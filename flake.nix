@@ -3,7 +3,6 @@
 
   outputs =
     {
-      nixpkgs,
       flake-parts,
       ...
     }@inputs:
@@ -13,10 +12,9 @@
       systems = [ "x86_64-linux" ];
 
       perSystem =
-        { system, pkgs, ... }:
-
+        { pkgs, ... }:
         {
-          formatter = pkgs.nixfmt-tree;
+          formatter = pkgs.nixfmt;
         };
     };
 
