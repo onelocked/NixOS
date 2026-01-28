@@ -1,5 +1,19 @@
 {
   description = "NixOS onelock";
+  outputs =
+    inputs@{ flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [ "x86_64-linux" ];
+      _module.args = { inherit inputs; };
+      imports = [
+        ./core
+      ];
+      perSystem =
+        { pkgs, ... }:
+        {
+          formatter = pkgs.nixfmt;
+        };
+    };
 
   inputs = {
     # --- System stuff ---
@@ -13,7 +27,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     flake-parts = {
-      url = "";
+      url = "github:hercules-ci/flake-parts";
     };
     # --- Flake-enabled packages ---
     onevix = {
@@ -66,20 +80,4 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs =
-    inputs@{ flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [ "x86_64-linux" ];
-      _module.args = { inherit inputs; };
-      imports = [
-        ./core
-      ];
-      perSystem =
-        { pkgs, ... }:
-        {
-          formatter = pkgs.nixfmt;
-          packages = (import ../pkgs) { inherit inputs pkgs; };
-        };
-
-    };
 }
