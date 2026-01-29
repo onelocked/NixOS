@@ -5,7 +5,7 @@
     modules = with inputs.self.modules.nixos; [
       onelock
       core
-      desktop
+      # desktop
     ];
   };
 }
