@@ -1,7 +1,8 @@
-{ config, ... }:
+{ config,lib, ... }:
 {
   networking = {
     hostName = "${config.constants.hostname}";
+    useDHCP = lib.mkDefault true;
     networkmanager.enable = true;
     firewall = {
       enable = false;
