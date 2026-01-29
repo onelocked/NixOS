@@ -17,7 +17,7 @@
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
     };
-    inputs.import-tree.url = "github:vic/import-tree";
+    import-tree.url = "github:vic/import-tree";
 
     # --- Flake-enabled packages ---
     onevix = {
