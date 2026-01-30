@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.onelock = {
+  flake.modules.nixos.hardware = {
     fileSystems."/" = {
       device = "/dev/disk/by-uuid/b2c1e345-6468-4e25-87c9-9caddf42b0c4";
       fsType = "ext4";

@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.onelock =
+  flake.modules.nixos.hardware =
     {
       config,
       lib,
