@@ -5,7 +5,7 @@
 
       fonts = {
         packages = with pkgs; [
-          apple-nerd-fonts
+          package.apple-nerd-fonts
           material-symbols
           noto-fonts
           noto-fonts-color-emoji
