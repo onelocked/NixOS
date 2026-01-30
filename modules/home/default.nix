@@ -35,6 +35,7 @@
           onelock
           xdg
           nh
+          cli
         ];
       };
     };
