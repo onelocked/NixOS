@@ -1,9 +1,10 @@
+{ self, ... }:
 {
   flake.modules.nixos.core =
-    { config, lib, ... }:
+    { lib, ... }:
     {
       networking = {
-        hostName = "${config.variables.hostname}";
+        hostName = "${self.variables.hostname}";
         useDHCP = lib.mkDefault true;
         networkmanager.enable = true;
         firewall = {

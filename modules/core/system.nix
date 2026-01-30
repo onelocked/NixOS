@@ -1,6 +1,7 @@
+{ self, ... }:
 {
   flake.modules.nixos.core =
-    { config, pkgs, ... }:
+    { pkgs, ... }:
     {
       nix = {
         settings = {
@@ -44,18 +45,18 @@
       };
 
       # Timezone and locale
-      time.timeZone = "${config.variables.timezone}";
-      i18n.defaultLocale = "${config.variables.locale}";
+      time.timeZone = "${self.variables.timezone}";
+      i18n.defaultLocale = "${self.variables.locale}";
       i18n.extraLocaleSettings = {
-        LC_ADDRESS = "${config.variables.locale}";
-        LC_IDENTIFICATION = "${config.variables.locale}";
-        LC_MEASUREMENT = "${config.variables.locale}";
-        LC_MONETARY = "${config.variables.locale}";
-        LC_NAME = "${config.variables.locale}";
-        LC_NUMERIC = "${config.variables.locale}";
-        LC_PAPER = "${config.variables.locale}";
-        LC_TELEPHONE = "${config.variables.locale}";
-        LC_TIME = "${config.variables.locale}";
+        LC_ADDRESS = "${self.variables.locale}";
+        LC_IDENTIFICATION = "${self.variables.locale}";
+        LC_MEASUREMENT = "${self.variables.locale}";
+        LC_MONETARY = "${self.variables.locale}";
+        LC_NAME = "${self.variables.locale}";
+        LC_NUMERIC = "${self.variables.locale}";
+        LC_PAPER = "${self.variables.locale}";
+        LC_TELEPHONE = "${self.variables.locale}";
+        LC_TIME = "${self.variables.locale}";
       };
       system.stateVersion = "25.11";
     };
