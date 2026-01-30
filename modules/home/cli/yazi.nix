@@ -20,7 +20,23 @@
         enableBashIntegration = true;
         enableNushellIntegration = true;
         package = inputs.yazi.packages.${pkgs.stdenv.hostPlatform.system}.default;
-        plugins = import ./_plugins.nix { inherit pkgs; };
+        plugins =
+          let
+            pluginNames = [
+              "starship"
+              "full-border"
+              "mediainfo"
+              "no-status"
+              "ouch"
+              "lazygit"
+            ];
+          in
+          builtins.listToAttrs (
+            map (name: {
+              inherit name;
+              value = pkgs.yaziPlugins.${name};
+            }) pluginNames
+          );
         settings = {
           tasks = {
             micro_workers = 10;
