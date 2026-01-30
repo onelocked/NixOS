@@ -7,6 +7,7 @@
         hardware
         core
         home-manager
+        desktop
       ];
     };
   };

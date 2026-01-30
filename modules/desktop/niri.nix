@@ -1,18 +1,14 @@
-{ ... }:
+{ inputs, ... }:
 {
-  flake.modules.nixos.desktop =
-    { pkgs, inputs, ... }:
+  flake.modules.nixos.niri =
+    { pkgs, ... }:
 
     let
+      niri-unstable = inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.niri-unstable;
       xwayland-unstable =
         inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.xwayland-satellite-unstable;
     in
     {
-      imports = [
-        ../../programs/quickshell
-        ../../programs/vicinae
-        ../../programs
-      ];
       nix.settings = {
         extra-substituters = [ "https://niri.cachix.org" ];
         extra-trusted-public-keys = [ "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964=" ];
@@ -20,7 +16,7 @@
 
       programs.niri = {
         enable = true;
-        package = inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.niri-unstable;
+        package = niri-unstable;
         useNautilus = false;
       };
       programs.xwayland = {
