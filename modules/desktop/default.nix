@@ -5,6 +5,7 @@
       niri
       sddm
       vicinae
+      quickshell
     ];
 
   };
