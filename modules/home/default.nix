@@ -1,4 +1,7 @@
-{ inputs, ... }:
+{
+  inputs,
+  ...
+}:
 {
   flake.modules.nixos.home-manager =
     { pkgs, ... }:

@@ -1,3 +1,4 @@
+{ self, ... }:
 {
   flake.modules.homeManager.xdg = {
     xdg = {
@@ -5,17 +6,17 @@
       userDirs = {
         enable = true;
         createDirectories = true;
-        download = "home/onelock/Downloads";
-        pictures = "/home/onelock/Pictures";
-        videos = "/home/onelock/Videos";
-        documents = "/home/onelock/Documents";
+        download = self.variables.homedir + "Downloads";
+        pictures = self.variables.homedir + "Pictures";
+        videos = self.variables.homedir + "Videos";
+        documents = self.variables.homedir + "/Documents";
         desktop = null;
         music = null;
         publicShare = null;
         templates = null;
         extraConfig = {
-          XDG_PROJECTS_DIR = "/home/onelock/Development";
-          XDG_BIN_HOME = "/home/onelock/.local/bin";
+          XDG_PROJECTS_DIR = self.variables.homedir + "Development";
+          XDG_BIN_HOME = self.variables.homedir + "/.local/bin";
         };
       };
     };
