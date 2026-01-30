@@ -1,10 +1,9 @@
 { inputs, ... }:
 {
   flake.modules.nixos.core = {
-    imports = [ inputs.self.modules.nixos.constants ];
+    imports = [ inputs.self.modules.generic.constants ];
   };
-
-  flake.modules.nixos.home-manager = {
-    imports = [ inputs.self.modules.nixos.constants ];
+  flake.modules.homeManager.onelock = {
+    imports = [ inputs.self.modules.generic.constants ];
   };
 }

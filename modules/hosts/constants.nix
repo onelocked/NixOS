@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.constants =
+  flake.modules.generic.constants =
     { lib, ... }:
     {
       options.variables = lib.mkOption {

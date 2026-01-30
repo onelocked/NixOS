@@ -1,11 +1,10 @@
 { inputs, ... }:
 {
-  flake.nixosConfigurations.onelock = inputs.nixpkgs.lib.nixosSystem {
-    system = "x86_64-linux";
-    modules = with inputs.self.modules.nixos; [
-      hardware
-      core
-      # desktop
+  flake.modules.nixos.onelock = {
+    imports = [
+      inputs.self.modules.nixos.hardware
+      inputs.self.modules.nixos.core
+      inputs.self.modules.nixos.home-manager
     ];
   };
 }
