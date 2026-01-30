@@ -3,8 +3,10 @@
   flake.nixosConfigurations = {
     NixOS = inputs.nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      modules = [
-        inputs.self.modules.nixos.onelock
+      modules = with inputs.self.modules.nixos; [
+        hardware
+        core
+        home-manager
       ];
     };
   };
