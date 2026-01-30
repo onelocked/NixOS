@@ -1,10 +1,10 @@
+{ self, ... }:
 {
   flake.modules.nixos.desktop =
     { pkgs, ... }:
     {
-
       services.displayManager.autoLogin.enable = true;
-      services.displayManager.autoLogin.user = "onelock";
+      services.displayManager.autoLogin.user = self.variables.username;
       services.displayManager = {
         sddm = {
           enable = true;

@@ -6,7 +6,4 @@
       onelock
     ];
   };
-  # flake.homeConfigurations.nixos-onelock = inputs.home-manager.lib.homeManagerConfiguration {
-  #   modules = [ inputs.self.modules.homeManager.home-manager ];
-  # };
 }
