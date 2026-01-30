@@ -32,7 +32,7 @@
       };
       home-manager.users.onelock = {
         imports = with inputs.self.modules.homeManager; [
-          onelock
+          settings
           xdg
           nh
           cli

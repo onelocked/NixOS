@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.homeManager.onelock = {
+  flake.modules.homeManager.settings = {
     home.username = self.variables.username;
     home.homeDirectory = self.variables.homedir;
     home.stateVersion = "25.11";
