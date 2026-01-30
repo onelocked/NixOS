@@ -5,7 +5,7 @@
     default = {
       email = "onelock@mail.com";
       username = "onelock";
-      homedir = "home/onelock";
+      homedir = "/home/onelock";
       hostname = "NixOS";
       desktop = "niri";
       editor = "onevix";
