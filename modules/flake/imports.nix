@@ -4,7 +4,7 @@
     imports = [ inputs.self.modules.nixos.constants ];
   };
 
-  # flake.modules.nixos.home-manager = {
-  #   imports = [ inputs.self.modules.nixos.constants ];
-  # };
+  flake.modules.nixos.home-manager = {
+    imports = [ inputs.self.modules.nixos.constants ];
+  };
 }
