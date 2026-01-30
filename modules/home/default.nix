@@ -1,16 +1,34 @@
 { inputs, ... }:
 {
-  flake.modules.nixos.home-manager = {
-    imports = [
-      inputs.home-manager.nixosModules.home-manager
-    ];
-    home-manager = {
-      useGlobalPkgs = true;
-      useUserPackages = true;
-      backupFileExtension = "backup";
+  flake.modules.nixos.home-manager =
+    { pkgs, ... }:
+    {
+      imports = [
+        inputs.home-manager.nixosModules.home-manager
+      ];
+      users.users.onelock = {
+        isNormalUser = true;
+        extraGroups = [
+          "networkmanager"
+          "wheel"
+          "kvm"
+          "input"
+          "disk"
+          "libvirtd"
+          "video"
+          "audio"
+        ];
+      };
+      # Default shell
+      users.defaultUserShell = pkgs.nushell;
+
+      home-manager = {
+        useGlobalPkgs = true;
+        useUserPackages = true;
+        backupFileExtension = "backup";
+      };
+      home-manager.users.onelock = {
+        imports = [ inputs.self.modules.homeManager.onelock ];
+      };
     };
-    home-manager.users.onelock = {
-      imports = [ inputs.self.modules.homeManager.onelock ];
-    };
-  };
 }
