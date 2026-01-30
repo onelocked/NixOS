@@ -28,7 +28,7 @@
         backupFileExtension = "backup";
       };
       home-manager.users.onelock = {
-        imports = [ inputs.self.modules.homeManager.onelock ];
+        imports = with inputs.self.modules.homeManager; [ onelock ];
       };
     };
 }
