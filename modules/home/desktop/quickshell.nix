@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  flake.modules.nixos.quickshell =
+  flake.modules.homeManager.quickshell =
     {
       pkgs,
       lib,

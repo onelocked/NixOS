@@ -36,6 +36,8 @@
           xdg
           nh
           cli
+          vicinae
+          quickshell
         ];
       };
     };
