@@ -23,7 +23,7 @@ in
         clean.extraArgs = "--keep-since 4d --keep 3";
       };
       home.shellAliases = {
-        nhs = "nh os switch -H onelock";
+        nhs = "nh os switch -H NixOS";
       };
     };
 }
