@@ -14,6 +14,7 @@
           imagemagick
           wlsunset
           python3
+          cava
 
         ]
         ++ (with pkgs.kdePackages; [
