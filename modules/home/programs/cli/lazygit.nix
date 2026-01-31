@@ -1,3 +1,4 @@
+{ self, ... }:
 {
   flake.modules.homeManager.cli =
     { pkgs, ... }:
@@ -18,7 +19,7 @@
           ".gitconfig".text = ''
             [user]
             	name = onelocked
-            	email = onelock@mail.com
+            	email = ${self.variables.email}
 
             [core]
                 pager = delta
@@ -49,6 +50,5 @@
           safe.directory = "/tmp"; # needed for ago.sh
         };
       };
-
     };
 }
