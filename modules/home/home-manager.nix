@@ -10,7 +10,7 @@
       imports = [
         inputs.home-manager.nixosModules.home-manager
       ];
-      users.users.onelock = {
+      users.users.${self.variables.username} = {
         isNormalUser = true;
         extraGroups = [
           "networkmanager"
