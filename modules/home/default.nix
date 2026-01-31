@@ -37,6 +37,7 @@
           cli
           vicinae
           quickshell
+          theming
         ];
       };
     };
