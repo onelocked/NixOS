@@ -38,6 +38,7 @@
           vicinae
           quickshell
           theming
+          zen-browser
         ];
       };
     };
