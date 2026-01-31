@@ -1,4 +1,4 @@
-{ self, ... }:
+{ inputs, self, ... }:
 {
   flake.modules.nixos.core =
     { pkgs, lib, ... }:
@@ -28,6 +28,15 @@
         optimise.automatic = true;
         package = pkgs.nixVersions.latest;
       };
+      nixpkgs.overlays = [
+        (
+          final: prev:
+          import ../../../pkgs {
+            pkgs = final;
+            inherit inputs;
+          }
+        )
+      ];
       nixpkgs = {
         hostPlatform = lib.mkDefault "x86_64-linux";
         config = {
