@@ -1,7 +1,7 @@
 { self, ... }:
 {
   flake.modules.nixos.core =
-    { pkgs, ... }:
+    { pkgs, lib, ... }:
     {
       nix = {
         settings = {
@@ -29,6 +29,7 @@
         package = pkgs.nixVersions.latest;
       };
       nixpkgs = {
+        hostPlatform = lib.mkDefault "x86_64-linux";
         config = {
           allowUnfree = true;
         };
@@ -36,7 +37,6 @@
 
       security = {
         polkit.enable = true;
-        #sudo.wheelNeedsPassword = false;
       };
 
       programs.gnupg.agent = {

@@ -9,6 +9,6 @@
     { pkgs, ... }:
     {
       formatter = pkgs.nixfmt-tree;
-      packages = (import ../../pkgs) { inherit pkgs; };
+      packages = (import ../pkgs) { inherit pkgs; };
     };
 }

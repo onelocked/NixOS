@@ -6,8 +6,8 @@
       modules = with inputs.self.modules.nixos; [
         hardware
         core
-        home-manager
         desktop
+        home-manager
       ];
     };
   };
