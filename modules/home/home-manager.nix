@@ -40,6 +40,7 @@
           zen-browser
           media
           jellyfin-desktop
+          ghostty
         ];
         home.username = self.variables.username;
         home.homeDirectory = self.variables.homedir;
