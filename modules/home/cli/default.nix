@@ -24,7 +24,7 @@
         ntfy-sh
         killall
         nap # Snippets
-        wayland-ocr
+        # wayland-ocr
 
         opkssh
         radeontop
