@@ -7,7 +7,6 @@
         hardware
         core
         desktop
-        lan-mouse
         home-manager
       ];
     };

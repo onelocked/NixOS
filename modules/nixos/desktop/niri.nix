@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  flake.modules.nixos.niri =
+  flake.modules.nixos.desktop =
     { pkgs, ... }:
 
     let

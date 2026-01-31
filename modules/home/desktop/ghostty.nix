@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.ghostty =
+  flake.modules.nixos.desktop =
     {
       pkgs,
       inputs,

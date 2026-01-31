@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.nixos.sddm =
+  flake.modules.nixos.desktop =
     { pkgs, ... }:
     {
       services.displayManager.autoLogin.enable = true;

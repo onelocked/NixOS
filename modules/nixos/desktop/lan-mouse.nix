@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  flake.modules.nixos.lan-mouse =
+  flake.modules.nixos.desktop =
     {
       pkgs,
       ...
