@@ -18,7 +18,6 @@
         libjxl
         dysk
         isd # TUI systemd
-        ookla-speedtest
         microfetch
         nix-prefetch-scripts
         ntfy-sh
