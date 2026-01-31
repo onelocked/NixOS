@@ -17,7 +17,6 @@
             home-manager.users.${self.variables.username} = {
               imports = with inputs.self.modules.homeManager; [
                 state
-                xdg
                 cli
                 vicinae
                 quickshell
