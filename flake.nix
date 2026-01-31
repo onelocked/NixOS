@@ -54,7 +54,7 @@
       };
     };
     yazi = {
-      url = "github:sxyazi/yazi/";
+      url = "github:sxyazi/yazi/v26.1.22";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     vicinae = {
