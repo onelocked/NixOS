@@ -1,0 +1,10 @@
+{
+  flake.modules.nixos.hardware =
+    { pkgs, ... }:
+    {
+      environment.systemPackages = with pkgs; [ rocmPackages.amdsmi ];
+      hardware.amdgpu = {
+        opencl.enable = true;
+      };
+    };
+}
