@@ -23,9 +23,7 @@
         enable = true;
         package = xwayland-unstable;
       };
-      services.displayManager.sessionPackages = [
-        inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.niri-unstable
-      ];
+      services.displayManager.sessionPackages = [ niri-unstable ];
       services.displayManager.defaultSession = "niri";
       systemd.user.services.niri-flake-polkit = {
         description = "PolicyKit Authentication by KDE";
