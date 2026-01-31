@@ -38,6 +38,8 @@
           quickshell
           theming
           zen-browser
+          media
+          jellyfin-desktop
         ];
         home.username = self.variables.username;
         home.homeDirectory = self.variables.homedir;

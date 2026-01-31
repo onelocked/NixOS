@@ -1,4 +1,3 @@
-{ inputs, ... }:
 {
   flake.modules.homeManager.media =
     { pkgs, ... }:
@@ -9,13 +8,6 @@
         moonlight-qt
         telegram-desktop
         parsec-bin
-        (inputs.wrappers.lib.wrapPackage {
-          inherit pkgs;
-          package = pkgs.jellyfin-desktop;
-          flags = {
-            "--platform" = "xcb";
-          };
-        })
       ];
     };
 }
