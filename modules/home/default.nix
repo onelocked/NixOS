@@ -1,4 +1,5 @@
 {
+  self,
   inputs,
   ...
 }:
@@ -29,7 +30,7 @@
         useUserPackages = true;
         backupFileExtension = "backup";
       };
-      home-manager.users.onelock = {
+      home-manager.users.${self.variables.username} = {
         imports = with inputs.self.modules.homeManager; [
           settings
           xdg
