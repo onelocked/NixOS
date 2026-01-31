@@ -5,6 +5,10 @@
     {
       nix = {
         settings = {
+          trusted-users = [
+            "root"
+            self.variables.username
+          ];
           auto-optimise-store = true;
           substituters = [
             "https://cache.nixos.org/"
