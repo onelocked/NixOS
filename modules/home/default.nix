@@ -29,7 +29,6 @@
       imports = with inputs.self.modules.homeManager; [
         settings
         xdg
-        nh
         cli
         vicinae
         quickshell

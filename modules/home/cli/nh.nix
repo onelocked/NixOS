@@ -3,7 +3,7 @@ let
   inherit (inputs.wrappers.lib) wrapPackage;
 in
 {
-  flake.modules.homeManager.nh =
+  flake.modules.homeManager.cli =
     { pkgs, ... }:
 
     let
