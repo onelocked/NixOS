@@ -3,6 +3,7 @@
   flake.modules.nixos.core =
     { pkgs, lib, ... }:
     {
+      documentation.enable = false;
       nix = {
         settings = {
           trusted-users = [
