@@ -1,12 +1,12 @@
 {
-  flake.modules.nixos.core = {
-    programs.bash = {
-      enable = true;
-      interactiveShellInit = ''
-        if ! [ "$TERM" = "dumb" ] && [ -z "$BASH_EXECUTION_STRING" ]; then
-          exec nu
-        fi
-      '';
+  flake.modules.nixos.core =
+    { config, ... }:
+    {
+      programs.bash = {
+        enable = true;
+        shellInit = ''
+          export NOCTALIA_AP_GOOGLE_API_KEY="$(cat ${config.sops.secrets.gemini.path})"
+        '';
+      };
     };
-  };
 }
