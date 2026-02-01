@@ -32,6 +32,10 @@
             cat = "bat";
           };
         };
+        pay-respects = {
+          enable = true;
+          enableNushellIntegration = true;
+        };
         zoxide = {
           enable = true;
           enableNushellIntegration = true;
