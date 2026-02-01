@@ -10,23 +10,19 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-index-database = {
-      url = "github:nix-community/nix-index-database";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
+    wrappers = {
+      url = "github:lassulus/wrappers";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     import-tree.url = "github:vic/import-tree";
 
     # --- Flake-enabled packages ---
     onevix = {
       url = "github:onelocked/onevix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    spicetify-nix = {
-      url = "github:Gerg-L/spicetify-nix/8bd7e49d5ac62756bee6e4b02221fb96bfc3c99a";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     zen-browser = {
@@ -60,10 +56,6 @@
     };
     vicinae = {
       url = "github:vicinaehq/vicinae/";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    wrappers = {
-      url = "github:lassulus/wrappers";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     opencode = {
