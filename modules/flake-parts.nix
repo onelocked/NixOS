@@ -1,9 +1,6 @@
 { inputs, ... }:
 {
-  imports = [
-    inputs.flake-parts.flakeModules.modules
-    inputs.home-manager.flakeModules.home-manager
-  ];
+  imports = [ inputs.flake-parts.flakeModules.modules ];
   systems = [ "x86_64-linux" ];
   perSystem =
     { pkgs, ... }:

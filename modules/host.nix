@@ -4,7 +4,7 @@
     NixOS = inputs.nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules =
-        with inputs.self.modules.nixos;
+        with self.modules.nixos;
         [
           hardware
           amdgpu
@@ -16,7 +16,7 @@
         ++ [
           {
             home-manager.users.${self.variables.username} = {
-              imports = with inputs.self.modules.homeManager; [
+              imports = with self.modules.homeManager; [
                 state
                 cli
                 vicinae
