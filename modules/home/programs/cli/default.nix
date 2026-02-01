@@ -24,6 +24,7 @@
         killall
         nap # Snippets
         wayland-ocr
+        launcher
 
         opkssh
         radeontop

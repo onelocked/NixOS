@@ -7,6 +7,7 @@ in
   apple-nerd-fonts = _ ./apple-nerd-fonts { inherit pkgs; };
   sunshine-xdg = _ ./sunshine/package.nix { };
   wayland-ocr = _ ./wayland-ocr { };
+  launcher = _ ./niri-launcher { };
   # win2xcur = _ ./win2xcur { };
   # allCursors = (import ./cursors { inherit (pkgs) lib pkgs; });
 }
