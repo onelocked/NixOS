@@ -26,6 +26,7 @@
             $env.CARAPACE_BRIDGES = 'zsh,bash'
           '';
           shellAliases = {
+            nix-shell = "nix-shell --run nu";
             dots = "cd ~/NixOS";
             ping = "${lib.getExe pkgs.gping}";
             cat = "bat";
