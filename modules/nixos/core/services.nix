@@ -23,5 +23,7 @@
       programs.seahorse.enable = true;
       #Xserver
       services.xserver.enable = pkgs.lib.mkForce false;
+      #Polkit
+      security.polkit.enable = true;
     };
 }
