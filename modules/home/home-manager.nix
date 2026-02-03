@@ -25,7 +25,7 @@
           ];
         };
         # Default shell
-        users.defaultUserShell = pkgs.nushell;
+        users.defaultUserShell = pkgs.${self.variables.shell};
         home-manager = {
           useGlobalPkgs = true;
           useUserPackages = true;
