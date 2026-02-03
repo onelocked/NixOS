@@ -1,6 +1,5 @@
 {
   writeShellScriptBin,
-  ripgrep,
   wl-clipboard-rs,
   mpv,
 }:
@@ -10,9 +9,11 @@ writeShellScriptBin "mpv-wlpaste" ''
 
   [ -z "$url" ] && exit 0
 
-  if echo "$url" | ${ripgrep}/bin/rg -q '(^https?://)?([^/]*\.)?tiktok\.com/'; then
-    url="''${url%%\?*}"
-  fi
+  case "$url" in
+    *tiktok.com/*\?*)
+      url="''${url%%\?*}"
+      ;;
+  esac
 
   exec ${mpv}/bin/mpv "$url"
 ''
