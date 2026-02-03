@@ -25,7 +25,6 @@
             pluginNames = [
               "starship"
               "full-border"
-              "mediainfo"
               "no-status"
               "ouch"
               "lazygit"
@@ -113,7 +112,13 @@
                   "loupe"
                   "nomacs"
                 ];
-                desc = "Set Wallpaper"; # Description shown in Yazi's 'open with' menu
+              }
+              {
+                mime = "video/*"; # Apply this to all video types
+                use = [
+                  "open"
+                  "video-trimmer"
+                ];
               }
             ];
           };
@@ -134,6 +139,12 @@
               {
                 run = "${getExe pkgs.nomacs} %s";
                 desc = "Image Editor";
+              }
+            ];
+            video-trimmer = [
+              {
+                run = "${getExe pkgs.video-trimmer} %s";
+                desc = "Video Trimmer";
               }
             ];
           };

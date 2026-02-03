@@ -11,7 +11,6 @@
           core
           desktop
           home-manager
-          ghostty
         ]
         ++ [
           {
