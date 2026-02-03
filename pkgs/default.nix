@@ -8,6 +8,7 @@ in
   sunshine-xdg = _ ./sunshine/package.nix { };
   wayland-ocr = _ ./wayland-ocr { };
   launcher = _ ./niri-launcher { };
+  mpv-wlpaste = _ ./mpv-wlpaste { };
   # win2xcur = _ ./win2xcur { };
   # allCursors = (import ./cursors { inherit (pkgs) lib pkgs; });
 }
