@@ -16,7 +16,7 @@
           {
             home-manager.users.${self.variables.username} = {
               imports = with self.modules.homeManager; [
-                pkgs
+                custom-derivations
                 state
                 cli
                 vicinae
