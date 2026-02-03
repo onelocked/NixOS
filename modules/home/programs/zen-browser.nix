@@ -4,29 +4,18 @@
     { pkgs, ... }:
     {
       imports = [ inputs.zen-browser.homeModules.twilight ];
-      programs.zen-browser = {
-        enable = true;
-        profiles.default = {
-          mods = [
-            "ae7868dc-1fa1-469e-8b89-a5edf7ab1f24" # Load Bar
-            "e122b5d9-d385-4bf8-9971-e137809097d0" # No Top Sites
-            "e51b85e6-cef5-45d4-9fff-6986637974e1" # smaller zen toast popup
-            "b51ff956-6aea-47ab-80c7-d6c047c0d510" # Disable Status Bar
-            "ad97bb70-0066-4e42-9b5f-173a5e42c6fc" # SuperPins
-            "a6335949-4465-4b71-926c-4a52d34bc9c0" # Better Find Bar
-          ];
-        };
-
-        policies =
-          let
-            mkLockedAttrs = builtins.mapAttrs (
-              _: value: {
-                Value = value;
-                Status = "locked";
-              }
-            );
-          in
-          {
+      programs.zen-browser =
+        let
+          mkLockedAttrs = builtins.mapAttrs (
+            _: value: {
+              Value = value;
+              Status = "locked";
+            }
+          );
+        in
+        {
+          enable = true;
+          policies = {
             AutofillAddressEnabled = false;
             AutofillCreditCardEnabled = false;
             DisableAppUpdate = true;
@@ -48,7 +37,6 @@
               Fingerprinting = true;
             };
             Preferences = mkLockedAttrs {
-              #VA-API
               "media.hardware-video-decoding.force-enabled" = true; # default = false
               "media.rdd-ffmpeg.enabled" = true; # default = true
               "media.av1.enabled" = true; # default = true
@@ -61,14 +49,7 @@
               "xpinstall.signatures.required" = false;
               "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
 
-              "zen.view.experimental-no-window-controls" = true;
-              "zen.view.compact.hide-toolbar" = false;
-              "zen.view.compact.hide-tabbar" = true;
-
               "gfx.webrender.all" = true;
-
-              "mousebutton.4th.enabled" = false;
-              "mousebutton.5th.enabled" = false;
 
               "privacy.resistFingerprinting" = true;
               "privacy.resistFingerprinting.randomization.canvas.use_siphash" = true;
@@ -82,6 +63,12 @@
 
               "widget.use-xdg-desktop-portal.file-picker" = 1;
 
+              "mousebutton.4th.enabled" = false;
+              "mousebutton.5th.enabled" = false;
+              "zen.welcome-screen.seen" = true;
+              "zen.view.experimental-no-window-controls" = true;
+              "zen.view.compact.hide-toolbar" = false;
+              "zen.view.compact.hide-tabbar" = true;
               "middlemouse.paste" = false;
 
             };
@@ -107,10 +94,29 @@
               };
             };
           };
-      };
+          profiles.default = {
+            mods = [
+              "ae7868dc-1fa1-469e-8b89-a5edf7ab1f24" # Load Bar
+              "e122b5d9-d385-4bf8-9971-e137809097d0" # No Top Sites
+              "e51b85e6-cef5-45d4-9fff-6986637974e1" # smaller zen toast popup
+              "b51ff956-6aea-47ab-80c7-d6c047c0d510" # Disable Status Bar
+              "ad97bb70-0066-4e42-9b5f-173a5e42c6fc" # SuperPins
+              "a6335949-4465-4b71-926c-4a52d34bc9c0" # Better Find Bar
+            ];
+            settings = {
+              "mousebutton.4th.enabled" = false;
+              "mousebutton.5th.enabled" = false;
+              "zen.welcome-screen.seen" = true;
+              "zen.view.experimental-no-window-controls" = true;
+              "zen.view.compact.hide-toolbar" = false;
+              "zen.view.compact.hide-tabbar" = true;
+              "middlemouse.paste" = false;
+            };
+          };
+        };
       xdg.mimeApps =
         let
-          zen-browser-pkg = inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default;
+          zen-browser-pkg = inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.twilight;
           associations = builtins.listToAttrs (
             map
               (name: {
