@@ -19,12 +19,9 @@
         dysk
         isd # TUI systemd
         microfetch
-        nix-prefetch-scripts
         ntfy-sh
         killall
         nap # Snippets
-        wayland-ocr
-        launcher
 
         opkssh
         radeontop
