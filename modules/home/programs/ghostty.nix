@@ -57,7 +57,7 @@
         };
     };
     nixos = {
-      core =
+      home-manager =
         { pkgs, lib, ... }:
         let
           ghostty-nix = inputs.ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default;
