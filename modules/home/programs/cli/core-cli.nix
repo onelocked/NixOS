@@ -1,10 +1,10 @@
-{ inputs, ... }:
 {
   flake.modules.homeManager.cli =
     { pkgs, ... }:
     {
       home.packages = with pkgs; [
         # Core CLI tools
+        neovim
         lsof
         tea
         fzf
@@ -26,7 +26,7 @@
         opkssh
         radeontop
         gemini-cli
-        inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.default
+        opencode
       ];
     };
 }

@@ -32,15 +32,6 @@
         package = pkgs.nixVersions.latest;
       };
       nixpkgs = {
-        overlays = [
-          (
-            final: prev:
-            import ../../../pkgs {
-              pkgs = final;
-              inherit inputs;
-            }
-          )
-        ];
         hostPlatform = lib.mkDefault "x86_64-linux";
         config = {
           allowUnfree = false;

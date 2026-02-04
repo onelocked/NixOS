@@ -1,13 +1,6 @@
-{ inputs, ... }:
 {
   flake.modules.nixos.desktop =
     { pkgs, ... }:
-
-    let
-      niri-unstable = inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.niri-unstable;
-      xwayland-unstable =
-        inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.xwayland-satellite-unstable;
-    in
     {
       nix.settings = {
         extra-substituters = [ "https://niri.cachix.org" ];
@@ -15,14 +8,12 @@
       };
       programs.niri = {
         enable = true;
-        package = niri-unstable;
         useNautilus = false;
       };
       programs.xwayland = {
         enable = true;
-        package = xwayland-unstable;
       };
-      services.displayManager.sessionPackages = [ niri-unstable ];
+      services.displayManager.sessionPackages = [ pkgs.niri ];
       services.displayManager.defaultSession = "niri";
       systemd.user.services.niri-flake-polkit = {
         description = "PolicyKit Authentication by KDE";

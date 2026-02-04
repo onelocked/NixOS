@@ -10,6 +10,7 @@
           amdgpu
           core
           desktop
+          overlays
           home-manager
         ]
         ++ [
