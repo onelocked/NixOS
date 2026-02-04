@@ -3,6 +3,7 @@
   flake.modules.nixos.overlays = {
     nixpkgs.overlays = [
       (final: prev: {
+        wl-clipboard = prev.wl-clipboard-rs;
         opencode = inputs.opencode.packages.${final.stdenv.hostPlatform.system}.default;
         ghostty = inputs.ghostty.packages.${final.stdenv.hostPlatform.system}.default;
         niri = inputs.niri-flake.packages.${final.stdenv.hostPlatform.system}.niri-unstable;
