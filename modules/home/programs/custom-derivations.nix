@@ -5,7 +5,7 @@
       home.packages = with pkgs; [
         mpv-wlpaste
         wayland-ocr
-        launcher
+        niri-launcher
       ];
     };
 }

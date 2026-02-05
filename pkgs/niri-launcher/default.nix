@@ -10,7 +10,7 @@ let
   _ = lib.getExe;
 in
 
-writeShellScriptBin "launcher" ''
+writeShellScriptBin "niri-launcher" ''
   APP_ID="$1"
   CMD="$2"
 
