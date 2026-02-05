@@ -49,12 +49,6 @@
             suppress_preload = false;
           };
           plugin = {
-            prepend_preloaders = [
-              {
-                mime = "image/jxl";
-                run = "image";
-              }
-            ];
             preloaders = [
               {
                 mime = "image/{avif,heic,svg+xml}";
