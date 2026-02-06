@@ -12,6 +12,7 @@
       };
       programs.xwayland = {
         enable = true;
+        package = pkgs.xwayland-satellite;
       };
       services.displayManager.sessionPackages = [ pkgs.niri ];
       services.displayManager.defaultSession = "niri";
