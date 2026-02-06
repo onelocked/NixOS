@@ -1,3 +1,4 @@
+{ self, ... }:
 {
   flake.modules.nixos.core =
     { pkgs, ... }:
@@ -24,10 +25,7 @@
             gfxmodeEfi = "3440x1440";
             gfxmodeBios = "3440x1440";
             splashMode = "normal";
-            splashImage = builtins.fetchurl {
-              url = "https://s3.onelock.org/download/grub.png";
-              sha256 = "0vir1idx70fvcld0cjbmfh6nm55vsr0sgsp048idy3scxpmkvr87";
-            };
+            splashImage = "${self.variables.homedir}/Pictures/grub.png";
             theme = pkgs.stdenv.mkDerivation {
               pname = "grub-theme-wuwa";
               version = "unstable-2025-07-09";
