@@ -30,6 +30,7 @@
             dots = "cd ~/NixOS";
             ping = "${lib.getExe pkgs.gping}";
             cat = "bat";
+            zip = "${lib.getExe pkgs.zip}";
           };
         };
         pay-respects = {
