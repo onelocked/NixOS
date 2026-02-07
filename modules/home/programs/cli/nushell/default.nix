@@ -25,13 +25,18 @@
             $env.EDITOR = "nvim"
             $env.CARAPACE_BRIDGES = 'zsh,bash'
           '';
-          shellAliases = {
-            nix-shell = "nix-shell --run nu";
-            dots = "cd ~/NixOS";
-            ping = "${lib.getExe pkgs.gping}";
-            cat = "bat";
-            zip = "${lib.getExe pkgs.zip}";
-          };
+          shellAliases =
+            let
+              _ = lib.getExe;
+            in
+            {
+              nix-shell = "nix-shell --run nu";
+              dots = "cd ~/NixOS";
+              ping = "${_ pkgs.gping}";
+              cat = "bat";
+              zip = "${_ pkgs.zip}";
+              ll = "${_ pkgs.eza} -l --icons --git -a";
+            };
         };
         pay-respects = {
           enable = true;
