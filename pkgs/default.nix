@@ -3,7 +3,6 @@ let
   _ = pkgs.callPackage;
 in
 {
-  sddm-onelock = _ ./sddm-themes { theme = "onelock"; };
   apple-nerd-fonts = _ ./apple-nerd-fonts { inherit pkgs; };
   wayland-ocr = _ ./wayland-ocr { };
   niri-launcher = _ ./niri-launcher { };
