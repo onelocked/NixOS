@@ -38,6 +38,10 @@
               ll = "${_ pkgs.eza} -l --icons --git -a";
             };
         };
+        atuin = {
+          enable = true;
+          enableNushellIntegration = true;
+        };
         pay-respects = {
           enable = true;
           enableNushellIntegration = true;
