@@ -30,7 +30,6 @@
 
           Service = {
             Type = "simple";
-            ExecStartPre = "${pkgs.coreutils}/bin/sleep 1";
             ExecStart = lib.getExe obs-wrapped;
           };
 
