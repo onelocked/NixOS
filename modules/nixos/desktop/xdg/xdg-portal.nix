@@ -1,3 +1,4 @@
+{ self, ... }:
 {
   flake.modules.nixos.desktop =
     { pkgs, lib, ... }:
@@ -43,9 +44,9 @@
             "xdg-desktop-portal-termfilechooser/config".text = ''
               [filechooser]
               cmd=yazi-wrapper.sh
-              default_dir=$HOME
-              open_mode=default
-              save_mode=last
+              default_dir=${self.variables.homedir}/Downloads
+              open_mode=suggested
+              save_mode=default
             '';
             "xdg-desktop-portal-termfilechooser/yazi-wrapper.sh".source = ../../../../scripts/yazi-wrapper.sh;
           };
