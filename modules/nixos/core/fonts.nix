@@ -16,12 +16,12 @@
           antialias = true;
           hinting = {
             enable = true;
-            style = "medium";
+            style = "full";
             autohint = false;
           };
           subpixel = {
             rgba = "rgb";
-            lcdfilter = "default";
+            lcdfilter = "light";
           };
           defaultFonts = {
             serif = [ "SF Pro Display" ];
