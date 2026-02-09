@@ -14,8 +14,6 @@
         enable = true;
         package = pkgs.xwayland-satellite;
       };
-      services.displayManager.sessionPackages = [ pkgs.niri ];
-      services.displayManager.defaultSession = "niri";
       systemd.user.services.niri-flake-polkit = {
         description = "PolicyKit Authentication by KDE";
         wantedBy = [ "niri.service" ];
