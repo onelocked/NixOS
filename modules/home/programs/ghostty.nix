@@ -41,6 +41,7 @@
             shell-integration = "nushell";
             desktop-notifications = "true";
             auto-update = "off";
+            custom-shader-animation = false; # TODO: remove this entry once fix is merged upstream
           };
         };
       };
