@@ -15,7 +15,7 @@
             font-style-bold = "Heavy";
             font-style-italic = "Bold Italic";
             font-style-bold-italic = "Heavy Italic";
-            font-size = "18";
+            font-size = "16";
 
             theme = "noctalia";
             cursor-style = "bar";
