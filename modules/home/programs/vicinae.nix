@@ -1,27 +1,19 @@
-{ inputs, ... }:
 {
   flake.modules.homeManager.vicinae =
-    { pkgs, ... }:
-    let
-      vicinae-unstable = inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.default;
-    in
+    { lib, ... }:
     {
-      imports = [ inputs.vicinae.homeManagerModules.default ];
-      nix.settings = {
-        extra-substituters = [ "https://vicinae.cachix.org" ];
-        extra-trusted-public-keys = [ "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc=" ];
-      };
-
-      services.vicinae = {
+      programs.vicinae = {
         enable = true;
-        package = vicinae-unstable;
+        useLayerShell = true;
         systemd = {
           enable = true;
           autoStart = true;
-          environment = {
-            QT_SCALE_FACTOR = "1.5";
-          };
         };
+      };
+      systemd.user.services.vicinae.Service = {
+        Environment = lib.mkForce [
+          "QT_SCALE_FACTOR=1.5"
+        ];
       };
     };
 }
