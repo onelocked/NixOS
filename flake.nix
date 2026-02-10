@@ -38,7 +38,7 @@
       };
     };
     niri-flake = {
-      url = "github:sodiboo/niri-flake/180bdbbc91c89f540a52d2b31c8c08116c53b91f";
+      url = "github:sodiboo/niri-flake";
     };
     lan-mouse = {
       url = "github:feschber/lan-mouse/";
