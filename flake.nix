@@ -49,7 +49,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     ghostty = {
-      url = "github:ghostty-org/ghostty";
+      url = "github:ghostty-org/ghostty/30d0ed4afd23abef1cee8a6a63dcab21c876b432";
     };
     yazi = {
       url = "github:sxyazi/yazi/v26.1.22";
