@@ -30,7 +30,7 @@
             window-padding-y = "10";
             quit-after-last-window-closed = "false";
 
-            window-vsync = "true"; # https://ghostty.org/docs/config/reference#window-vsync
+            window-vsync = "true"; # NOTE: https://ghostty.org/docs/config/reference#window-vsync
             window-decoration = "server";
             window-save-state = "never";
             right-click-action = "copy";
