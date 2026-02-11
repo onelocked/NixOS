@@ -376,11 +376,11 @@
         "nixvim": "nixvim"
       },
       "locked": {
-        "lastModified": 1769705463,
-        "narHash": "sha256-0rqPI4Aj6nB8H2Ez6qLNU+igfb8ZT7n3wiu1YxcBOts=",
+        "lastModified": 1770831609,
+        "narHash": "sha256-YVBwfokHsYQ60EiUvNmFJIcvo22HcbVSNIoZrh0MWcE=",
         "owner": "onelocked",
         "repo": "onevix",
-        "rev": "6052a4f54707bd8b5df5d533403ff248b3cefd6d",
+        "rev": "4f1feb2c9e4b4c9fb6a3699e22cdd46b17683c79",
         "type": "github"
       },
       "original": {
