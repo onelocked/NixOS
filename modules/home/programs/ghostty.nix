@@ -8,6 +8,10 @@
         };
         programs.ghostty = {
           enable = true;
+          systemd = {
+            enable = true;
+          };
+          installBatSyntax = true;
           settings = {
 
             font-family = "Liga SFMono";
@@ -45,25 +49,6 @@
           };
         };
       };
-    };
-    nixos = {
-      home-manager =
-        { lib, pkgs, ... }:
-        {
-          systemd.user.services."app-com.mitchellh.ghostty" = {
-            description = "Ghostty Terminal server";
-            wantedBy = [ "graphical-session.target" ];
-            after = [
-              "graphical-session.target"
-              "dbus.socket"
-            ];
-            requires = [ "graphical-session.target" ];
-            serviceConfig = {
-              Type = "dbus";
-              ExecStart = "${lib.getExe pkgs.ghostty} --initial-window=false";
-            };
-          };
-        };
     };
   };
 }
