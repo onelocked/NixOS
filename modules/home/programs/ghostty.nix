@@ -19,7 +19,7 @@
             font-style-bold = "Heavy";
             font-style-italic = "Bold Italic";
             font-style-bold-italic = "Heavy Italic";
-            font-size = "16";
+            font-size = "15";
 
             theme = "noctalia";
             cursor-style = "bar";
@@ -45,7 +45,7 @@
             shell-integration = "nushell";
             desktop-notifications = "true";
             auto-update = "off";
-            custom-shader-animation = false; # TODO: remove this entry once fix is merged upstream
+            custom-shader-animation = false;
           };
         };
       };
