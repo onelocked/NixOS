@@ -33,8 +33,8 @@
               cat = "bat";
               zip = "${_ pkgs.zip}";
               ll = "${_ pkgs.eza} -l --icons --git -a";
+              gtop = "${_ pkgs.amdgpu_top}";
             };
-
 
           configFile.text = # nu
             ''
