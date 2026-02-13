@@ -13,6 +13,7 @@
         ];
         users.users.${self.variables.username} = {
           isNormalUser = true;
+          useDefaultShell = true;
           extraGroups = [
             "networkmanager"
             "wheel"
@@ -25,6 +26,7 @@
           ];
         };
         # Default shell
+        environment.shells = [ pkgs.${self.variables.shell} ];
         users.defaultUserShell = pkgs.${self.variables.shell};
         home-manager = {
           useGlobalPkgs = true;
