@@ -1,10 +1,13 @@
 {
-  flake.modules.homeManager.cli = {
-    programs.btop = {
-      enable = true;
-      settings = {
-        color_theme = "noctalia";
+  flake.modules.homeManager.cli =
+    { pkgs, ... }:
+    {
+      programs.btop = {
+        enable = true;
+        package = pkgs.btop-rocm;
+        settings = {
+          color_theme = "noctalia";
+        };
       };
     };
-  };
 }
