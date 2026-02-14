@@ -231,6 +231,26 @@
         "type": "github"
       }
     },
+    "nix-index-database": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1770315571,
+        "narHash": "sha256-hy0gcAgAcxrnSWKGuNO+Ob0x6jQ2xkR6hoaR0qJBHYs=",
+        "owner": "nix-community",
+        "repo": "nix-index-database",
+        "rev": "2684bb8080a6f2ca5f9d494de5ef875bc1c4ecdb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nix-index-database",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1768032153,
@@ -386,6 +406,7 @@
         "import-tree": "import-tree",
         "lan-mouse": "lan-mouse",
         "niri": "niri",
+        "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs_3",
         "onevix": "onevix",
         "opencode": "opencode",
