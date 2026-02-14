@@ -37,8 +37,8 @@
         home-manager.follows = "home-manager";
       };
     };
-    niri-flake = {
-      url = "github:sodiboo/niri-flake";
+    niri = {
+      url = "github:niri-wm/niri/wip/branch";
     };
     lan-mouse = {
       url = "github:feschber/lan-mouse/";
