@@ -6,7 +6,6 @@
         # Core CLI tools
         neovim
         lsof
-        tea
         fzf
         fd
         gh
@@ -15,17 +14,11 @@
         wget
         unzip
         ripgrep
-        libjxl
-        dysk
         isd # TUI systemd
-        microfetch
-        ntfy-sh
         killall
         nap # Snippets
 
         opkssh
-        radeontop
-        gemini-cli
         opencode
       ];
     };
