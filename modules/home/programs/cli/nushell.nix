@@ -4,6 +4,10 @@
     {
       home.shell.enableNushellIntegration = true;
       programs = {
+        nix-your-shell = {
+          enable = true;
+          enableNushellIntegration = true;
+        };
         atuin = {
           enable = true;
           enableNushellIntegration = true;
@@ -51,10 +55,6 @@
 
               def nget [package: string] {
                   ^nix shell $"nixpkgs#($package)"
-              }
-
-              def nix-develop [] {
-                  nix develop -c nu
               }
 
               # Completions

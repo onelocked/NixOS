@@ -2,7 +2,6 @@
   flake.modules.nixos.core =
     { pkgs, ... }:
     {
-
       fonts = {
         packages = with pkgs; [
           apple-nerd-fonts
