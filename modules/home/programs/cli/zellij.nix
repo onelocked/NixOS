@@ -342,6 +342,7 @@
               ui {
                   pane_frames {
                       hide_session_name true
+                      rounded_corners true
                   }
               }
               theme_dir "/home/onelock/.config/zellij/themes"
