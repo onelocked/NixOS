@@ -1,6 +1,6 @@
 {
   flake.modules.homeManager.vicinae =
-    { lib, ... }:
+    { lib, config, ... }:
     {
       programs.vicinae = {
         enable = true;
@@ -10,7 +10,7 @@
           autoStart = true;
         };
       };
-      systemd.user.services.vicinae.Service = {
+      systemd.user.services.vicinae.Service = lib.mkIf config.programs.vicinae.enable {
         Environment = lib.mkForce [
           "QT_SCALE_FACTOR=1.5"
         ];
