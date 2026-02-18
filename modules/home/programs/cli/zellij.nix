@@ -13,6 +13,41 @@
                     }
                 }
               '';
+          defaultLayout =
+            pkgs.writeText "defaultLayout.kdl" # kdl
+              ''
+                layout {
+                    default_tab_template {
+                        pane size=1 borderless=true {
+                            plugin location="tab-bar"
+                        }
+                        children
+                        pane size=1 borderless=true {
+                            plugin location="status-bar"
+                        }
+                    }
+
+                    swap_floating_layout {
+                        floating_panes max_panes=1 {
+                            pane {
+                                x "10%"
+                                y "10%"
+                                width "80%"
+                                height "80%"
+                            }
+                        }
+                        floating_panes {
+                            pane {
+                                x "10%"
+                                y "10%"
+                                width "80%"
+                                height "80%"
+                            }
+                        }
+                    }
+                }
+
+              '';
         in
         {
           enable = true;
@@ -262,24 +297,8 @@
                       bind "esc" { UndoRenamePane; SwitchToMode "pane"; }
                   }
               }
-              plugins {
-                  about location="zellij:about"
-                  compact-bar location="zellij:compact-bar"
-                  configuration location="zellij:configuration"
-                  filepicker location="zellij:strider" {
-                      cwd "/"
-                  }
-                  plugin-manager location="zellij:plugin-manager"
-                  session-manager location="zellij:session-manager"
-                  status-bar location="zellij:status-bar"
-                  strider location="zellij:strider"
-                  tab-bar location="zellij:tab-bar"
-                  welcome-screen location="zellij:session-manager" {
-                      welcome_screen true
-                  }
-              }
-              load_plugins {
-              }
+
+              default_layout "${defaultLayout}"
 
               session_serialization false
 
