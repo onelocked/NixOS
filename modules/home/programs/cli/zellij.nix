@@ -253,20 +253,9 @@
                       bind "Ctrl down" { MoveFocus "down"; }
                       bind "Ctrl up" { MoveFocus "up"; }
                       bind "Ctrl right" { MoveFocus "right"; }
-                      bind "Alt +" { Resize "Increase left"; }
-                      bind "Alt -" { Resize "Decrease left"; }
-                      bind "Alt =" { Resize "Increase left"; }
-                      bind "Ctrl [" { PreviousSwapLayout; }
-                      bind "Ctrl ]" { NextSwapLayout; }
                       bind "Ctrl f" { ToggleFloatingPanes; }
-                      bind "Ctrl h" { MoveFocusOrTab "left"; }
-                      bind "Ctrl i" { MoveTab "left"; }
-                      bind "Ctrl j" { MoveFocus "down"; }
-                      bind "Ctrl k" { MoveFocus "up"; }
-                      bind "Ctrl l" { MoveFocusOrTab "right"; }
                       bind "Ctrl n" { NewPane; }
                       bind "Ctrl x" { CloseFocus; }
-                      bind "Ctrl o" { MoveTab "right"; }
                       bind "Alt f" { ToggleFocusFullscreen; }
                       bind "Alt p" { TogglePaneInGroup; }
                       bind "Alt Shift p" { ToggleGroupMarking; }
