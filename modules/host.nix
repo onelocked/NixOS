@@ -28,6 +28,7 @@
                 media
                 jellyfin-desktop
                 ghostty
+                kitty
               ];
             };
           }
