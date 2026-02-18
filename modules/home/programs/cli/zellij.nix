@@ -27,6 +27,13 @@
                         }
                     }
 
+                    tab name="neovim" focus=true {
+                        pane
+                    }
+
+                    tab name="terminal" {
+                        pane
+                    }
                     swap_floating_layout {
                         floating_panes max_panes=1 {
                             pane {
@@ -46,7 +53,34 @@
                         }
                     }
                 }
-
+              '';
+          sysmon =
+            pkgs.writeText "sysmon.kdl" # kdl
+              ''
+                layout {
+                    default_tab_template {
+                        pane size=1 borderless=true {
+                            plugin location="tab-bar"
+                        }
+                        children
+                        pane size=1 borderless=true {
+                            plugin location="status-bar"
+                        }
+                    }
+                    tab name="sysmon" {
+                        pane split_direction="vertical" {
+                            pane size="70%" name="btop" {
+                                command "${pkgs.btop-rocm}/bin/btop"
+                                close_on_exit true
+                            }
+                            pane size="30%" name="amdgpu" {
+                                command "${pkgs.amdgpu_top}/bin/amdgpu_top"
+                                args "--dark"
+                                close_on_exit true
+                            }
+                        }
+                    }
+                }
               '';
         in
         {
@@ -237,6 +271,8 @@
                       bind "Alt Shift p" { ToggleGroupMarking; }
                       bind "Ctrl e" { Run "nvim" { close_on_exit true; };}
                       bind "Ctrl g" { NewTab { layout "${lazygitLayout}"; }; }
+                      bind "Ctrl m" { NewTab { layout "${sysmon}"; }; }
+
                   }
                   shared_except "locked" "renametab" "renamepane" {
                       bind "Ctrl q" { Quit; }
