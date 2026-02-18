@@ -20,6 +20,7 @@
                 custom-derivations
                 state
                 cli
+                zellij
                 vicinae
                 quickshell
                 theming
