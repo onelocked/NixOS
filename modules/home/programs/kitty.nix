@@ -6,12 +6,10 @@
         include = "./themes/noctalia.conf";
 
         font_family = "Liga SFMono Semibold";
-        bold_font = "Liga SFMono Bold";
-        italic_font = "Liga SFMono Semibold Italic";
-        bold_italic_font = "Liga SFMono Bold Italic";
+        bold_font = "Liga SFMono Heavy";
+        italic_font = "Liga SFMono Heavy Italic";
+        bold_italic_font = "Liga SFMono Heavy Italic";
         font_size = "15";
-
-
 
         adjust_line_height = "0";
         adjust_column_width = "0";
@@ -20,11 +18,10 @@
         remember_window_position = "no";
 
         draw_minimal_borders = "yes";
-        window_margin_width = "2";
+        window_margin_width = "4";
         placement_strategy = "center";
         update_check_interval = "24";
         allow_hyperlinks = "yes";
-
 
         scrollback_lines = "10000";
         wheel_scroll_multiplier = "5.0";
