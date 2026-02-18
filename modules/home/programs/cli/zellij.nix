@@ -8,7 +8,8 @@
             pkgs.writeText "lazygit.kdl" # kdl
               ''
                 layout {
-                    pane command="lazygit" {
+                    pane name="lazygit" {
+                        command "${pkgs.lazygit}/bin/lazygit"
                         close_on_exit true
                     }
                 }
