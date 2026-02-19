@@ -108,6 +108,14 @@
               $env.PATH ++= [ "~/.nix-profile/bin" ]
               $env.EDITOR = "nvim"
               $env.CARAPACE_BRIDGES = 'zsh,bash'
+              # Transient prompt
+              $env.PROMPT_COMMAND_RIGHT = {|| "" } # Hide right prompt after enter
+
+              $env.TRANSIENT_PROMPT_COMMAND = {|| "  " }
+              $env.TRANSIENT_PROMPT_INDICATOR = {|| "" }
+              $env.TRANSIENT_PROMPT_INDICATOR_VI_INSERT = {|| "" }
+              $env.TRANSIENT_PROMPT_INDICATOR_VI_NORMAL = {|| "" }
+              $env.TRANSIENT_PROMPT_MULTILINE_INDICATOR = {|| "" }
             '';
 
           extraConfig = # nu
