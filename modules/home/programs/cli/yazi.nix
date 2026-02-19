@@ -47,15 +47,7 @@
                 0
                 0
               ];
-              suppress_preload = false;
-            };
-            plugin = {
-              preloaders = [
-                {
-                  mime = "image/*";
-                  run = "image";
-                }
-              ];
+              suppress_preload = true;
             };
             mgr = {
               sort_by = "natural";
@@ -69,7 +61,6 @@
               scrolloff = 5;
               title_format = "Yazi: {cwd}";
               ratio = [
-                # or 0 3 4
                 2
                 3
                 3
@@ -80,7 +71,7 @@
               tab_size = 2;
               image_filter = "triangle"; # from fast to slow but high quality: nearest, triangle, catmull-rom, lanczos3
               cache_dir = "";
-              image_delay = 90;
+              image_delay = 0;
               max_width = 1200; # maybe 1000
               max_height = 1200; # maybe 1000
               image_quality = 60;
