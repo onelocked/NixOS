@@ -217,11 +217,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1771441818,
-        "narHash": "sha256-qvNEs9caE8vha8EPDq1wUGXSIk8uplhPgQmEpKi0Rxc=",
+        "lastModified": 1771496053,
+        "narHash": "sha256-mxterEpNc6oDI1oY4+OdWXiLTpSrKBLWKWhAW503GFc=",
         "owner": "niri-wm",
         "repo": "niri",
-        "rev": "99144a02c1e097b5a9eeb042a672f8340584d72b",
+        "rev": "3d1cf38bf3ba9bd0208a6452bc4453ad4df79fe2",
         "type": "github"
       },
       "original": {
