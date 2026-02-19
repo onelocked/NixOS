@@ -11,6 +11,10 @@
         atuin = {
           enable = true;
           enableNushellIntegration = true;
+          settings = {
+            search_mode = "fuzzy";
+            filter_mode = "session-preload";
+          };
         };
         pay-respects = {
           enable = true;
