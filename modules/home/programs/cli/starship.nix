@@ -5,18 +5,35 @@
       enableNushellIntegration = true;
       settings = {
         add_newline = false;
-        format = "[➜ $directory](pastelgreen)$character";
+        format = "[ 󰪥 $directory ](pastelgreen)$character";
         palette = "catppuccin_mocha";
         right_format = "$all";
         command_timeout = 1000;
 
         character = {
-          vimcmd_symbol = "[❮](teal)";
-          success_symbol = "[❯](pastelgreen)";
-          error_symbol = "[❯](pink)";
+          vimcmd_symbol = "[](teal)";
+          success_symbol = "[➜](pastelgreen)";
+          error_symbol = "[](pink)";
         };
         git_branch = {
           format = "[$symbol$branch(:$remote_branch)]($style)";
+          symbol = "󰘬 ";
+        };
+        git_commit = {
+          commit_hash_length = 6;
+          tag_symbol = " ";
+        };
+        git_status = {
+          ahead = "  ";
+          behind = "  ";
+          untracked = " 󰯇 ";
+          modified = "  ";
+          deleted = "  ";
+        };
+        directory = {
+          read_only = " ";
+          truncation_length = 6;
+          format = "[󰉋 ](sapphire)[$path](teal)";
         };
 
         golang = {
