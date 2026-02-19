@@ -31,7 +31,6 @@
               _ = lib.getExe;
             in
             {
-              nix-shell = "nix-shell --run nu";
               dots = "cd ~/NixOS";
               ping = "${_ pkgs.gping}";
               cat = "bat";
