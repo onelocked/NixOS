@@ -2,6 +2,7 @@
   flake.modules.homeManager.kitty = {
     programs.kitty = {
       enable = true;
+      enableGitIntegration = true;
       settings = {
         include = "./themes/noctalia.conf";
 
@@ -41,6 +42,10 @@
         cursor_blink_interval = "0.5";
         cursor_stop_blinking_after = "15.0";
       };
+      extraConfig = # toml
+        ''
+          mouse_map right press ungrabbed combine : copy_to_clipboard : clear_selection
+        '';
     };
   };
 }
