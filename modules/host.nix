@@ -27,8 +27,8 @@
                 zen-browser
                 media
                 jellyfin-desktop
-                ghostty
                 kitty
+                foot
               ];
             };
           }
