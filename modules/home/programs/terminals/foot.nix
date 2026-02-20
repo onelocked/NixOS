@@ -7,10 +7,10 @@
         main = {
           include = "~/.config/foot/themes/noctalia";
 
-          font = "Liga SFMono:style=Bold:size=12";
-          font-bold = "Liga SFMono:style=Heavy:size=12";
-          font-italic = "Liga SFMono:style=Bold Italic:size=12";
-          font-bold-italic = "Liga SFMono:style=Heavy Italic:size=12";
+          font = "SFMono Nerd Font:style=Bold:size=12";
+          font-bold = "SFMono Nerd Font:style=Heavy:size=12";
+          font-italic = "SFMono Nerd Font:style=Bold Italic:size=12";
+          font-bold-italic = "SFMono Nerd Font:style=Heavy Italic:size=12";
 
           pad = "6x6";
           dpi-aware = "yes";
