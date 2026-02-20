@@ -337,7 +337,7 @@
               theme_dir "/home/onelock/.config/zellij/themes"
               theme "kanagawa"
               default_mode "locked"
-              mouse_mode false
+              mouse_mode true
               copy_command "wl-copy"
               copy_clipboard "system"
               copy_on_select false
