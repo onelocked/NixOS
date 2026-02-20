@@ -40,7 +40,11 @@
           format = "[ ](bold cyan)";
         };
         nix_shell = {
-          format = "[ nix-shell ](bold white)";
+          format = "[$symbol$state( ($name))]($style) ";
+          impure_msg = "[impure](bold red)";
+          pure_msg = "[pure](bold green)";
+          symbol = " ";
+          style = "bold white";
         };
 
         docker_context = {
