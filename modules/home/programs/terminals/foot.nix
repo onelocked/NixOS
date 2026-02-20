@@ -12,7 +12,7 @@
           font-italic = "SFMono Nerd Font:style=Bold Italic:size=13";
           font-bold-italic = "SFMono Nerd Font:style=Heavy Italic:size=13";
 
-          pad = "3x3";
+          pad = "8x3";
           dpi-aware = "yes";
           bold-text-in-bright = "no";
           gamma-correct-blending = "no";
