@@ -14,6 +14,12 @@
 
           pad = "6x6";
           dpi-aware = "yes";
+          bold-text-in-bright = "no";
+          gamma-correct-blending = "no";
+        };
+
+        scrollback = {
+          lines = 10000;
         };
 
         cursor = {
@@ -25,6 +31,11 @@
 
         mouse = {
           hide-when-typing = "no";
+        };
+
+        mouse-bindings = {
+          select-extend = "none";
+          clipboard-copy = "BTN_RIGHT";
         };
 
         tweak = {
