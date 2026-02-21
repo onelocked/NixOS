@@ -11,7 +11,9 @@
 let
   _ = lib.getExe;
 in
-writeShellScriptBin "ocr" ''
+writeShellScriptBin "ocr" #bash
+
+''
   selection="$(${_ slurp} || true)"
 
   if [ -z "$selection" ]; then
