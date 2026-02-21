@@ -10,8 +10,8 @@
         ];
         audio = [ "mpv.desktop" ];
         video = [ "mpv.desktop" ];
-        directory = [ "ghostty.desktop" ];
-        terminal = [ "ghostty.desktop" ];
+        directory = [ "foot.desktop" ];
+        terminal = [ "foot.desktop" ];
       };
 
       mimeMap = {
