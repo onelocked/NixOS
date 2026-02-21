@@ -1,6 +1,5 @@
 {
-  writeShellScriptBin,
-  lib,
+  writeShellApplication,
   grim,
   libnotify,
   slurp,
@@ -8,22 +7,31 @@
   wl-clipboard-rs,
   langs ? "eng+rus",
 }:
-let
-  _ = lib.getExe;
-in
-writeShellScriptBin "ocr" #bash
 
-''
-  selection="$(${_ slurp} || true)"
+writeShellApplication {
+  name = "ocr";
 
-  if [ -z "$selection" ]; then
-    ${_ libnotify} -- "OCR Cancelled by user"
-    exit 0
-  fi
+  runtimeInputs = [
+    grim
+    libnotify
+    slurp
+    tesseract5
+    wl-clipboard-rs
+  ];
 
-  ${_ grim} -g "$selection" -t ppm - \
-    | ${_ tesseract5} -l ${langs} - - \
-    | ${wl-clipboard-rs}/bin/wl-copy
+  text = # bash
+    ''
+      selection=$(slurp 2>/dev/null || true)
 
-  ${_ libnotify} -- "OCR copied to clipboard"
-''
+      if [ -z "$selection" ]; then
+        notify-send "OCR" "Cancelled by user"
+        exit 0
+      fi
+
+      grim -g "$selection" -t ppm - \
+        | tesseract -l "${langs}" - - \
+        | wl-copy
+
+      notify-send "OCR" "Text copied to clipboard"
+    '';
+}
