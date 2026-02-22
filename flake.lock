@@ -418,11 +418,11 @@
         "nixvim": "nixvim"
       },
       "locked": {
-        "lastModified": 1771782747,
-        "narHash": "sha256-HbB6VbpLF2CxaMUsgINKoMKy8K7yO1+2ImkFKVPN5+8=",
+        "lastModified": 1771804012,
+        "narHash": "sha256-uPYEwOxsV5fvymaK3gK6GICwrSMGXMwzHXPc6lWOLyM=",
         "owner": "onelocked",
         "repo": "vimmax",
-        "rev": "3df4e903b386cc7cc39edb7d3ea3e6b7045df669",
+        "rev": "dfce7406993124d9b9c09fc28b897dbfecc56395",
         "type": "github"
       },
       "original": {
