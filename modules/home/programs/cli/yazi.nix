@@ -18,6 +18,7 @@
         in
         {
           enable = true;
+          shellWrapperName = "y";
           enableBashIntegration = true;
           enableNushellIntegration = true;
           package = inputs.yazi.packages.${pkgs.stdenv.hostPlatform.system}.default;
