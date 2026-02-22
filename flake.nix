@@ -29,8 +29,8 @@
     };
 
     # --- Flake-enabled packages ---
-    onevix = {
-      url = "github:onelocked/onevix";
+    vimmax = {
+      url = "github:onelocked/vimmax";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
     };

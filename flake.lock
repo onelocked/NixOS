@@ -3,11 +3,11 @@
     "buffer-manager": {
       "flake": false,
       "locked": {
-        "lastModified": 1768574561,
-        "narHash": "sha256-eOWgLq1eTHutV3jZzVRPtgwVIm25dcZ31ayXLbfPH4M=",
+        "lastModified": 1770227189,
+        "narHash": "sha256-dTv5S2PbFEsyETpvf8urH9nHzgc48aMicX9+VH9DKQk=",
         "owner": "j-morano",
         "repo": "buffer_manager.nvim",
-        "rev": "d62dc479603459cf6664abd468761ae78316e803",
+        "rev": "a0ac2db39c8bd4a2b6ca897f38c88770f90d9323",
         "type": "github"
       },
       "original": {
@@ -55,17 +55,17 @@
     "flake-parts_2": {
       "inputs": {
         "nixpkgs-lib": [
-          "onevix",
+          "vimmax",
           "nixvim",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1768135262,
-        "narHash": "sha256-PVvu7OqHBGWN16zSi6tEmPwwHQ4rLPU9Plvs8/1TUBY=",
+        "lastModified": 1769996383,
+        "narHash": "sha256-AnYjnFWgS49RlqX7LrC4uA+sCCDBj0Ry/WOJ5XWAsa0=",
         "owner": "hercules-ci",
         "repo": "flake-parts",
-        "rev": "80daad04eddbbf5a4d883996a73f3f542fa437ac",
+        "rev": "57928607ea566b5db3ad13af0e57e921e6b12381",
         "type": "github"
       },
       "original": {
@@ -190,6 +190,21 @@
         "type": "github"
       }
     },
+    "import-tree_2": {
+      "locked": {
+        "lastModified": 1771045967,
+        "narHash": "sha256-oYO4poyw0Sb/db2PigqugMlDwsvwLg6CSpFrMUWxA3Q=",
+        "owner": "vic",
+        "repo": "import-tree",
+        "rev": "c968d3b54d12cf5d9c13f16f7c545a06c9d1fde6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vic",
+        "repo": "import-tree",
+        "type": "github"
+      }
+    },
     "lan-mouse": {
       "inputs": {
         "nixpkgs": [
@@ -298,11 +313,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1768875095,
-        "narHash": "sha256-dYP3DjiL7oIiiq3H65tGIXXIT1Waiadmv93JS0sS+8A=",
+        "lastModified": 1770380644,
+        "narHash": "sha256-P7dWMHRUWG5m4G+06jDyThXO7kwSk46C1kgjEWcybkE=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "ed142ab1b3a092c4d149245d0c4126a5d7ea00b0",
+        "rev": "ae67888ff7ef9dff69b3cf0cc0fbfbcd3a722abe",
         "type": "github"
       },
       "original": {
@@ -319,41 +334,16 @@
         "systems": "systems_2"
       },
       "locked": {
-        "lastModified": 1769644746,
-        "narHash": "sha256-1X9o0GjCzku03magX4pM+1OZXA0aUTN7KvEReZ9t3OU=",
+        "lastModified": 1771135771,
+        "narHash": "sha256-wyvBIhDuyCRyjB3yPg77qoyxrlgQtBR1rVW3c9knV3E=",
         "owner": "nix-community",
         "repo": "nixvim",
-        "rev": "3c27e1b35ca0fee6a89bfc20840654361ffe888d",
+        "rev": "ed0424f0b08d303a7348f52f7850ad1b2704f9ba",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
         "repo": "nixvim",
-        "type": "github"
-      }
-    },
-    "onevix": {
-      "inputs": {
-        "buffer-manager": "buffer-manager",
-        "flake-parts": [
-          "flake-parts"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "nixvim": "nixvim"
-      },
-      "locked": {
-        "lastModified": 1771713080,
-        "narHash": "sha256-eMmP8icZqEIVI4VfFkdRyQl7zgMrQyVqfEdLr4XIpSA=",
-        "owner": "onelocked",
-        "repo": "onevix",
-        "rev": "4d33c8777576f8ef8fc38ab30a60115ae03933f3",
-        "type": "github"
-      },
-      "original": {
-        "owner": "onelocked",
-        "repo": "onevix",
         "type": "github"
       }
     },
@@ -408,10 +398,10 @@
         "niri": "niri",
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs_3",
-        "onevix": "onevix",
         "opencode": "opencode",
         "quickshell": "quickshell",
         "sops-nix": "sops-nix",
+        "vimmax": "vimmax",
         "wrappers": "wrappers",
         "yazi": "yazi",
         "zen-browser": "zen-browser"
@@ -542,6 +532,32 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "vimmax": {
+      "inputs": {
+        "buffer-manager": "buffer-manager",
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "import-tree": "import-tree_2",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixvim": "nixvim"
+      },
+      "locked": {
+        "lastModified": 1771782747,
+        "narHash": "sha256-HbB6VbpLF2CxaMUsgINKoMKy8K7yO1+2ImkFKVPN5+8=",
+        "owner": "onelocked",
+        "repo": "vimmax",
+        "rev": "3df4e903b386cc7cc39edb7d3ea3e6b7045df669",
+        "type": "github"
+      },
+      "original": {
+        "owner": "onelocked",
+        "repo": "vimmax",
         "type": "github"
       }
     },
