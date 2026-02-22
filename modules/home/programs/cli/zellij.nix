@@ -335,7 +335,7 @@
                   }
               }
               theme_dir "/home/onelock/.config/zellij/themes"
-              theme "kanagawa"
+              theme "gruvbox-dark"
               default_mode "locked"
               mouse_mode true
               copy_command "wl-copy"
