@@ -20,7 +20,6 @@
         nurl # Prefetch package hashes and generate the func
 
         opkssh
-        opencode
       ];
     };
 }

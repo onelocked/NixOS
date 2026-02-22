@@ -56,9 +56,5 @@
       url = "github:sxyazi/yazi/v26.1.22";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    opencode = {
-      url = "github:anomalyco/opencode/v1.1.36";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 }

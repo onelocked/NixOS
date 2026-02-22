@@ -11,7 +11,6 @@
         {
           wl-clipboard = prev.wl-clipboard-rs;
 
-          opencode = pkg "opencode" "default";
           ghostty = pkg "ghostty" "default";
           niri = pkg "niri" "default";
           neovim = pkg "vimmax" "default";
