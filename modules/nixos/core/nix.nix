@@ -22,6 +22,9 @@
             "nix-command"
             "flakes"
           ];
+          extra-substituters = [ "https://onelock.cachix.org" ];
+          extra-trusted-public-keys = [ "onelock.cachix.org-1:Wyy9XrWqFKcPxkZXQg5yZXtsbKTbkaga44UWRJfgqEg=" ];
+
           use-xdg-base-directories = false;
           warn-dirty = false;
           keep-outputs = true;
