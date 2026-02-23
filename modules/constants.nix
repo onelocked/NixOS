@@ -12,7 +12,7 @@
         desktop = "niri";
         locale = "en_GB.UTF-8";
         timezone = "Europe/London";
-        kbdLayout = "us,ru";
+        kbdLayout = "us";
         consoleKeymap = "us";
       };
     };
