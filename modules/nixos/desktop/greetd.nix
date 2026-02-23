@@ -10,7 +10,7 @@
       niri-command = "${lib.getExe' config.programs.niri.package "niri-session"}";
     in
     {
-      services.displayManager.enable = false;
+      services.displayManager.enable = lib.mkForce false;
       services.greetd = {
         enable = true;
         settings = {
