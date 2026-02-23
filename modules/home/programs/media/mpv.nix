@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.homeManager.media =
+  flake.homeModules.media =
     { pkgs, ... }:
     {
       programs.mpv = {

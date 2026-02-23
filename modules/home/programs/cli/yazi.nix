@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  flake.modules.homeManager.cli =
+  flake.homeModules.cli =
     {
       pkgs,
       lib,

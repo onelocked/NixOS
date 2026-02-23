@@ -1,5 +1,5 @@
 {
-  flake.modules.homeManager.custom-derivations =
+  flake.homeModules.custom-derivations =
     { pkgs, ... }:
     {
       home.packages = with pkgs; [

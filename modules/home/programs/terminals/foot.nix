@@ -1,5 +1,5 @@
 {
-  flake.modules.homeManager.foot = {
+  flake.homeModules.foot = {
     programs.foot = {
       enable = true;
       server.enable = true;

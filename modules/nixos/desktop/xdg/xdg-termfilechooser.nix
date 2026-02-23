@@ -1,7 +1,7 @@
 { self, ... }:
 {
-  flake.modules = {
-    nixos.desktop =
+  flake = {
+    nixosModules.desktop =
       { lib, ... }:
       let
         inherit (lib) mkForce;
@@ -20,7 +20,7 @@
           };
         };
       };
-    homeManager.state =
+    homeModules.state =
       { pkgs, ... }:
       {
         xdg.configFile = {

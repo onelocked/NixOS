@@ -1,5 +1,5 @@
 {
-  flake.modules.homeManager.zellij =
+  flake.homeModules.zellij =
     { pkgs, ... }:
     {
       programs.zellij =

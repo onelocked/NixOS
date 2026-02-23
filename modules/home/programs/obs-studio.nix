@@ -1,5 +1,5 @@
 {
-  flake.modules.homeManager.media =
+  flake.homeModules.media =
     { pkgs, lib, ... }:
     let
       obs-wrapped = (

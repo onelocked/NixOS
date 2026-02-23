@@ -1,5 +1,5 @@
 {
-  flake.modules.homeManager.tmux =
+  flake.homeModules.tmux =
     { pkgs, ... }:
     let
       catppuccin-tmux = pkgs.tmuxPlugins.mkTmuxPlugin {

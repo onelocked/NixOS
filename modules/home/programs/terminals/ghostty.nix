@@ -1,6 +1,6 @@
 {
-  flake.modules = {
-    homeManager = {
+  flake = {
+    homeModules = {
       ghostty = {
         nix.settings = {
           extra-substituters = [ "https://ghostty.cachix.org" ];

@@ -1,6 +1,6 @@
 {
-  flake.modules = {
-    homeManager.theming =
+  flake = {
+    homeModules.theming =
       { pkgs, ... }:
       {
         home.packages = [
@@ -14,7 +14,7 @@
           };
         };
       };
-    nixos.desktop = {
+    nixosModules.desktop = {
       programs.dconf.enable = true;
     };
   };

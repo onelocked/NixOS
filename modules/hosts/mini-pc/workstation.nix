@@ -16,7 +16,7 @@
         ++ [
           {
             home-manager.users.${self.variables.username} = {
-              imports = with self.modules.homeManager; [
+              imports = with self.homeModules; [
                 custom-derivations
                 state
                 cli

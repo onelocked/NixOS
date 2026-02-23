@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  flake.modules.homeManager.jellyfin-desktop =
+  flake.homeModules.jellyfin-desktop =
     { pkgs, ... }:
     {
       home.packages = [

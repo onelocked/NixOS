@@ -1,5 +1,5 @@
 {
-  flake.modules.homeManager.kitty = {
+  flake.homeModules.kitty = {
     programs.kitty = {
       enable = true;
       enableGitIntegration = true;
