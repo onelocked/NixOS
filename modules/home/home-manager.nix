@@ -7,28 +7,31 @@
   flake = {
     nixosModules = {
       home-manager =
-        { pkgs, ... }:
+        { pkgs, config, ... }:
         {
           imports = [
             inputs.home-manager.nixosModules.home-manager
           ];
-          users.users.${self.variables.username} = {
-            isNormalUser = true;
-            useDefaultShell = true;
-            extraGroups = [
-              "networkmanager"
-              "wheel"
-              "kvm"
-              "input"
-              "disk"
-              "libvirtd"
-              "video"
-              "audio"
-            ];
+          users = {
+            defaultUserShell = pkgs.${self.variables.shell};
+            users.${self.variables.username} = {
+              isNormalUser = true;
+              useDefaultShell = true;
+              extraGroups = [
+                "networkmanager"
+                "wheel"
+                "kvm"
+                "input"
+                "disk"
+                "libvirtd"
+                "video"
+                "audio"
+              ];
+            };
           };
-          # Default shell
-          environment.shells = [ pkgs.${self.variables.shell} ];
-          users.defaultUserShell = pkgs.${self.variables.shell};
+
+          environment.shells = [ config.users.defaultUserShell ]; # Default shell
+
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
