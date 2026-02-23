@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.amdgpu =
+  flake.modules.nixos.mini-pc =
     { pkgs, ... }:
     {
       nixpkgs.config.rocmSupport = true;

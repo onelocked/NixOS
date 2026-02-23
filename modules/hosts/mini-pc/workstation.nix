@@ -6,8 +6,8 @@
       modules =
         with self.modules.nixos;
         [
-          hardware
-          amdgpu
+          mini-pc
+          grub
           core
           desktop
           overlays
