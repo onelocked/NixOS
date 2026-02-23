@@ -4,8 +4,8 @@
   ...
 }:
 {
-  flake.modules = {
-    nixos.home-manager =
+  flake.nixosModules = {
+    home-manager =
       { pkgs, ... }:
       {
         imports = [
@@ -34,30 +34,30 @@
           backupFileExtension = "backup";
         };
       };
+  };
 
-    homeManager.state = {
-      home.username = self.variables.username;
-      home.homeDirectory = self.variables.homedir;
-      home.stateVersion = "25.11";
-      home.sessionVariables = {
-        EDITOR = "nvim";
-      };
-      xdg = {
+  flake.modules.homeManager.state = {
+    home.username = self.variables.username;
+    home.homeDirectory = self.variables.homedir;
+    home.stateVersion = "25.11";
+    home.sessionVariables = {
+      EDITOR = "nvim";
+    };
+    xdg = {
+      enable = true;
+      userDirs = {
         enable = true;
-        userDirs = {
-          enable = true;
-          createDirectories = true;
-          download = self.variables.homedir + "/Downloads";
-          pictures = self.variables.homedir + "/Pictures";
-          videos = self.variables.homedir + "/Videos";
-          documents = self.variables.homedir + "/Documents";
-          desktop = null;
-          music = null;
-          publicShare = null;
-          templates = null;
-          extraConfig = {
-            PROJECTS = self.variables.homedir + "/Development";
-          };
+        createDirectories = true;
+        download = self.variables.homedir + "/Downloads";
+        pictures = self.variables.homedir + "/Pictures";
+        videos = self.variables.homedir + "/Videos";
+        documents = self.variables.homedir + "/Documents";
+        desktop = null;
+        music = null;
+        publicShare = null;
+        templates = null;
+        extraConfig = {
+          PROJECTS = self.variables.homedir + "/Development";
         };
       };
     };

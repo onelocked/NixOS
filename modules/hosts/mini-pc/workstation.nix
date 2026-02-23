@@ -4,7 +4,7 @@
     NixOS = inputs.nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules =
-        with self.modules.nixos;
+        with self.nixosModules;
         [
           mini-pc
           grub

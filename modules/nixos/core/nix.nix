@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.nixos.core =
+  flake.nixosModules.core =
     { pkgs, lib, ... }:
     {
       nix = {

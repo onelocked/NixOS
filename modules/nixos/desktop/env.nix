@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.desktop = {
+  flake.nixosModules.desktop = {
     environment.sessionVariables = {
       XDG_CURRENT_DESKTOP = "niri";
       XDG_SESSION_DESKTOP = "niri";

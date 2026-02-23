@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.mini-pc =
+  flake.nixosModules.mini-pc =
     {
       config,
       lib,

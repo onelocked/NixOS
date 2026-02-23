@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.desktop = {
+  flake.nixosModules.desktop = {
     security.rtkit.enable = true;
 
     services = {
