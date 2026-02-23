@@ -7,6 +7,7 @@
         wheelNeedsPassword = true;
         execWheelOnly = true;
       };
+      polkit.enable = true;
     };
   };
 }
