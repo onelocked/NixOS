@@ -1,5 +1,5 @@
 {
-  flake.homeModules.media =
+  flake.homeModules.qview =
     { pkgs, ... }:
     {
       home.packages = with pkgs; [

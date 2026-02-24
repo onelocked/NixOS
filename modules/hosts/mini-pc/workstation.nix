@@ -8,7 +8,6 @@
         [
           mini-pc
           onelock
-          grub
           core
           desktop
           overlays
@@ -21,14 +20,17 @@
                 default
                 custom-derivations
                 cli
-                zellij
+                theming
+
+                foot
                 vicinae
                 quickshell
-                theming
                 zen-browser
                 media
                 jellyfin-desktop
-                foot
+                obs-studio
+                mpv
+                qview
               ];
             };
           }
