@@ -1,12 +1,17 @@
 {
   flake.homeModules = {
-
-    obs-studio = {
-      programs.obs-with-plugins = {
-        enable = true;
-        startService = true;
+    obs-studio =
+      { pkgs, ... }:
+      {
+        programs.obs-with-plugins = {
+          enable = true;
+          systemd = true;
+          plugins = with pkgs.obs-studio-plugins; [
+            distroav
+            obs-pipewire-audio-capture
+          ];
+        };
       };
-    };
 
     default =
       {
@@ -19,14 +24,9 @@
         cfg = config.programs.obs-with-plugins;
 
         obs-wrapped = pkgs.wrapOBS {
-          plugins = with pkgs.obs-studio-plugins; [
-            distroav
-            wlrobs
-            obs-vaapi
-            obs-vkcapture
-            obs-pipewire-audio-capture
-          ];
+          plugins = cfg.plugins;
         };
+
         inherit (lib)
           mkEnableOption
           mkOption
@@ -37,9 +37,16 @@
       in
       {
         options.programs.obs-with-plugins = {
-          enable = mkEnableOption "OBS Studio with pre-configured plugins";
+          enable = mkEnableOption "OBS Studio with configurable plugins";
 
-          startService = mkOption {
+          plugins = mkOption {
+            type = types.listOf types.package;
+            default = [ ];
+            example = lib.literalExpression "with pkgs.obs-studio-plugins; [ distroav wlrobs ]";
+            description = "List of OBS plugins to include in the wrapper.";
+          };
+
+          systemd = mkOption {
             type = types.bool;
             default = false;
             description = "Whether to enable the obs-startup systemd service.";
@@ -49,7 +56,7 @@
         config = mkIf cfg.enable {
           home.packages = [ obs-wrapped ];
 
-          systemd.user = mkIf cfg.startService {
+          systemd.user = mkIf cfg.systemd {
             tmpfiles.rules = [
               "R %h/.config/obs-studio/.sentinel"
             ];
