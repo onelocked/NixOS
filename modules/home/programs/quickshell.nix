@@ -50,5 +50,9 @@
           target = "graphical-session.target";
         };
       };
+      systemd.user.services.quickshell.Service = {
+        Type = "dbus";
+        BusName = "org.kde.StatusNotifierWatcher";
+      };
     };
 }

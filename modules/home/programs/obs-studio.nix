@@ -65,11 +65,13 @@
               Unit = {
                 Description = "OBS Startup";
                 After = [ "quickshell.service" ];
+                Wants = [ "quickshell.service" ];
               };
 
               Service = {
                 Type = "simple";
                 ExecStart = getExe obs-wrapped;
+                Restart = "no";
               };
 
               Install = {
