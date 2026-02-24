@@ -249,10 +249,10 @@
                       }
                   }
                   shared_among "normal" "locked" {
-                      bind "Ctrl left" { MoveFocus "left"; }
-                      bind "Ctrl down" { MoveFocus "down"; }
-                      bind "Ctrl up" { MoveFocus "up"; }
-                      bind "Ctrl right" { MoveFocus "right"; }
+                      bind "Alt left" { MoveFocus "left"; }
+                      bind "Alt down" { MoveFocus "down"; }
+                      bind "Alt up" { MoveFocus "up"; }
+                      bind "Alt right" { MoveFocus "right"; }
                       bind "Ctrl f" { ToggleFloatingPanes; }
                       bind "Ctrl n" { NewPane; }
                       bind "Ctrl x" { CloseFocus; }
@@ -338,9 +338,9 @@
               theme "gruvbox-dark"
               default_mode "locked"
               mouse_mode true
-              copy_command "wl-copy"
-              copy_clipboard "system"
-              copy_on_select false
+              copy_command "${pkgs.wl-clipboard-rs}/bin/wl-copy"
+              copy_clipboard "primary"
+              copy_on_select true
               Default: false
               show_startup_tips false
             '';
