@@ -5,18 +5,18 @@
       enableNushellIntegration = true;
       settings = {
         add_newline = false;
-        format = "[ 󰪥 $directory ](pastelgreen)$character";
-        palette = "catppuccin_mocha";
+        format = "[ 󰪥 $directory ](color_green)$character";
+        palette = "gruvbox";
         right_format = "$all";
         command_timeout = 1000;
 
         character = {
-          vimcmd_symbol = "[](teal)";
-          success_symbol = "[➜](pastelgreen)";
-          error_symbol = "[](pink)";
+          vimcmd_symbol = "[](color_teal)";
+          success_symbol = "[➜](color_dark_green)";
+          error_symbol = "[](color_pink)";
         };
         git_branch = {
-          format = "[$symbol$branch(:$remote_branch)]($style)";
+          format = "[$symbol$branch(:$remote_branch)](color_teal1)";
           symbol = "󰘬 ";
         };
         git_commit = {
@@ -33,52 +33,39 @@
         directory = {
           read_only = " ";
           truncation_length = 6;
-          format = "[󰉋 ](sapphire)[$path](teal)";
+          format = "[󰉋 ](sapphire)[$path](color_orange)";
         };
 
         golang = {
           format = "[ ](bold cyan)";
         };
         nix_shell = {
-          format = "[$symbol$state( ($name))]($style) ";
-          impure_msg = "[impure](bold red)";
-          pure_msg = "[pure](bold green)";
+          format = "[$symbol$state( ($name))](color_fg0) ";
+          impure_msg = "[impure](color_red1)";
+          pure_msg = "[pure](color_green)";
           symbol = " ";
-          style = "bold white";
         };
 
         docker_context = {
           symbol = "[󰡨 ](bold sky)";
         };
 
-        palettes.catppuccin_mocha = {
-          rosewater = "#f5e0dc";
-          flamingo = "#f2cdcd";
-          pink = "#f5c2e7";
-          mauve = "#cba6f7";
-          red = "#f38ba8";
-          maroon = "#eba0ac";
-          peach = "#fab387";
-          yellow = "#f9e2af";
-          green = "#a6e3a1";
-          pastelgreen = "#a6e3a1";
-          teal = "#94e2d5";
-          sky = "#89dceb";
-          sapphire = "#74c7ec";
-          blue = "#89b4fa";
-          lavender = "#b4befe";
-          text = "#cdd6f4";
-          subtext1 = "#bac2de";
-          subtext0 = "#a6adc8";
-          overlay2 = "#9399b2";
-          overlay1 = "#7f849c";
-          overlay0 = "#6c7086";
-          surface2 = "#585b70";
-          surface1 = "#45475a";
-          surface0 = "#313244";
-          base = "#1e1e2e";
-          mantle = "#181825";
-          crust = "#11111b";
+        palettes.gruvbox = {
+          color_fg0 = "#fbf1c7";
+          color_bg1 = "#3c3836";
+          color_bg3 = "#665c54";
+          color_blue = "#458588";
+          color_aqua = "#689d6a";
+          color_green = "#98971a";
+          color_dark_green = "#b8bb26";
+          color_teal = "#458588";
+          color_teal1 = "#83a598";
+          color_orange = "#d79921";
+          color_purple = "#b16286";
+          color_red = "#cc241d";
+          color_red1 = "#fb4934";
+          color_yellow = "#d79921";
+          color_pink = "#d3869b";
         };
       };
     };
