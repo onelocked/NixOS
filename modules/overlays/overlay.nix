@@ -20,11 +20,11 @@
         neovim = pkg "vimmax" "default";
         lan-mouse = pkg "lan-mouse" "default";
 
-        loupe = prev.loupe.overrideAttrs (oldAttrs: {
-          patches = (oldAttrs.patches or [ ]) ++ [
-            ./patches/43-18-aspect-ratio.patch
-          ];
-        });
+        # loupe = prev.loupe.overrideAttrs (oldAttrs: {
+        #   patches = (oldAttrs.patches or [ ]) ++ [
+        #     ./patches/43-18-aspect-ratio.patch
+        #   ];
+        # });
       };
 
     nixosModules.overlays = {

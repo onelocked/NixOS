@@ -114,7 +114,7 @@
               ];
               loupe = [
                 {
-                  run = "${getExe pkgs.loupe} %s";
+                  run = "${getExe inputs.derivations.packages.${pkgs.stdenv.hostPlatform.system}.loupe} %s";
                   desc = "Loupe";
                 }
               ];

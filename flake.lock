@@ -16,7 +16,48 @@
         "type": "github"
       }
     },
+    "derivations": {
+      "inputs": {
+        "flake-parts": "flake-parts",
+        "import-tree": "import-tree",
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1771972130,
+        "narHash": "sha256-+V4AP+pQdH+VTHFKLilpt9OpAtrOPscXQc1Is06zmUg=",
+        "ref": "refs/heads/main",
+        "rev": "892b432751dc2688df9270ff9508b87cd47c3ea0",
+        "revCount": 3,
+        "type": "git",
+        "url": "file:///home/onelock/Development/Coding/derivations"
+      },
+      "original": {
+        "type": "git",
+        "url": "file:///home/onelock/Development/Coding/derivations"
+      }
+    },
     "flake-parts": {
+      "inputs": {
+        "nixpkgs-lib": [
+          "derivations",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1769996383,
+        "narHash": "sha256-AnYjnFWgS49RlqX7LrC4uA+sCCDBj0Ry/WOJ5XWAsa0=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "57928607ea566b5db3ad13af0e57e921e6b12381",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
+    "flake-parts_2": {
       "inputs": {
         "nixpkgs-lib": [
           "nixpkgs"
@@ -36,7 +77,7 @@
         "type": "github"
       }
     },
-    "flake-parts_2": {
+    "flake-parts_3": {
       "inputs": {
         "nixpkgs-lib": [
           "vimmax",
@@ -126,6 +167,21 @@
         "type": "github"
       }
     },
+    "import-tree_3": {
+      "locked": {
+        "lastModified": 1771045967,
+        "narHash": "sha256-oYO4poyw0Sb/db2PigqugMlDwsvwLg6CSpFrMUWxA3Q=",
+        "owner": "vic",
+        "repo": "import-tree",
+        "rev": "c968d3b54d12cf5d9c13f16f7c545a06c9d1fde6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vic",
+        "repo": "import-tree",
+        "type": "github"
+      }
+    },
     "lan-mouse": {
       "inputs": {
         "nixpkgs": [
@@ -149,7 +205,7 @@
     },
     "niri": {
       "inputs": {
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_2",
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
@@ -189,6 +245,22 @@
     },
     "nixpkgs": {
       "locked": {
+        "lastModified": 1771848320,
+        "narHash": "sha256-0MAd+0mun3K/Ns8JATeHT1sX28faLII5hVLq0L3BdZU=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "2fc6539b481e1d2569f25f8799236694180c0993",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
         "lastModified": 1757967192,
         "narHash": "sha256-/aA9A/OBmnuOMgwfzdsXRusqzUpd8rQnQY8jtrHK+To=",
         "owner": "NixOS",
@@ -203,7 +275,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_2": {
+    "nixpkgs_3": {
       "locked": {
         "lastModified": 1771369470,
         "narHash": "sha256-0NBlEBKkN3lufyvFegY4TYv5mCNHbi5OmBDrzihbBMQ=",
@@ -219,7 +291,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_3": {
+    "nixpkgs_4": {
       "locked": {
         "lastModified": 1770380644,
         "narHash": "sha256-P7dWMHRUWG5m4G+06jDyThXO7kwSk46C1kgjEWcybkE=",
@@ -237,8 +309,8 @@
     },
     "nixvim": {
       "inputs": {
-        "flake-parts": "flake-parts_2",
-        "nixpkgs": "nixpkgs_3",
+        "flake-parts": "flake-parts_3",
+        "nixpkgs": "nixpkgs_4",
         "systems": "systems"
       },
       "locked": {
@@ -277,13 +349,14 @@
     },
     "root": {
       "inputs": {
-        "flake-parts": "flake-parts",
+        "derivations": "derivations",
+        "flake-parts": "flake-parts_2",
         "home-manager": "home-manager",
-        "import-tree": "import-tree",
+        "import-tree": "import-tree_2",
         "lan-mouse": "lan-mouse",
         "niri": "niri",
         "nix-index-database": "nix-index-database",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs_3",
         "quickshell": "quickshell",
         "sops-nix": "sops-nix",
         "vimmax": "vimmax",
@@ -411,7 +484,7 @@
         "flake-parts": [
           "flake-parts"
         ],
-        "import-tree": "import-tree_2",
+        "import-tree": "import-tree_3",
         "nixpkgs": [
           "nixpkgs"
         ],

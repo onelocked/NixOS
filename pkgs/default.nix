@@ -7,5 +7,5 @@ in
   wayland-ocr = _ ./wayland-ocr.nix { };
   niri-launcher = _ ./niri-launcher.nix { };
   mpv-wlpaste = _ ./mpv-wlpaste.nix { };
-  amdgpu_top = _ ./amdgpu_top.nix { };
+  # amdgpu_top = _ ./amdgpu_top.nix { };
 }
