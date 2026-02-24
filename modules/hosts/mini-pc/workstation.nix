@@ -27,7 +27,6 @@
                 zen-browser
                 media
                 jellyfin-desktop
-                kitty
                 foot
               ];
             };
