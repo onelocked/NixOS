@@ -1,8 +1,8 @@
 {
-  flake.homeModules.custom-derivations =
+  flake.nixosModules.desktop =
     { pkgs, ... }:
     {
-      home.packages = with pkgs; [
+      environment.systemPackages = with pkgs; [
         mpv-wlpaste
         wayland-ocr
         niri-launcher

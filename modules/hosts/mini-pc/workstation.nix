@@ -18,7 +18,6 @@
             home-manager.users.${self.variables.username} = {
               imports = with self.homeModules; [
                 default
-                custom-derivations
                 cli
                 theming
 
