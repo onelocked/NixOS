@@ -7,6 +7,7 @@
         with self.nixosModules;
         [
           mini-pc
+          onelock
           grub
           core
           desktop
