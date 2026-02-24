@@ -6,21 +6,24 @@
       modules =
         with self.nixosModules;
         [
-          mini-pc
-          onelock
-          core
-          desktop
+          mini-pc # Hardware configuration
+          onelock # user configuration
+          core # core nixos modules
           overlays
           home-manager
+
+          desktop
         ]
         ++ [
           {
             home-manager.users.${self.variables.username} = {
               imports = with self.homeModules; [
+                # Core modules
                 default
                 cli
-                theming
 
+                # Desktop Specific
+                theming
                 foot
                 vicinae
                 quickshell
