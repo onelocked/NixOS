@@ -20,7 +20,7 @@
           };
         };
       };
-    homeModules.state =
+    homeModules.default =
       { pkgs, ... }:
       {
         xdg.configFile = {

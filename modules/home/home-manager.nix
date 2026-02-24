@@ -40,7 +40,7 @@
         };
     };
 
-    homeModules.state = {
+    homeModules.default = {
       home.username = self.variables.username;
       home.homeDirectory = self.variables.homedir;
       home.stateVersion = "25.11";
