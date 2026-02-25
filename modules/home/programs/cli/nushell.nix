@@ -61,12 +61,6 @@
                   ^nix shell $"nixpkgs#($package)"
               }
 
-              # Completions
-              let carapace_completer = {|spans: list<string>|
-                carapace $spans.0 nushell ...$spans
-                | from json
-                | if ($in | default [] | where value == $"($spans | last)ERR" | is-empty) { $in } else { null }
-              }
 
               # --- Zoxide interactive on Shift+Z ---
               $env.config.keybindings ++= [
@@ -101,7 +95,6 @@
               }
               $env.PATH ++= [ "~/.nix-profile/bin" ]
               $env.EDITOR = "nvim"
-              $env.CARAPACE_BRIDGES = 'zsh,bash'
               # Transient prompt
               $env.PROMPT_COMMAND_RIGHT = {|| "" } # Hide right prompt after enter
 
