@@ -25,7 +25,7 @@
           extra-substituters = [ "https://onelock.cachix.org" ];
           extra-trusted-public-keys = [ "onelock.cachix.org-1:Wyy9XrWqFKcPxkZXQg5yZXtsbKTbkaga44UWRJfgqEg=" ];
 
-          use-xdg-base-directories = false;
+          use-xdg-base-directories = true;
           warn-dirty = false;
           keep-outputs = true;
           keep-derivations = true;
