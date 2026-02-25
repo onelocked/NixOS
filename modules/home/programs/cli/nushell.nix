@@ -1,4 +1,3 @@
-{ inputs, ... }:
 {
   flake.homeModules.cli =
     { pkgs, lib, ... }:
@@ -41,7 +40,7 @@
               cat = "bat";
               zip = "${_ pkgs.zip}";
               ll = "${_ pkgs.eza} -l --icons --git -a";
-              gtop = "${_ inputs.derivations.packages.${pkgs.stdenv.hostPlatform.system}.amdgpu_top} --dark";
+              gtop = "${_ pkgs.amdgpu_top} --dark";
             };
 
           configFile.text = # nu

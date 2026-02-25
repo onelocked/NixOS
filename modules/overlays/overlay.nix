@@ -5,7 +5,7 @@
       final: prev:
       let
         system = final.stdenv.hostPlatform.system;
-        pkg = input: name: inputs.${input}.packages.${system}.${name};
+        getPkg = input: name: inputs.${input}.packages.${system}.${name};
 
         localPkgs = import ../../pkgs {
           pkgs = final;
@@ -15,16 +15,13 @@
       localPkgs
       // {
         wl-clipboard = prev.wl-clipboard-rs;
-        ghostty = pkg "ghostty" "default";
-        niri = pkg "niri" "default";
-        neovim = pkg "vimmax" "default";
-        lan-mouse = pkg "lan-mouse" "default";
 
-        # loupe = prev.loupe.overrideAttrs (oldAttrs: {
-        #   patches = (oldAttrs.patches or [ ]) ++ [
-        #     ./patches/43-18-aspect-ratio.patch
-        #   ];
-        # });
+        ghostty = getPkg "ghostty" "default";
+        niri = getPkg "niri" "default";
+        neovim = getPkg "vimmax" "default";
+        lan-mouse = getPkg "lan-mouse" "default";
+        loupe = getPkg "derivations" "loupe";
+        amdgpu_top = getPkg "derivations" "amdgpu_top";
       };
 
     nixosModules.overlays = {
