@@ -52,10 +52,6 @@
       url = "github:quickshell-mirror/quickshell/";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    yazi = {
-      url = "github:sxyazi/yazi/v26.1.22";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     derivations.url = "git+file:///home/onelock/Development/Coding/derivations";
   };
 }

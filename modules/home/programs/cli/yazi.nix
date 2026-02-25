@@ -1,4 +1,3 @@
-{ inputs, ... }:
 {
   flake.homeModules.cli =
     {
@@ -7,11 +6,6 @@
       ...
     }:
     {
-      nix.settings = {
-        extra-substituters = [ "https://yazi.cachix.org" ];
-        extra-trusted-substituters = [ "https://yazi.cachix.org" ];
-        extra-trusted-public-keys = [ "yazi.cachix.org-1:Dcdz63NZKfvUCbDGngQDAZq6kOroIrFoyO064uvLh8k=" ];
-      };
       programs.yazi =
         let
           inherit (lib) getExe;
@@ -21,7 +15,7 @@
           shellWrapperName = "y";
           enableBashIntegration = true;
           enableNushellIntegration = true;
-          package = inputs.yazi.packages.${pkgs.stdenv.hostPlatform.system}.default;
+          package = pkgs.yazi;
           plugins =
             let
               pluginNames = [
