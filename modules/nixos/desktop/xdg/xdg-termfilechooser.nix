@@ -59,7 +59,7 @@
                     set -- --chooser-file="$out" "$path"
                 fi
 
-                command="${pkgs.foot}/bin/foot --app-id=FileChooser -e yazi"
+                command="${pkgs.foot}/bin/foot --app-id=FileChooser -e ${pkgs.yazi}/bin/yazi"
 
                 for arg in "$@"; do
                     escaped=$(printf "%s" "$arg" | sed 's/"/\\"/g')
