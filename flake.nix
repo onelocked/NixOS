@@ -6,6 +6,7 @@
   inputs = {
     # --- System stuff ---
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    import-tree.url = "github:vic/import-tree";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -18,7 +19,6 @@
       url = "github:lassulus/wrappers";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    import-tree.url = "github:vic/import-tree";
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -28,7 +28,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # --- Flake-enabled packages ---
+    # --- Flakes ---
+    niri.url = "github:niri-wm/niri/wip/branch";
+    derivations.url = "git+file:///home/onelock/Development/Coding/derivations";
     vimmax = {
       url = "github:onelocked/vimmax";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -41,9 +43,6 @@
         home-manager.follows = "home-manager";
       };
     };
-    niri = {
-      url = "github:niri-wm/niri/wip/branch";
-    };
     lan-mouse = {
       url = "github:feschber/lan-mouse/";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -52,6 +51,5 @@
       url = "github:quickshell-mirror/quickshell/";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    derivations.url = "git+file:///home/onelock/Development/Coding/derivations";
   };
 }
