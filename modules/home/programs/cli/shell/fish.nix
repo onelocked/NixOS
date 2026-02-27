@@ -1,29 +1,16 @@
 {
-  flake.homeModules.fish =
-    { pkgs, lib, ... }:
-    {
-      programs.fish = {
-        enable = true;
-        shellAliases =
-          let
-            _ = lib.getExe;
-          in
-          {
-            dots = "cd ~/NixOS";
-            ping = "${_ pkgs.gping}";
-            cat = "bat";
-            zip = "${_ pkgs.zip}";
-            ll = "${_ pkgs.eza} -l --icons --git -a";
-            gtop = "${_ pkgs.amdgpu_top} --dark";
-          };
-        functions = {
-          # Transient Prompt
-          starship_transient_prompt_func = ''
-            printf " \e[38;2;142;192;124m\e[0m "
-          '';
+  flake.homeModules.fish = {
+    programs.fish = {
+      enable = true;
+      functions = {
+        # Transient Prompt
+        starship_transient_prompt_func = ''
+          printf " \e[38;2;142;192;124m\e[0m "
+        '';
 
-          # Shift + Z Zoxide picker
-          __zoxide_interactive = ''
+        # Shift + Z Zoxide picker
+        __zoxide_interactive = # fish
+          ''
             set dir (zoxide query --interactive | string trim)
 
             if test -n "$dir"
@@ -32,8 +19,9 @@
               commandline -f repaint
             end
           '';
-        };
-        interactiveShellInit = ''
+      };
+      interactiveShellInit = # fish
+        ''
           bind Z __zoxide_interactive
 
           # Gruvbox Dark Palette for Fish
@@ -72,6 +60,6 @@
           set -g fish_color_normal_bg     "#282828"  # base / background
           set -g fish_color_comment_bg    "#32302f"  # surface0
         '';
-      };
     };
+  };
 }
