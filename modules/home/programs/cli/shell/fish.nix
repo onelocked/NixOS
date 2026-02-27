@@ -22,6 +22,8 @@
       };
       interactiveShellInit = # fish
         ''
+          set -g fish_greeting # Disable greeting
+
           bind Z __zoxide_interactive
 
           # Gruvbox Dark Palette for Fish

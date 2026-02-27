@@ -1,10 +1,9 @@
 { self, ... }:
 {
   flake.nixosModules.onelock =
-    { pkgs, config, ... }:
+    { pkgs, ... }:
     {
       users = {
-        defaultUserShell = pkgs.${self.variables.shell};
         users.${self.variables.username} = {
           isNormalUser = true;
           useDefaultShell = true;
@@ -20,6 +19,9 @@
           ];
         };
       };
-      environment.shells = [ config.users.defaultUserShell ]; # Default shell
+      environment.shells = with pkgs; [
+        fish
+        nushell
+      ];
     };
 }
