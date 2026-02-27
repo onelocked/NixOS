@@ -3,6 +3,8 @@
     programs.starship = {
       enable = true;
       enableNushellIntegration = true;
+      enableFishIntegration = true;
+      enableTransience = true;
       settings = {
         add_newline = false;
         format = "[ 󰪥 $directory ](color_green)$character";

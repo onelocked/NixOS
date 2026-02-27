@@ -7,10 +7,12 @@
         nix-your-shell = {
           enable = true;
           enableNushellIntegration = true;
+          enableFishIntegration = true;
         };
         atuin = {
           enable = true;
           enableNushellIntegration = true;
+          enableFishIntegration = true;
           settings = {
             search_mode = "fuzzy";
             filter_mode = "session-preload";
@@ -18,15 +20,18 @@
         };
         pay-respects = {
           enable = true;
+          enableFishIntegration = true;
           enableNushellIntegration = true;
         };
         zoxide = {
           enable = true;
           enableNushellIntegration = true;
+          enableFishIntegration = true;
         };
         carapace = {
           enable = true;
           enableNushellIntegration = true;
+          enableFishIntegration = true;
         };
         nushell = {
           enable = true;
@@ -94,6 +99,7 @@
               }
               $env.PATH ++= [ "~/.nix-profile/bin" ]
               $env.EDITOR = "nvim"
+
               # Transient prompt
               $env.PROMPT_COMMAND_RIGHT = {|| "" } # Hide right prompt after enter
 

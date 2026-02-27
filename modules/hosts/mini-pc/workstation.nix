@@ -33,6 +33,7 @@
                 obs-studio
                 mpv
                 qview
+                fish
               ];
             };
           }

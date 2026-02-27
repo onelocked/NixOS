@@ -15,6 +15,7 @@
           shellWrapperName = "y";
           enableBashIntegration = true;
           enableNushellIntegration = true;
+          enableFishIntegration = true;
           package = pkgs.yazi;
           plugins =
             let
