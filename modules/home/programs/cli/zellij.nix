@@ -340,7 +340,6 @@
               mouse_mode true
               advanced_mouse_actions false
               copy_command "${pkgs.wl-clipboard-rs}/bin/wl-copy"
-              copy_clipboard "primary"
               copy_on_select true
               Default: false
               show_startup_tips false
