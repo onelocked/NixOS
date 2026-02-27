@@ -19,6 +19,18 @@
               commandline -f repaint
             end
           '';
+        nrun = # fish
+          ''
+            set -l package $argv[1]
+            nix run "nixpkgs#$package"
+          '';
+
+        # Open a nix shell with a package
+        nget = # fish
+          ''
+            set -l package $argv[1]
+            nix shell "nixpkgs#$package"
+          '';
       };
       interactiveShellInit = # fish
         ''
