@@ -26,6 +26,7 @@
                 theming
                 foot
                 vicinae
+                fuzzel
                 quickshell
                 zen-browser
                 media
