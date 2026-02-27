@@ -16,7 +16,6 @@
             printf " \e[38;2;142;192;124m\e[0m "
           '';
 
-          # Shift + Z Zoxide picker
           __zoxide_interactive = # fish
             ''
               set dir (zoxide query --interactive | string trim)
@@ -24,8 +23,9 @@
               if test -n "$dir"
                 cd "$dir"
                 y
-                commandline -f repaint
               end
+
+              commandline -f repaint
             '';
           # Run a nix run with a package
           nrun = # fish
