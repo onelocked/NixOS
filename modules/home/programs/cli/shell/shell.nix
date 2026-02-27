@@ -6,13 +6,17 @@
         let
           _ = lib.getExe;
         in
+        with pkgs;
         {
           dots = "cd ~/NixOS";
-          ping = "${_ pkgs.gping}";
+          ping = "${_ gping}";
           cat = "bat";
-          zip = "${_ pkgs.zip}";
-          ll = "${_ pkgs.eza} -l --icons --git -a";
-          gtop = "${_ pkgs.amdgpu_top} --dark";
+          ff = "${_ fastfetch}";
+          zip = "${_ zip}";
+          ls = "${_ eza} -1h --color=auto --icons";
+          la = "${_ eza} -1h --color=auto --icons -a";
+          ll = "${_ eza} -lh --icons --git -a";
+          gtop = "${_ amdgpu_top} --dark";
         };
       programs = {
         nix-your-shell = {
