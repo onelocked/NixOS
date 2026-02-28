@@ -1,6 +1,6 @@
-{ pkgs, ... }:
+{ stdenv, pkgs, ... }:
 
-pkgs.stdenv.mkDerivation rec {
+stdenv.mkDerivation rec {
   name = "apple-nerd-fonts";
   src = fetchTarball {
     url = "https://s3.onelock.org/download/apple-nerd.tar.gz";
