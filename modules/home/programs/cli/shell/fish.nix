@@ -41,6 +41,10 @@
               nix shell "nixpkgs#$package"
             '';
         };
+        shellAbbrs = {
+          nb = "nix build";
+          nd = "nix develop";
+        };
         interactiveShellInit = # fish
           ''
             set -g fish_greeting # Disable greeting
