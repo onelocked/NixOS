@@ -1,6 +1,6 @@
 { stdenv, pkgs, ... }:
 
-stdenv.mkDerivation rec {
+stdenv.mkDerivation (finalAttrs: {
   name = "apple-nerd-fonts";
   src = fetchTarball {
     url = "https://s3.onelock.org/download/apple-nerd.tar.gz";
@@ -11,6 +11,6 @@ stdenv.mkDerivation rec {
 
   installPhase = ''
     install -dm755 $out/share/fonts/apple-nerd
-    rsync -r --exclude='NY/*Black*' --exclude='NY/*Heavy*' ${src}/ $out/share/fonts/apple-nerd
+    rsync -r --exclude='NY/*Black*' --exclude='NY/*Heavy*' ${finalAttrs.src}/ $out/share/fonts/apple-nerd
   '';
-}
+})
