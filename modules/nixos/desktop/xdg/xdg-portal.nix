@@ -13,16 +13,18 @@
         xdgOpenUsePortal = true;
         wlr.enable = false;
       };
-      xdg.portal.config = {
-        common = {
-          "org.freedesktop.impl.portal.Secret" = mkForce [
-            "gnome-keyring"
-          ];
-        };
-        niri = {
-          "org.freedesktop.impl.portal.Secret" = mkForce [
-            "gnome-keyring"
-          ];
+      xdg.portal = {
+        config = {
+          common = {
+            default = mkForce [ "gnome" ];
+            "org.freedesktop.impl.portal.Secret" = mkForce [ "gnome-keyring" ];
+            "org.freedesktop.impl.portal.Chooser" = mkForce [ "none" ];
+          };
+          niri = {
+            default = mkForce [ "gnome" ];
+            "org.freedesktop.impl.portal.Secret" = mkForce [ "gnome-keyring" ];
+            "org.freedesktop.impl.portal.Chooser" = mkForce [ "none" ];
+          };
         };
       };
       xdg.terminal-exec = {
