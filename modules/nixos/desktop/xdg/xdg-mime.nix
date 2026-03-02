@@ -6,7 +6,7 @@
       defaultApps = {
         text = [ "nvim.desktop" ];
         image = [
-          "com.interversehq.qView"
+          "com.interversehq.qView.desktop"
         ];
         audio = [ "mpv.desktop" ];
         video = [ "mpv.desktop" ];
