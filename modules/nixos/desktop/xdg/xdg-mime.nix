@@ -75,6 +75,16 @@
             "x-scheme-handler/discord" = [ "vesktop.desktop" ];
             "x-scheme-handler/tg" = [ "telegram.desktop" ];
           };
+          removedAssociations = {
+            "video/mp2t" = [ "umpv.desktop" ];
+            "video/mp4" = [ "umpv.desktop" ];
+            "video/mpeg" = [ "umpv.desktop" ];
+            "video/ogg" = [ "umpv.desktop" ];
+            "video/webm" = [ "umpv.desktop" ];
+            "video/x-flv" = [ "umpv.desktop" ];
+            "video/x-matroska" = [ "umpv.desktop" ];
+            "video/x-msvideo" = [ "umpv.desktop" ];
+          };
         };
       };
     };
