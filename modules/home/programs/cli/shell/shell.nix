@@ -10,7 +10,7 @@
         {
           dots = "cd ~/NixOS";
           ping = "${_ gping}";
-          cat = "bat";
+          cat = "${_ bat}";
           ff = "${_ fastfetch}";
           zip = "${_ zip}";
           ls = "${_ eza} -1h --color=auto --icons";

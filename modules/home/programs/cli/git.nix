@@ -42,7 +42,7 @@
       };
       home = {
         shellAliases = {
-          lg = "lazygit";
+          lg = "${pkgs.lazygit}/bin/lazygit";
         };
         packages = with pkgs; [
           delta
