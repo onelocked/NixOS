@@ -149,21 +149,6 @@
         "type": "github"
       }
     },
-    "import-tree_3": {
-      "locked": {
-        "lastModified": 1771045967,
-        "narHash": "sha256-oYO4poyw0Sb/db2PigqugMlDwsvwLg6CSpFrMUWxA3Q=",
-        "owner": "vic",
-        "repo": "import-tree",
-        "rev": "c968d3b54d12cf5d9c13f16f7c545a06c9d1fde6",
-        "type": "github"
-      },
-      "original": {
-        "owner": "vic",
-        "repo": "import-tree",
-        "type": "github"
-      }
-    },
     "lan-mouse": {
       "inputs": {
         "nixpkgs": [
@@ -296,11 +281,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1771135771,
-        "narHash": "sha256-wyvBIhDuyCRyjB3yPg77qoyxrlgQtBR1rVW3c9knV3E=",
+        "lastModified": 1772402258,
+        "narHash": "sha256-3DmCFOdmbkFML1/G9gj8Wb+rCCZFPOQtNoMCpqOF8SA=",
         "owner": "nix-community",
         "repo": "nixvim",
-        "rev": "ed0424f0b08d303a7348f52f7850ad1b2704f9ba",
+        "rev": "21ae25e13b01d3b4cdc750b5f9e7bad68b150c10",
         "type": "github"
       },
       "original": {
@@ -429,18 +414,20 @@
         "flake-parts": [
           "flake-parts"
         ],
-        "import-tree": "import-tree_3",
+        "import-tree": [
+          "import-tree"
+        ],
         "nixpkgs": [
           "nixpkgs"
         ],
         "nixvim": "nixvim"
       },
       "locked": {
-        "lastModified": 1772235174,
-        "narHash": "sha256-nlb3fk9FCPnUTajXhKh8d27jDVD4EtiYFCCkTEqeyRU=",
+        "lastModified": 1772482106,
+        "narHash": "sha256-Irh/If7Poc/Ll+40UiYwpcw8bwehlP0ihzX/ojxyd2I=",
         "owner": "onelocked",
         "repo": "vimmax",
-        "rev": "14804d5f9b98262dd93631cc2639547ae50de902",
+        "rev": "b52840f0668096126b03ac256b0d315c721bcb6c",
         "type": "github"
       },
       "original": {

@@ -35,6 +35,7 @@
       url = "github:onelocked/vimmax";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
+      inputs.import-tree.follows = "import-tree";
     };
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
