@@ -44,6 +44,8 @@
         shellAbbrs = {
           nb = "nix build";
           nd = "nix develop";
+          nr = "nix run";
+          nf = "nix flake update";
         };
         interactiveShellInit = # fish
           ''
