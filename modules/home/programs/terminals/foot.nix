@@ -23,14 +23,15 @@
         };
 
         cursor = {
-          style = "beam";
+          style = "block";
+          unfocused-style = "hollow";
           blink = "yes";
           blink-rate = 500;
-          beam-thickness = 1.5;
+          underline-thickness = 3;
         };
 
         mouse = {
-          hide-when-typing = "no";
+          hide-when-typing = "yes";
         };
 
         mouse-bindings = {
@@ -42,6 +43,7 @@
           render-timer = "none";
           overflowing-glyphs = "yes";
           font-monospace-warn = "no";
+          surface-bit-depth = "8-bit";
         };
       };
     };
