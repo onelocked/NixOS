@@ -6,6 +6,9 @@
         enable = true;
         wheelNeedsPassword = true;
         execWheelOnly = true;
+        extraConfig = ''
+          Defaults pwfeedback
+        '';
       };
       polkit.enable = true;
     };
