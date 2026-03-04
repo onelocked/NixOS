@@ -35,6 +35,7 @@
                 mpv
                 qview
                 fish
+                dott-tui
               ];
             };
           }
