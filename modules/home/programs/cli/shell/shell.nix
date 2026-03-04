@@ -1,3 +1,4 @@
+{ inputs, ... }:
 {
   flake.homeModules.cli =
     { pkgs, lib, ... }:
@@ -8,7 +9,7 @@
         in
         with pkgs;
         {
-          dots = "cd ~/NixOS";
+          dots = "${inputs.derivations.packages.${pkgs.stdenv.hostPlatform.system}.dott}/bin/dott-tui";
           ping = "${_ gping}";
           cat = "${_ bat}";
           ff = "${_ fastfetch}";
