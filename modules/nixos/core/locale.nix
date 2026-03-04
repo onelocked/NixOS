@@ -15,6 +15,5 @@
       LC_TELEPHONE = "${self.variables.locale}";
       LC_TIME = "${self.variables.locale}";
     };
-    system.stateVersion = "25.11";
   };
 }

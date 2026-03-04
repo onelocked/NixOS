@@ -3,6 +3,7 @@
   flake.nixosModules.core =
     { pkgs, lib, ... }:
     {
+      system.stateVersion = "25.11";
       nix = {
         settings = {
           trusted-users = [
