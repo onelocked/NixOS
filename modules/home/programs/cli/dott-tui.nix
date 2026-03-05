@@ -1,7 +1,14 @@
+{ self, ... }:
 {
   flake.homeModules.dott-tui =
-    { pkgs, ... }:
+    {
+      pkgs,
+      lib,
+      config,
+      ...
+    }:
     let
+      _ = lib.getExe;
       asci-art = pkgs.writeText "asci.txt" ''
         ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⠶⣻⠝⠋⠠⠔⠛⠁⡀⠀⠈⢉⡙⠓⠶⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
         ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠞⢋⣴⡮⠓⠋⠀⠀⢄⠀⠀⠉⠢⣄⠀⠈⠁⠀⡀⠙⢶⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -66,30 +73,33 @@
 
           [[entries]]
           name = "NixOS config"
-          command = "yazi"
-          args = ["~/NixOS"]
+          command = "${_ pkgs.yazi}"
+          args = ["${self.variables.homedir}/NixOS"]
 
           [[entries]]
           name = "Neovim Config"
-          command = "yazi"
-          args = ["~/Development/Coding/neovim"]
+          command = "${_ pkgs.yazi}"
+          args = ["${self.variables.homedir}/Development/Coding/neovim"]
 
           [[entries]]
           name = "Niri Config"
-          command = "yazi"
-          args = ["~/.config/niri"]
+          command = "${_ pkgs.yazi}"
+          args = ["${config.xdg.configHome}/niri"]
 
           [[entries]]
-          name = "Zellij"
-          command = "zellij"
+          name = "Music"
+          command = "${_ pkgs.jellyfin-tui}"
           args = []
-
 
           [[entries]]
           name = "System Monitor"
-          command = "btop"
+          command = "${_ pkgs.btop-rocm}"
           args = []
 
+          [[entries]]
+          name = "GPU Monitor"
+          command = "${_ pkgs.amdgpu_top}"
+          args = ["--dark"]
 
           [[entries]]
           name = "Quit"
