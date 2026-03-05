@@ -31,6 +31,7 @@
                 zen-browser
                 media
                 jellyfin-desktop
+                jellyfin-tui
                 obs-studio
                 mpv
                 qview
