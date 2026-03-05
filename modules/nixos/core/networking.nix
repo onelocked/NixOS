@@ -12,7 +12,6 @@
         };
         interfaces.eno1.wakeOnLan.enable = true;
       };
-      boot.kernelParams = [ "ipv6.disable=1" ];
       services.avahi = {
         enable = true;
         publish.enable = true;
