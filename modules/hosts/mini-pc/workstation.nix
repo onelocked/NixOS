@@ -37,6 +37,7 @@
                 qview
                 fish
                 dott-tui
+                worktrunk
               ];
             };
           }

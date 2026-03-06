@@ -52,5 +52,9 @@
       url = "github:noctalia-dev/noctalia-qs/";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    worktrunk = {
+      url = "github:max-sixty/worktrunk";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 }
