@@ -8,12 +8,9 @@
         username = "onelock";
         homedir = "/home/onelock";
         hostname = "NixOS";
-        shell = "nushell";
-        desktop = "niri";
         locale = "en_GB.UTF-8";
         timezone = "Europe/London";
-        kbdLayout = "us";
-        consoleKeymap = "us";
+        stateVersion = "25.11";
       };
     };
   };

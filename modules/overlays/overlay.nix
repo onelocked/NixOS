@@ -1,7 +1,7 @@
-{ inputs, ... }:
+{ inputs, self, ... }:
 {
   flake.modules.nixos.overlays = {
-    nixpkgs.overlays = [ inputs.self.overlays.default ];
+    nixpkgs.overlays = [ self.overlays.default ];
   };
 
   flake.overlays.default =

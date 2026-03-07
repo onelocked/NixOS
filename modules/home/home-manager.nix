@@ -20,7 +20,7 @@
     home = {
       username = self.variables.username;
       homeDirectory = self.variables.homedir;
-      stateVersion = "25.11";
+      stateVersion = self.variables.stateVersion;
       sessionVariables = {
         EDITOR = "nvim";
       };

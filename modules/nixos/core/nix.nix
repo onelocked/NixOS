@@ -3,7 +3,7 @@
   flake.modules.nixos.core =
     { pkgs, lib, ... }:
     {
-      system.stateVersion = "25.11";
+      system.stateVersion = self.variables.stateVersion;
       nix = {
         optimise.automatic = true;
         package = pkgs.nixVersions.latest;
