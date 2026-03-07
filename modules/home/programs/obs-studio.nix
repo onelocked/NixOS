@@ -1,5 +1,5 @@
 {
-  flake.homeModules = {
+  flake.modules.homeManager = {
     obs-studio =
       { pkgs, ... }:
       {

@@ -1,5 +1,5 @@
 {
-  flake.homeModules.media =
+  flake.modules.homeManager.media =
     { pkgs, ... }:
     {
       home.packages = with pkgs; [

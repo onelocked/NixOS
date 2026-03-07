@@ -1,6 +1,6 @@
 {
   flake = {
-    homeModules.theming =
+    modules.homeManager.theming =
       { config, ... }:
       {
         # Enable dconf for home-manager
@@ -11,7 +11,7 @@
           };
         };
       };
-    nixosModules.desktop = {
+    modules.nixos.desktop = {
       programs.dconf.enable = true;
     };
   };

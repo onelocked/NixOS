@@ -1,5 +1,5 @@
 {
-  flake.homeModules.vicinae =
+  flake.modules.homeManager.vicinae =
     { lib, config, ... }:
     {
       programs.vicinae = {

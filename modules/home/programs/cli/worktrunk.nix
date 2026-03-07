@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  flake.homeModules.worktrunk = {
+  flake.modules.homeManager.worktrunk = {
     imports = [ inputs.worktrunk.homeModules.default ];
     programs.worktrunk = {
       enable = true;

@@ -1,5 +1,5 @@
 {
-  flake.nixosModules.desktop =
+  flake.modules.nixos.desktop =
     { pkgs, lib, ... }:
     {
       environment.systemPackages = with pkgs; [ gpu-screen-recorder ];

@@ -1,5 +1,5 @@
 {
-  flake.homeModules.cli = {
+  flake.modules.homeManager.cli = {
     home.shell.enableNushellIntegration = true;
     programs = {
       nushell = {

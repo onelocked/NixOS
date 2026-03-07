@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.nixosModules.desktop =
+  flake.modules.nixos.desktop =
     { config, ... }:
     let
       cfg = config.home-manager.users.${self.variables.username};

@@ -4,7 +4,7 @@
     NixOS = inputs.nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules =
-        with self.nixosModules;
+        with self.modules.nixos;
         [
           mini-pc # Hardware configuration
           onelock # user configuration
@@ -17,7 +17,7 @@
         ++ [
           {
             home-manager.users.${self.variables.username} = {
-              imports = with self.homeModules; [
+              imports = with self.modules.homeManager; [
                 # Core modules
                 default
                 cli

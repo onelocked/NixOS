@@ -1,5 +1,5 @@
 {
-  flake.homeModules.theming =
+  flake.modules.homeManager.theming =
     {
       pkgs,
       lib,

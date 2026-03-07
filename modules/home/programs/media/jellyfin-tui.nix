@@ -1,5 +1,5 @@
 {
-  flake.homeModules.jellyfin-tui = {
+  flake.modules.homeManager.jellyfin-tui = {
     xdg.configFile."jellyfin-tui/config.yaml".text = # yaml
       ''
         servers:

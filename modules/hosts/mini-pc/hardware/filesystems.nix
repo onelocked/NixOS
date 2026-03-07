@@ -1,5 +1,5 @@
 {
-  flake.nixosModules.mini-pc = {
+  flake.modules.nixos.mini-pc = {
     boot = {
       tmp.cleanOnBoot = true;
       supportedFilesystems = [

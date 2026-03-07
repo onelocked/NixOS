@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  flake.homeModules.zen-browser =
+  flake.modules.homeManager.zen-browser =
     { pkgs, ... }:
     {
       imports = [ inputs.zen-browser.homeModules.twilight ];

@@ -1,5 +1,5 @@
 {
-  flake.homeModules.fuzzel =
+  flake.modules.homeManager.fuzzel =
     { config, pkgs, ... }:
     {
       programs.fuzzel = {

@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.nixosModules.core = {
+  flake.modules.nixos.core = {
     # Timezone and locale
     time.timeZone = "${self.variables.timezone}";
     i18n.defaultLocale = "${self.variables.locale}";

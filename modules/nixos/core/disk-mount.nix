@@ -1,5 +1,5 @@
 {
-  flake.nixosModules.core = {
+  flake.modules.nixos.core = {
     services = {
       devmon.enable = false;
       gvfs.enable = false;

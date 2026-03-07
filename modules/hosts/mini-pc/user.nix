@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.nixosModules.onelock =
+  flake.modules.nixos.onelock =
     { pkgs, ... }:
     {
       users = {
