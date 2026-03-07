@@ -1,7 +1,10 @@
 { inputs, self, ... }:
 {
   flake.modules.nixos.overlays = {
-    nixpkgs.overlays = [ self.overlays.default ];
+    nixpkgs.overlays = [
+      self.overlays.default
+      inputs.derivations.overlays.derivations
+    ];
   };
 
   flake.overlays.default =
@@ -23,7 +26,5 @@
       niri = getPkg "niri" "default";
       neovim = getPkg "vimmax" "default";
       lan-mouse = getPkg "lan-mouse" "default";
-      loupe = getPkg "derivations" "loupe";
-      amdgpu_top = getPkg "derivations" "amdgpu_top";
     };
 }
