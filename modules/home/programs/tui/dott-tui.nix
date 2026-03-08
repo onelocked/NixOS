@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.homeManager.dott-tui =
+  flake.modules.homeManager.tui =
     {
       pkgs,
       lib,

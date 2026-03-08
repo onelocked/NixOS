@@ -15,6 +15,7 @@ in
     homeModules = with homeManager; [
       default
       cli
+      tui
       theming
       foot
       vicinae
@@ -28,7 +29,6 @@ in
       mpv
       qview
       fish
-      dott-tui
       worktrunk
     ];
   };

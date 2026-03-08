@@ -14,10 +14,7 @@
         wget
         unzip
         ripgrep
-        isd # TUI systemd
         killall
-        nap # Snippets
-        nurl # Prefetch package hashes and generate the func
 
         opkssh
       ];
