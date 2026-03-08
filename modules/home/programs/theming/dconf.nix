@@ -1,6 +1,6 @@
 {
   flake = {
-    modules.homeManager.theming =
+    modules.homeManager.dconf =
       { config, ... }:
       {
         # Enable dconf for home-manager

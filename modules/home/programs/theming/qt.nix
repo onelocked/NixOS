@@ -1,5 +1,5 @@
 {
-  flake.modules.homeManager.theming =
+  flake.modules.homeManager.qt =
     {
       lib,
       config,

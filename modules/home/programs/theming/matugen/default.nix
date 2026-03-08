@@ -1,5 +1,5 @@
 {
-  flake.modules.homeManager.theming =
+  flake.modules.homeManager.matugen =
     { config, ... }:
     {
       xdg.configFile."noctalia/user-templates.toml".text = ''

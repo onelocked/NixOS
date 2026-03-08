@@ -36,6 +36,13 @@ in
         zen-browser
         theming
       ];
+      theming = [
+        gtk
+        qt
+        dconf
+        cursor
+        matugen
+      ];
       launcher = [
         fuzzel
         vicinae
