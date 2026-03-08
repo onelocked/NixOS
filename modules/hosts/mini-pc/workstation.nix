@@ -31,6 +31,7 @@ in
         dott-tui
       ];
       desktop = [
+        xdg
         foot
         quickshell
         zen-browser
