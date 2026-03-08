@@ -13,12 +13,10 @@ in
     ];
     homeModules = with homeManager; {
       shell = [
-        shell-default
         fish
         starship
       ];
       cli = [
-        cli-default
         bat
         btop
         direnv
@@ -28,7 +26,6 @@ in
         worktrunk
       ];
       tui = [
-        tui-default
         zellij
         yazi
         dott-tui
@@ -37,7 +34,6 @@ in
         foot
         quickshell
         zen-browser
-        qview
         theming
       ];
       launcher = [
@@ -45,11 +41,14 @@ in
         vicinae
       ];
       media = [
-        media-default
         mpv
         obs-studio
+        qview
         jellyfin-desktop
         jellyfin-tui
+        telegram-desktop
+        vesktop
+        parsec
       ];
     };
   };

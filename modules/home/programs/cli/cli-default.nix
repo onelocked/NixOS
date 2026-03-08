@@ -1,5 +1,5 @@
 {
-  flake.modules.homeManager.cli-default =
+  flake.modules.homeManager.default =
     { pkgs, ... }:
     {
       home.packages = with pkgs; [

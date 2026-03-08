@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  flake.modules.homeManager.shell-default =
+  flake.modules.homeManager.default =
     { pkgs, lib, ... }:
     {
       home.shellAliases =
