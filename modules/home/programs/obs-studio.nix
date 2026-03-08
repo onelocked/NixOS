@@ -63,7 +63,7 @@
 
             services."obs-startup" = {
               Unit = {
-                Description = "OBS Startup";
+                Description = "OBS Auto Startup";
                 After = [ "quickshell.service" ];
                 Wants = [ "quickshell.service" ];
               };
@@ -71,7 +71,6 @@
               Service = {
                 Type = "simple";
                 ExecStart = getExe obs-wrapped;
-                Restart = "no";
               };
 
               Install = {
