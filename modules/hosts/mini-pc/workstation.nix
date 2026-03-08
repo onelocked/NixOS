@@ -10,7 +10,6 @@ in
       user
       core
       overlays
-      home-manager
       desktop
     ];
     homeModules = with homeManager; [

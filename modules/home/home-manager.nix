@@ -1,19 +1,5 @@
+{ self, ... }:
 {
-  self,
-  inputs,
-  ...
-}:
-{
-  flake.modules.nixos.home-manager = {
-    imports = [ inputs.home-manager.nixosModules.home-manager ];
-    home-manager = {
-      useGlobalPkgs = true;
-      useUserPackages = true;
-      backupFileExtension = "backup";
-      overwriteBackup = true;
-    };
-  };
-
   flake.modules.homeManager.default = {
     home = {
       username = self.variables.username;
