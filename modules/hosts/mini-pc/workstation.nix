@@ -6,8 +6,8 @@ in
 {
   flake.nixosConfigurations.NixOS = mkSystem {
     nixosModules = with nixos; [
-      mini-pc
-      onelock
+      hardware-mini-pc
+      user
       core
       overlays
       home-manager
