@@ -1,32 +1,36 @@
 { self, ... }:
 {
-  flake.modules.homeManager.default = {
-    home = {
-      username = self.variables.username;
-      homeDirectory = self.variables.homedir;
-      stateVersion = self.variables.stateVersion;
-      sessionVariables = {
-        EDITOR = "nvim";
+  flake.modules.homeManager.default =
+    let
+      inherit (self.variables) username homedir stateVersion;
+    in
+    {
+      home = {
+        username = username;
+        homeDirectory = homedir;
+        stateVersion = stateVersion;
+        sessionVariables = {
+          EDITOR = "nvim";
+        };
       };
-    };
 
-    xdg = {
-      enable = true;
-      userDirs = {
+      xdg = {
         enable = true;
-        createDirectories = true;
-        download = self.variables.homedir + "/Downloads";
-        pictures = self.variables.homedir + "/Pictures";
-        videos = self.variables.homedir + "/Videos";
-        documents = self.variables.homedir + "/Documents";
-        desktop = null;
-        music = null;
-        publicShare = null;
-        templates = null;
-        extraConfig = {
-          PROJECTS = self.variables.homedir + "/Development";
+        userDirs = {
+          enable = true;
+          createDirectories = true;
+          download = homedir + "/Downloads";
+          pictures = homedir + "/Pictures";
+          videos = homedir + "/Videos";
+          documents = homedir + "/Documents";
+          extraConfig = {
+            PROJECTS = homedir + "/Development";
+          };
+          desktop = null;
+          music = null;
+          publicShare = null;
+          templates = null;
         };
       };
     };
-  };
 }
