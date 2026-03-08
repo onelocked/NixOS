@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.vesktop =
+  flake.modules.homeManager.vesktop =
     { pkgs, ... }:
     {
       home.packages = with pkgs; [

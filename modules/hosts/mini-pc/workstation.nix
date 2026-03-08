@@ -34,7 +34,6 @@ in
         foot
         quickshell
         zen-browser
-        theming
       ];
       theming = [
         gtk

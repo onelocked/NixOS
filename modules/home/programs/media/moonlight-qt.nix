@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.moonlight-qt =
+  flake.modules.homeManager.moonlight-qt =
     { pkgs, ... }:
     {
       home.packages = [

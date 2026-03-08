@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.parsec =
+  flake.modules.homeManager.parsec =
     { pkgs, ... }:
     {
       home.packages = [ pkgs.parsec-bin ];
