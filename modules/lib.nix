@@ -18,9 +18,10 @@
       {
         nixosModules,
         homeModules ? [ ],
+        system ? "x86_64-linux",
       }:
       inputs.nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
+        inherit system;
         modules = nixosModules ++ lib.optional (homeModules != [ ]) (self.lib.hm homeModules);
       };
   };
