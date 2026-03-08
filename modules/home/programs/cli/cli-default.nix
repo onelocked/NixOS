@@ -1,9 +1,8 @@
 {
-  flake.modules.homeManager.cli =
+  flake.modules.homeManager.cli-default =
     { pkgs, ... }:
     {
       home.packages = with pkgs; [
-        # Core CLI tools
         neovim
         lsof
         fzf
@@ -15,7 +14,6 @@
         unzip
         ripgrep
         killall
-
         opkssh
       ];
     };

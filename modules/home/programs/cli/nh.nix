@@ -4,7 +4,7 @@ let
   inherit (self.variables) homedir;
 in
 {
-  flake.modules.homeManager.cli =
+  flake.modules.homeManager.nh =
     { pkgs, ... }:
 
     let

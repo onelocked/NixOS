@@ -13,16 +13,25 @@
     hm = username: modules: {
       home-manager.users.${username}.imports = modules;
     };
+
+    mkHomeModules = groups: lib.flatten (lib.attrValues groups);
+
     mkSystem =
       {
         nixosModules,
-        homeModules ? [ ],
+        homeModules ? { },
         username ? self.variables.username,
         system ? "x86_64-linux",
       }:
+      let
+        flatHome = self.lib.mkHomeModules homeModules;
+        flatHomeWithDefault = flatHome ++ [ self.modules.homeManager.default ];
+      in
       inputs.nixpkgs.lib.nixosSystem {
         inherit system;
-        modules = nixosModules ++ lib.optional (homeModules != [ ]) (self.lib.hm username homeModules);
+        modules =
+          nixosModules
+          ++ lib.optional (flatHomeWithDefault != [ ]) (self.lib.hm username flatHomeWithDefault);
       };
   };
 }

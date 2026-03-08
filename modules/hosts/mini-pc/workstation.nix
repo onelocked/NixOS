@@ -11,25 +11,48 @@ in
       core
       overlays
       desktop
+      bash
     ];
-    homeModules = with homeManager; [
-      default
-      cli
-      tui
-      theming
-      foot
-      vicinae
-      fuzzel
-      quickshell
-      zen-browser
-      media
-      jellyfin-desktop
-      jellyfin-tui
-      obs-studio
-      mpv
-      qview
-      fish
-      worktrunk
-    ];
+    homeModules = with homeManager; {
+      shell = [
+        shell-default
+        fish
+        starship
+      ];
+      cli = [
+        cli-default
+        bat
+        btop
+        direnv
+        fastfetch
+        git
+        nh
+        worktrunk
+      ];
+      tui = [
+        tui-default
+        zellij
+        yazi
+        dott-tui
+      ];
+      desktop = [
+        foot
+        quickshell
+        zen-browser
+        qview
+        theming
+      ];
+      launcher = [
+        fuzzel
+        vicinae
+      ];
+      media = [
+        media-default
+        mpv
+        obs-studio
+        jellyfin-desktop
+        jellyfin-tui
+      ];
+    };
   };
 }

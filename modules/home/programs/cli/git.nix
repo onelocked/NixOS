@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.homeManager.cli =
+  flake.modules.homeManager.git =
     { pkgs, ... }:
     {
       programs.git =

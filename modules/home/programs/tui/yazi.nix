@@ -1,5 +1,5 @@
 {
-  flake.modules.homeManager.tui =
+  flake.modules.homeManager.yazi =
     {
       pkgs,
       lib,

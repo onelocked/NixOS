@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.tui =
+  flake.modules.homeManager.tui-default =
     { pkgs, ... }:
     {
       home.packages = with pkgs; [
