@@ -26,11 +26,12 @@
       let
         flatHome = self.lib.mkHomeModules homeModules;
         flatHomeWithDefault = flatHome ++ [ self.modules.homeManager.default ];
+        nixosModulesWithDefault = nixosModules ++ [ self.modules.nixos.default ];
       in
       inputs.nixpkgs.lib.nixosSystem {
         inherit system;
         modules =
-          nixosModules
+          nixosModulesWithDefault
           ++ lib.optional (flatHomeWithDefault != [ ]) (self.lib.hm username flatHomeWithDefault);
       };
   };
