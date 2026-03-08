@@ -1,19 +1,23 @@
 { self, ... }:
 {
-  flake.modules.nixos.core = {
-    # Timezone and locale
-    time.timeZone = "${self.variables.timezone}";
-    i18n.defaultLocale = "${self.variables.locale}";
-    i18n.extraLocaleSettings = {
-      LC_ADDRESS = "${self.variables.locale}";
-      LC_IDENTIFICATION = "${self.variables.locale}";
-      LC_MEASUREMENT = "${self.variables.locale}";
-      LC_MONETARY = "${self.variables.locale}";
-      LC_NAME = "${self.variables.locale}";
-      LC_NUMERIC = "${self.variables.locale}";
-      LC_PAPER = "${self.variables.locale}";
-      LC_TELEPHONE = "${self.variables.locale}";
-      LC_TIME = "${self.variables.locale}";
+  flake.modules.nixos.core =
+    let
+      inherit (self.variables) timezone locale;
+    in
+    {
+      # Timezone and locale
+      time.timeZone = timezone;
+      i18n.defaultLocale = locale;
+      i18n.extraLocaleSettings = {
+        LC_ADDRESS = locale;
+        LC_IDENTIFICATION = locale;
+        LC_MEASUREMENT = locale;
+        LC_MONETARY = locale;
+        LC_NAME = locale;
+        LC_NUMERIC = locale;
+        LC_PAPER = locale;
+        LC_TELEPHONE = locale;
+        LC_TIME = locale;
+      };
     };
-  };
 }
