@@ -9,6 +9,7 @@
           nerd-fonts.symbols-only
           noto-fonts
           noto-fonts-color-emoji
+          cartograph
         ];
         fontDir.enable = true;
         fontconfig = {
