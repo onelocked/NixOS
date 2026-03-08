@@ -1,7 +1,13 @@
 {
   flake.modules.nixos.default =
-    { config, pkgs, ... }:
     {
+      config,
+      pkgs,
+      lib,
+      ...
+    }:
+    {
+      programs.nano.enable = lib.mkForce false;
       programs.bash = {
         enable = true;
         interactiveShellInit = ''
