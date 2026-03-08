@@ -10,19 +10,19 @@
     default = { };
   };
   config.flake.lib = {
-    hm = modules: {
-      home-manager.users.${self.variables.username}.imports = modules;
+    hm = username: modules: {
+      home-manager.users.${username}.imports = modules;
     };
-
     mkSystem =
       {
         nixosModules,
         homeModules ? [ ],
+        username ? self.variables.username,
         system ? "x86_64-linux",
       }:
       inputs.nixpkgs.lib.nixosSystem {
         inherit system;
-        modules = nixosModules ++ lib.optional (homeModules != [ ]) (self.lib.hm homeModules);
+        modules = nixosModules ++ lib.optional (homeModules != [ ]) (self.lib.hm username homeModules);
       };
   };
 }
