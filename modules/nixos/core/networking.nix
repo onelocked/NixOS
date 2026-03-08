@@ -3,15 +3,18 @@
   flake.modules.nixos.core =
     { lib, ... }:
     {
-      networking = {
-        hostName = "${self.variables.hostname}";
-        useDHCP = lib.mkDefault true;
-        networkmanager.enable = true;
-        firewall = {
-          enable = false;
+      networking =
+        let
+          inherit (self.variables) hostname;
+          inherit (lib) mkDefault;
+        in
+        {
+          hostName = hostname;
+          useDHCP = mkDefault true;
+          networkmanager.enable = true;
+          firewall.enable = false;
+          interfaces.eno1.wakeOnLan.enable = true;
         };
-        interfaces.eno1.wakeOnLan.enable = true;
-      };
       services.avahi = {
         enable = true;
         publish.enable = true;
