@@ -1,6 +1,7 @@
 { inputs, self, ... }:
 let
   inherit (inputs.wrappers.lib) wrapPackage;
+  inherit (self.variables) homedir;
 in
 {
   flake.modules.homeManager.cli =
@@ -11,7 +12,7 @@ in
         inherit pkgs;
         package = pkgs.nh;
         env = {
-          "NH_OS_FLAKE" = self.variables.homedir + "/NixOS";
+          "NH_OS_FLAKE" = homedir + "/NixOS";
         };
       };
     in
