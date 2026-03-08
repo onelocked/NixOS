@@ -4,7 +4,7 @@
   ...
 }:
 {
-  flake.modules.nixos.core =
+  flake.modules.nixos.default =
     { pkgs, config, ... }:
     {
       imports = [ inputs.sops-nix.nixosModules.sops ];

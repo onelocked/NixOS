@@ -8,10 +8,8 @@ in
     nixosModules = with nixos; [
       hardware-mini-pc
       user
-      core
       overlays
       desktop
-      bash
     ];
     homeModules = with homeManager; {
       shell = [

@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.core =
+  flake.modules.nixos.default =
     { lib, ... }:
     let
       inherit (lib) mkForce;

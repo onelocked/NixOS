@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.nixos.core =
+  flake.modules.nixos.default =
     { pkgs, ... }:
     {
       boot.loader =

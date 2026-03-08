@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.bash =
+  flake.modules.nixos.default =
     { config, pkgs, ... }:
     {
       programs.bash = {
