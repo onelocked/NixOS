@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.mini-pc = {
+  flake.modules.nixos.hardware-mini-pc = {
     powerManagement = {
       enable = true;
       cpuFreqGovernor = "ondemand";
