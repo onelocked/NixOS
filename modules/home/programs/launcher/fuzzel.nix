@@ -6,7 +6,7 @@
         enable = true;
         settings = {
           main = {
-            include = "${config.xdg.configHome}" + "/fuzzel/themes/noctalia";
+            include = config.xdg.configHome + "/fuzzel/themes/noctalia";
             dpi-aware = "yes";
             width = 25;
             letter-spacing = 0;
@@ -20,6 +20,5 @@
           };
         };
       };
-
     };
 }
