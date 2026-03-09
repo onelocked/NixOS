@@ -76,6 +76,11 @@
               icon = "zen-twilight";
               exec = "${pkgs.niri-launcher}/bin/niri-launcher zen-twilight zen-twilight";
             };
+            "org.jellyfin.JellyfinDesktop" = {
+              name = "Jellyfin";
+              icon = "org.jellyfin.JellyfinDesktop";
+              exec = "${pkgs.jellyfin-desktop}/bin/jellyfin-desktop --platform xcb";
+            };
           };
         };
     };
