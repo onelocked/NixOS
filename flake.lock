@@ -361,7 +361,6 @@
         "sops-nix": "sops-nix",
         "vimmax": "vimmax",
         "worktrunk": "worktrunk",
-        "wrappers": "wrappers",
         "zen-browser": "zen-browser"
       }
     },
@@ -527,26 +526,6 @@
         "owner": "max-sixty",
         "repo": "worktrunk",
         "rev": "fe395cb467d341d4b21e9b1cc6cfa2feaec0fdd1",
-        "type": "github"
-      }
-    },
-    "wrappers": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1772137435,
-        "narHash": "sha256-dqkfxxpIiIs4wdWhT4lfQi1lfA0CgIftPiYGvw0tUOk=",
-        "owner": "lassulus",
-        "repo": "wrappers",
-        "rev": "4e12f430ae705d9bbb591ca9c51cbccbee050a23",
-        "type": "github"
-      },
-      "original": {
-        "owner": "lassulus",
-        "repo": "wrappers",
         "type": "github"
       }
     },
