@@ -1,6 +1,6 @@
 {
   flake.modules.nixos.desktop =
-    { pkgs, ... }:
+    { pkgs, lib, ... }:
     {
       systemd.user.services.lan-mouse = {
         description = "Lan Mouse Daemon";
@@ -17,6 +17,10 @@
           Restart = "on-failure";
           RestartSec = 1;
           TimeoutStopSec = 10;
+          Environment = lib.mkForce [
+            "RUST_BACKTRACE=0"
+            "RUST_LOG=error"
+          ];
         };
       };
     };

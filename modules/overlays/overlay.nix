@@ -25,6 +25,5 @@
       ghostty = getPkg "ghostty" "default";
       niri = getPkg "niri" "default";
       neovim = getPkg "vimmax" "default";
-      lan-mouse = getPkg "lan-mouse" "default";
     };
 }

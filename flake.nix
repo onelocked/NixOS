@@ -40,10 +40,6 @@
         home-manager.follows = "home-manager";
       };
     };
-    lan-mouse = {
-      url = "github:feschber/lan-mouse/";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     quickshell = {
       url = "github:noctalia-dev/noctalia-qs/";
       inputs.nixpkgs.follows = "nixpkgs";

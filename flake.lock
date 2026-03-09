@@ -35,14 +35,15 @@
       "inputs": {
         "flake-parts": "flake-parts",
         "import-tree": "import-tree",
+        "lan-mouse": "lan-mouse",
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1773013119,
-        "narHash": "sha256-xvZlnnTH8Zjh6d5yIZk4hzLeZ0CEi3Lkod5vbdW9kLk=",
+        "lastModified": 1773019761,
+        "narHash": "sha256-440hJtZsY+y8Vgv5Ekh5WHfa/pPMPBpx6FIMFQRxpFk=",
         "ref": "refs/heads/main",
-        "rev": "4f74b0963b275cab7334fae80ac0a621f073bb72",
-        "revCount": 12,
+        "rev": "e4e088b97eea2b333947fa59a995ff91ccd02d0a",
+        "revCount": 14,
         "type": "git",
         "url": "file:///home/onelock/Development/Coding/derivations"
       },
@@ -185,6 +186,7 @@
     "lan-mouse": {
       "inputs": {
         "nixpkgs": [
+          "derivations",
           "nixpkgs"
         ],
         "rust-overlay": "rust-overlay"
@@ -353,7 +355,6 @@
         "flake-parts": "flake-parts_2",
         "home-manager": "home-manager",
         "import-tree": "import-tree_2",
-        "lan-mouse": "lan-mouse",
         "niri": "niri",
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs_3",
@@ -367,6 +368,7 @@
     "rust-overlay": {
       "inputs": {
         "nixpkgs": [
+          "derivations",
           "lan-mouse",
           "nixpkgs"
         ]
