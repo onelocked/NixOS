@@ -15,7 +15,6 @@
         in
         {
           enable = true;
-          suppressXdgMigrationWarning = true;
           policies = {
             AutofillAddressEnabled = false;
             AutofillCreditCardEnabled = false;
