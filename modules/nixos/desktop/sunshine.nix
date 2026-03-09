@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.desktop = {
+  flake.modules.nixos.sunshine = {
     services.sunshine = {
       enable = true;
       capSysAdmin = true;

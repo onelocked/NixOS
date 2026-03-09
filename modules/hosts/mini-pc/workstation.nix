@@ -10,6 +10,7 @@ in
       user
       overlays
       desktop
+      sunshine
     ];
     homeModules = with homeManager; {
       shell = [
@@ -56,6 +57,7 @@ in
         telegram-desktop
         vesktop
         parsec
+        moonlight-qt
       ];
     };
   };
