@@ -15,6 +15,8 @@
         ripgrep
         killall
         opkssh
+        # Coreutils rewrite in rust
+        uutils-coreutils-noprefix
       ];
     };
 }
