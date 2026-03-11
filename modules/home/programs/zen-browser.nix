@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
   flake.modules.homeManager.zen-browser =
-    { pkgs, ... }:
+    { pkgs, lib, ... }:
     {
       imports = [ inputs.zen-browser.homeModules.twilight ];
       programs.zen-browser =
@@ -143,8 +143,8 @@
           );
         in
         {
-          associations.added = associations;
-          defaultApplications = associations;
+          associations.added = lib.mkForce associations;
+          defaultApplications = lib.mkForce associations;
         };
     };
 }
