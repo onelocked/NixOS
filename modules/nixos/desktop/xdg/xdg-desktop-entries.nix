@@ -49,11 +49,11 @@
             name = "Neovim Wrapper";
             noDisplay = true;
           };
-          "zen-twilight" = {
-            name = "Zen Browser";
-            icon = "zen-twilight";
-            exec = "${pkgs.niri-launcher}/bin/niri-launcher zen-twilight zen-twilight";
-          };
+          # "zen-twilight" = {
+          #   name = "Zen Browser";
+          #   icon = "zen-twilight";
+          #   exec = "${pkgs.niri-launcher}/bin/niri-launcher zen-twilight zen-twilight";
+          # };
           "org.jellyfin.JellyfinDesktop" = {
             name = "Jellyfin";
             icon = "org.jellyfin.JellyfinDesktop";

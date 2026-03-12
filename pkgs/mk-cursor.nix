@@ -1,11 +1,11 @@
 {
-  stdenv,
+  stdenvNoCC,
   name,
   url,
   sha256,
 }:
 
-stdenv.mkDerivation {
+stdenvNoCC.mkDerivation {
   inherit name;
 
   src = fetchTarball {
