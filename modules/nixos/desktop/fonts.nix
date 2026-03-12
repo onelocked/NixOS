@@ -7,6 +7,7 @@
           apple-nerd-fonts
           nerd-fonts.symbols-only
           noto-fonts-color-emoji
+          maple-mono.NL-NF
         ];
         fontDir.enable = true;
         fontconfig = {

@@ -7,10 +7,10 @@
         main = {
           include = "~/.config/foot/themes/noctalia";
 
-          font = "SFMono Nerd Font:style=Bold:size=13";
+          font = "Maple Mono NL NF:style=ExtraBold:size=13";
           font-bold = "SFMono Nerd Font:style=Heavy:size=13";
-          font-italic = "SFMono Nerd Font:style=Bold Italic:size=13";
-          font-bold-italic = "SFMono Nerd Font:style=Heavy Italic:size=13";
+          font-italic = "Maple Mono NL NF:style=ExtraBold Italic:size=13";
+          font-bold-italic = "SF Mono:style=Heavy Italic:size=13";
 
           pad = "8x3x8x0";
           dpi-aware = "yes";
@@ -23,7 +23,7 @@
         };
 
         cursor = {
-          style = "block";
+          style = "beam";
           unfocused-style = "hollow";
           blink = "yes";
           blink-rate = 500;
