@@ -45,7 +45,6 @@ in
         matugen
       ];
       launcher = [
-        fuzzel
         vicinae
       ];
       media = [
