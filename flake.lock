@@ -613,11 +613,11 @@
         "nixvim": "nixvim"
       },
       "locked": {
-        "lastModified": 1773284254,
-        "narHash": "sha256-VLL4MdumTHWms1NuIcRSBUTf7wz0WYi+iQlaZERv5ms=",
+        "lastModified": 1773370337,
+        "narHash": "sha256-JD5NbnAkxU+K2bCUlXWR/w9xdn3+l/+8jnCEDWRgikA=",
         "owner": "onelocked",
         "repo": "vimmax",
-        "rev": "d6a70a3331486ac7a09acaeb7d3a784c4a694870",
+        "rev": "edea83813150bdf4ea10dbbc4258024c8298af8b",
         "type": "github"
       },
       "original": {
