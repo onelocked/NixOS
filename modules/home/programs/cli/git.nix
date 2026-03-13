@@ -49,6 +49,7 @@
           lg = "${pkgs.lazygit}/bin/lazygit";
         };
         packages = with pkgs; [
+          diffnav
           delta
           gh-dash
         ];
