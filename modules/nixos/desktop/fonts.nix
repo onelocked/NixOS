@@ -4,7 +4,7 @@
     {
       fonts = {
         packages = with pkgs; [
-          apple-nerd-fonts
+          apple-font
           nerd-fonts.symbols-only
           noto-fonts-color-emoji
           maple-mono.NL-NF
