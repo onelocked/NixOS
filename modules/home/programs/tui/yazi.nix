@@ -146,6 +146,14 @@
                 run = ''shell -- ya emit cd "$(git rev-parse --show-toplevel)"'';
                 desc = "git root";
               }
+              {
+                on = [
+                  "g"
+                  "s"
+                ];
+                run = "shell -- ya emit cd /mnt/s3";
+                desc = "Go to S3";
+              }
 
               {
                 on = [
