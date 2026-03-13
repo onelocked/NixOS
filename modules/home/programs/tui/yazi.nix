@@ -140,6 +140,15 @@
               }
               {
                 on = [
+                  "g"
+                  "r"
+                ];
+                run = ''shell -- ya emit cd "$(git rev-parse --show-toplevel)"'';
+                desc = "git root";
+              }
+
+              {
+                on = [
                   "b"
                   "y"
                 ];
@@ -150,17 +159,18 @@
               }
             ];
           };
-          initLua = ''
-            require("starship"):setup({
-                hide_flags = false, -- Default: false
-                flags_after_prompt = true, -- Default: true
-                config_file = "~/.config/starship.toml", -- Default: nil
-            })
-            require("no-status"):setup()
-            require("full-border"):setup {
-            	type = ui.Border.ROUNDED,
-            }
-          '';
+          initLua = # lua
+            ''
+              require("starship"):setup({
+                  hide_flags = false, -- Default: false
+                  flags_after_prompt = true, -- Default: true
+                  config_file = "~/.config/starship.toml", -- Default: nil
+              })
+              require("no-status"):setup()
+              require("full-border"):setup {
+              	type = ui.Border.ROUNDED,
+              }
+            '';
         };
     };
 }

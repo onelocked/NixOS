@@ -18,6 +18,7 @@
           la = "${_ eza} -1h --color=auto --icons -a";
           ll = "${_ eza} -lh --icons --git -a";
           gtop = "${_ amdgpu_top} --dark";
+          gr = "cd (git rev-parse --show-toplevel)";
         };
       programs = {
         nix-your-shell = {
