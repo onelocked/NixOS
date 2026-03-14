@@ -1,4 +1,3 @@
-{ inputs, ... }:
 {
   flake.modules.homeManager.default =
     { pkgs, lib, ... }:
@@ -9,7 +8,7 @@
         in
         with pkgs;
         {
-          dots = "${inputs.derivations.packages.${pkgs.stdenv.hostPlatform.system}.dott}/bin/dott-tui";
+          dots = "${pkgs.dott-tui}/bin/dott-tui";
           ping = "${_ gping}";
           cat = "${_ bat}";
           ff = "${_ fastfetch}";
