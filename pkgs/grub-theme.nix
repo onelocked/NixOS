@@ -10,7 +10,7 @@ stdenv.mkDerivation {
     hash = "sha256-ChnML4zm4EnVX/WmZW5RWHnK/tqjXSeR4BK8XfN0xxA=";
   };
   installPhase = ''
-    install -dm755 $out
+    mkdir -p $out
     cp -rf theme/* $out/
   '';
 }
