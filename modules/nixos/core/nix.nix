@@ -45,6 +45,7 @@
             builtins.elem (lib.getName pkg) [
               "parsec-bin"
               "ndi-6"
+              "spotify"
             ];
         };
       };

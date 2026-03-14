@@ -48,6 +48,7 @@ in
         vicinae
       ];
       media = [
+        spotify
         mpv
         obs-studio
         qview
