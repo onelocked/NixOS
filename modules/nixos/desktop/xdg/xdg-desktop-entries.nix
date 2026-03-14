@@ -32,11 +32,11 @@
             name = "btop++";
             noDisplay = true;
           };
-          "mpv" = {
-            name = "MPV";
-            exec = "${pkgs.mpv}/bin/mpv --player-operation-mode=pseudo-gui -- %U";
-            icon = "mpv";
-          };
+          # "mpv" = {
+          #   name = "MPV";
+          #   exec = "${pkgs.mpv}/bin/mpv --player-operation-mode=pseudo-gui -- %U";
+          #   icon = "mpv";
+          # };
           "umpv" = {
             name = "umpv Media Player";
             noDisplay = true;
