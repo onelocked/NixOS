@@ -1,19 +1,27 @@
 {
-  writeShellScriptBin,
+  writeShellApplication,
   wl-clipboard-rs,
   mpv,
-  coreutils,
+  uutils-coreutils-noprefix,
 }:
-
-writeShellScriptBin "mpv-wlpaste" ''
-  url=$(${wl-clipboard-rs}/bin/wl-paste | ${coreutils}/bin/tr -d '[:space:]')
-  if [ -z "$url" ]; then
-    exit 0
-  fi
-  case "$url" in
-    *tiktok.com*)
-      url="''${url%%\?*}"
-      ;;
-  esac
-  exec ${mpv}/bin/mpv "$url"
-''
+writeShellApplication {
+  name = "mpv-wlpaste";
+  runtimeInputs = [
+    wl-clipboard-rs
+    mpv
+    uutils-coreutils-noprefix
+  ];
+  text = # bash
+    ''
+      url=$(wl-paste | tr -d '[:space:]')
+      if [ -z "$url" ]; then
+        exit 0
+      fi
+      case "$url" in
+        *tiktok.com*)
+          url="''${url%%\?*}"
+          ;;
+      esac
+      exec mpv "$url"
+    '';
+}

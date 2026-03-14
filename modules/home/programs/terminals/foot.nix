@@ -9,7 +9,7 @@
 
           font = "Maple Mono NL NF:style=ExtraBold:size=13";
           font-bold = "SFMono Nerd Font:style=Heavy:size=13";
-          font-italic = "Maple Mono NL NF:style=ExtraBold Italic:size=13";
+          font-italic = "SF Mono:style=Bold Italic:size=13";
           font-bold-italic = "SF Mono:style=Heavy Italic:size=13";
 
           pad = "8x3x8x0";
