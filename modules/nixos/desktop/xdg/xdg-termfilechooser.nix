@@ -1,21 +1,26 @@
 { self, ... }:
 {
   flake.modules.nixos.desktop =
-    { lib, ... }:
+    { lib, pkgs, ... }:
     let
       inherit (lib) mkForce;
     in
     {
-      xdg.portal.config = {
-        common = {
-          "org.freedesktop.impl.portal.FileChooser" = mkForce [
-            "termfilechooser"
-          ];
-        };
-        niri = {
-          "org.freedesktop.impl.portal.FileChooser" = mkForce [
-            "termfilechooser"
-          ];
+      xdg.portal = {
+        extraPortals = with pkgs; [
+          xdg-desktop-portal-termfilechooser
+        ];
+        config = {
+          common = {
+            "org.freedesktop.impl.portal.FileChooser" = mkForce [
+              "termfilechooser"
+            ];
+          };
+          niri = {
+            "org.freedesktop.impl.portal.FileChooser" = mkForce [
+              "termfilechooser"
+            ];
+          };
         };
       };
     };

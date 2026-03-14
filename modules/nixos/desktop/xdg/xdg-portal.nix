@@ -1,15 +1,12 @@
 {
   flake.modules.nixos.desktop =
-    { pkgs, lib, ... }:
+    { lib, ... }:
     let
       inherit (lib) mkForce;
     in
     {
       xdg.portal = {
         enable = true;
-        extraPortals = with pkgs; [
-          xdg-desktop-portal-termfilechooser
-        ];
         xdgOpenUsePortal = true;
         wlr.enable = false;
       };
