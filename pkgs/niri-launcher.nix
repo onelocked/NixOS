@@ -1,24 +1,25 @@
 {
-  lib,
-  writeShellScriptBin,
+  writeShellApplication,
   jq,
-  coreutils,
+  uutils-coreutils-noprefix,
   util-linux,
 }:
-
-let
-  _ = lib.getExe;
-in
-
-writeShellScriptBin "niri-launcher" ''
-  APP_ID="$1"
-  CMD="$2"
-
-  WIN_ID=$(niri msg --json windows | ${_ jq} -r ".[] | select(.app_id == \"$APP_ID\") | .id" | ${coreutils}/bin/head -n1)
-
-  if [ -z "$WIN_ID" ]; then
-      ${util-linux}/bin/setsid $CMD >/dev/null 2>&1 &
-  else
-      niri msg action focus-window --id $WIN_ID
-  fi
-''
+writeShellApplication {
+  name = "niri-launcher";
+  runtimeInputs = [
+    jq
+    uutils-coreutils-noprefix
+    util-linux
+  ];
+  text = # bash
+    ''
+      APP_ID="$1"
+      CMD="$2"
+      WIN_ID=$(niri msg --json windows | jq -r ".[] | select(.app_id == \"$APP_ID\") | .id" | head -n1)
+      if [ -z "$WIN_ID" ]; then
+          setsid "$CMD" >/dev/null 2>&1 &
+      else
+          niri msg action focus-window --id "$WIN_ID"
+      fi
+    '';
+}
