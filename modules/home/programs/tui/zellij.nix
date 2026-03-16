@@ -1,86 +1,140 @@
 {
   flake.modules.homeManager.zellij =
     { pkgs, ... }:
+    let
+      zjstatus = pkgs.fetchurl {
+        url = "https://github.com/dj95/zjstatus/releases/download/v0.22.0/zjstatus.wasm";
+        sha256 = "sha256-TeQm0gscv4YScuknrutbSdksF/Diu50XP4W/fwFU3VM=";
+      };
+      zjstatus-hints = pkgs.fetchurl {
+        url = "https://github.com/b0o/zjstatus-hints/releases/download/v0.1.4/zjstatus-hints.wasm";
+        sha256 = "sha256-k2xV6QJcDtvUNCE4PvwVG9/ceOkk+Wa/6efGgr7IcZ0=";
+      };
+    in
     {
       programs.zellij =
         let
-          lazygitLayout =
-            pkgs.writeText "lazygit.kdl" # kdl
-              ''
-                layout {
-                    pane name="lazygit" {
-                        command "${pkgs.lazygit}/bin/lazygit"
-                        close_on_exit true
-                    }
+          zjstatusPlugin = # kdl
+            ''
+              pane size=1 borderless=true {
+                plugin location="file:${zjstatus}" {
+                  hide_frame_for_single_pane "true"
+                  hide_frame_except_for_search     "false"
+                  hide_frame_except_for_scroll     "false"
+                  hide_frame_except_for_fullscreen "false"
+
+                  border_enabled  "false"
+                  border_char     "─"
+                  border_format   "#[fg=#6C7086]{char}"
+                  border_position "top"
+
+                  format_left   "{mode}"
+                  format_center "{tabs}"
+                  format_right  "{pipe_zjstatus_hints}"
+                  format_space  ""
+
+                  // NOTE: this is necessary for the zjstatus-hint plugin to render
+                  pipe_zjstatus_hints_format "{output}"
+
+                  // indicators
+                  tab_sync_indicator       "<> "
+                  tab_fullscreen_indicator " "
+                  tab_floating_indicator   "⬚ "
+
+                  // Modes
+                  mode_normal        "#[fg=#272e33,bg=#a7c080,bold]  "
+                  mode_locked        "#[fg=#272e33,bg=#e67e80,bold]  "
+                  mode_resize        "#[fg=#272e33,bg=#dbbc7f,bold] 󰩨 {name} "
+                  mode_pane          "#[fg=#272e33,bg=#d699b6,bold]  {name} "
+                  mode_tab           "#[fg=#272e33,bg=#7fbbb3,bold] 󱦞 {name} "
+                  mode_scroll        "#[fg=#272e33,bg=#83c092,bold]  {name} "
+                  mode_session       "#[fg=#272e33,bg=#e69875,bold]  {name} "
+                  mode_move          "#[fg=#272e33,bg=#9da9a0,bold]  {name} "
+
+
+                  // inactive tabs
+                  tab_normal              "#[fg=#859289] {index} {floating_indicator}"
+                  tab_normal_fullscreen   "#[fg=#859289] {index} {fullscreen_indicator}"
+                  tab_normal_sync         "#[fg=#859289] {index} {sync_indicator}"
+
+                  // formatting for the current active tab
+                  tab_active              "#[fg=#272e33,bg=#7fbbb3,bold] {index} {floating_indicator}"
+                  tab_active_fullscreen   "#[fg=#272e33,bg=#7fbbb3,bold] {index} {fullscreen_indicator}"
+                  tab_active_sync         "#[fg=#272e33,bg=#7fbbb3,bold] {index} {sync_indicator}"
+
+                  tab_separator           ""
+                  // format when renaming a tab
+                  tab_rename              "#[bg=#d699b6,fg=#272e33] {index} {name} {floating_indicator} "
+
+                  // limit tab display count
+                  tab_display_count         "5"  // limit number of visible tabs
+                  tab_truncate_start_format "#[fg=#dbbc7f]#[fg=#272e33,bg=#dbbc7f]+{count} "
+                  tab_truncate_end_format   "#[fg=#272e33,bg=#dbbc7f] +{count}#[fg=#dbbc7f]"
                 }
-              '';
+              }
+            '';
+
+          defaultTabTemplate = # kdl
+            ''
+              default_tab_template {
+                children
+                ${zjstatusPlugin}
+              }
+              swap_floating_layout {
+                floating_panes max_panes=1 {
+                  pane {
+                    x "10%"
+                    y "10%"
+                    width "80%"
+                    height "80%"
+                  }
+                }
+                floating_panes {
+                  pane {
+                    x "10%"
+                    y "10%"
+                    width "80%"
+                    height "80%"
+                  }
+                }
+              }
+            '';
           defaultLayout =
             pkgs.writeText "defaultLayout.kdl" # kdl
               ''
                 layout {
-                    default_tab_template {
-                        pane size=1 borderless=true {
-                            plugin location="tab-bar"
-                        }
-                        children
-                        pane size=1 borderless=true {
-                            plugin location="status-bar"
-                        }
-                    }
-
-                    tab name="neovim" focus=true {
-                        pane
-                    }
-
-                    tab name="terminal" {
-                        pane
-                    }
-                    swap_floating_layout {
-                        floating_panes max_panes=1 {
-                            pane {
-                                x "10%"
-                                y "10%"
-                                width "80%"
-                                height "80%"
-                            }
-                        }
-                        floating_panes {
-                            pane {
-                                x "10%"
-                                y "10%"
-                                width "80%"
-                                height "80%"
-                            }
-                        }
-                    }
+                  ${defaultTabTemplate}
                 }
               '';
-          sysmon =
+
+          lazygitLayout =
+            pkgs.writeText "lazygit.kdl" # kdl
+              ''
+                layout {
+                  pane name="lazygit" {
+                    command "${pkgs.lazygit}/bin/lazygit"
+                    close_on_exit true
+                  }
+                }
+              '';
+          sysmonLayout =
             pkgs.writeText "sysmon.kdl" # kdl
               ''
                 layout {
-                    default_tab_template {
-                        pane size=1 borderless=true {
-                            plugin location="tab-bar"
-                        }
-                        children
-                        pane size=1 borderless=true {
-                            plugin location="status-bar"
-                        }
+                  ${defaultTabTemplate}
+                  tab name="sysmon" {
+                    pane split_direction="vertical" {
+                      pane size="70%" name="btop" {
+                        command "${pkgs.btop-rocm}/bin/btop"
+                        close_on_exit true
+                      }
+                      pane size="30%" name="amdgpu" {
+                        command "${pkgs.amdgpu_top}/bin/amdgpu_top"
+                        args "--dark"
+                        close_on_exit true
+                      }
                     }
-                    tab name="sysmon" {
-                        pane split_direction="vertical" {
-                            pane size="70%" name="btop" {
-                                command "${pkgs.btop-rocm}/bin/btop"
-                                close_on_exit true
-                            }
-                            pane size="30%" name="amdgpu" {
-                                command "${pkgs.amdgpu_top}/bin/amdgpu_top"
-                                args "--dark"
-                                close_on_exit true
-                            }
-                        }
-                    }
+                  }
                 }
               '';
         in
@@ -88,6 +142,38 @@
           enable = true;
           extraConfig = # kdl
             ''
+              default_layout "${defaultLayout}"
+
+              session_serialization false
+
+              ui {
+                  pane_frames {
+                      hide_session_name true
+                      rounded_corners true
+                  }
+              }
+              theme "gruvbox-dark"
+              default_mode "locked"
+              mouse_mode true
+              advanced_mouse_actions false
+              copy_command "${pkgs.wl-clipboard-rs}/bin/wl-copy"
+              copy_on_select true
+              Default: false
+              show_startup_tips false
+              pane_frames false
+
+              plugins {
+                  zjstatus-hints location="file:${zjstatus-hints}" {
+                      max_length 100 // 0 = unlimited
+                      overflow_str "..." // default
+                      pipe_name "zjstatus_hints" // default
+                      hide_in_base_mode true
+                  }
+              }
+              load_plugins {
+                  zjstatus-hints
+              }
+
               keybinds clear-defaults=true {
                   locked {
                       bind "Ctrl a" { SwitchToMode "normal"; }
@@ -261,7 +347,7 @@
                       bind "Alt Shift p" { ToggleGroupMarking; }
                       bind "Ctrl e" { Run "nvim" { close_on_exit true; };}
                       bind "Ctrl g" { NewTab { layout "${lazygitLayout}"; }; }
-                      bind "Ctrl m" { NewTab { layout "${sysmon}"; }; }
+                      bind "Ctrl m" { NewTab { layout "${sysmonLayout}"; }; }
 
                   }
                   shared_except "locked" "renametab" "renamepane" {
@@ -323,26 +409,6 @@
                       bind "esc" { UndoRenamePane; SwitchToMode "pane"; }
                   }
               }
-
-              default_layout "${defaultLayout}"
-
-              session_serialization false
-
-              ui {
-                  pane_frames {
-                      hide_session_name true
-                      rounded_corners true
-                  }
-              }
-              theme_dir "/home/onelock/.config/zellij/themes"
-              theme "gruvbox-dark"
-              default_mode "locked"
-              mouse_mode true
-              advanced_mouse_actions false
-              copy_command "${pkgs.wl-clipboard-rs}/bin/wl-copy"
-              copy_on_select true
-              Default: false
-              show_startup_tips false
             '';
         };
     };
