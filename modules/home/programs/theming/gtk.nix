@@ -27,10 +27,6 @@
           gtk-xft-hinting = 1;
           gtk-xft-hintstyle = "hintslight";
           gtk-xft-rgba = "rgb";
-          gtk-decoration-layout = "menu:";
-        };
-        gtk4.extraConfig = mkForce {
-          gtk-decoration-layout = "menu:";
         };
         theme = {
           package = pkgs.adw-gtk3;
