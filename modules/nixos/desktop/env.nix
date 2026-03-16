@@ -9,6 +9,12 @@
       environment.sessionVariables = {
         QS_ICON_THEME = "${cfg.gtk.iconTheme.name}";
         GTK_USE_PORTAL = "1";
+        EDITOR = "nvim";
       };
     };
+  flake.modules.homeManager.default = {
+    home.sessionVariables = {
+      EDITOR = "nvim";
+    };
+  };
 }

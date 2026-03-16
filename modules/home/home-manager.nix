@@ -9,9 +9,6 @@
         username = username;
         homeDirectory = homedir;
         stateVersion = stateVersion;
-        sessionVariables = {
-          EDITOR = "nvim";
-        };
       };
     };
 }
