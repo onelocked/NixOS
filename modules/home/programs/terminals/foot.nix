@@ -23,7 +23,7 @@
         };
 
         cursor = {
-          style = "beam";
+          style = "block";
           unfocused-style = "hollow";
           blink = "yes";
           blink-rate = 500;

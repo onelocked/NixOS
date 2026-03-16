@@ -44,23 +44,23 @@
                   // Modes
                   mode_normal        "#[fg=#272e33,bg=#a7c080,bold]  "
                   mode_locked        "#[fg=#272e33,bg=#e67e80,bold]  "
-                  mode_resize        "#[fg=#272e33,bg=#dbbc7f,bold] 󰩨 {name} "
-                  mode_pane          "#[fg=#272e33,bg=#d699b6,bold]  {name} "
-                  mode_tab           "#[fg=#272e33,bg=#7fbbb3,bold] 󱦞 {name} "
-                  mode_scroll        "#[fg=#272e33,bg=#83c092,bold]  {name} "
-                  mode_session       "#[fg=#272e33,bg=#e69875,bold]  {name} "
-                  mode_move          "#[fg=#272e33,bg=#9da9a0,bold]  {name} "
+                  mode_resize        "#[fg=#272e33,bg=#dbbc7f,bold] 󰩨 "
+                  mode_pane          "#[fg=#272e33,bg=#d699b6,bold]  "
+                  mode_tab           "#[fg=#272e33,bg=#7fbbb3,bold] 󱦞 "
+                  mode_scroll        "#[fg=#272e33,bg=#83c092,bold]  "
+                  mode_session       "#[fg=#272e33,bg=#e69875,bold] 󰍻  "
+                  mode_move          "#[fg=#272e33,bg=#9da9a0,bold]  "
 
 
                   // inactive tabs
-                  tab_normal              "#[fg=#859289] {index} {floating_indicator}"
-                  tab_normal_fullscreen   "#[fg=#859289] {index} {fullscreen_indicator}"
-                  tab_normal_sync         "#[fg=#859289] {index} {sync_indicator}"
+                  tab_normal              "#[fg=#859289] ○ {floating_indicator}"
+                  tab_normal_fullscreen   "#[fg=#859289] ○ {fullscreen_indicator}"
+                  tab_normal_sync         "#[fg=#859289] ○ {sync_indicator}"
 
                   // formatting for the current active tab
-                  tab_active              "#[fg=#272e33,bg=#7fbbb3,bold] {index} {floating_indicator}"
-                  tab_active_fullscreen   "#[fg=#272e33,bg=#7fbbb3,bold] {index} {fullscreen_indicator}"
-                  tab_active_sync         "#[fg=#272e33,bg=#7fbbb3,bold] {index} {sync_indicator}"
+                  tab_active              "#[fg=#272e33,bg=#7fbbb3,bold] ● {floating_indicator}"
+                  tab_active_fullscreen   "#[fg=#272e33,bg=#7fbbb3,bold] ● {fullscreen_indicator}"
+                  tab_active_sync         "#[fg=#272e33,bg=#7fbbb3,bold] ● {sync_indicator}"
 
                   tab_separator           ""
                   // format when renaming a tab
