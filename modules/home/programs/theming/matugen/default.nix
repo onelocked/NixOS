@@ -2,15 +2,16 @@
   flake.modules.homeManager.matugen =
     { config, ... }:
     {
-      xdg.configFile."noctalia/user-templates.toml".text = ''
-        [config]
+      xdg.configFile."noctalia/user-templates.toml".text = # toml
+        ''
+          [config]
 
-        [templates]
+          [templates]
 
-        [templates.lazygit]
-        input_path = '${./templates/lazygit.yml}'
-        output_path = '${config.xdg.configHome}/lazygit/config.yml'
+          [templates.lazygit]
+          input_path = '${./templates/lazygit.yml}'
+          output_path = '${config.xdg.configHome}/lazygit/config.yml'
 
-      '';
+        '';
     };
 }

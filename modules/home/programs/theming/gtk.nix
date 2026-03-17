@@ -12,6 +12,20 @@
     {
       gtk = {
         enable = true;
+        theme = {
+          package = pkgs.adw-gtk3;
+          name = "adw-gtk3-dark";
+        };
+        iconTheme = {
+          package = pkgs.papirus-icon-theme;
+          name = "Papirus-Dark";
+        };
+        font = {
+          name = "SFPro Text";
+          size = 14;
+        };
+
+        # Extra Config
         gtk4.extraCss = mkForce config.gtk.gtk3.extraCss;
         gtk3.extraCss = mkForce ''
           @import url("noctalia.css");
@@ -27,18 +41,6 @@
           gtk-xft-hinting = 1;
           gtk-xft-hintstyle = "hintslight";
           gtk-xft-rgba = "rgb";
-        };
-        theme = {
-          package = pkgs.adw-gtk3;
-          name = "adw-gtk3-dark";
-        };
-        iconTheme = {
-          package = pkgs.papirus-icon-theme;
-          name = "Papirus-Dark";
-        };
-        font = {
-          name = "SFPro Text";
-          size = 14;
         };
       };
     };

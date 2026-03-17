@@ -8,7 +8,7 @@
     let
       qtctConf = {
         Appearance = {
-          color_scheme_path = "${config.xdg.configHome}/qt6ct/colors/noctalia.conf";
+          color_scheme_path = config.xdg.configHome + "/qt6ct/colors/noctalia.conf";
           custom_palette = true;
           icon_theme = config.gtk.iconTheme.name;
           standard_dialogs = "default";

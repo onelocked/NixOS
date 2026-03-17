@@ -3,10 +3,6 @@
     { pkgs, ... }:
     {
       home = {
-        packages = with pkgs; [
-          bareblood_cursor
-          hand-of-evil
-        ];
         pointerCursor = {
           gtk.enable = true;
           x11.enable = true;

@@ -1,18 +1,19 @@
 {
   flake = {
-    modules.homeManager.dconf =
-      { config, ... }:
-      {
-        # Enable dconf for home-manager
-        dconf.settings = {
-          "org/gnome/desktop/interface" = {
-            color-scheme = "prefer-dark";
-            gtk-theme = "${config.gtk.theme.name}";
+    modules = {
+      homeManager.dconf =
+        { config, ... }:
+        {
+          dconf.settings = {
+            "org/gnome/desktop/interface" = {
+              color-scheme = "prefer-dark";
+              gtk-theme = "${config.gtk.theme.name}";
+            };
           };
         };
+      nixos.desktop = {
+        programs.dconf.enable = true;
       };
-    modules.nixos.desktop = {
-      programs.dconf.enable = true;
     };
   };
 }
