@@ -24,14 +24,12 @@
         style.name = "Fusion";
       };
 
-      xdg.configFile = {
-
-        # qtct config
-        "qt5ct/qt5ct.conf".text =
-          let
-            default = ''"${defaultFont},-1,5,400,0,0,0,0,0,0,0,0,0,0,1"'';
-          in
-          lib.generators.toINI { } (
+      xdg.configFile =
+        let
+          default = ''"${defaultFont},-1,5,400,0,0,0,0,0,0,0,0,0,0,1"'';
+        in
+        {
+          "qt5ct/qt5ct.conf".text = lib.generators.toINI { } (
             qtctConf
             // {
               Fonts = {
@@ -40,12 +38,7 @@
               };
             }
           );
-
-        "qt6ct/qt6ct.conf".text =
-          let
-            default = ''"${defaultFont},-1,5,400,0,0,0,0,0,0,0,0,0,0,1"'';
-          in
-          lib.generators.toINI { } (
+          "qt6ct/qt6ct.conf".text = lib.generators.toINI { } (
             qtctConf
             // {
               Fonts = {
@@ -54,6 +47,6 @@
               };
             }
           );
-      };
+        };
     };
 }
