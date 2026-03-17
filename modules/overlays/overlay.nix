@@ -11,7 +11,7 @@
     final: prev:
     let
       system = final.stdenv.hostPlatform.system;
-      getPkg = input: name: inputs.${input}.packages.${system}.${name};
+      getPkg = input: inputs.${input}.packages.${system}.default;
 
       localPkgs = import ../../pkgs {
         pkgs = final;
@@ -22,8 +22,7 @@
     // {
       wl-clipboard = prev.wl-clipboard-rs;
 
-      ghostty = getPkg "ghostty" "default";
-      niri = getPkg "niri" "default";
-      neovim = getPkg "vimmax" "default";
+      niri = getPkg "niri";
+      neovim = getPkg "vimmax";
     };
 }
