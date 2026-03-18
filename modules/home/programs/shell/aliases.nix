@@ -6,7 +6,7 @@
       config,
       ...
     }:
-    lib.mkIf config.programs.fish.enable or false {
+    lib.mkIf ((config.programs.fish.enable or false) || (config.programs.nushell.enable or false)) {
       home.shellAliases =
         let
           _ = lib.getExe;
