@@ -1,17 +1,52 @@
 { self, ... }:
 {
   flake.modules.nixos.niri =
-    { pkgs, ... }:
     {
-      programs.niri = {
-        enable = true;
-        useNautilus = false;
-      };
-      programs.xwayland = {
-        enable = true;
-        package = pkgs.xwayland-satellite;
-      };
-    };
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
+    lib.mkMerge [
+      {
+        programs.niri = {
+          enable = true;
+          useNautilus = false;
+        };
+        programs.xwayland = {
+          enable = true;
+          package = pkgs.xwayland-satellite;
+        };
+      }
+      (lib.mkIf (config.programs.niri.enable) (
+        let
+          niri-command = "${lib.getExe' config.programs.niri.package "niri-session"}";
+          inherit (self.variables) username;
+        in
+        {
+          environment.systemPackages = [
+            pkgs.libsecret
+          ];
+
+          services = {
+            displayManager.enable = lib.mkForce false;
+            greetd = {
+              enable = true;
+              settings = {
+                default_session = {
+                  command = niri-command;
+                  user = username;
+                };
+              };
+            };
+          };
+          security.pam.services.greetd = {
+            enableGnomeKeyring = true;
+          };
+        }
+      ))
+    ];
+
   flake.modules.homeManager.default =
     {
       pkgs,
@@ -19,7 +54,7 @@
       osConfig,
       ...
     }:
-    lib.mkIf (osConfig.programs.niri.enable or false) (
+    lib.mkIf (osConfig.programs.niri.enable) (
       let
         general =
           pkgs.writeText "general.kdl" # kdl
