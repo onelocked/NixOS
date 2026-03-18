@@ -1,7 +1,12 @@
 {
   flake.modules.homeManager.default =
-    { pkgs, lib, ... }:
     {
+      pkgs,
+      lib,
+      config,
+      ...
+    }:
+    lib.mkIf config.programs.fish.enable or false {
       home.shellAliases =
         let
           _ = lib.getExe;
@@ -19,6 +24,7 @@
           gtop = "${_ amdgpu_top} --dark";
           gr = "cd (git rev-parse --show-toplevel)";
         };
+
       programs = {
         nix-your-shell = {
           enable = true;
