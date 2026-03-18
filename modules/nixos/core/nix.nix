@@ -2,15 +2,18 @@
 {
   flake.modules.nixos.default =
     { pkgs, lib, ... }:
+    let
+      inherit (self.variables) stateVersion username;
+    in
     {
-      system.stateVersion = self.variables.stateVersion;
+      system.stateVersion = stateVersion;
       nix = {
         optimise.automatic = true;
         package = pkgs.nixVersions.latest;
         settings = {
           trusted-users = [
             "root"
-            self.variables.username
+            username
           ];
           experimental-features = [
             "nix-command"
