@@ -31,10 +31,6 @@
           inherit (self.variables) username;
         in
         {
-          environment.systemPackages = [
-            pkgs.libsecret
-          ];
-
           services = {
             displayManager.enable = lib.mkForce false;
             greetd = {
@@ -128,7 +124,7 @@
                   }
               }
               // Ask for keyring password at startup
-              spawn-sh-at-startup "secret-tool lookup app keyring-init || echo 'init' | secret-tool store --label='keyring-init' app keyring-init"
+              spawn-sh-at-startup "${pkgs.libsecret}/bin/secret-tool lookup app keyring-init || echo 'init' | secret-tool store --label='keyring-init' app keyring-init"
             '';
         workspaces =
           pkgs.writeText "workspaces.kdl" # kdl
