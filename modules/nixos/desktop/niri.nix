@@ -14,7 +14,7 @@
           useNautilus = false;
         };
       }
-      (lib.mkIf (config.programs.niri.enable) (
+      (lib.mkIf (config.programs.niri.enable or false) (
         let
           niri-command = "${lib.getExe' config.programs.niri.package "niri-session"}";
           inherit (self.variables) username;
@@ -63,7 +63,7 @@
       osConfig,
       ...
     }:
-    lib.mkIf (osConfig.programs.niri.enable) (
+    lib.mkIf (osConfig.programs.niri.enable or false) (
       let
         general =
           pkgs.writeText "general.kdl" # kdl

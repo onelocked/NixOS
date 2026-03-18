@@ -12,7 +12,7 @@
       programs.bash = {
         enable = true;
         interactiveShellInit =
-          lib.mkIf config.home-manager.users.${self.variables.username}.programs.fish.enable
+          lib.mkIf config.home-manager.users.${self.variables.username}.programs.fish.enable or false
             ''
               if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
               then
