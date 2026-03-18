@@ -51,6 +51,7 @@
     {
       pkgs,
       lib,
+      config,
       osConfig,
       ...
     }:
@@ -97,7 +98,7 @@
                    skip-at-startup
               }
 
-              screenshot-path "${self.variables.homedir}/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+              screenshot-path "${config.xdg.userDirs.pictures}/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
               debug {
                 // Allows notification actions and window activation from Noctalia.

@@ -14,9 +14,7 @@
           pictures = homedir + "/Pictures";
           videos = homedir + "/Videos";
           documents = homedir + "/Documents";
-          extraConfig = {
-            PROJECTS = homedir + "/Development";
-          };
+          extraConfig.PROJECTS = homedir + "/Development";
           desktop = null;
           music = null;
           publicShare = null;
