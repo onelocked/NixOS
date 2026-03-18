@@ -1,27 +1,28 @@
 { self, ... }:
 {
   flake.modules.nixos.desktop =
-    { lib, pkgs, ... }:
+    {
+      lib,
+      pkgs,
+      config,
+      ...
+    }:
     let
-      inherit (lib) mkForce;
+      chooser = {
+        "org.freedesktop.impl.portal.FileChooser" = lib.mkForce [
+          "termfilechooser"
+        ];
+      };
     in
     {
       xdg.portal = {
         extraPortals = with pkgs; [
           xdg-desktop-portal-termfilechooser
         ];
-        config = {
-          common = {
-            "org.freedesktop.impl.portal.FileChooser" = mkForce [
-              "termfilechooser"
-            ];
-          };
-          niri = {
-            "org.freedesktop.impl.portal.FileChooser" = mkForce [
-              "termfilechooser"
-            ];
-          };
-        };
+        config = lib.mkMerge [
+          { common = chooser; }
+          (lib.mkIf config.programs.niri.enable { niri = chooser; })
+        ];
       };
     };
 
@@ -33,7 +34,7 @@
           [filechooser]
           cmd=yazi-wrapper.sh
           default_dir=${self.variables.homedir}/Downloads
-          open_mode=suggested
+          open_mode=default
           save_mode=default
         '';
         "xdg-desktop-portal-termfilechooser/yazi-wrapper.sh" = {
