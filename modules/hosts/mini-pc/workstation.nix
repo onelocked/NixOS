@@ -11,6 +11,7 @@ in
       overlays
       desktop
       sunshine
+      niri
     ];
     homeModules = with homeManager; {
       shell = [
