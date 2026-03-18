@@ -17,6 +17,13 @@
           enable = true;
           package = pkgs.xwayland-satellite;
         };
+        xdg.portal = {
+          config.niri = {
+            "org.freedesktop.impl.portal.FileChooser" = lib.mkForce [
+              "termfilechooser"
+            ];
+          };
+        };
       }
       (lib.mkIf (config.programs.niri.enable) (
         let

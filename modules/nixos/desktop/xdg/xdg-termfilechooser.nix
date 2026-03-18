@@ -3,23 +3,16 @@
     {
       lib,
       pkgs,
-      config,
       ...
     }:
-    let
-      chooser = {
-        "org.freedesktop.impl.portal.FileChooser" = lib.mkForce [
-          "termfilechooser"
-        ];
-      };
-    in
     {
       xdg.portal = {
         extraPortals = [ pkgs.xdg-desktop-portal-termfilechooser ];
-        config = lib.mkMerge [
-          { common = chooser; }
-          (lib.mkIf config.programs.niri.enable { niri = chooser; })
-        ];
+        config.common = {
+          "org.freedesktop.impl.portal.FileChooser" = lib.mkForce [
+            "termfilechooser"
+          ];
+        };
       };
     };
 
@@ -52,6 +45,7 @@
               path="$4"
               out="$5"
 
+              command="${pkgs.foot}/bin/foot --app-id=FileChooser -e ${pkgs.yazi}/bin/yazi"
 
               if [ "$save" = "1" ]; then
                   set -- --chooser-file="$out" "$path"
@@ -62,8 +56,6 @@
               else
                   set -- --chooser-file="$out" "$path"
               fi
-
-              command="${pkgs.foot}/bin/foot --app-id=FileChooser -e ${pkgs.yazi}/bin/yazi"
 
               for arg in "$@"; do
                   escaped=$(printf "%s" "$arg" | sed 's/"/\\"/g')
