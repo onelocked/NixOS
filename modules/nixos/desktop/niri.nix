@@ -13,17 +13,6 @@
           enable = true;
           useNautilus = false;
         };
-        programs.xwayland = {
-          enable = true;
-          package = pkgs.xwayland-satellite;
-        };
-        xdg.portal = {
-          config.niri = {
-            "org.freedesktop.impl.portal.FileChooser" = lib.mkForce [
-              "termfilechooser"
-            ];
-          };
-        };
       }
       (lib.mkIf (config.programs.niri.enable) (
         let
@@ -31,6 +20,17 @@
           inherit (self.variables) username;
         in
         {
+          programs.xwayland = {
+            enable = true;
+            package = pkgs.xwayland-satellite;
+          };
+          xdg.portal = {
+            config.niri = {
+              "org.freedesktop.impl.portal.FileChooser" = lib.mkForce [
+                "termfilechooser"
+              ];
+            };
+          };
           services = {
             displayManager.enable = lib.mkForce false;
             greetd = {
