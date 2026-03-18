@@ -65,13 +65,6 @@
                     "key": " ",
                     "keyColor": "yellow"
                 },
-                /*
-                {
-                    "type": "packages",
-                    "key": "󰏖 ",
-                    "keyColor": "yellow"
-                },
-                */
                 {
                     "type": "custom",
                     "format": " ─────────────────────────── "
