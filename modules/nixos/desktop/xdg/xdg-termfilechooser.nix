@@ -1,4 +1,3 @@
-{ self, ... }:
 {
   flake.modules.nixos.desktop =
     {
@@ -16,9 +15,7 @@
     in
     {
       xdg.portal = {
-        extraPortals = with pkgs; [
-          xdg-desktop-portal-termfilechooser
-        ];
+        extraPortals = [ pkgs.xdg-desktop-portal-termfilechooser ];
         config = lib.mkMerge [
           { common = chooser; }
           (lib.mkIf config.programs.niri.enable { niri = chooser; })
@@ -27,16 +24,17 @@
     };
 
   flake.modules.homeManager.default =
-    { pkgs, ... }:
+    { pkgs, config, ... }:
     {
       xdg.configFile = {
-        "xdg-desktop-portal-termfilechooser/config".text = ''
-          [filechooser]
-          cmd=yazi-wrapper.sh
-          default_dir=${self.variables.homedir}/Downloads
-          open_mode=default
-          save_mode=default
-        '';
+        "xdg-desktop-portal-termfilechooser/config".text = # toml
+          ''
+            [filechooser]
+            cmd=yazi-wrapper.sh
+            default_dir=${config.xdg.userDirs.download}
+            open_mode=default
+            save_mode=default
+          '';
         "xdg-desktop-portal-termfilechooser/yazi-wrapper.sh" = {
           executable = true;
           text = # bash
