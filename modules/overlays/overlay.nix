@@ -3,7 +3,6 @@
   flake.modules.nixos.overlays = {
     nixpkgs.overlays = [
       self.overlays.default
-      inputs.derivations.overlays.derivations
     ];
   };
 
