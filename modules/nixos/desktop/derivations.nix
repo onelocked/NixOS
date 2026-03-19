@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  flake-file.inputs.derivations.url = "git+file:///home/onelock/Development/Coding/derivations";
+  flake-file.inputs.extra-modules.url = "github:onelocked/extra-modules";
 
   flake.modules.nixos.desktop =
     { pkgs, ... }:
@@ -11,7 +11,7 @@
         niri-launcher
       ];
       nixpkgs.overlays = [
-        inputs.derivations.overlays.derivations
+        inputs.extra-modules.overlays.derivations
       ];
     };
 }

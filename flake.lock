@@ -31,7 +31,7 @@
         "type": "github"
       }
     },
-    "derivations": {
+    "extra-modules": {
       "inputs": {
         "flake-parts": "flake-parts",
         "fontui": "fontui",
@@ -40,17 +40,17 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1773933375,
-        "narHash": "sha256-ehjwkN3082EvenUBPLvx5W6W4MuyZJfSjhhrVSh8+RM=",
-        "ref": "refs/heads/main",
-        "rev": "05e29641f02b7b0981b7f07f73785dd84fb3fb63",
-        "revCount": 27,
-        "type": "git",
-        "url": "file:///home/onelock/Development/Coding/derivations"
+        "lastModified": 1773934410,
+        "narHash": "sha256-9sQXHwVcenAAtjumuvqqoWolS/pjTyve65YhnXzvDzg=",
+        "owner": "onelocked",
+        "repo": "extra-modules",
+        "rev": "ef12a62b2a0ae28a0b82ccf4b09e977fb288fb09",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "file:///home/onelock/Development/Coding/derivations"
+        "owner": "onelocked",
+        "repo": "extra-modules",
+        "type": "github"
       }
     },
     "flake-file": {
@@ -71,7 +71,7 @@
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
-          "derivations",
+          "extra-modules",
           "nixpkgs"
         ]
       },
@@ -170,7 +170,7 @@
     "fontui": {
       "inputs": {
         "nixpkgs": [
-          "derivations",
+          "extra-modules",
           "nixpkgs"
         ],
         "systems": "systems"
@@ -440,7 +440,7 @@
     },
     "root": {
       "inputs": {
-        "derivations": "derivations",
+        "extra-modules": "extra-modules",
         "flake-file": "flake-file",
         "flake-parts": "flake-parts_2",
         "home-manager": "home-manager",
@@ -463,7 +463,7 @@
     "rust-overlay": {
       "inputs": {
         "nixpkgs": [
-          "derivations",
+          "extra-modules",
           "lan-mouse",
           "nixpkgs"
         ]

@@ -1,11 +1,11 @@
 { inputs, ... }:
 {
-  flake-file.inputs.derivations.url = "git+file:///home/onelock/Development/Coding/derivations";
+  flake-file.inputs.extra-modules.url = "github:onelocked/extra-modules";
   flake.modules.homeManager = {
     obs-studio =
       { pkgs, ... }:
       {
-        imports = [ inputs.derivations.homeManagerModules.obs-with-plugins ];
+        imports = [ inputs.extra-modules.homeManagerModules.obs-with-plugins ];
         programs.obs-with-plugins = {
           enable = true;
           systemd = true;
