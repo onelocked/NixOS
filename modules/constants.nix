@@ -2,6 +2,7 @@
 {
   flake = {
     options.variables = lib.mkOption {
+      readOnly = true;
       type = lib.types.attrsOf lib.types.unspecified;
       default = {
         email = "onelock@mail.com";
