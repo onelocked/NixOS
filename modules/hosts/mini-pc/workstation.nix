@@ -31,6 +31,7 @@ in
         zellij
         yazi
         dott-tui
+        neovim
       ];
       desktop = [
         xdg

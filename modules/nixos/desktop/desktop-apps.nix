@@ -1,4 +1,6 @@
 {
+  flake-file.inputs.derivations.url = "git+file:///home/onelock/Development/Coding/derivations";
+
   flake.modules.nixos.desktop =
     { pkgs, ... }:
     {

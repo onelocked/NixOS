@@ -1,5 +1,6 @@
 { self, ... }:
 {
+  flake-file.inputs.niri.url = "github:niri-wm/niri/wip/branch";
   flake.modules.nixos.niri =
     {
       config,
