@@ -40,11 +40,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1773660528,
-        "narHash": "sha256-Af9NctZADtLnPs3sHrBamggAI84o9L7zwUW7VyxJx5U=",
+        "lastModified": 1773933375,
+        "narHash": "sha256-ehjwkN3082EvenUBPLvx5W6W4MuyZJfSjhhrVSh8+RM=",
         "ref": "refs/heads/main",
-        "rev": "152cb2384a2d71702d8042c6f211fb271266891b",
-        "revCount": 26,
+        "rev": "05e29641f02b7b0981b7f07f73785dd84fb3fb63",
+        "revCount": 27,
         "type": "git",
         "url": "file:///home/onelock/Development/Coding/derivations"
       },
