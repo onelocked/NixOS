@@ -46,6 +46,10 @@
       url = "github:max-sixty/worktrunk/fe395cb467d341d4b21e9b1cc6cfa2feaec0fdd1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    yazi = {
+      url = "github:sxyazi/yazi/cc2414728caa2fb848be27e3b96e977fa6913211";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
       inputs = {
