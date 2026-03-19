@@ -1,3 +1,4 @@
+{ inputs, ... }:
 {
   flake-file.inputs.vimmax = {
     url = "github:onelocked/vimmax";
@@ -6,14 +7,11 @@
     inputs.import-tree.follows = "import-tree";
   };
 
-  flake.modules.homeManager.neovim =
-    { pkgs, ... }:
-    {
-      home = {
-        packages = [ pkgs.neovim ];
-        sessionVariables = {
-          EDITOR = "nvim";
-        };
-      };
+  flake.modules.homeManager.neovim = {
+    imports = [ inputs.vimmax.homeManagerModules.default ];
+    programs.vimmax = {
+      enable = true;
+      defaultEditor = true;
     };
+  };
 }

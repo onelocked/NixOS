@@ -22,6 +22,5 @@
       wl-clipboard = prev.wl-clipboard-rs;
 
       niri = getPkg "niri";
-      neovim = getPkg "vimmax";
     };
 }
