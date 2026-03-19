@@ -1,7 +1,7 @@
 { self, ... }:
 {
   flake.modules.homeManager.git =
-    { pkgs, ... }:
+    { pkgs, config, ... }:
     {
       programs.git =
         let
@@ -41,8 +41,8 @@
         };
       programs.lazygit = {
         enable = true;
-        enableNushellIntegration = true;
-        enableFishIntegration = true;
+        enableNushellIntegration = config.programs.nushell.enable or false;
+        enableFishIntegration = config.programs.fish.enable or false;
       };
       home = {
         shellAliases = {

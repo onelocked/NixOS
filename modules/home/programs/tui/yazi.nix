@@ -8,6 +8,7 @@
     {
       pkgs,
       lib,
+      config,
       ...
     }:
     {
@@ -19,9 +20,8 @@
           enable = true;
           package = inputs.yazi.packages.${pkgs.stdenv.hostPlatform.system}.default;
           shellWrapperName = "y";
-          enableBashIntegration = true;
-          enableNushellIntegration = true;
-          enableFishIntegration = true;
+          enableNushellIntegration = config.programs.nushell.enable or false;
+          enableFishIntegration = config.programs.fish.enable or false;
           plugins =
             let
               pluginNames = [

@@ -6,7 +6,11 @@
       config,
       ...
     }:
-    lib.mkIf ((config.programs.fish.enable or false) || (config.programs.nushell.enable or false)) {
+    let
+      fish = config.programs.fish.enable or false;
+      nushell = config.programs.nushell.enable or false;
+    in
+    lib.mkIf (fish || nushell) {
       home.shellAliases =
         let
           _ = lib.getExe;
@@ -28,13 +32,13 @@
       programs = {
         nix-your-shell = {
           enable = true;
-          enableNushellIntegration = true;
-          enableFishIntegration = true;
+          enableNushellIntegration = nushell;
+          enableFishIntegration = fish;
         };
         atuin = {
           enable = true;
-          enableNushellIntegration = true;
-          enableFishIntegration = true;
+          enableNushellIntegration = nushell;
+          enableFishIntegration = fish;
           settings = {
             search_mode = "fuzzy";
             filter_mode = "session-preload";
@@ -42,18 +46,18 @@
         };
         pay-respects = {
           enable = true;
-          enableFishIntegration = true;
-          enableNushellIntegration = true;
+          enableFishIntegration = fish;
+          enableNushellIntegration = nushell;
         };
         zoxide = {
           enable = true;
-          enableNushellIntegration = true;
-          enableFishIntegration = true;
+          enableNushellIntegration = nushell;
+          enableFishIntegration = fish;
         };
         carapace = {
           enable = true;
-          enableNushellIntegration = true;
-          enableFishIntegration = true;
+          enableNushellIntegration = nushell;
+          enableFishIntegration = fish;
         };
       };
     };
