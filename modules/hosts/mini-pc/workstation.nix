@@ -58,7 +58,6 @@ in
         jellyfin-tui
         telegram-desktop
         vesktop
-        parsec
         moonlight-qt
       ];
     };
