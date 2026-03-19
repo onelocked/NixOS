@@ -46,6 +46,7 @@
           nd = "nix develop";
           nr = "nix run";
           nf = "nix flake update";
+          wf = "nix run ~/NixOS#write-flake";
         };
         interactiveShellInit = # fish
           ''
