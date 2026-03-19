@@ -16,8 +16,8 @@
         discordBranch = "stable";
       };
       vencord.settings = {
-        autoUpdate = true;
-        autoUpdateNotification = true;
+        autoUpdate = false;
+        autoUpdateNotification = false;
         useQuickCss = true;
         themeLinks = [ "https://refact0r.github.io/system24/build/system24.css" ];
         eagerPatches = false;
