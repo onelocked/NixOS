@@ -13,7 +13,7 @@
         functions = {
           # Transient Prompt
           starship_transient_prompt_func = ''
-            printf " \e[38;2;142;192;124m\e[0m "
+            printf " \e[38;2;232;196;216m\e[0m "
           '';
 
           __zoxide_interactive = # fish
@@ -54,41 +54,29 @@
 
             bind Z __zoxide_interactive
 
-            # Gruvbox Dark Palette for Fish
-            # --- Base Colors ---
-            set -g fish_color_normal        "#ebdbb2"  # rosewater / text
-            set -g fish_color_command       "#83a598"  # blue / recognized_command
-            set -g fish_color_keyword       "#b16286"  # mauve / shape_keyword
-            set -g fish_color_string        "#8ec07c"  # teal / string
-            set -g fish_color_operator      "#83a598"  # sky / operator
-            set -g fish_color_comment       "#928374"  # overlay2 / comments
-            set -g fish_color_error         "#fb4934"  # red / errors
-            set -g fish_color_param         "#fe8019"  # flamingo / variables
-            set -g fish_color_quote         "#8ec07c"  # string quotes
-            set -g fish_color_redirection   "#83a598"  # operator symbols > |
-            set -g fish_color_end           "#d3869b"  # pink / special chars
-            set -g fish_color_autosuggestion "#7c6f64" # overlay1
-            set -g fish_color_search_match  --bold --underline "#b8bb26" # green / search match
-            set -g fish_color_selection      "#458588"  # sapphire / selection
+            set -g fish_color_normal        "#cfd3e7"
+            set -g fish_color_command       "#b8db8c"
+            set -g fish_color_keyword       "#c8b0e8"
+            set -g fish_color_string        "#c5c0ff"
+            set -g fish_color_operator      "#8fd4b5"
+            set -g fish_color_comment       "#454545"
+            set -g fish_color_error         "#f4a8b8"
+            set -g fish_color_param         "#a8c8f0"
+            set -g fish_color_quote         "#b8db8c"
+            set -g fish_color_redirection   "#7cb8d4"
+            set -g fish_color_end           "#e8c4d8"
+            set -g fish_color_autosuggestion "#787878"
+            set -g fish_color_search_match  --bold --underline "#f6d88a"
+            set -g fish_color_selection      "#a8c8f0"
 
-            # --- Cursor ---
-            set -g fish_color_cursor          "#282828"  # base background
-            set -g fish_color_cursor_foreground "#ebdbb2" # rosewater text
+            set -g fish_color_cursor          "#1e1e2e"
+            set -g fish_color_cursor_foreground "#cfd3e7"
 
-            # --- Path / File Highlights ---
-            set -g fish_color_directory     "#fabd2f"  # yellow / file paths
-            set -g fish_color_commandpath   "#83a598"  # blue / recognized commands
+            set -g fish_color_directory     "#f6d88a"
+            set -g fish_color_commandpath   "#7d75c0"
 
-            # --- Virtual Text / UI elements ---
-            # Not all Nushell shapes exist in Fish; closest mapping:
-            set -g fish_color_bracket       "#b8bb26"  # green / matching brackets
-            set -g fish_color_escape        "#fe8019"  # flamingo / escapes
-            set -g fish_color_operator      "#83a598"  # sky / operator symbols
-
-            # --- Background / Terminal Colors ---
-            # Fish doesn't control terminal background fully; just set defaults
-            set -g fish_color_normal_bg     "#282828"  # base / background
-            set -g fish_color_comment_bg    "#32302f"  # surface0
+            set -g fish_color_bracket       "#b8db8c"
+            set -g fish_color_escape        "#f2b8a0"
           '';
       };
     };
