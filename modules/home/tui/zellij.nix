@@ -42,25 +42,25 @@
                   tab_floating_indicator   "⬚ "
 
                   // Modes
-                  mode_normal        "#[fg=#272e33,bg=#a7c080,bold]  "
-                  mode_locked        "#[fg=#272e33,bg=#e67e80,bold]  "
-                  mode_resize        "#[fg=#272e33,bg=#dbbc7f,bold] 󰩨 "
-                  mode_pane          "#[fg=#272e33,bg=#d699b6,bold]  "
-                  mode_tab           "#[fg=#272e33,bg=#7fbbb3,bold] 󱦞 "
-                  mode_scroll        "#[fg=#272e33,bg=#83c092,bold]  "
-                  mode_session       "#[fg=#272e33,bg=#e69875,bold] 󰍻  "
-                  mode_move          "#[fg=#272e33,bg=#9da9a0,bold]  "
+                  mode_normal        "#[fg=#8fd4b5,bg=#131316,bold]  "
+                  mode_locked        "#[fg=#f4a8b8,bg=#131316,bold]  "
+                  mode_resize        "#[fg=#d4a8c0,bg=#131316,bold] 󰩨 "
+                  mode_pane          "#[fg=#7d75c0,bg=#131316,bold]  "
+                  mode_tab           "#[fg=#f2b8a0,bg=#131316,bold] 󱦞 "
+                  mode_scroll        "#[fg=#c8b0e8,bg=#131316,bold]  "
+                  mode_session       "#[fg=#f6d88a,bg=#131316,bold] 󰍻  "
+                  mode_move          "#[fg=#e8c4d8,bg=#131316,bold]  "
 
 
                   // inactive tabs
-                  tab_normal              "#[fg=#859289] ○ {floating_indicator}"
-                  tab_normal_fullscreen   "#[fg=#859289] ○ {fullscreen_indicator}"
-                  tab_normal_sync         "#[fg=#859289] ○ {sync_indicator}"
+                  tab_normal              "#[fg=#c5c0ff] ○ "
+                  tab_normal_fullscreen   "#[fg=#c5c0ff] ○ "
+                  tab_normal_sync         "#[fg=#c5c0ff] ○ "
 
                   // formatting for the current active tab
-                  tab_active              "#[fg=#272e33,bg=#7fbbb3,bold] ● {floating_indicator}"
-                  tab_active_fullscreen   "#[fg=#272e33,bg=#7fbbb3,bold] ● {fullscreen_indicator}"
-                  tab_active_sync         "#[fg=#272e33,bg=#7fbbb3,bold] ● {sync_indicator}"
+                  tab_active              "#[fg=#7d75c0,bg=#131316,bold] {floating_indicator}● "
+                  tab_active_fullscreen   "#[fg=#7d75c0,bg=#131316,bold] {fullscreen_indicator}● "
+                  tab_active_sync         "#[fg=#7d75c0,bg=#131316,bold] {sync_indicator}● "
 
                   tab_separator           ""
                   // format when renaming a tab
@@ -144,7 +144,7 @@
                     mocha {
                         text_unselected {
                             base 207 211 231
-                            background 30 30 46
+                            background 19 19 22
                             emphasis_0 242 184 160
                             emphasis_1 124 184 212
                             emphasis_2 184 219 140
@@ -215,7 +215,7 @@
                             emphasis_3 200 176 232
                         }
                         frame_selected {
-                            base 53 53 67     // s
+                            base 53 53 67
                             background 0
                             emphasis_0 242 184 160
                             emphasis_1 197 192 255
@@ -223,7 +223,7 @@
                             emphasis_3 0
                         }
                         frame_unselected {
-                            base 19 19 22     // s
+                            base 19 19 22
                             background 0
                             emphasis_0 242 184 160
                             emphasis_1 197 192 255
