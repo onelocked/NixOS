@@ -8,7 +8,6 @@
       ...
     }:
     {
-      programs.nano.enable = lib.mkForce false;
       programs.bash = {
         enable = true;
         interactiveShellInit =
