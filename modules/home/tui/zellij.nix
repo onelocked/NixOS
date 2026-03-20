@@ -6,10 +6,6 @@
         url = "https://github.com/dj95/zjstatus/releases/download/v0.22.0/zjstatus.wasm";
         sha256 = "sha256-TeQm0gscv4YScuknrutbSdksF/Diu50XP4W/fwFU3VM=";
       };
-      zjstatus-hints = pkgs.fetchurl {
-        url = "https://github.com/b0o/zjstatus-hints/releases/download/v0.1.4/zjstatus-hints.wasm";
-        sha256 = "sha256-k2xV6QJcDtvUNCE4PvwVG9/ceOkk+Wa/6efGgr7IcZ0=";
-      };
     in
     {
       programs.zellij =
@@ -30,11 +26,9 @@
 
                   format_left   "{mode}"
                   format_center "{tabs}"
-                  format_right  "{pipe_zjstatus_hints}"
+                  format_right  ""
                   format_space  ""
 
-                  // NOTE: this is necessary for the zjstatus-hint plugin to render
-                  pipe_zjstatus_hints_format "{output}"
 
                   // indicators
                   tab_sync_indicator       "<> "
@@ -295,18 +289,6 @@
               Default: false
               show_startup_tips false
               pane_frames false
-
-              plugins {
-                  zjstatus-hints location="file:${zjstatus-hints}" {
-                      max_length 100 // 0 = unlimited
-                      overflow_str "..." // default
-                      pipe_name "zjstatus_hints" // default
-                      hide_in_base_mode true
-                  }
-              }
-              load_plugins {
-                  zjstatus-hints
-              }
 
               keybinds clear-defaults=true {
                   locked {
