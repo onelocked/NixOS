@@ -11,7 +11,7 @@
       programs.bash = {
         enable = true;
         interactiveShellInit =
-          lib.mkIf config.home-manager.users.${self.variables.username}.programs.fish.enable or false
+          lib.mkIf config.home-manager.users.${self.variables.username}.programs.fish.enable or false # bash
             ''
               if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
               then
@@ -19,9 +19,10 @@
                 exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
               fi
             '';
-        shellInit = ''
-          export NOCTALIA_AP_GOOGLE_API_KEY="$(cat ${config.sops.secrets.gemini.path})"
-        '';
+        shellInit = # bash
+          ''
+            export NOCTALIA_AP_GOOGLE_API_KEY="$(cat ${config.sops.secrets.gemini.path})"
+          '';
       };
     };
 }
