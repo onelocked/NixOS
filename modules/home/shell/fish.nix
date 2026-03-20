@@ -51,7 +51,8 @@
         interactiveShellInit = # fish
           ''
             set -g fish_greeting # Disable greeting
-
+            fish_vi_key_bindings
+            bind -M insert Z __zoxide_interactive
             bind Z __zoxide_interactive
 
             set -g fish_color_normal        "#cfd3e7"
