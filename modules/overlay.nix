@@ -12,13 +12,8 @@
       system = final.stdenv.hostPlatform.system;
       getPkg = input: inputs.${input}.packages.${system}.default;
 
-      localPkgs = import ../../pkgs {
-        pkgs = final;
-        inherit inputs;
-      };
     in
-    localPkgs
-    // {
+    {
       wl-clipboard = prev.wl-clipboard-rs;
 
       niri = getPkg "niri";
