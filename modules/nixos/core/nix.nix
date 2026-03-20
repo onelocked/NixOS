@@ -43,6 +43,7 @@
           extra-trusted-public-keys = [ "onelock.cachix.org-1:Wyy9XrWqFKcPxkZXQg5yZXtsbKTbkaga44UWRJfgqEg=" ];
         };
       };
+      programs.nano.enable = lib.mkForce false;
       nixpkgs = {
         hostPlatform = lib.mkDefault "x86_64-linux";
         config = {
