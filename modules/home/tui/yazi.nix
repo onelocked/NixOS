@@ -1,9 +1,4 @@
-{ inputs, ... }:
 {
-  flake-file.inputs.yazi = {
-    url = "github:sxyazi/yazi/cc2414728caa2fb848be27e3b96e977fa6913211";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
   flake.modules.homeManager.yazi =
     {
       pkgs,
@@ -18,7 +13,6 @@
         in
         {
           enable = true;
-          package = inputs.yazi.packages.${pkgs.stdenv.hostPlatform.system}.default;
           shellWrapperName = "y";
           enableNushellIntegration = config.programs.nushell.enable or false;
           enableFishIntegration = config.programs.fish.enable or false;
