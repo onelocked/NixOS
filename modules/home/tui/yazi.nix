@@ -24,6 +24,7 @@
                 "no-status"
                 "ouch"
                 "lazygit"
+                "git"
               ];
             in
             builtins.listToAttrs (
@@ -79,6 +80,18 @@
                 0
               ];
             };
+            plugin.prepend_fetchers = [
+              {
+                id = "git";
+                url = "*";
+                run = "git";
+              }
+              {
+                id = "git";
+                url = "*/";
+                run = "git";
+              }
+            ];
             open = {
               prepend_rules = [
                 {
@@ -176,6 +189,10 @@
               require("no-status"):setup()
               require("full-border"):setup {
               	type = ui.Border.ROUNDED,
+              }
+              require("git"):setup {
+                  -- Order of status signs showing in the linemode
+                order = 1500,
               }
             '';
         };
