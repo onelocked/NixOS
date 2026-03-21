@@ -177,7 +177,7 @@
               require("starship"):setup({
                   hide_flags = false, -- Default: false
                   flags_after_prompt = true, -- Default: true
-                  config_file = "~/.config/starship.toml", -- Default: nil
+                  config_file = "${config.xdg.configHome}/starship.toml", -- Default: nil
               })
               require("no-status"):setup()
               require("full-border"):setup {
