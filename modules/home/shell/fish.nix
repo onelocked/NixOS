@@ -16,6 +16,14 @@
             printf " \e[38;2;232;196;216m\e[0m "
           '';
 
+          # Force fish to repaint after each command exec (fixes zellij)
+          _repaint_after_command = {
+            body = ''
+              commandline -f repaint
+            '';
+            onEvent = "fish_postexec";
+          };
+
           __zoxide_interactive = # fish
             ''
               set dir (zoxide query --interactive | string trim)
