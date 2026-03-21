@@ -224,7 +224,7 @@
             showRoleColors = true;
             showAvatars = true;
           };
-          Unindent.enabled = false;
+          Unindent.enabled = true;
           UnlockedAvatarZoom.enabled = false;
           UnsuppressEmbeds.enabled = false;
           UserMessagesPronouns.enabled = false;
