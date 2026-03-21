@@ -25,6 +25,7 @@
                 "ouch"
                 "lazygit"
                 "git"
+                "piper"
               ];
             in
             builtins.listToAttrs (
@@ -80,6 +81,18 @@
                 0
               ];
             };
+            plugin.prepend_previewers = [
+              {
+                url = "*.md";
+                run = "piper -- CLICOLOR_FORCE=1 ${getExe pkgs.glow} -w=$w -s=dracula -- $1";
+              }
+            ];
+            plugin.prepend_preloaders = [
+              {
+                url = "*.md";
+                run = "piper -- CLICOLOR_FORCE=1 ${getExe pkgs.glow} -w=$w -s=dracula -- $1";
+              }
+            ];
             plugin.prepend_fetchers = [
               {
                 id = "git";
