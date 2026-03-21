@@ -14,7 +14,7 @@
             ''
               pane size=1 borderless=true {
                 plugin location="file:${zjstatus}" {
-                  hide_frame_for_single_pane "true"
+                  hide_frame_for_single_pane "false"
                   hide_frame_except_for_search     "false"
                   hide_frame_except_for_scroll     "false"
                   hide_frame_except_for_fullscreen "false"
@@ -36,14 +36,14 @@
                   tab_floating_indicator   "⬚ "
 
                   // Modes
-                  mode_normal        "#[fg=#8fd4b5,bg=#131316,bold]  "
-                  mode_locked        "#[fg=#f4a8b8,bg=#131316,bold]  "
-                  mode_resize        "#[fg=#d4a8c0,bg=#131316,bold] 󰩨 "
-                  mode_pane          "#[fg=#7d75c0,bg=#131316,bold]  "
-                  mode_tab           "#[fg=#f2b8a0,bg=#131316,bold] 󱦞 "
-                  mode_scroll        "#[fg=#c8b0e8,bg=#131316,bold]  "
-                  mode_session       "#[fg=#f6d88a,bg=#131316,bold] 󰍻  "
-                  mode_move          "#[fg=#e8c4d8,bg=#131316,bold]  "
+                  mode_normal        "#[fg=#8fd4b5,bg=#131316]  "
+                  mode_locked        "#[fg=#f4a8b8,bg=#131316]  "
+                  mode_resize        "#[fg=#d4a8c0,bg=#131316] 󰩨 "
+                  mode_pane          "#[fg=#7d75c0,bg=#131316]  "
+                  mode_tab           "#[fg=#f2b8a0,bg=#131316] 󱦞 "
+                  mode_scroll        "#[fg=#c8b0e8,bg=#131316]  "
+                  mode_session       "#[fg=#f6d88a,bg=#131316] 󰍻  "
+                  mode_move          "#[fg=#e8c4d8,bg=#131316]  "
 
 
                   // inactive tabs
