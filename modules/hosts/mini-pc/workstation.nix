@@ -44,7 +44,6 @@ in
         qt
         dconf
         cursor
-        matugen
       ];
       launcher = [
         vicinae
