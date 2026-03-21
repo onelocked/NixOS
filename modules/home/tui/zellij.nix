@@ -100,17 +100,6 @@
                   ${defaultTabTemplate}
                 }
               '';
-
-          lazygitLayout =
-            pkgs.writeText "lazygit.kdl" # kdl
-              ''
-                layout {
-                  pane name="lazygit" {
-                    command "${pkgs.lazygit}/bin/lazygit"
-                    close_on_exit true
-                  }
-                }
-              '';
           sysmonLayout =
             pkgs.writeText "sysmon.kdl" # kdl
               ''
@@ -462,7 +451,6 @@
                       bind "Alt p" { TogglePaneInGroup; }
                       bind "Alt Shift p" { ToggleGroupMarking; }
                       bind "Ctrl e" { Run "nvim" { close_on_exit true; };}
-                      bind "Ctrl g" { NewTab { layout "${lazygitLayout}"; }; }
                       bind "Ctrl m" { NewTab { layout "${sysmonLayout}"; }; }
 
                   }
