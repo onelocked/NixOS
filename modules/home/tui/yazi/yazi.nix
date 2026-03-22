@@ -42,17 +42,10 @@
             image_filter = "triangle"; # from fast to slow but high quality: nearest, triangle, catmull-rom, lanczos3
             cache_dir = "";
             image_delay = 0;
-            max_width = 2500; # maybe 1000
-            max_height = 2500; # maybe 1000
+            max_width = 1920;
+            max_height = 1404;
             image_quality = 60;
             sixel_fraction = 15;
-            ueberzug_scale = 1;
-            ueberzug_offset = [
-              0
-              0
-              0
-              0
-            ];
           };
         };
       };
