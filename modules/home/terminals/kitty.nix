@@ -6,11 +6,21 @@
       settings = {
         include = "./themes/noctalia.conf";
 
-        font_family = "Liga SFMono Semibold";
-        bold_font = "Liga SFMono Heavy";
-        italic_font = "Liga SFMono Heavy Italic";
-        bold_italic_font = "Liga SFMono Heavy Italic";
+        font_family = "Maple Mono NL NF ExtraBold";
+        bold_font = "SFMono Nerd Font Heavy";
+        italic_font = "SF Mono Bold Italic";
+        bold_italic_font = "SF Mono Heavy Italic";
         font_size = "15";
+        font_features = "MapleMono-NL-NF-ExtraBold +zero +onum";
+
+        wayland_titlebar_color = "background";
+        wayland_enable_ime = "no";
+
+        macos_thicken_font = "0"; # not macOS but forces no thickening
+        text_rendering_across_os = "freetype";
+        freetype_pcf_long_family_names = "yes";
+
+        force_ltr = "no";
 
         adjust_line_height = "0";
         adjust_column_width = "0";
