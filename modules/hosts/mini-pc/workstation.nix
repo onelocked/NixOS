@@ -29,6 +29,7 @@ in
       ];
       tui = [
         zellij
+        tmux
         yazi
         dott-tui
         neovim
