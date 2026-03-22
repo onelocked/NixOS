@@ -3,6 +3,7 @@
     { pkgs, ... }:
     {
       home.packages = with pkgs; [
+        eza
         lsof
         fzf
         fd
