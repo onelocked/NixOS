@@ -106,7 +106,7 @@
             set -g status-right ""
             set -g status-justify centre
 
-            set -g window-status-format "#[fg=colour238]● "
+            set -g window-status-format "#[fg=colour238]○ "
             set -g window-status-current-format "#{?window_zoomed_flag,#[fg=#c5c0ff]●  ,#[fg=#c5c0ff]● }"
             set -g window-status-separator "  "
 
