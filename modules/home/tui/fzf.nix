@@ -2,7 +2,6 @@
   flake.modules.homeManager.default = {
     programs.fzf = {
       enable = true;
-      enableFishIntegration = true;
       colors = {
         "bg+" = "#2a2a3a";
         "fg+" = "#cfd3e7";
@@ -21,11 +20,13 @@
         "--height=50%"
         "--layout=reverse"
         "--border=rounded"
-        "--prompt= "
-        "--pointer=➜ "
-        "--marker= "
+        "--padding=0,1"
+        "--prompt=  "
+        "--pointer= "
+        "--marker=✓ "
         "--info=inline"
-        "--no-clear"
+        "--scrollbar=▓"
+        "--cycle"
       ];
     };
   };
