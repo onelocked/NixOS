@@ -28,7 +28,6 @@ in
         worktrunk
       ];
       tui = [
-        zellij
         tmux
         yazi
         dott-tui
