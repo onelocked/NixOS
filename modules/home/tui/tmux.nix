@@ -27,17 +27,51 @@
     {
       programs.tmux = {
         enable = true;
+        terminal = "tmux-256color";
+        newSession = false;
+        mouse = true;
+        prefix = "^A";
         clock24 = true;
         keyMode = "vi";
         historyLimit = 100000;
         extraConfig = # tmux
           ''
+
+            set -g allow-passthrough on
+            set -ga update-environment TERM
+            set -ga update-environment TERM_PROGRAM
+            set -g detach-on-destroy on
+            set -g escape-time 0
+            set -g set-clipboard on
+
+            set-option -ga terminal-features 'tmux-256color:sixel'
+            set-option -g terminal-overrides ',foot*:Tc'
+
+            # pane border color
+            set -g pane-border-style "fg=#2a2a2a"
+            set -g pane-active-border-style "fg=#2a2a2a"
+
+            #border style
+            set -g pane-border-style "fg=#2a2a2a"
+            set -g pane-active-border-style "fg=#c5c0ff"
+
+            set -g status-position bottom
+            set -g status-style "bg=default,fg=#8fd4b5"
+            set -g status-left "#{?client_prefix,  ,  }"
+            set -g status-right ""
+            set -g status-justify centre
+
+            set -g window-status-format "#[fg=colour238]○ "
+            set -g window-status-current-format "#{?window_zoomed_flag,#[fg=#c5c0ff]●  ,#[fg=#c5c0ff]● }"
+            set -g window-status-separator "  "
+
+            # keybinds
             unbind '['
+            unbind 's'
 
             #enter vim style copy mode
-            bind Space copy-mode
+            bind s copy-mode
             #create a new tab
-            bind ^C new-window -c "$HOME"
             bind ^D detach
             bind * list-clients
             bind * setw synchronize-panes
@@ -77,62 +111,37 @@
             bind-key -T resize_table Escape switch-client -T root
 
 
-            set -g prefix ^A #Leader key
-            set -g allow-passthrough on
-            set -ga update-environment TERM
-            set -ga update-environment TERM_PROGRAM
-            set -g renumber-windows on
-            set -g base-index 1
-            setw -g pane-base-index 1
-            set -g detach-on-destroy off
-            set -g escape-time 0
-            set -g set-clipboard on
 
-            set-option -g default-terminal 'tmux-256color'
-            set-option -ga terminal-features 'tmux-256color:sixel'
-            set-option -g terminal-overrides ',foot*:Tc'
-
-            # pane border color
-            set -g pane-border-style "fg=#2a2a2a"
-            set -g pane-active-border-style "fg=#2a2a2a"
-
-            #border style
-            set -g pane-border-style "fg=#2a2a2a"
-            set -g pane-active-border-style "fg=#c5c0ff"
-
-            set -g status-position bottom
-            set -g status-style "bg=default,fg=#8fd4b5"
-            set -g status-left "#{?client_prefix,  ,  }"
-            set -g status-right ""
-            set -g status-justify centre
-
-            set -g window-status-format "#[fg=colour238]○ "
-            set -g window-status-current-format "#{?window_zoomed_flag,#[fg=#c5c0ff]●  ,#[fg=#c5c0ff]● }"
-            set -g window-status-separator "  "
-
-            #Floax plugin
-            set -g @floax-width '80%'
-            set -g @floax-height '80%'
-            set -g @floax-border-color 'white'
-            set -g @floax-text-color 'blue'
-            bind -n C-f run-shell "${tmux-floax}/share/tmux-plugins/tmux-floax/scripts/floax.sh"
-            set -g @floax-change-path 'true'
-            ${tmuxRun tmux-floax}
-
-            set -g @sessionx-bind-zo-new-window 'ctrl-y'
+            # SessionX Plugin
             set -g @sessionx-auto-accept 'off'
-            bind -n C-f run-shell "${tmux-floax}/share/tmux-plugins/tmux-floax/scripts/floax.sh"
-            unbind -T prefix p
-            bind-key p switch-client -T pane_table
             set -g @sessionx-window-height '86%'
             set -g @sessionx-window-width '75%'
             set -g @sessionx-zoxide-mode 'on'
             set -g @sessionx-custom-paths-subdirectories 'false'
             set -g @sessionx-filter-current 'false'
+            # Assign the default to a dummy key so it stops stealing <Leader> + O
+            set -g @sessionx-bind 'M-F12'
+            bind-key o switch-client -T sessionx_table
+            bind-key -T sessionx_table w run-shell "${pkgs.tmuxPlugins.tmux-sessionx}/share/tmux-plugins/sessionx/scripts/sessionx.sh"
+
             ${tmuxRun pkgs.tmuxPlugins.tmux-sessionx}
+
+            # Floax plugin
+            set -g @floax-width '80%'
+            set -g @floax-height '80%'
+            set -g @floax-border-color 'white'
+            set -g @floax-text-color 'blue'
+            set -g @floax-change-path 'true'
+            # Bind Floax to use Ctrl+F
+            set -g @floax-bind '-n C-f'
+            ${tmuxRun tmux-floax}
 
             ${tmuxRun pkgs.tmuxPlugins.sensible}
             ${tmuxRun pkgs.tmuxPlugins.yank}
+
+            set -g base-index 1
+            setw -g pane-base-index 1
+            set -g renumber-windows on
           '';
       };
     };
