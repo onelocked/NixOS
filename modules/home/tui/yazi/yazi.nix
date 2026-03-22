@@ -31,9 +31,9 @@
             scrolloff = 5;
             title_format = "Yazi: {cwd}";
             ratio = [
+              1
               2
-              3
-              3
+              4
             ];
           };
           preview = {
@@ -42,8 +42,8 @@
             image_filter = "triangle"; # from fast to slow but high quality: nearest, triangle, catmull-rom, lanczos3
             cache_dir = "";
             image_delay = 0;
-            max_width = 1200; # maybe 1000
-            max_height = 1200; # maybe 1000
+            max_width = 2500; # maybe 1000
+            max_height = 2500; # maybe 1000
             image_quality = 60;
             sixel_fraction = 15;
             ueberzug_scale = 1;
