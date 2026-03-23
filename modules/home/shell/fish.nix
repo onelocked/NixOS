@@ -18,13 +18,49 @@
 
           __zoxide_interactive = # fish
             ''
-              set dir (zoxide query --interactive | string trim)
+              set dir (
+                  zoxide query -ls 2>/dev/null \
+                  | awk -v home="$HOME" '{
+                      score = $1
+                      sub(/^[ \t]*[0-9.]+[ \t]+/, "", $0)
+                      orig = $0
+                      sub("^" home, "~", $0)
+
+                      green = "\033[32m"
+                      dim   = "\033[2m"
+                      reset = "\033[0m"
+
+                      printf "%s%6s %s│%s  %s\t%s\n", green, score, reset dim, reset, $0, orig
+                  }' \
+                  | fzf \
+                      --ansi \
+                      --no-sort \
+                      --height=100% \
+                      --layout=reverse \
+                      --info=inline-right \
+                      --scheme=path \
+                      --delimiter='\t' \
+                      --with-nth=1 \
+                      --prompt "󰰷 Zoxide: ➜ " \
+                      --pointer="▶" \
+                      --separator "─" \
+                      --scrollbar "│" \
+                      --border="rounded" \
+                      --padding="1,2" \
+                      --header " Rank │  Directory" \
+                      --preview 'eza -TL=3 --color=always --icons {2} 2>/dev/null || ls {2}' \
+                      --preview-window="right:50%:wrap" \
+                      --bind "ctrl-j:down,ctrl-k:up" \
+                      --bind "ctrl-d:preview-half-page-down,ctrl-u:preview-half-page-up" \
+                  | cut -f2 \
+                  | string trim
+              )
 
               if test -n "$dir"
-                cd "$dir"
-                y
+                  cd "$dir"
+                  y
+                  zoxide add "$dir"
               end
-
               commandline -f repaint
             '';
           # Run a nix run with a package
