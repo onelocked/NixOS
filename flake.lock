@@ -179,11 +179,11 @@
         "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1774321813,
-        "narHash": "sha256-2TTk2mQoA3007k4EvLTPOb3hAAByCU2/WSG9MFEpfOk=",
+        "lastModified": 1774368693,
+        "narHash": "sha256-iCljar6IiWRsgMsw+tuckNRoNhf70EGIjEU3it6F+HE=",
         "owner": "onelocked",
         "repo": "fuzzy-search.yazi",
-        "rev": "95a2dd7442421e312b55b5671ca5be571b73538d",
+        "rev": "0315c52100c52980b619745eca3c1a1807b518e2",
         "type": "github"
       },
       "original": {
