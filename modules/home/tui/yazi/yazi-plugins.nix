@@ -40,6 +40,7 @@
             );
           fuzzy-search = {
             enable = true;
+            enableFishIntegration = config.programs.fish.enable or false;
             depth = 3;
             keymaps = {
               fd = true;
