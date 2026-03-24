@@ -1,4 +1,4 @@
-{ self, inputs, ... }:
+{ inputs, ... }:
 {
   flake-file.inputs.fuzzy-search-yazi = {
     url = "github:onelocked/fuzzy-search.yazi";
@@ -56,14 +56,6 @@
                 {
                   url = "*.md";
                   run = "piper -- CLICOLOR_FORCE=1 ${_ pkgs.glow} -w=$w -s=dracula -- $1";
-                }
-                {
-                  url = self.variables.homedir + "/NixOS" + "/**/";
-                  run = "piper -- ${_ pkgs.eza} -TL=3 --color=always --icons=always --group-directories-first --no-quotes $1";
-                }
-                {
-                  url = config.xdg.userDirs.extraConfig.PROJECTS + "/**/";
-                  run = "piper -- ${_ pkgs.eza} -TL=3 --color=always --icons=always --group-directories-first --no-quotes $1";
                 }
               ];
               prepend_preloaders = [
