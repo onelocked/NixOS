@@ -2,9 +2,7 @@
 {
   flake-file.inputs.fuzzy-search-yazi = {
     url = "github:onelocked/fuzzy-search.yazi";
-    inputs = {
-      nixpkgs.follows = "nixpkgs";
-    };
+    inputs.nixpkgs.follows = "nixpkgs";
   };
   flake.modules.homeManager.yazi =
     {
@@ -38,14 +36,18 @@
                 value = pkgs.yaziPlugins.${name};
               }) pluginNames
             );
-          fuzzy-search = {
-            enable = true;
-            enableFishIntegration = config.programs.fish.enable or false;
-            depth = 3;
-            keymaps = {
-              fd = true;
-              rg = true;
-              zoxide = true;
+          yaziPlugins = {
+            plugins = {
+              fuzzy-search = {
+                enable = true;
+                enableFishIntegration = config.programs.fish.enable or false;
+                depth = 3;
+                keymaps = {
+                  fd = true;
+                  rg = true;
+                  zoxide = true;
+                };
+              };
             };
           };
           settings = {
