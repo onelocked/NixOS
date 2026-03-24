@@ -10,6 +10,10 @@
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs-lib";
     };
+    fuzzy-search-yazi = {
+      url = "github:onelocked/fuzzy-search.yazi";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -44,10 +48,6 @@
     };
     worktrunk = {
       url = "github:max-sixty/worktrunk/fe395cb467d341d4b21e9b1cc6cfa2feaec0fdd1";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    yazi = {
-      url = "github:sxyazi/yazi/cc2414728caa2fb848be27e3b96e977fa6913211";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     zen-browser = {

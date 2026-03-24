@@ -1,5 +1,11 @@
-{ self, ... }:
+{ self, inputs, ... }:
 {
+  flake-file.inputs.fuzzy-search-yazi = {
+    url = "github:onelocked/fuzzy-search.yazi";
+    inputs = {
+      nixpkgs.follows = "nixpkgs";
+    };
+  };
   flake.modules.homeManager.yazi =
     {
       pkgs,
@@ -8,6 +14,7 @@
       ...
     }:
     {
+      imports = [ inputs.fuzzy-search-yazi.homeManagerModules.default ];
       programs.yazi =
         let
           _ = lib.getExe;
@@ -31,6 +38,15 @@
                 value = pkgs.yaziPlugins.${name};
               }) pluginNames
             );
+          fuzzy-search = {
+            enable = true;
+            depth = 3;
+            keymaps = {
+              fd = true;
+              rg = true;
+              zoxide = true;
+            };
+          };
           settings = {
             plugin = {
               prepend_previewers = [
