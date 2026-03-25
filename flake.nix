@@ -50,6 +50,10 @@
       url = "github:max-sixty/worktrunk/fe395cb467d341d4b21e9b1cc6cfa2feaec0fdd1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    wrappers = {
+      url = "github:Lassulus/wrappers";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
       inputs = {
