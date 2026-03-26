@@ -15,9 +15,12 @@
           };
         }
         {
-          matches = [ { app-id = "foot"; } ];
-          open-focused = true;
-          open-on-workspace = "coding";
+          matches = [ { title = "Select what to share"; } ];
+          open-floating = true;
+          default-column-width.fixed = 500;
+          default-window-height.fixed = 290;
+          max-width = 500;
+          max-height = 290;
         }
         {
           matches = [ { app-id = "jellyfin-desktop"; } ];
@@ -41,14 +44,6 @@
           open-fullscreen = false;
           open-floating = true;
           max-height = 1200;
-        }
-        {
-          matches = [ { title = "Select what to share"; } ];
-          open-floating = true;
-          default-column-width.fixed = 500;
-          default-window-height.fixed = 290;
-          max-width = 500;
-          max-height = 290;
         }
         {
           matches = [ { app-id = "spotify"; } ];
