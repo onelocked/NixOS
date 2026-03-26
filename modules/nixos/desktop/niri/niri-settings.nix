@@ -1,6 +1,11 @@
+{ self, ... }:
 {
   flake.modules.nixos.niri =
-    { pkgs, lib, ... }:
+    {
+      pkgs,
+      lib,
+      ...
+    }:
     {
       custom.programs.niri.settings = {
         extraConfig = # kdl
@@ -42,7 +47,7 @@
 
         hotkey-overlay.skip-at-startup = null;
 
-        screenshot-path = "/home/onelock/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
+        screenshot-path = self.variables.homedir + "/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
 
         debug.honor-xdg-activation-with-invalid-serial = null;
 
@@ -58,50 +63,6 @@
           previews = {
             max-height = 480;
             max-scale = 0.5;
-          };
-        };
-
-        workspaces = {
-          "social" = {
-            layout = {
-              center-focused-column = "never";
-              preset-column-widths = [
-                { proportion = 0.79; }
-                { proportion = 0.21; }
-              ];
-            };
-          };
-
-          "coding" = {
-            layout = {
-              center-focused-column = "never";
-              preset-column-widths = [
-                { proportion = 0.5; }
-                { fixed = 2488; }
-              ];
-              default-column-width.fixed = 2488;
-            };
-          };
-
-          "browser" = {
-            layout = {
-              center-focused-column = "never";
-              default-column-width.proportion = 0.749;
-              preset-column-widths = [
-                { proportion = 0.749; }
-                { fixed = 2871; }
-              ];
-            };
-          };
-
-          "media" = {
-            layout = {
-              center-focused-column = "never";
-              default-column-width.proportion = 0.749;
-              preset-column-widths = [
-                { proportion = 0.749; }
-              ];
-            };
           };
         };
 

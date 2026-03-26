@@ -189,10 +189,10 @@
         "Mod+8".focus-workspace = 8;
         "Mod+9".focus-workspace = 9;
 
-        "Mod+Shift+1".move-column-to-workspace = 1;
-        "Mod+Shift+2".move-column-to-workspace = 2;
-        "Mod+Shift+3".move-column-to-workspace = 3;
-        "Mod+Shift+4".move-column-to-workspace = 4;
+        "Mod+Shift+1".move-column-to-workspace = "browser";
+        "Mod+Shift+2".move-column-to-workspace = "coding";
+        "Mod+Shift+3".move-column-to-workspace = "social";
+        "Mod+Shift+4".move-column-to-workspace = "media";
         "Mod+Shift+5".move-column-to-workspace = 5;
         "Mod+Shift+6".move-column-to-workspace = 6;
         "Mod+Shift+7".move-column-to-workspace = 7;
