@@ -19,12 +19,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     import-tree.url = "github:vic/import-tree";
-    niri.url = "github:niri-wm/niri/wip/branch";
+    niri.url = "github:niri-wm/niri";
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
     nixpkgs-lib.follows = "nixpkgs";
     quickshell = {
       url = "github:noctalia-dev/noctalia-qs/";
