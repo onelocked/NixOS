@@ -8,11 +8,6 @@
           default-window-height.fixed = 1273;
           open-focused = true;
           open-floating = true;
-          opacity = 0.85;
-          background-effect = {
-            xray = true;
-            blur = true;
-          };
         }
         {
           matches = [ { title = "Select what to share"; } ];
