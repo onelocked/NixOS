@@ -19,7 +19,7 @@
         autoUpdate = false;
         autoUpdateNotification = false;
         useQuickCss = true;
-        themeLinks = [ "https://refact0r.github.io/system24/build/system24.css" ];
+        themeLinks = [ "https://codeberg.org/onelock/system-24-with-custom-pallete/raw/branch/main/system24.theme.css" ];
         eagerPatches = false;
         enabledThemes = [ ];
         enableReactDevtools = false;
