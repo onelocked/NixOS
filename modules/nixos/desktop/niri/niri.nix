@@ -5,7 +5,7 @@
 }:
 {
   flake-file.inputs = {
-    niri.url = "github:niri-wm/niri/wip/branch";
+    niri.url = "github:niri-wm/niri";
     wrappers = {
       url = "github:Lassulus/wrappers";
       inputs.nixpkgs.follows = "nixpkgs";
