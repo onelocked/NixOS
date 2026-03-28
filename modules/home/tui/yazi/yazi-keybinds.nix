@@ -4,21 +4,6 @@
       keymap = {
         mgr.prepend_keymap = [
           {
-            on = [ "z" ];
-            run = "plugin fuzzy-search -- fd --TL=3";
-            desc = "Fuzzy Find Files";
-          }
-          {
-            on = [ "<S-s>" ];
-            run = "plugin fuzzy-search -- rg --TL=3";
-            desc = "Ripgrep Search";
-          }
-          {
-            on = [ "<S-z>" ];
-            run = "plugin fuzzy-search -- zoxide --TL=3";
-            desc = "Zoxide Search";
-          }
-          {
             on = [
               "l"
               "g"
