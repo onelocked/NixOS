@@ -5,7 +5,7 @@
 }:
 {
   flake-file.inputs = {
-    niri.url = "github:niri-wm/niri";
+    niri.url = "github:niri-wm/niri/b82d52705e1424cf47b26dd7b096832901c31f56";
     wrappers = {
       url = "github:Lassulus/wrappers";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -20,17 +20,23 @@
     }:
     let
       inherit (config.custom.programs.niri) settings;
-      niriWrapped =
-        (inputs.wrappers.wrapperModules.niri.apply {
-          inherit pkgs;
-          inherit settings;
-        }).wrapper;
+      niriWrapped = inputs.wrappers.wrapperModules.niri.apply {
+        inherit pkgs;
+        package = (
+          lib.mkForce (
+            pkgs.niri.overrideAttrs (oldAttrs: {
+              doCheck = false;
+            })
+          )
+        );
+        inherit settings;
+      };
     in
     lib.mkMerge [
       {
         programs.niri = {
           enable = true;
-          package = niriWrapped;
+          package = niriWrapped.wrapper;
           useNautilus = false;
         };
       }
