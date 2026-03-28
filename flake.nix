@@ -19,7 +19,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     import-tree.url = "github:vic/import-tree";
-    niri.url = "github:niri-wm/niri";
+    niri.url = "github:niri-wm/niri/b82d52705e1424cf47b26dd7b096832901c31f56";
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
