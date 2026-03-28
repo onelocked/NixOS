@@ -18,24 +18,17 @@
           _ = lib.getExe;
         in
         {
-          plugins =
-            let
-              pluginNames = [
-                "starship"
-                "full-border"
-                "no-status"
-                "ouch"
-                "lazygit"
-                "git"
-                "piper"
-              ];
-            in
-            builtins.listToAttrs (
-              map (name: {
-                inherit name;
-                value = pkgs.yaziPlugins.${name};
-              }) pluginNames
-            );
+          plugins = {
+            inherit (pkgs.yaziPlugins)
+              starship
+              full-border
+              no-status
+              ouch
+              lazygit
+              git
+              piper
+              ;
+          };
           yaziPlugins = {
             plugins = {
               fuzzy-search = {
