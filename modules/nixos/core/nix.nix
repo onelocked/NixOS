@@ -15,10 +15,7 @@
         optimise.automatic = true;
         package = pkgs.nixVersions.latest;
         settings = {
-          trusted-users = [
-            "root"
-            username
-          ];
+          trusted-users = [ username ];
           experimental-features = [
             "nix-command"
             "flakes"
@@ -32,15 +29,13 @@
 
           # Binary Cache
           substituters = [
-            "https://cache.nixos.org/"
             "https://cachix.cachix.org"
+            "https://onelock.cachix.org"
           ];
           trusted-public-keys = [
-            "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
             "cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM="
+            "onelock.cachix.org-1:Wyy9XrWqFKcPxkZXQg5yZXtsbKTbkaga44UWRJfgqEg="
           ];
-          extra-substituters = [ "https://onelock.cachix.org" ];
-          extra-trusted-public-keys = [ "onelock.cachix.org-1:Wyy9XrWqFKcPxkZXQg5yZXtsbKTbkaga44UWRJfgqEg=" ];
         };
       };
       programs.nano.enable = lib.mkForce false;
