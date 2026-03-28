@@ -22,8 +22,8 @@
           cat = "${_ bat}";
           ff = "${_ fastfetch}";
           zip = "${_ zip}";
-          ls = "${_ lla} -T --sort-dirs-first --no-dotfiles";
-          la = "${_ lla} -T --sort-dirs-first";
+          ls = "${_ lla} --sort-dirs-first --no-dotfiles";
+          la = "${_ lla} --sort-dirs-first";
           ll = "${_ lla} -S";
           gtop = "${_ amdgpu_top} --dark";
           gr = "cd (git rev-parse --show-toplevel)";
