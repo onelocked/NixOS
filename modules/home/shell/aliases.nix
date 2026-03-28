@@ -22,9 +22,9 @@
           cat = "${_ bat}";
           ff = "${_ fastfetch}";
           zip = "${_ zip}";
-          ls = "${_ eza} -1h --color=auto --icons";
-          la = "${_ eza} -1h --color=auto --icons -a";
-          ll = "${_ eza} -lh --icons --git -a";
+          ls = "${_ lla} -T --sort-dirs-first --no-dotfiles";
+          la = "${_ lla} -T --sort-dirs-first";
+          ll = "${_ lla} -S";
           gtop = "${_ amdgpu_top} --dark";
           gr = "cd (git rev-parse --show-toplevel)";
         };

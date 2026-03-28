@@ -26,6 +26,7 @@ in
         git
         nh
         worktrunk
+        lla
       ];
       tui = [
         tmux
