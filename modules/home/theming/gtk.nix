@@ -26,7 +26,10 @@
         };
 
         # Extra Config
-        gtk4.extraCss = mkForce config.gtk.gtk3.extraCss;
+        gtk4 = {
+          theme = config.gtk.theme;
+          extraCss = mkForce config.gtk.gtk3.extraCss;
+        };
         gtk3.extraCss = mkForce ''
           @import url("noctalia.css");
         '';
