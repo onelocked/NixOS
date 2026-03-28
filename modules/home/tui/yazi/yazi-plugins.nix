@@ -13,6 +13,7 @@
     }:
     {
       imports = [ inputs.fuzzy-search-yazi.homeManagerModules.default ];
+      home.packages = [ pkgs.ouch ];
       programs.yazi =
         let
           _ = lib.getExe;
@@ -27,6 +28,7 @@
               lazygit
               git
               piper
+              chmod
               ;
           };
           yaziPlugins = {
@@ -70,6 +72,25 @@
                 }
               ];
             };
+          };
+          keymap = {
+            mgr.prepend_keymap = [
+              {
+                on = [
+                  "c"
+                  "m"
+                ];
+                run = "plugin chmod";
+                desc = "chmod on files";
+              }
+              {
+                on = [
+                  "C"
+                ];
+                run = "plugin ouch";
+                desc = "Compress files with ouch";
+              }
+            ];
           };
           initLua = # lua
             ''
