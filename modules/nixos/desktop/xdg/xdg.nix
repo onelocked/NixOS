@@ -8,6 +8,7 @@
       {
         enable = true;
         userDirs = {
+          setSessionVariables = true;
           enable = true;
           createDirectories = true;
           download = homedir + "/Downloads";
