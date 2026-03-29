@@ -24,10 +24,6 @@
     };
     nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
     nixpkgs-lib.follows = "nixpkgs";
-    quickshell = {
-      url = "github:noctalia-dev/noctalia-qs/";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
