@@ -14,4 +14,5 @@
     {
       formatter = pkgs.nixfmt-tree;
     };
+  flake-file.do-not-edit = "";
 }
