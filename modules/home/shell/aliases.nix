@@ -27,6 +27,7 @@
           ll = "${_ lla} -S";
           gtop = "${_ amdgpu_top} --dark";
           gr = "cd (git rev-parse --show-toplevel)";
+          shot = "${pkgs.wl-clipboard-rs}/bin/wl-paste | , silicon --language nix --to-clipboard --shadow-blur-radius 30 --pad-horiz 20 --pad-vert 20 --theme 'Visual Studio Dark+'";
         };
 
       programs = {
