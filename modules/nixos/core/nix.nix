@@ -16,17 +16,6 @@
         package = pkgs.nixVersions.latest;
         settings = {
           trusted-users = [ username ];
-          experimental-features = [
-            "nix-command"
-            "flakes"
-          ];
-
-          auto-optimise-store = true;
-          use-xdg-base-directories = true;
-          warn-dirty = false;
-          keep-outputs = true;
-          keep-derivations = true;
-
           # Binary Cache
           substituters = [
             "https://cachix.cachix.org"
@@ -36,6 +25,15 @@
             "cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM="
             "onelock.cachix.org-1:Wyy9XrWqFKcPxkZXQg5yZXtsbKTbkaga44UWRJfgqEg="
           ];
+          experimental-features = [
+            "nix-command"
+            "flakes"
+          ];
+          auto-optimise-store = true;
+          use-xdg-base-directories = true;
+          warn-dirty = false;
+          keep-outputs = true;
+          keep-derivations = true;
         };
       };
       programs.nano.enable = lib.mkForce false;
