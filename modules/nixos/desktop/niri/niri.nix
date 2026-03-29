@@ -42,7 +42,6 @@
       }
       (lib.mkIf (config.programs.niri.enable or false) (
         let
-          niri-command = "${lib.getExe' config.programs.niri.package "niri-session"}";
           inherit (self.variables) username;
         in
         {
@@ -58,13 +57,24 @@
               };
             };
           };
+          programs.uwsm = {
+            enable = true;
+            waylandCompositors = {
+              niri = {
+                prettyName = "niri";
+                comment = "Niri compositor managed by UWSM";
+                binPath = "/run/current-system/sw/bin/niri";
+                extraArgs = [ "--session" ];
+              };
+            };
+          };
           services = {
             displayManager.enable = lib.mkForce false;
             greetd = {
               enable = true;
               settings = {
                 default_session = {
-                  command = niri-command;
+                  command = "${lib.getExe config.programs.uwsm.package} start niri-uwsm.desktop";
                   user = username;
                 };
               };
