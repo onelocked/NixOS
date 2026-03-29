@@ -9,7 +9,7 @@
         default_sort = "name";
         default_format = "table";
         show_icons = true;
-        include_dirs = true;
+        include_dirs = false;
         permission_format = "octal";
         theme = "abrelshud";
         enabled_plugins = [ ];
