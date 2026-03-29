@@ -1,9 +1,4 @@
-{ inputs, ... }:
 {
-  flake-file.inputs.quickshell = {
-    url = "github:noctalia-dev/noctalia-qs/";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
   flake.modules.homeManager.quickshell =
     {
       pkgs,
@@ -11,7 +6,7 @@
       ...
     }:
     let
-      quickshell-flake = inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default;
+      quickshell-flake = pkgs.quickshell;
       quickshell-deps =
         with pkgs;
         [
