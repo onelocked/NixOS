@@ -39,7 +39,6 @@
         interactiveShellInit = # fish
           ''
             set -g fish_greeting # Disable greeting
-            fish_vi_key_bindings
 
             set -g fish_color_normal        "#cfd3e7"
             set -g fish_color_command       "#b8db8c"
