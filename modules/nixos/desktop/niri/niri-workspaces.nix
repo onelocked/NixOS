@@ -3,7 +3,6 @@
   flake.modules.nixos.niri =
     {
       lib,
-      pkgs,
       config,
       ...
     }:
