@@ -3,6 +3,9 @@
   self,
   ...
 }:
+let
+  inherit (self.variables) username homedir;
+in
 {
   flake-file.inputs.sops-nix = {
     url = "github:Mic92/sops-nix";
@@ -16,11 +19,13 @@
       environment.systemPackages = with pkgs; [ sops ];
       sops = {
         defaultSopsFile = ../../../secrets/encrypted.yaml;
-        age.keyFile = self.variables.homedir + "/.config/sops/age/keys.txt";
-        age.generateKey = true;
+        age = {
+          keyFile = homedir + "/.config/sops/age/keys.txt";
+          generateKey = true;
+        };
         secrets.gemini = {
           key = "gemini";
-          owner = "onelock";
+          owner = username;
           format = "yaml";
           sopsFile = config.sops.defaultSopsFile;
         };
