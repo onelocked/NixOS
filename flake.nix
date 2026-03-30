@@ -11,7 +11,7 @@
       inputs.nixpkgs-lib.follows = "nixpkgs-lib";
     };
     fuzzy-search-yazi = {
-      url = "github:onelocked/fuzzy-search.yazi";
+      url = "github:onelocked/fuzzy-search.yazi/dev";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
