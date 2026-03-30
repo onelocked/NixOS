@@ -180,15 +180,16 @@
         "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1774473171,
-        "narHash": "sha256-3YsZQ7SOkJZfUWP2KGzp8fPpT42M+x2aThs/AYmdy0o=",
+        "lastModified": 1774867734,
+        "narHash": "sha256-TXMkw+WdPKkxni4sTCG6qhJV6Cm2Gneo759wTeM1g2I=",
         "owner": "onelocked",
         "repo": "fuzzy-search.yazi",
-        "rev": "16cea088a39c7769fbd22c4810347b04dd38c6b2",
+        "rev": "5d3eadb79b98df577c53e359a3531bbb35c2c83a",
         "type": "github"
       },
       "original": {
         "owner": "onelocked",
+        "ref": "dev",
         "repo": "fuzzy-search.yazi",
         "type": "github"
       }

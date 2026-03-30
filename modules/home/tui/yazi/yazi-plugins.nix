@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
   flake-file.inputs.fuzzy-search-yazi = {
-    url = "github:onelocked/fuzzy-search.yazi";
+    url = "github:onelocked/fuzzy-search.yazi/dev";
     inputs.nixpkgs.follows = "nixpkgs";
   };
   flake.modules.homeManager.yazi =
