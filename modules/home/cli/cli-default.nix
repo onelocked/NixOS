@@ -14,7 +14,6 @@
         unzip
         ripgrep
         killall
-        opkssh
         # Coreutils rewrite in rust
         uutils-coreutils-noprefix
         wl-clipboard-rs

@@ -12,6 +12,7 @@ in
       desktop
       sunshine
       niri
+      opkssh
     ];
     homeModules = with homeManager; {
       shell = [
