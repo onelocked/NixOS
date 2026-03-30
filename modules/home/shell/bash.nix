@@ -19,10 +19,6 @@
                 exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
               fi
             '';
-        shellInit = # bash
-          ''
-            export NOCTALIA_AP_GOOGLE_API_KEY="$(cat ${config.sops.secrets.gemini.path})"
-          '';
       };
     };
 }
