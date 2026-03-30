@@ -4,27 +4,32 @@
     {
       pkgs,
       osConfig,
+      lib,
       ...
     }:
     let
+      quickshellDeps =
+        with pkgs;
+        [
+          imagemagick
+          wlsunset
+          python3
+          cava
+        ]
+        ++ (with pkgs.kdePackages; [
+          qt6ct
+          qtbase
+          qtmultimedia
+        ]);
+      qmlImportPath = lib.makeSearchPath "lib/qt6/qml" quickshellDeps;
+
       quickshellWrapped = inputs.wrappers.lib.wrapPackage {
         inherit pkgs;
         package = pkgs.quickshell;
-        runtimeInputs =
-          with pkgs;
-          [
-            imagemagick
-            wlsunset
-            python3
-            cava
-          ]
-          ++ (with pkgs.kdePackages; [
-            qt6ct
-            qtbase
-            qtmultimedia
-          ]);
+        runtimeInputs = quickshellDeps;
         env = {
           QT_QPA_PLATFORMTHEME = "gtk3";
+          QML_IMPORT_PATH = qmlImportPath;
         };
       };
     in
