@@ -1,8 +1,6 @@
 { self, ... }:
 {
-  flake-file.inputs = {
-    nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
-  };
+  flake-file.inputs.nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
 
   flake.modules.nixos.default =
     { pkgs, lib, ... }:
