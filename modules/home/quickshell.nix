@@ -1,49 +1,37 @@
+{ inputs, ... }:
 {
   flake.modules.homeManager.quickshell =
     {
       pkgs,
-      lib,
+      osConfig,
       ...
     }:
     let
-      quickshell-flake = pkgs.quickshell;
-      quickshell-deps =
-        with pkgs;
-        [
-          imagemagick
-          wlsunset
-          python3
-          cava
-
-        ]
-        ++ (with pkgs.kdePackages; [
-          qt6ct
-          qtbase
-          qtmultimedia
-        ]);
-
-      qmlImportPath = lib.makeSearchPath "lib/qt6/qml" quickshell-deps;
-
-      quickshell = pkgs.symlinkJoin {
-        name = "quickshell";
-        paths = [ quickshell-flake ] ++ quickshell-deps;
-
-        buildInputs = [ pkgs.makeWrapper ];
-
-        postBuild = ''
-          wrapProgram $out/bin/quickshell \
-            --prefix PATH : ${lib.makeBinPath quickshell-deps} \
-            --prefix QML_IMPORT_PATH : ${qmlImportPath}
-        '';
-        meta = {
-          mainProgram = "quickshell";
+      quickshellWrapped = inputs.wrappers.lib.wrapPackage {
+        inherit pkgs;
+        package = pkgs.quickshell;
+        runtimeInputs =
+          with pkgs;
+          [
+            imagemagick
+            wlsunset
+            python3
+            cava
+          ]
+          ++ (with pkgs.kdePackages; [
+            qt6ct
+            qtbase
+            qtmultimedia
+          ]);
+        env = {
+          QT_QPA_PLATFORMTHEME = "gtk3";
         };
       };
     in
     {
       programs.quickshell = {
         enable = true;
-        package = quickshell;
+        package = quickshellWrapped;
         systemd = {
           enable = true;
           target = "graphical-session.target";
@@ -52,6 +40,7 @@
       systemd.user.services.quickshell.Service = {
         Type = "dbus";
         BusName = "org.kde.StatusNotifierWatcher";
+        EnvironmentFile = osConfig.sops.secrets.gemini.path;
       };
     };
 }
