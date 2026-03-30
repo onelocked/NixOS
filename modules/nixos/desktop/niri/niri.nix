@@ -80,9 +80,6 @@
               };
             };
           };
-          security.pam.services.greetd = {
-            enableGnomeKeyring = true;
-          };
         }
       ))
     ];
