@@ -67,6 +67,8 @@
         };
 
         input = {
+          mod-key = "Super";
+          mod-key-nested = "Alt";
           disable-power-key-handling = null;
           keyboard = {
             repeat-rate = 40;
