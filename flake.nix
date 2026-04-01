@@ -25,7 +25,7 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
+    nixpkgs.follows = "extra-modules/nixpkgs";
     nixpkgs-lib.follows = "nixpkgs";
     sops-nix = {
       url = "github:Mic92/sops-nix";
