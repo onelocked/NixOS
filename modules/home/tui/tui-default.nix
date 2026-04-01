@@ -5,7 +5,6 @@
       home.packages = with pkgs; [
         isd # TUI systemd
         nap # Snippets
-        fontui # Font browse
       ];
     };
 }

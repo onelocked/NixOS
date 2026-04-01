@@ -19,7 +19,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     import-tree.url = "github:vic/import-tree";
-    niri.url = "github:niri-wm/niri/b82d52705e1424cf47b26dd7b096832901c31f56";
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
@@ -42,10 +41,6 @@
         import-tree.follows = "import-tree";
         nixpkgs.follows = "nixpkgs";
       };
-    };
-    worktrunk = {
-      url = "github:max-sixty/worktrunk/fe395cb467d341d4b21e9b1cc6cfa2feaec0fdd1";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     wrappers = {
       url = "github:Lassulus/wrappers";

@@ -5,7 +5,6 @@
 }:
 {
   flake-file.inputs = {
-    niri.url = "github:niri-wm/niri/b82d52705e1424cf47b26dd7b096832901c31f56";
     wrappers = {
       url = "github:Lassulus/wrappers";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -22,13 +21,6 @@
       inherit (config.custom.programs.niri) settings;
       niriWrapped = inputs.wrappers.wrapperModules.niri.apply {
         inherit pkgs;
-        package = (
-          lib.mkForce (
-            pkgs.niri.overrideAttrs (oldAttrs: {
-              doCheck = false;
-            })
-          )
-        );
         inherit settings;
       };
     in
