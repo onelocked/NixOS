@@ -34,14 +34,6 @@
       url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    vimmax = {
-      url = "github:onelocked/vimmax";
-      inputs = {
-        flake-parts.follows = "flake-parts";
-        import-tree.follows = "import-tree";
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
     wrappers = {
       url = "github:Lassulus/wrappers";
       inputs.nixpkgs.follows = "nixpkgs";
