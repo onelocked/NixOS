@@ -45,6 +45,8 @@
               "parsec-bin"
               "ndi-6"
               "spotify"
+              "steam"
+              "steam-unwrapped"
             ];
         };
       };
