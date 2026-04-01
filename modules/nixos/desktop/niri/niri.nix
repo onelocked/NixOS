@@ -55,7 +55,7 @@
               niri = {
                 prettyName = "niri";
                 comment = "Niri compositor managed by UWSM";
-                binPath = "/run/current-system/sw/bin/niri";
+                binPath = "${lib.getExe config.programs.niri.package}"; # NOTE: /run/current-system/sw/bin/niri is more preferred to avoid version mismatch
                 extraArgs = [ "--session" ];
               };
             };
