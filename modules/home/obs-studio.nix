@@ -16,4 +16,37 @@
         };
       };
   };
+  flake.modules.nixos.default = {
+    networking.firewall = {
+      allowedTCPPortRanges = [
+        {
+          from = 5961;
+          to = 5970;
+        } # NDI TCP
+        {
+          from = 6960;
+          to = 6970;
+        }
+        {
+          from = 7960;
+          to = 7970;
+        }
+      ];
+      allowedUDPPortRanges = [
+        {
+          from = 5960;
+          to = 5970;
+        } # NDI UDP
+        {
+          from = 6960;
+          to = 6970;
+        }
+        {
+          from = 7960;
+          to = 7970;
+        }
+      ];
+      allowedUDPPorts = [ 5353 ]; # mDNS for NDI source discovery
+    };
+  };
 }
