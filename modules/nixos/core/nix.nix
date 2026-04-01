@@ -1,6 +1,10 @@
-{ self, ... }:
+{ self, lib, ... }:
 {
-  flake-file.inputs.nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
+  flake-file.inputs = {
+    extra-modules.url = "github:onelocked/extra-modules";
+    nixpkgs.url = lib.mkForce "";
+    nixpkgs.follows = "extra-modules/nixpkgs";
+  };
 
   flake.modules.nixos.default =
     { pkgs, lib, ... }:
