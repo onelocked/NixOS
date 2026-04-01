@@ -13,5 +13,15 @@
   flake-file = {
     do-not-edit = "";
     description = "onelock's dendritic nixos flake configuration";
+    style = {
+      sortPriority.inputs = [
+        "nixpkgs"
+        "flake-parts"
+        "flake-file"
+        "home-manager"
+        "wrappers"
+        "extra-modules"
+      ];
+    };
   };
 }
