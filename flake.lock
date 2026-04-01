@@ -51,20 +51,20 @@
     "extra-modules": {
       "inputs": {
         "flake-parts": "flake-parts",
-        "fontui": "fontui",
         "import-tree": "import-tree",
         "lan-mouse": "lan-mouse",
         "niri": "niri",
         "nixpkgs": "nixpkgs",
         "quickshell": "quickshell",
-        "rust-overlay": "rust-overlay"
+        "rust-overlay": "rust-overlay",
+        "vimmax": "vimmax"
       },
       "locked": {
-        "lastModified": 1775059173,
-        "narHash": "sha256-py90yhCTO+vwTLFCSnaDGs1kl8VQBHd5lvJudTuBgFk=",
+        "lastModified": 1775062288,
+        "narHash": "sha256-vsYdrV+FR8xolQaFrjmVVlvTLi4+KCIos2AG0Sav998=",
         "owner": "onelocked",
         "repo": "extra-modules",
-        "rev": "09a3a013c9b006e2f7871a56ef2f63301f4f5829",
+        "rev": "36b2e20219d550b4bfd25a79a26cfa4a0c49d78e",
         "type": "github"
       },
       "original": {
@@ -160,28 +160,6 @@
       "original": {
         "owner": "hercules-ci",
         "repo": "flake-parts",
-        "type": "github"
-      }
-    },
-    "fontui": {
-      "inputs": {
-        "nixpkgs": [
-          "extra-modules",
-          "nixpkgs"
-        ],
-        "systems": "systems"
-      },
-      "locked": {
-        "lastModified": 1773182406,
-        "narHash": "sha256-+iVJfP+CyBx4FZC5gRSWvR7RkRTIHRpTAcIaqD0jNN0=",
-        "owner": "onelocked",
-        "repo": "fontui",
-        "rev": "21ab88357b35022efb732d3e2580f3b6be07e6ee",
-        "type": "github"
-      },
-      "original": {
-        "owner": "onelocked",
-        "repo": "fontui",
         "type": "github"
       }
     },
@@ -398,14 +376,16 @@
     "nixvim": {
       "inputs": {
         "flake-parts": [
+          "extra-modules",
           "vimmax",
           "flake-parts"
         ],
         "nixpkgs": [
+          "extra-modules",
           "vimmax",
           "nixpkgs"
         ],
-        "systems": "systems_5"
+        "systems": "systems_2"
       },
       "locked": {
         "lastModified": 1774802402,
@@ -427,7 +407,7 @@
           "extra-modules",
           "nixpkgs"
         ],
-        "systems": "systems_2",
+        "systems": "systems",
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
@@ -463,7 +443,6 @@
         ],
         "sops-nix": "sops-nix",
         "spicetify-nix": "spicetify-nix",
-        "vimmax": "vimmax",
         "wrappers": "wrappers",
         "zen-browser": "zen-browser"
       }
@@ -532,21 +511,6 @@
     },
     "systems": {
       "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
-      }
-    },
-    "systems_2": {
-      "locked": {
         "lastModified": 1689347949,
         "narHash": "sha256-12tWmuL2zgBgZkdoB6qXZsgJEH9LR3oUgpaQq2RbI80=",
         "owner": "nix-systems",
@@ -557,6 +521,21 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default-linux",
+        "type": "github"
+      }
+    },
+    "systems_2": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
         "type": "github"
       }
     },
@@ -576,21 +555,6 @@
       }
     },
     "systems_4": {
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
-      }
-    },
-    "systems_5": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
@@ -631,22 +595,25 @@
       "inputs": {
         "buffer-manager": "buffer-manager",
         "flake-parts": [
+          "extra-modules",
           "flake-parts"
         ],
         "import-tree": [
+          "extra-modules",
           "import-tree"
         ],
         "nixpkgs": [
+          "extra-modules",
           "nixpkgs"
         ],
         "nixvim": "nixvim"
       },
       "locked": {
-        "lastModified": 1775057432,
-        "narHash": "sha256-P3T/r7svupbztdpbAV3lPwpkeqXnL7FA8CP44xHmDTs=",
+        "lastModified": 1775062205,
+        "narHash": "sha256-Z1bggLDf+Y872Vg2YsgLK/2yyczkJOALB2kz8CvT/I4=",
         "owner": "onelocked",
         "repo": "vimmax",
-        "rev": "cd79947d5cf27cbe901cd711a179f31d60fb9537",
+        "rev": "ef4f647e0f34b234442676777aeb0d8b4b54b1c6",
         "type": "github"
       },
       "original": {
