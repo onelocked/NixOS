@@ -15,13 +15,19 @@
           wlsunset
           python3
           cava
+          grim
+          slurp
+          wl-clipboard-rs
+          tesseract
+          zbar
         ]
         ++ (with pkgs.kdePackages; [
           qt6ct
           qtbase
           qtmultimedia
         ]);
-      qmlImportPath = lib.makeSearchPath "lib/qt6/qml" quickshellDeps;
+
+      qmlImportPath = lib.makeSearchPath pkgs.kdePackages.qtbase.qtQmlPrefix quickshellDeps;
 
       quickshellWrapped = inputs.wrappers.lib.wrapPackage {
         inherit pkgs;
@@ -30,6 +36,7 @@
         env = {
           QT_QPA_PLATFORMTHEME = "gtk3";
           QML_IMPORT_PATH = qmlImportPath;
+          QML2_IMPORT_PATH = qmlImportPath;
         };
       };
     in
