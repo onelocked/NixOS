@@ -28,7 +28,6 @@
         };
 
         window-rule = {
-          geometry-corner-radius = 20;
           clip-to-geometry = true;
           draw-border-with-background = false;
         };
@@ -41,6 +40,10 @@
         layer-rules = [
           {
             matches = [ { namespace = "^noctalia-wallpaper*"; } ];
+            place-within-backdrop = true;
+          }
+          {
+            matches = [ { namespace = "^awww-daemon$"; } ];
             place-within-backdrop = true;
           }
         ];
