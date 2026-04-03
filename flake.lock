@@ -1,5 +1,31 @@
 {
   "nodes": {
+    "awww": {
+      "inputs": {
+        "flake-compat": "flake-compat",
+        "nixpkgs": [
+          "extra-modules",
+          "nixpkgs"
+        ],
+        "rust-overlay": [
+          "extra-modules",
+          "rust-overlay"
+        ]
+      },
+      "locked": {
+        "lastModified": 1774191766,
+        "narHash": "sha256-bvO+gfuUOVUiBEwAJ5A2RjpysPzCfyXD+DM8piOa1+4=",
+        "ref": "refs/heads/main",
+        "rev": "7a8fc2e646b97e5ae508a44d3449e3b41345d456",
+        "revCount": 1336,
+        "type": "git",
+        "url": "https://codeberg.org/LGFae/awww"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://codeberg.org/LGFae/awww"
+      }
+    },
     "buffer-manager": {
       "flake": false,
       "locked": {
@@ -50,6 +76,7 @@
     },
     "extra-modules": {
       "inputs": {
+        "awww": "awww",
         "flake-parts": "flake-parts",
         "import-tree": "import-tree",
         "lan-mouse": "lan-mouse",
@@ -60,11 +87,11 @@
         "vimmax": "vimmax"
       },
       "locked": {
-        "lastModified": 1775062288,
-        "narHash": "sha256-vsYdrV+FR8xolQaFrjmVVlvTLi4+KCIos2AG0Sav998=",
+        "lastModified": 1775174513,
+        "narHash": "sha256-YBuyzGKPbruvk+yg1aSaNaxgqYeFJHmxnD+SZiA9xQ8=",
         "owner": "onelocked",
         "repo": "extra-modules",
-        "rev": "36b2e20219d550b4bfd25a79a26cfa4a0c49d78e",
+        "rev": "8932728f2ed0f7339f24b0bd277124c655a1db37",
         "type": "github"
       },
       "original": {
@@ -74,6 +101,22 @@
       }
     },
     "flake-compat": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1761588595,
+        "narHash": "sha256-XKUZz9zewJNUj46b4AJdiRZJAvSZ0Dqj2BNfXvFlJC4=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "f387cd2afec9419c8ee37694406ca490c3f34ee5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
+    "flake-compat_2": {
       "flake": false,
       "locked": {
         "lastModified": 1767039857,
@@ -290,7 +333,7 @@
       "inputs": {
         "cachyos-kernel": "cachyos-kernel",
         "cachyos-kernel-patches": "cachyos-kernel-patches",
-        "flake-compat": "flake-compat",
+        "flake-compat": "flake-compat_2",
         "flake-parts": "flake-parts_3",
         "nixpkgs": "nixpkgs_2"
       },
