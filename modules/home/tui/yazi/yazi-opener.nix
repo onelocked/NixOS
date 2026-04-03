@@ -26,7 +26,7 @@
         opener = {
           setwallpaper = [
             {
-              run = "qs ipc call wallpaper set %s all";
+              run = "awww img %s";
               desc = "Set Wallpaper";
             }
           ];
