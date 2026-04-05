@@ -9,34 +9,35 @@
     }:
     let
       quickshellDeps =
-        with pkgs;
+        with pkgs.kdePackages;
         [
-          imagemagick
-          wlsunset
-          python3
-          cava
-          grim
-          slurp
-          wl-clipboard-rs
-          tesseract
-          zbar
-        ]
-        ++ (with pkgs.kdePackages; [
-          qt6ct
-          qtbase
           qtmultimedia
+          qt5compat
+        ]
+        ++ (with pkgs; [
+          imagemagick
+          cava
+          python3
         ]);
 
-      qmlImportPath = lib.makeSearchPath pkgs.kdePackages.qtbase.qtQmlPrefix quickshellDeps;
+      qmlImportPath = lib.makeSearchPath pkgs.kdePackages.qtbase.qtQmlPrefix quickshellDeps; # lib/qt-6/qml
+
+      qtPluginPath = lib.makeSearchPath pkgs.kdePackages.qtbase.qtPluginPrefix quickshellDeps; # lib/qt-6/plugins
 
       quickshellWrapped = inputs.wrappers.lib.wrapPackage {
         inherit pkgs;
         package = pkgs.quickshell;
+        aliases = [ "qs" ];
+        args = [ "--no-duplicate" ];
         runtimeInputs = quickshellDeps;
         env = {
           QT_QPA_PLATFORMTHEME = "gtk3";
+          QS_ICON_THEME = "Papirus-Dark";
+          QS_DROP_EXPENSIVE_FONTS = 1;
           QML_IMPORT_PATH = qmlImportPath;
           QML2_IMPORT_PATH = qmlImportPath;
+          QT_PLUGIN_PATH = qtPluginPath;
+          XDG_DATA_DIRS = "${lib.makeSearchPath "share" [ pkgs.lucide ]}\${XDG_DATA_DIRS:+:\$XDG_DATA_DIRS}";
         };
       };
     in
