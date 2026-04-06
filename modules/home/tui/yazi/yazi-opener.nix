@@ -23,32 +23,37 @@
             }
           ];
         };
-        opener = {
-          setwallpaper = [
-            {
-              run = "awww img %s";
-              desc = "Set Wallpaper";
-            }
-          ];
-          loupe = [
-            {
-              run = "${lib.getExe pkgs.loupe} %s";
-              desc = "Loupe";
-            }
-          ];
-          nomacs = [
-            {
-              run = "${lib.getExe pkgs.nomacs} %s";
-              desc = "Image Editor";
-            }
-          ];
-          video-trimmer = [
-            {
-              run = "${lib.getExe pkgs.video-trimmer} %s";
-              desc = "Video Trimmer";
-            }
-          ];
-        };
+        opener =
+          let
+            inherit (lib) getExe;
+          in
+          with pkgs;
+          {
+            setwallpaper = [
+              {
+                run = "${getExe awww} img %s --transition-duration 2 --transition-fps 60 --transition-bezier .43,1.19,1,.4 --transition-type any";
+                desc = "Set Wallpaper";
+              }
+            ];
+            loupe = [
+              {
+                run = "${getExe loupe} %s";
+                desc = "Loupe";
+              }
+            ];
+            nomacs = [
+              {
+                run = "${getExe nomacs} %s";
+                desc = "Image Editor";
+              }
+            ];
+            video-trimmer = [
+              {
+                run = "${getExe video-trimmer} %s";
+                desc = "Video Trimmer";
+              }
+            ];
+          };
       };
     };
 }

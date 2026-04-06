@@ -29,6 +29,8 @@
               git
               piper
               chmod
+              smart-filter
+              wl-clipboard
               ;
           };
           yaziPlugins = {
@@ -46,32 +48,36 @@
             };
           };
           settings = {
-            plugin = {
-              prepend_previewers = [
-                {
-                  url = "*.md";
-                  run = "piper -- CLICOLOR_FORCE=1 ${_ pkgs.glow} -w=$w -s=dracula -- $1";
-                }
-              ];
-              prepend_preloaders = [
-                {
-                  url = "*.md";
-                  run = "piper -- CLICOLOR_FORCE=1 ${_ pkgs.glow} -w=$w -s=dracula -- $1";
-                }
-              ];
-              prepend_fetchers = [
-                {
-                  id = "git";
-                  url = "*";
-                  run = "git";
-                }
-                {
-                  id = "git";
-                  url = "*/";
-                  run = "git";
-                }
-              ];
-            };
+            plugin =
+              let
+                piper = "piper -- CLICOLOR_FORCE=1 ${_ pkgs.glow} -w=$w -s=dracula -- $1";
+              in
+              {
+                prepend_previewers = [
+                  {
+                    url = "*.md";
+                    run = piper;
+                  }
+                ];
+                prepend_preloaders = [
+                  {
+                    url = "*.md";
+                    run = piper;
+                  }
+                ];
+                prepend_fetchers = [
+                  {
+                    id = "git";
+                    url = "*";
+                    run = "git";
+                  }
+                  {
+                    id = "git";
+                    url = "*/";
+                    run = "git";
+                  }
+                ];
+              };
           };
           keymap = {
             mgr.prepend_keymap = [
@@ -89,6 +95,20 @@
                 ];
                 run = "plugin ouch";
                 desc = "Compress files with ouch";
+              }
+              {
+                on = [
+                  "f"
+                ];
+                run = "plugin smart-filter";
+                desc = "Smart filter";
+              }
+              {
+                on = [
+                  "<C-y>"
+                ];
+                run = "plugin wl-clipboard";
+                desc = "copy to clipboard";
               }
             ];
           };
