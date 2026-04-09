@@ -26,6 +26,18 @@
         ];
       };
 
+      services = {
+        system76-scheduler = {
+          enable = true;
+          useStockConfig = true;
+        };
+        scx = {
+          enable = true;
+          package = pkgs.scx.rustscheds;
+          scheduler = lib.mkDefault "scx_lavd"; # Gaming scheduler https://github.com/sched-ext/scx/blob/main/scheds/rust/README.md
+        };
+      };
+
       boot.kernel.sysctl = lib.mkIf config.programs.steam.enable {
         # 20-shed.conf
         "kernel.sched_cfs_bandwidth_slice_us" = 3000;
