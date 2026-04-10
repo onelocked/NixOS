@@ -11,6 +11,7 @@
         xserver.enable = mkForce false;
         journald.storage = "volatile";
         dbus.implementation = "broker";
+        flatpak.enable = mkForce false;
       };
       programs.seahorse.enable = mkForce false;
     };
