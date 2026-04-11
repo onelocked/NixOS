@@ -4,16 +4,14 @@
     {
       pkgs,
       osConfig,
+      config,
       lib,
       ...
     }:
     let
       quickshellDeps =
         with pkgs.kdePackages;
-        [
-          qtmultimedia
-          qt5compat
-        ]
+        [ qtmultimedia ]
         ++ (with pkgs; [
           imagemagick
           cava
@@ -28,7 +26,6 @@
         inherit pkgs;
         package = pkgs.quickshell;
         aliases = [ "qs" ];
-        args = [ "--no-duplicate" ];
         runtimeInputs = quickshellDeps;
         env = {
           QT_QPA_PLATFORMTHEME = "gtk3";
@@ -53,6 +50,7 @@
       systemd.user.services.quickshell.Service = {
         Type = "dbus";
         BusName = "org.kde.StatusNotifierWatcher";
+        ExecStart = lib.mkForce "${config.programs.quickshell.package}/bin/quickshell --no-duplicate";
         EnvironmentFile = osConfig.sops.secrets.gemini.path;
       };
     };
