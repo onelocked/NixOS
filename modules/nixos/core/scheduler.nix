@@ -1,12 +1,16 @@
 {
   flake.modules.nixos.default =
-    { pkgs, ... }:
+    { lib, pkgs, ... }:
     {
       services = {
+        system76-scheduler = {
+          enable = true;
+          useStockConfig = true;
+        };
         scx = {
           enable = true;
           package = pkgs.scx.rustscheds;
-          scheduler = "scx_bpfland"; # Best overall for normal workloads https://github.com/sched-ext/scx/blob/main/scheds/rust/README.md
+          scheduler = lib.mkDefault "scx_lavd"; # Gaming scheduler https://github.com/sched-ext/scx/blob/main/scheds/rust/README.md
         };
       };
     };
