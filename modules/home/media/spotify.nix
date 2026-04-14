@@ -3,6 +3,7 @@
   flake-file.inputs.spicetify-nix = {
     url = "github:Gerg-L/spicetify-nix";
     inputs.nixpkgs.follows = "nixpkgs";
+    inputs.systems.follows = "systems";
   };
 
   flake.modules.homeManager.spotify =

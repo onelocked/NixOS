@@ -4,6 +4,8 @@
     extra-modules = {
       url = "github:onelocked/extra-modules";
       inputs.flake-parts.follows = "flake-parts";
+      inputs.import-tree.follows = "import-tree";
+      inputs.systems.follows = "systems";
     };
   };
 

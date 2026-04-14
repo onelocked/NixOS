@@ -4,6 +4,7 @@
     extra-modules.url = "github:onelocked/extra-modules";
     nixpkgs.url = lib.mkForce "";
     nixpkgs.follows = "extra-modules/nixpkgs";
+    systems.url = "github:nix-systems/x86_64-linux";
   };
 
   flake.modules.nixos.default =
