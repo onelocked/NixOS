@@ -20,13 +20,21 @@
     };
     extra-modules = {
       url = "github:onelocked/extra-modules";
-      inputs.flake-parts.follows = "flake-parts";
+      inputs = {
+        flake-parts.follows = "flake-parts";
+        import-tree.follows = "import-tree";
+        systems.follows = "systems";
+      };
     };
     fuzzy-search-yazi = {
       url = "github:onelocked/fuzzy-search.yazi/dev";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     import-tree.url = "github:vic/import-tree";
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixpkgs-lib.follows = "nixpkgs";
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -34,8 +42,12 @@
     };
     spicetify-nix = {
       url = "github:Gerg-L/spicetify-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems";
+      };
     };
+    systems.url = "github:nix-systems/x86_64-linux";
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
       inputs = {
