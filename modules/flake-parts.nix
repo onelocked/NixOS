@@ -5,10 +5,7 @@
     inputs.flake-file.flakeModules.dendritic
   ];
 
-  systems = [
-    "x86_64-linux"
-    "aarch64-linux"
-  ];
+  systems = [ "x86_64-linux" ];
 
   flake-file = {
     do-not-edit = "";
