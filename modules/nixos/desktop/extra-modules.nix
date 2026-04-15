@@ -1,6 +1,11 @@
 { inputs, ... }:
 {
-  flake-file.inputs.extra-modules.url = "github:onelocked/extra-modules";
+  flake-file.inputs = {
+    extra-modules = {
+      url = "github:onelocked/extra-modules";
+      inputs.flake-parts.follows = "flake-parts";
+    };
+  };
 
   flake.modules.nixos.desktop =
     { pkgs, ... }:
