@@ -18,10 +18,15 @@
             settings = with config.custom.programs; {
               keymap = yazi.keymap;
               yazi = yazi.settings;
+              theme = yazi.theme;
             };
             constructFiles.initLua = {
               relPath = "yazi-config/init.lua";
               content = config.custom.programs.yazi.initLua;
+            };
+            constructFiles.oneshillFlavor = {
+              relPath = "yazi-config/flavors/oneshill.yazi/flavor.toml";
+              content = config.custom.programs.yazi.flavorContent;
             };
           };
         })
@@ -56,6 +61,18 @@
           description = "Yazi plugins";
         };
 
+        flavors = lib.mkOption {
+          type = lib.types.attrsOf (lib.types.nullOr lib.types.path);
+          default = { };
+          description = "Yazi flavors";
+        };
+
+        flavorContent = lib.mkOption {
+          type = with lib.types; nullOr lines;
+          default = "";
+          description = "Raw TOML content for the flavor file";
+        };
+
         initLua = lib.mkOption {
           type = with lib.types; nullOr (either path lines);
           default = "";
@@ -63,6 +80,12 @@
             The init.lua for Yazi itself.
           '';
           example = lib.literalExpression "./init.lua";
+        };
+
+        theme = lib.mkOption {
+          type = type;
+          default = { };
+          description = "Theme settings";
         };
 
         settings = lib.mkOption {
