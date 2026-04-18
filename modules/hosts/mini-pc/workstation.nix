@@ -49,6 +49,8 @@ in
       qt
 
       zen-browser
+
+      fzf
     ];
   };
 }
