@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.yazi = {
+  m.yazi = {
     custom.programs.yazi = {
       settings = {
         tasks = {

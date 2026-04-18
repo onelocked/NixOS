@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.default =
+  m.default =
     { pkgs, ... }:
     {
       hj.packages = with pkgs; [

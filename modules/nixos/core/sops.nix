@@ -12,7 +12,7 @@ in
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  flake.modules.nixos.default =
+  m.default =
     { pkgs, config, ... }:
     {
       imports = [ inputs.sops-nix.nixosModules.sops ];

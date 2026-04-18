@@ -3,7 +3,7 @@ let
   inherit (self.variables) username;
 in
 {
-  flake.modules.nixos.user = {
+  m.user = {
     users = {
       users.${username} = {
         isNormalUser = true;

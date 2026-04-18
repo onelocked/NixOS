@@ -7,7 +7,7 @@
     systems.url = "github:nix-systems/x86_64-linux";
   };
 
-  flake.modules.nixos.default =
+  m.default =
     { pkgs, lib, ... }:
     let
       inherit (self.variables) stateVersion username;

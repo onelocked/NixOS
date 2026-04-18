@@ -1,7 +1,12 @@
-{ inputs, ... }:
+{
+  inputs,
+  lib,
+  ...
+}:
 {
   imports = [
     inputs.flake-parts.flakeModules.modules
+    (lib.mkAliasOptionModule [ "m" ] [ "flake" "modules" "nixos" ])
     inputs.flake-file.flakeModules.dendritic
   ];
 

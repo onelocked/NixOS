@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  flake.modules.nixos.yazi =
+  m.yazi =
     {
       pkgs,
       config,
@@ -46,7 +46,7 @@
         '';
     };
 
-  flake.modules.nixos.default =
+  m.default =
     { pkgs, lib, ... }:
     let
       inherit (pkgs.formats.toml { }) type;

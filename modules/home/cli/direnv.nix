@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.direnv =
+  m.direnv =
     { config, ... }:
     {
       programs.direnv = {

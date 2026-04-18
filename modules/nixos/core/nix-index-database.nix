@@ -5,7 +5,7 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  flake.modules.nixos.default = {
+  m.default = {
     imports = [ inputs.nix-index-database.nixosModules.default ];
     programs.nix-index-database = {
       comma.enable = true;

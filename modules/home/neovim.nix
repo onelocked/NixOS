@@ -7,7 +7,7 @@
     inputs.import-tree.follows = "import-tree";
     inputs.systems.follows = "systems";
   };
-  flake.modules.nixos.neovim =
+  m.neovim =
     { pkgs, ... }:
     {
       hj = {

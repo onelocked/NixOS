@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.nixos.overlays = {
+  m.overlays = {
     nixpkgs.overlays = [
       self.overlays.default
     ];

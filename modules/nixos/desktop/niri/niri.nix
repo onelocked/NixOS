@@ -4,7 +4,7 @@
   ...
 }:
 {
-  flake.modules.nixos.niri =
+  m.niri =
     {
       pkgs,
       config,
@@ -71,7 +71,7 @@
         }
       ))
     ];
-  flake.modules.nixos.default =
+  m.default =
     { lib, ... }:
     {
       options.custom = {

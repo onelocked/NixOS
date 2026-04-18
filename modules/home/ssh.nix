@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.default = {
+  m.default = {
     hj.files.".ssh/config".text = # bash
       ''
         Host Raspberry

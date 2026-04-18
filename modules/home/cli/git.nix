@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.nixos.git =
+  m.git =
     { pkgs, ... }:
     {
       programs.git =

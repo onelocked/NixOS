@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.niri = {
+  m.niri = {
     custom.programs.niri.settings = {
       window-rules = [
         {

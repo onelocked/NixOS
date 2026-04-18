@@ -4,7 +4,7 @@
     url = "github:onelocked/fuzzy-search.yazi/dev";
     inputs.nixpkgs.follows = "nixpkgs";
   };
-  flake.modules.nixos.yazi =
+  m.yazi =
     {
       pkgs,
       lib,

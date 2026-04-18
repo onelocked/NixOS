@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.starship =
+  m.starship =
     { pkgs, lib, ... }:
     {
       hj = {

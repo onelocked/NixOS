@@ -9,7 +9,7 @@
     };
   };
 
-  flake.modules.nixos.desktop =
+  m.desktop =
     { pkgs, ... }:
     {
       environment.systemPackages = with pkgs; [

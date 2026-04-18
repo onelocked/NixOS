@@ -1,6 +1,6 @@
 { self, inputs, ... }:
 {
-  flake.modules.nixos.mpv =
+  m.mpv =
     { pkgs, ... }:
     {
       nixpkgs.overlays = [

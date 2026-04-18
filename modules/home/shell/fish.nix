@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.fish =
+  m.fish =
     {
       pkgs,
       config,
@@ -145,7 +145,7 @@
         }) config.programs.fish.functions;
     };
 
-  flake.modules.nixos.default =
+  m.default =
     { lib, ... }:
     {
       options.programs.fish = {

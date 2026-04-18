@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.jellyfin-tui =
+  m.jellyfin-tui =
     { pkgs, ... }:
     {
       hj = {

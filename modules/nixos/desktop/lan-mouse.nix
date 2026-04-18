@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.desktop =
+  m.desktop =
     { pkgs, lib, ... }:
     {
       networking.firewall.allowedUDPPorts = [ 4242 ];

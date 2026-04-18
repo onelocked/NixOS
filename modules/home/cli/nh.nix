@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.nixos.nh = {
+  m.nh = {
     programs.nh = {
       enable = true;
       flake = self.variables.homedir + "/NixOS";

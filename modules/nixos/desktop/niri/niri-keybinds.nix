@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.niri =
+  m.niri =
     { pkgs, ... }:
     let
       set = _: { };
