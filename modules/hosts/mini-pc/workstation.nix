@@ -1,11 +1,9 @@
 { self, ... }:
-let
-  inherit (self.lib) mkSystem;
-  inherit (self.modules) nixos;
-in
+with self.lib;
+with self.modules.nixos;
 {
   flake.nixosConfigurations.NixOS = mkSystem {
-    nixosModules = with nixos; [
+    modules = [
       hardware-mini-pc
       user
       overlays
@@ -14,7 +12,6 @@ in
       niri
       opkssh
 
-      #ported stuff
       btop
       bat
       direnv
@@ -22,6 +19,7 @@ in
       git
       lla
       nh
+      fzf
 
       quickshell
 
@@ -49,8 +47,6 @@ in
       qt
 
       zen-browser
-
-      fzf
     ];
   };
 }
