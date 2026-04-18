@@ -4,12 +4,6 @@
   ...
 }:
 {
-  flake-file.inputs = {
-    wrappers = {
-      url = "github:Lassulus/wrappers";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-  };
   flake.modules.nixos.niri =
     {
       pkgs,
@@ -19,8 +13,10 @@
     }:
     let
       inherit (config.custom.programs.niri) settings;
-      niriWrapped = inputs.wrappers.wrapperModules.niri.apply {
+      niriWrapped = inputs.wrappers.wrappers.niri.wrap {
         inherit pkgs;
+        package = pkgs.niri;
+        v2-settings = true;
         inherit settings;
       };
     in
@@ -28,7 +24,7 @@
       {
         programs.niri = {
           enable = true;
-          package = niriWrapped.wrapper;
+          package = niriWrapped;
           useNautilus = false;
         };
       }
@@ -76,21 +72,50 @@
       ))
     ];
   flake.modules.nixos.default =
-    { lib, pkgs, ... }:
+    { lib, ... }:
     {
       options.custom = {
         programs.niri = {
           settings = lib.mkOption {
+            default = { };
             type = lib.types.submodule {
-              freeformType = (pkgs.formats.json { }).type;
-              # strings don't merge by default
-              options.extraConfig = lib.mkOption {
-                type = lib.types.lines;
-                default = "";
-                description = "Additional configuration lines.";
+              freeformType = lib.types.attrs;
+              options = {
+                binds = lib.mkOption {
+                  default = { };
+                  type = lib.types.attrs;
+                };
+                layout = lib.mkOption {
+                  default = { };
+                  type = lib.types.attrs;
+                };
+                spawn-at-startup = lib.mkOption {
+                  default = [ ];
+                  type = lib.types.listOf (lib.types.either lib.types.str (lib.types.listOf lib.types.str));
+                };
+                window-rules = lib.mkOption {
+                  default = [ ];
+                  type = lib.types.listOf lib.types.attrs;
+                };
+                layer-rules = lib.mkOption {
+                  default = [ ];
+                  type = lib.types.listOf lib.types.attrs;
+                };
+                workspaces = lib.mkOption {
+                  default = { };
+                  type = lib.types.attrsOf (lib.types.nullOr lib.types.anything);
+                };
+                outputs = lib.mkOption {
+                  default = { };
+                  type = lib.types.attrs;
+                };
+                # change to lines to allow merging
+                extraConfig = lib.mkOption {
+                  default = "";
+                  type = lib.types.lines;
+                };
               };
             };
-            description = "Niri settings, see https://github.com/Lassulus/wrappers/blob/main/modules/niri/module.nix for available options";
           };
         };
       };

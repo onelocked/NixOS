@@ -4,7 +4,7 @@
     url = "github:onelocked/fuzzy-search.yazi/dev";
     inputs.nixpkgs.follows = "nixpkgs";
   };
-  flake.modules.homeManager.yazi =
+  flake.modules.nixos.yazi =
     {
       pkgs,
       lib,
@@ -12,42 +12,27 @@
       ...
     }:
     {
-      imports = [ inputs.fuzzy-search-yazi.homeManagerModules.default ];
-      home.packages = [ pkgs.ouch ];
-      programs.yazi =
-        let
-          _ = lib.getExe;
-        in
-        {
-          plugins = {
-            inherit (pkgs.yaziPlugins)
-              starship
-              full-border
-              no-status
-              ouch
-              lazygit
-              git
-              piper
-              chmod
-              smart-filter
-              wl-clipboard
-              ;
-          };
-          yaziPlugins = {
-            plugins = {
-              fuzzy-search = {
-                enable = true;
-                enableFishIntegration = config.programs.fish.enable or false;
-                depth = 3;
-                keymaps = {
-                  fd = true;
-                  rg = true;
-                  zoxide = true;
-                };
-              };
-            };
-          };
-          settings = {
+      custom.programs.yazi = {
+        plugins = {
+          inherit (pkgs.yaziPlugins)
+            starship
+            full-border
+            no-status
+            ouch
+            lazygit
+            git
+            piper
+            chmod
+            smart-filter
+            wl-clipboard
+            ;
+          fuzzy-search = inputs.fuzzy-search-yazi;
+        };
+        settings =
+          let
+            _ = lib.getExe;
+          in
+          {
             plugin =
               let
                 piper = "piper -- CLICOLOR_FORCE=1 ${_ pkgs.glow} -w=$w -s=dracula -- $1";
@@ -79,55 +64,70 @@
                 ];
               };
           };
-          keymap = {
-            mgr.prepend_keymap = [
-              {
-                on = [
-                  "c"
-                  "m"
-                ];
-                run = "plugin chmod";
-                desc = "chmod on files";
-              }
-              {
-                on = [
-                  "C"
-                ];
-                run = "plugin ouch";
-                desc = "Compress files with ouch";
-              }
-              {
-                on = [
-                  "f"
-                ];
-                run = "plugin smart-filter";
-                desc = "Smart filter";
-              }
-              {
-                on = [
-                  "<C-y>"
-                ];
-                run = "plugin wl-clipboard";
-                desc = "copy to clipboard";
-              }
-            ];
-          };
-          initLua = # lua
-            ''
-              require("starship"):setup({
-                  hide_flags = false, -- Default: false
-                  flags_after_prompt = true, -- Default: true
-                  config_file = "${config.xdg.configHome}/starship.toml", -- Default: nil
-              })
-              require("no-status"):setup()
-              require("full-border"):setup {
-              	type = ui.Border.ROUNDED,
-              }
-              require("git"):setup {
-                  -- Order of status signs showing in the linemode
-                order = 1500,
-              }
-            '';
+        keymap = {
+          mgr.prepend_keymap = [
+            {
+              on = [ "z" ];
+              run = "plugin fuzzy-search -- fd --TL=3";
+              desc = "Fuzzy Find Files";
+            }
+            {
+              on = [ "<S-s>" ];
+              run = "plugin fuzzy-search -- rg --TL=3";
+              desc = "Ripgrep Search";
+            }
+            {
+              on = [ "<S-z>" ];
+              run = "plugin fuzzy-search -- zoxide --TL=3";
+              desc = "Zoxide Search";
+            }
+            {
+              on = [
+                "c"
+                "m"
+              ];
+              run = "plugin chmod";
+              desc = "chmod on files";
+            }
+            {
+              on = [
+                "C"
+              ];
+              run = "plugin ouch";
+              desc = "Compress files with ouch";
+            }
+            {
+              on = [
+                "f"
+              ];
+              run = "plugin smart-filter";
+              desc = "Smart filter";
+            }
+            {
+              on = [
+                "<C-y>"
+              ];
+              run = "plugin wl-clipboard";
+              desc = "copy to clipboard";
+            }
+          ];
         };
+      };
+      custom.programs.yazi.initLua = # lua
+        ''
+          require("starship"):setup({
+              hide_flags = false, -- Default: false
+              flags_after_prompt = true, -- Default: true
+              config_file = "${config.hj.xdg.config.directory}/starship.toml", -- Default: nil
+          })
+          require("no-status"):setup()
+          require("full-border"):setup {
+          	type = ui.Border.ROUNDED,
+          }
+          require("git"):setup {
+              -- Order of status signs showing in the linemode
+            order = 1500,
+          }
+        '';
     };
 }

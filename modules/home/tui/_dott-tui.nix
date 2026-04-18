@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.homeManager.dott-tui =
+  flake.modules.nixos.dott-tui =
     {
       pkgs,
       lib,
@@ -42,7 +42,10 @@
       '';
     in
     {
-      xdg.configFile."dott/config.toml".text = # toml
+      environment.shellAliases = {
+        dots = "${pkgs.dott-tui}/bin/dott-tui";
+      };
+      hj.xdg.config.files."dott/config.toml".text = # toml
         ''
           logo_type = "custom"
           custom_logo_path = "${asci-art}"
@@ -84,7 +87,7 @@
           [[entries]]
           name = "Niri Config"
           command = "${_ pkgs.yazi}"
-          args = ["${config.xdg.configHome}/niri"]
+          args = ["${config.hj.xdg.config.directory}/niri"]
 
           [[entries]]
           name = "Music"

@@ -8,6 +8,11 @@
   systems = [ "x86_64-linux" ];
 
   flake-file = {
+    inputs.wrappers = {
+      url = "github:BirdeeHub/nix-wrapper-modules";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     do-not-edit = "";
     description = "onelock's dendritic nixos flake configuration";
     style = {
@@ -15,7 +20,6 @@
         "nixpkgs"
         "flake-parts"
         "flake-file"
-        "home-manager"
         "wrappers"
         "extra-modules"
       ];

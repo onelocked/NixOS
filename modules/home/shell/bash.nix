@@ -1,4 +1,3 @@
-{ self, ... }:
 {
   flake.modules.nixos.default =
     {
@@ -11,7 +10,7 @@
       programs.bash = {
         enable = true;
         interactiveShellInit =
-          lib.mkIf config.home-manager.users.${self.variables.username}.programs.fish.enable or false # bash
+          lib.mkIf config.programs.fish.enable or false # bash
             ''
               if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
               then

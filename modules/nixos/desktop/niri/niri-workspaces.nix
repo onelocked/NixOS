@@ -1,4 +1,3 @@
-{ self, ... }:
 {
   flake.modules.nixos.niri =
     {
@@ -6,9 +5,6 @@
       config,
       ...
     }:
-    let
-      cfg = config.home-manager.users.${self.variables.username};
-    in
     {
       custom.programs.niri.settings.extraConfig = lib.mkMerge [
         # kdl
@@ -56,7 +52,7 @@
              }
         ''
         (lib.mkAfter ''
-          include optional=true "${cfg.xdg.configHome}/niri/config.kdl";
+          include optional=true "${config.hj.xdg.config.directory}/niri/config.kdl";
         '')
       ];
     };

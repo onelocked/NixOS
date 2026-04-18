@@ -1,8 +1,8 @@
 {
-  flake.modules.homeManager.yazi =
+  flake.modules.nixos.yazi =
     { pkgs, lib, ... }:
     {
-      programs.yazi.settings = {
+      custom.programs.yazi.settings = {
         open = {
           prepend_rules = [
             {

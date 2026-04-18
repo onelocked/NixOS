@@ -3,6 +3,7 @@
     {
       lib,
       pkgs,
+      config,
       ...
     }:
     {
@@ -14,17 +15,12 @@
           ];
         };
       };
-    };
-
-  flake.modules.homeManager.default =
-    { pkgs, config, ... }:
-    {
-      xdg.configFile = {
+      hj.xdg.config.files = {
         "xdg-desktop-portal-termfilechooser/config".text = # toml
           ''
             [filechooser]
             cmd=yazi-wrapper.sh
-            default_dir=${config.xdg.userDirs.download}
+            default_dir=${config.hj.directory}/Downloads";
             open_mode=default
             save_mode=default
           '';

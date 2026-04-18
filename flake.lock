@@ -93,15 +93,14 @@
         "systems": [
           "systems"
         ],
-        "treefmt-nix": "treefmt-nix",
-        "vimmax": "vimmax"
+        "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1776299794,
-        "narHash": "sha256-Eo7JVdVSwj0WmX5kPOHZmbsUsKAPDEjPoeO99bd6t4Y=",
+        "lastModified": 1776536743,
+        "narHash": "sha256-9dNbo837LMdrEztz0fW0QQKCFVGuCNmDi40kGrEWMBY=",
         "owner": "onelocked",
         "repo": "extra-modules",
-        "rev": "6b26957c57d132e534c0783dafc3baa397b7aa68",
+        "rev": "d9750b26a8b56a36eda6abd1d59de4f6dc32a962",
         "type": "github"
       },
       "original": {
@@ -126,6 +125,22 @@
         "type": "github"
       }
     },
+    "flake-compat_2": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1767039857,
+        "narHash": "sha256-vNpUSpF5Nuw8xvDLj2KCwwksIbjua2LZCqhV1LNRDns=",
+        "owner": "NixOS",
+        "repo": "flake-compat",
+        "rev": "5edf11c44bc78a0d334f6334cdaf7d60d732daab",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
     "flake-file": {
       "locked": {
         "lastModified": 1776202746,
@@ -144,7 +159,7 @@
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
-          "nixpkgs-lib"
+          "nixpkgs"
         ]
       },
       "locked": {
@@ -183,9 +198,31 @@
         "type": "github"
       }
     },
+    "hjem": {
+      "inputs": {
+        "nix-darwin": "nix-darwin",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1776410057,
+        "narHash": "sha256-xjJpa+PGjB2lZi1saUU+ubWw5+FpAud/T0/jC1gLL1A=",
+        "owner": "feel-co",
+        "repo": "hjem",
+        "rev": "3828faa3b6c14d4e557866db01d06137f33ad9f8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "feel-co",
+        "repo": "hjem",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
+          "zen-browser",
           "nixpkgs"
         ]
       },
@@ -299,6 +336,27 @@
         "type": "github"
       }
     },
+    "nix-darwin": {
+      "inputs": {
+        "nixpkgs": [
+          "hjem",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1775037210,
+        "narHash": "sha256-KM2WYj6EA7M/FVZVCl3rqWY+TFV5QzSyyGE2gQxeODU=",
+        "owner": "nix-darwin",
+        "repo": "nix-darwin",
+        "rev": "06648f4902343228ce2de79f291dd5a58ee12146",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-darwin",
+        "repo": "nix-darwin",
+        "type": "github"
+      }
+    },
     "nix-index-database": {
       "inputs": {
         "nixpkgs": [
@@ -335,17 +393,14 @@
     "nixvim": {
       "inputs": {
         "flake-parts": [
-          "extra-modules",
           "vimmax",
           "flake-parts"
         ],
         "nixpkgs": [
-          "extra-modules",
           "vimmax",
           "nixpkgs"
         ],
         "systems": [
-          "extra-modules",
           "vimmax",
           "systems"
         ]
@@ -425,19 +480,19 @@
         "flake-file": "flake-file",
         "flake-parts": "flake-parts",
         "fuzzy-search-yazi": "fuzzy-search-yazi",
-        "home-manager": "home-manager",
+        "hjem": "hjem",
         "import-tree": "import-tree",
         "nix-index-database": "nix-index-database",
         "nixpkgs": [
           "extra-modules",
           "nixpkgs"
         ],
-        "nixpkgs-lib": [
-          "nixpkgs"
-        ],
         "sops-nix": "sops-nix",
         "spicetify-nix": "spicetify-nix",
         "systems": "systems_2",
+        "vicinae": "vicinae",
+        "vicinae-extensions": "vicinae-extensions",
+        "vimmax": "vimmax",
         "wrappers": "wrappers",
         "zen-browser": "zen-browser"
       }
@@ -536,6 +591,21 @@
         "type": "github"
       }
     },
+    "systems_3": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
     "treefmt-nix": {
       "inputs": {
         "nixpkgs": [
@@ -557,33 +627,77 @@
         "type": "github"
       }
     },
+    "vicinae": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "systems": "systems_3"
+      },
+      "locked": {
+        "lastModified": 1776435302,
+        "narHash": "sha256-MSmlvbsg2kc2DdQGBR+3Shta+Spgi4A2k5tkbTnrro8=",
+        "owner": "vicinaehq",
+        "repo": "vicinae",
+        "rev": "9fb1f6d2f882ebf36ab19919e99ca36ad7e06c9b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vicinaehq",
+        "repo": "vicinae",
+        "type": "github"
+      }
+    },
+    "vicinae-extensions": {
+      "inputs": {
+        "flake-compat": "flake-compat_2",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "systems": [
+          "systems"
+        ],
+        "vicinae": [
+          "vicinae"
+        ]
+      },
+      "locked": {
+        "lastModified": 1775911073,
+        "narHash": "sha256-Fa5JvMFVwBzbnOjEV2Cer8ak0zF/CDwdHT7+wslL30w=",
+        "owner": "vicinaehq",
+        "repo": "extensions",
+        "rev": "d12bcb134d45dedad1a28a18e1cd8807353338d0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vicinaehq",
+        "repo": "extensions",
+        "type": "github"
+      }
+    },
     "vimmax": {
       "inputs": {
         "buffer-manager": "buffer-manager",
         "flake-parts": [
-          "extra-modules",
           "flake-parts"
         ],
         "import-tree": [
-          "extra-modules",
           "import-tree"
         ],
         "nixpkgs": [
-          "extra-modules",
           "nixpkgs"
         ],
         "nixvim": "nixvim",
         "systems": [
-          "extra-modules",
           "systems"
         ]
       },
       "locked": {
-        "lastModified": 1776215866,
-        "narHash": "sha256-jwrkM7sITPeU8BguVbqkbQzqv0lnO3QbVgLEfyF6Wmg=",
+        "lastModified": 1776541446,
+        "narHash": "sha256-CTVBhNqqED1Y/Ggw/npXUY20QwSx7lvc219mKAHGG7s=",
         "owner": "onelocked",
         "repo": "vimmax",
-        "rev": "4ced6a88879d1890e7b5a0869465d5b2bcf7ba27",
+        "rev": "e63486f8b1b860d3a130c4f5ced1f01d2f78d968",
         "type": "github"
       },
       "original": {
@@ -599,34 +713,32 @@
         ]
       },
       "locked": {
-        "lastModified": 1775600302,
-        "narHash": "sha256-2fgKImv78CXIcfo1RsY7EI4uMZ84x/MggA5rrusYc7c=",
-        "owner": "Lassulus",
-        "repo": "wrappers",
-        "rev": "9d8397d8ef1ac35763085f3338589f558128f7db",
+        "lastModified": 1776464146,
+        "narHash": "sha256-XwLFfJDz71vIF7BAhnbLhrzQjmDC2uXdo7N0oHUrYzA=",
+        "owner": "BirdeeHub",
+        "repo": "nix-wrapper-modules",
+        "rev": "75febede14a0845f4ef429da692a0698bf433600",
         "type": "github"
       },
       "original": {
-        "owner": "Lassulus",
-        "repo": "wrappers",
+        "owner": "BirdeeHub",
+        "repo": "nix-wrapper-modules",
         "type": "github"
       }
     },
     "zen-browser": {
       "inputs": {
-        "home-manager": [
-          "home-manager"
-        ],
+        "home-manager": "home-manager",
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1776144279,
-        "narHash": "sha256-eX3u6wJ34+qu7ZR1qWOaToGWmudYQSOEStZZm6goP+8=",
+        "lastModified": 1776488873,
+        "narHash": "sha256-VOYDLF8/Jderf6riz3PyiCQhsCUfpd4S9NmDT/URgYI=",
         "owner": "0xc000022070",
         "repo": "zen-browser-flake",
-        "rev": "727de8a44c85e90f899c540cf3ffa0d5d3344f9c",
+        "rev": "d453f29dbf13541981f8acd558fb6b88e5fd7af6",
         "type": "github"
       },
       "original": {

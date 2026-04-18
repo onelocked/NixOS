@@ -1,13 +1,12 @@
 {
-  flake.modules.homeManager.direnv =
+  flake.modules.nixos.direnv =
     { config, ... }:
     {
       programs.direnv = {
         enable = true;
         nix-direnv.enable = true;
-        enableNushellIntegration = config.programs.nushell.enable or false;
         enableFishIntegration = config.programs.fish.enable or false;
-        config = {
+        settings = {
           global = {
             hide_env_diff = true;
           };
