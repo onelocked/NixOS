@@ -1,8 +1,8 @@
 {
-  flake.modules.homeManager.worktrunk =
+  flake.modules.nixos.worktrunk =
     { pkgs, lib, ... }:
     {
-      home.packages = [ pkgs.worktrunk ];
+      hj.packages = [ pkgs.worktrunk ];
       programs = {
         fish.interactiveShellInit = ''
           ${lib.getExe pkgs.worktrunk} config shell init fish | source

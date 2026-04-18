@@ -6,6 +6,9 @@
       lib,
       ...
     }:
+    let
+      set = _: { };
+    in
     {
       custom.programs.niri.settings = {
         extraConfig = # kdl
@@ -21,9 +24,12 @@
           mode = "3440x1440@99.982";
           scale = 1;
           transform = "normal";
-          position._attrs = {
-            x = 0;
-            y = 0;
+          position = _: {
+            props = {
+              x = 0;
+              y = 0;
+            };
+            content = { };
           };
         };
 
@@ -34,7 +40,7 @@
 
         overview = {
           zoom = 0.35;
-          workspace-shadow.off = null;
+          workspace-shadow.off = set;
         };
 
         layer-rules = [
@@ -48,11 +54,11 @@
           }
         ];
 
-        hotkey-overlay.skip-at-startup = null;
+        hotkey-overlay.skip-at-startup = set;
 
         screenshot-path = self.variables.homedir + "/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
 
-        debug.honor-xdg-activation-with-invalid-serial = null;
+        debug.honor-xdg-activation-with-invalid-serial = set;
 
         recent-windows = {
           debounce-ms = 750;
@@ -72,7 +78,7 @@
         input = {
           mod-key = "Super";
           mod-key-nested = "Alt";
-          disable-power-key-handling = null;
+          disable-power-key-handling = set;
           keyboard = {
             repeat-rate = 40;
             repeat-delay = 370;
@@ -83,11 +89,11 @@
           };
           mouse = {
             accel-profile = "flat";
-            natural-scroll = null;
+            natural-scroll = set;
             scroll-factor = 1.2;
             scroll-method = "on-button-down";
             scroll-button = 273;
-            scroll-button-lock = null;
+            scroll-button-lock = set;
           };
         };
 
@@ -96,11 +102,11 @@
           xcursor-size = 24;
         };
 
-        gestures.hot-corners.off = null;
+        gestures.hot-corners.off = set;
 
         layout = {
           background-color = "transparent";
-          always-center-single-column = null;
+          always-center-single-column = set;
           gaps = 9;
           center-focused-column = "on-overflow";
           preset-column-widths = [
@@ -109,17 +115,20 @@
           ];
           default-column-width.fixed = 2489;
           focus-ring = {
-            off = null;
+            off = set;
             width = 0.5;
           };
           shadow = {
-            on = null;
+            on = set;
             draw-behind-window = true;
             softness = 50;
             spread = 5;
-            offset._attrs = {
-              x = 0;
-              y = 0;
+            offset = _: {
+              props = {
+                x = 0;
+                y = 0;
+              };
+              content = { };
             };
             color = "#000000";
           };

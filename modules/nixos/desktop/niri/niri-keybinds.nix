@@ -1,181 +1,261 @@
 {
   flake.modules.nixos.niri =
     { pkgs, ... }:
+    let
+      set = _: { };
+    in
     {
       custom.programs.niri.settings.binds = {
         # Unbind side mouse buttons
-        "MouseBack" = {
-          spawn = null;
-          _attrs.repeat = false;
+        "MouseBack" = _: {
+          props = {
+            repeat = false;
+          };
+          content = {
+            spawn = set;
+          };
         };
-        "MouseForward" = {
-          spawn = null;
-          _attrs.repeat = false;
+        "MouseForward" = _: {
+          props = {
+            repeat = false;
+          };
+          content = {
+            spawn = set;
+          };
         };
 
         # Core Applications
-        "Mod+T" = {
-          spawn = [ "${pkgs.foot}/bin/foot" ];
-          _attrs.repeat = false;
+        "Mod+T" = _: {
+          props = {
+            repeat = false;
+          };
+          content = {
+            spawn = [ "${pkgs.foot}/bin/foot" ];
+          };
         };
-        "Mod+B" = {
-          spawn = [
-            "${pkgs.niri-launcher}/bin/niri-launcher"
-            "zen-twilight"
-            "zen-twilight"
-          ];
-          _attrs.repeat = false;
+        "Mod+B" = _: {
+          props = {
+            repeat = false;
+          };
+          content = {
+            spawn = [
+              "${pkgs.niri-launcher}/bin/niri-launcher"
+              "zen-twilight"
+              "zen-twilight"
+            ];
+          };
         };
+
         # Noctalia IPC calls
-        "Mod+ALT+L" = {
-          spawn = [
-            "qs"
-            "ipc"
-            "call"
-            "lockScreen"
-            "lock"
-          ];
-          _attrs.repeat = false;
+        "Mod+ALT+L" = _: {
+          props = {
+            repeat = false;
+          };
+          content = {
+            spawn = [
+              "qs"
+              "ipc"
+              "call"
+              "lockScreen"
+              "lock"
+            ];
+          };
         };
-        "Mod+BACKSPACE" = {
-          spawn = [
-            "qs"
-            "ipc"
-            "call"
-            "sessionMenu"
-            "toggle"
-          ];
-          _attrs.repeat = false;
+        "Mod+BACKSPACE" = _: {
+          props = {
+            repeat = false;
+          };
+          content = {
+            spawn = [
+              "qs"
+              "ipc"
+              "call"
+              "sessionMenu"
+              "toggle"
+            ];
+          };
         };
-        "Shift+Alt+W" = {
-          spawn = [
-            "qs"
-            "ipc"
-            "call"
-            "wallpaper"
-            "toggle"
-          ];
-          _attrs.repeat = false;
+        "Shift+Alt+W" = _: {
+          props = {
+            repeat = false;
+          };
+          content = {
+            spawn = [
+              "qs"
+              "ipc"
+              "call"
+              "wallpaper"
+              "toggle"
+            ];
+          };
         };
 
         # Hardware Controls via Noctalia
-        "ALT+Shift+Equal" = {
-          spawn = [
-            "qs"
-            "ipc"
-            "call"
-            "brightness"
-            "increase"
-          ];
-          _attrs.repeat = false;
+        "ALT+Shift+Equal" = _: {
+          props = {
+            repeat = false;
+          };
+          content = {
+            spawn = [
+              "qs"
+              "ipc"
+              "call"
+              "brightness"
+              "increase"
+            ];
+          };
         };
-        "ALT+Shift+Minus" = {
-          spawn = [
-            "qs"
-            "ipc"
-            "call"
-            "brightness"
-            "decrease"
-          ];
-          _attrs.repeat = false;
+        "ALT+Shift+Minus" = _: {
+          props = {
+            repeat = false;
+          };
+          content = {
+            spawn = [
+              "qs"
+              "ipc"
+              "call"
+              "brightness"
+              "decrease"
+            ];
+          };
         };
-        "Mod+Alt+Equal" = {
-          spawn = [
-            "qs"
-            "ipc"
-            "call"
-            "volume"
-            "increase"
-          ];
-          _attrs.repeat = false;
+        "Mod+Alt+Equal" = _: {
+          props = {
+            repeat = false;
+          };
+          content = {
+            spawn = [
+              "qs"
+              "ipc"
+              "call"
+              "volume"
+              "increase"
+            ];
+          };
         };
-        "Mod+Alt+Minus" = {
-          spawn = [
-            "qs"
-            "ipc"
-            "call"
-            "volume"
-            "decrease"
-          ];
-          _attrs.repeat = false;
+        "Mod+Alt+Minus" = _: {
+          props = {
+            repeat = false;
+          };
+          content = {
+            spawn = [
+              "qs"
+              "ipc"
+              "call"
+              "volume"
+              "decrease"
+            ];
+          };
         };
-        "ALT+Shift+A" = {
-          spawn = [
-            "qs"
-            "ipc"
-            "call"
-            "plugin:assistant-panel"
-            "toggle"
-          ];
-          _attrs.repeat = false;
+        "ALT+Shift+A" = _: {
+          props = {
+            repeat = false;
+          };
+          content = {
+            spawn = [
+              "qs"
+              "ipc"
+              "call"
+              "plugin:assistant-panel"
+              "toggle"
+            ];
+          };
         };
 
         # Vicinae Launcher / Extensions
-        "Mod+Z" = {
-          spawn = [
-            "vicinae"
-            "vicinae://extensions/vicinae/core/search-emojis"
-          ];
-          _attrs.repeat = false;
+        "Mod+Z" = _: {
+          props = {
+            repeat = false;
+          };
+          content = {
+            spawn = [
+              "vicinae"
+              "vicinae://extensions/vicinae/core/search-emojis"
+            ];
+          };
         };
-        "Shift+Alt+F" = {
-          spawn = [
-            "vicinae"
-            "vicinae://extensions/knoopx/nix"
-          ];
-          _attrs = {
+        "Shift+Alt+F" = _: {
+          props = {
             repeat = false;
             hotkey-overlay-title = "Nix";
           };
+          content = {
+            spawn = [
+              "vicinae"
+              "vicinae://extensions/knoopx/nix"
+            ];
+          };
         };
-        "Mod+SPACE" = {
-          spawn = [
-            "vicinae"
-            "toggle"
-          ];
-          _attrs = {
+        "Mod+SPACE" = _: {
+          props = {
             repeat = false;
             hotkey-overlay-title = "Launcher";
           };
+          content = {
+            spawn = [
+              "vicinae"
+              "toggle"
+            ];
+          };
         };
-        "Mod+V" = {
-          spawn = [
-            "vicinae"
-            "vicinae://extensions/vicinae/clipboard/history"
-          ];
-          _attrs.repeat = false;
+        "Mod+V" = _: {
+          props = {
+            repeat = false;
+          };
+          content = {
+            spawn = [
+              "vicinae"
+              "vicinae://extensions/vicinae/clipboard/history"
+            ];
+          };
         };
 
         # Window Actions
-        "Mod+G" = {
-          toggle-overview = null;
-          _attrs.repeat = false;
+        "Mod+G" = _: {
+          props = {
+            repeat = false;
+          };
+          content = {
+            toggle-overview = set;
+          };
         };
-        "Mod+Q" = {
-          close-window = null;
-          _attrs.repeat = false;
+        "Mod+Q" = _: {
+          props = {
+            repeat = false;
+          };
+          content = {
+            close-window = set;
+          };
         };
 
         # Navigation
-        "Mod+Left".focus-column-left = null;
-        "Mod+Down".focus-window-down = null;
-        "Mod+Up".focus-window-up = null;
-        "Mod+Right".focus-column-right = null;
+        "Mod+Left".focus-column-left = set;
+        "Mod+Down".focus-window-down = set;
+        "Mod+Up".focus-window-up = set;
+        "Mod+Right".focus-column-right = set;
 
         # Moving Windows
-        "Mod+Ctrl+Left".move-column-left = null;
-        "Mod+Ctrl+Down".move-window-down = null;
-        "Mod+Ctrl+Up".move-window-up = null;
-        "Mod+Ctrl+Right".move-column-right = null;
+        "Mod+Ctrl+Left".move-column-left = set;
+        "Mod+Ctrl+Down".move-window-down = set;
+        "Mod+Ctrl+Up".move-window-up = set;
+        "Mod+Ctrl+Right".move-column-right = set;
 
         # Mouse Wheel Navigation
-        "Mod+WheelScrollDown" = {
-          focus-column-right = null;
-          _attrs.cooldown-ms = 150;
+        "Mod+WheelScrollDown" = _: {
+          props = {
+            cooldown-ms = 150;
+          };
+          content = {
+            focus-column-right = set;
+          };
         };
-        "Mod+WheelScrollUp" = {
-          focus-column-left = null;
-          _attrs.cooldown-ms = 150;
+        "Mod+WheelScrollUp" = _: {
+          props = {
+            cooldown-ms = 150;
+          };
+          content = {
+            focus-column-left = set;
+          };
         };
 
         # Workspaces
@@ -200,15 +280,15 @@
         "Mod+Shift+9".move-column-to-workspace = 9;
 
         # Layout Manipulation
-        "Mod+BracketLeft".consume-or-expel-window-left = null;
-        "Mod+BracketRight".consume-or-expel-window-right = null;
+        "Mod+BracketLeft".consume-or-expel-window-left = set;
+        "Mod+BracketRight".consume-or-expel-window-right = set;
 
-        "Mod+R".switch-preset-column-width = null;
-        "Mod+Ctrl+R".reset-window-height = null;
-        "Mod+F".maximize-column = null;
-        "Mod+M".fullscreen-window = null;
-        "Mod+Shift+F".toggle-windowed-fullscreen = null;
-        "Mod+C".center-column = null;
+        "Mod+R".switch-preset-column-width = set;
+        "Mod+Ctrl+R".reset-window-height = set;
+        "Mod+F".maximize-column = set;
+        "Mod+M".fullscreen-window = set;
+        "Mod+Shift+F".toggle-windowed-fullscreen = set;
+        "Mod+C".center-column = set;
 
         "Mod+Minus".set-column-width = "-10%";
         "Mod+Equal".set-column-width = "+10%";
@@ -216,11 +296,11 @@
         "Mod+Shift+Minus".set-window-height = "-10%";
         "Mod+Shift+Equal".set-window-height = "+10%";
 
-        "Mod+W".expand-column-to-available-width = null;
-        "Mod+SHIFT+W".toggle-window-floating = null;
+        "Mod+W".expand-column-to-available-width = set;
+        "Mod+SHIFT+W".toggle-window-floating = set;
 
         # Screenshot
-        "Print".screenshot = null;
+        "Print".screenshot = set;
       };
     };
 }

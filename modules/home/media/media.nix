@@ -3,8 +3,9 @@
     { pkgs, ... }:
     {
       hj.packages = with pkgs; [
-        isd # TUI systemd
-        nap # Snippets
+        jellyfin-desktop
+        moonlight-qt
+        ayugram-desktop
       ];
     };
 }

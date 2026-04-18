@@ -1,6 +1,6 @@
 {
-  flake.modules.homeManager.yazi = {
-    programs.yazi = {
+  flake.modules.nixos.yazi = {
+    custom.programs.yazi = {
       keymap = {
         mgr.prepend_keymap = [
           {

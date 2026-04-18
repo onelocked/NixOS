@@ -1,7 +1,7 @@
 { self, ... }:
 {
-  flake.modules.homeManager.git =
-    { pkgs, config, ... }:
+  flake.modules.nixos.git =
+    { pkgs, ... }:
     {
       programs.git =
         let
@@ -9,7 +9,7 @@
         in
         {
           enable = true;
-          settings = {
+          config = {
             user = {
               name = username + "ed";
               email = email;
@@ -40,11 +40,8 @@
           };
         };
       programs = {
-        delta.enable = true;
         lazygit = {
           enable = true;
-          enableNushellIntegration = config.programs.nushell.enable or false;
-          enableFishIntegration = config.programs.fish.enable or false;
           settings = {
             git = {
               autoFetch = false;
@@ -111,14 +108,13 @@
           };
         };
       };
-      home = {
-        shellAliases = {
-          lg = "${pkgs.lazygit}/bin/lazygit";
-        };
-        packages = with pkgs; [
-          diffnav
-          gh-dash
-        ];
+      hj.packages = with pkgs; [
+        diffnav
+        gh-dash
+        delta
+      ];
+      environment.shellAliases = {
+        lg = "${pkgs.lazygit}/bin/lazygit";
       };
     };
 }

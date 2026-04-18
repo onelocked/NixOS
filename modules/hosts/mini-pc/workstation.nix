@@ -1,7 +1,7 @@
 { self, ... }:
 let
   inherit (self.lib) mkSystem;
-  inherit (self.modules) nixos homeManager;
+  inherit (self.modules) nixos;
 in
 {
   flake.nixosConfigurations.NixOS = mkSystem {
@@ -13,54 +13,42 @@ in
       sunshine
       niri
       opkssh
+
+      #ported stuff
+      btop
+      bat
+      direnv
+      fastfetch
+      git
+      lla
+      nh
+
+      quickshell
+
+      worktrunk
+      qview
+      jellyfin-tui
+      starship
+      foot
+      fish
+
+      obs-studio
+
+      cursor
+      vesktop
+
+      spotify
+
+      mpv
+      yazi
+
+      neovim
+      vicinae
+
+      gtk
+      qt
+
+      zen-browser
     ];
-    homeModules = with homeManager; {
-      shell = [
-        fish
-        starship
-      ];
-      cli = [
-        bat
-        btop
-        direnv
-        fastfetch
-        git
-        nh
-        worktrunk
-        lla
-      ];
-      tui = [
-        tmux
-        yazi
-        dott-tui
-        neovim
-      ];
-      desktop = [
-        xdg
-        foot
-        quickshell
-        zen-browser
-      ];
-      theming = [
-        gtk
-        qt
-        dconf
-        cursor
-      ];
-      launcher = [
-        vicinae
-      ];
-      media = [
-        spotify
-        mpv
-        obs-studio
-        qview
-        jellyfin-desktop
-        jellyfin-tui
-        telegram-desktop
-        vesktop
-        moonlight-qt
-      ];
-    };
   };
 }

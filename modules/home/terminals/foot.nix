@@ -1,53 +1,45 @@
 {
-  flake.modules.homeManager.foot =
-    { config, ... }:
+  flake.modules.nixos.foot =
+    { pkgs, ... }:
     {
-      programs.foot = {
-        enable = true;
-        server.enable = true;
-        settings = {
-          main = {
-            include = config.xdg.configHome + "/foot/themes/noctalia";
+      hj = {
+        xdg.config.files."foot/foot.ini".text = # ini
+          ''
+            [cursor]
+            blink=yes
+            blink-rate=500
+            style=block
+            underline-thickness=3
+            unfocused-style=hollow
 
-            font = "Maple Mono NL NF:style=ExtraBold:size=13";
-            font-bold = "SFMono Nerd Font:style=Heavy:size=13";
-            font-italic = "SF Mono:style=Bold Italic:size=13";
-            font-bold-italic = "SF Mono:style=Heavy Italic:size=13";
+            [main]
+            bold-text-in-bright=no
+            dpi-aware=yes
+            font=Maple Mono NL NF:style=ExtraBold:size=13
+            font-bold=SFMono Nerd Font:style=Heavy:size=13
+            font-bold-italic=SF Mono:style=Heavy Italic:size=13
+            font-italic=SF Mono:style=Bold Italic:size=13
+            gamma-correct-blending=no
+            include=/home/onelock/.config/foot/themes/noctalia
+            pad=8x3x8x0
 
-            pad = "8x3x8x0";
-            dpi-aware = "yes";
-            bold-text-in-bright = "no";
-            gamma-correct-blending = "no";
-          };
+            [mouse]
+            hide-when-typing=yes
 
-          scrollback = {
-            lines = 10000;
-          };
+            [mouse-bindings]
+            clipboard-copy=BTN_RIGHT
+            select-extend=none
 
-          cursor = {
-            style = "block";
-            unfocused-style = "hollow";
-            blink = "yes";
-            blink-rate = 500;
-            underline-thickness = 3;
-          };
+            [scrollback]
+            lines=10000
 
-          mouse = {
-            hide-when-typing = "yes";
-          };
-
-          mouse-bindings = {
-            select-extend = "none";
-            clipboard-copy = "BTN_RIGHT";
-          };
-
-          tweak = {
-            render-timer = "none";
-            overflowing-glyphs = "yes";
-            font-monospace-warn = "no";
-            surface-bit-depth = "8-bit";
-          };
-        };
+            [tweak]
+            font-monospace-warn=no
+            overflowing-glyphs=yes
+            render-timer=none
+            surface-bit-depth=8-bit
+          '';
+        packages = [ pkgs.foot ];
       };
     };
 }
