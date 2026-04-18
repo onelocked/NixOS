@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.yazi =
+  m.yazi =
     { pkgs, lib, ... }:
     {
       custom.programs.yazi.settings = {

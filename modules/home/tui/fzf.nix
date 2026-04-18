@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.fzf = {
+  m.fzf = {
     custom.programs.fzf = {
       enable = true;
       colors = {
@@ -31,7 +31,7 @@
     };
   };
 
-  flake.modules.nixos.default =
+  m.default =
     {
       config,
       lib,

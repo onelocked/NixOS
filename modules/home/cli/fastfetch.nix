@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  flake.modules.nixos.fastfetch =
+  m.fastfetch =
     { pkgs, ... }:
     let
       logo = pkgs.writeText "nixos-logo.txt" ''

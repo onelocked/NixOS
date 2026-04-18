@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.desktop =
+  m.desktop =
     { lib, ... }:
     let
       inherit (lib) mkForce;

@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.worktrunk =
+  m.worktrunk =
     { pkgs, lib, ... }:
     {
       hj.packages = [ pkgs.worktrunk ];

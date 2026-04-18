@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.foot =
+  m.foot =
     { pkgs, ... }:
     {
       hj = {

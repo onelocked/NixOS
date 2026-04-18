@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.qview =
+  m.qview =
     { pkgs, ... }:
     {
       hj = {

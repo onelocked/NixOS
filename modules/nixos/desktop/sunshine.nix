@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.sunshine = {
+  m.sunshine = {
     networking.firewall = {
       allowedTCPPorts = [
         47984

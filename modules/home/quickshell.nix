@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  flake.modules.nixos.quickshell =
+  m.quickshell =
     {
       pkgs,
       lib,

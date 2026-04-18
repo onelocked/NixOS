@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.obs-studio =
+  m.obs-studio =
     { pkgs, lib, ... }:
     let
       obs-wrapped = (

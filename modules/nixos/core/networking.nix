@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.nixos.default =
+  m.default =
     { lib, ... }:
     let
       inherit (self.variables) hostname;

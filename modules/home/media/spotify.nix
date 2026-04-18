@@ -6,7 +6,7 @@
     inputs.systems.follows = "systems";
   };
 
-  flake.modules.nixos.spotify =
+  m.spotify =
     { pkgs, ... }:
     let
       spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};

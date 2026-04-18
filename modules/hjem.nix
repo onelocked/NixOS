@@ -11,7 +11,7 @@
     };
   };
 
-  flake.modules.nixos.default =
+  m.default =
     {
       lib,
       ...

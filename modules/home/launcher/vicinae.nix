@@ -13,7 +13,7 @@
     };
   };
 
-  flake.modules.nixos.vicinae =
+  m.vicinae =
     { pkgs, ... }:
     {
       nixpkgs.overlays = [ inputs.vicinae.overlays.default ];
@@ -170,7 +170,7 @@
       };
     };
 
-  flake.modules.nixos.default =
+  m.default =
     { pkgs, config, ... }:
     let
       cfg = config.custom.services.vicinae;

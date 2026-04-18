@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.nixos.dott-tui =
+  m.dott-tui =
     {
       pkgs,
       lib,

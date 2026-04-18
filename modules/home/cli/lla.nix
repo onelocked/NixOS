@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.lla =
+  m.lla =
     {
       pkgs,
       config,

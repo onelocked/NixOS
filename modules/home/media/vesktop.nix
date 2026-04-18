@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.vesktop =
+  m.vesktop =
     { pkgs, ... }:
     {
       hj = {

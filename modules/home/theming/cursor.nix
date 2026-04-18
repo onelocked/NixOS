@@ -1,6 +1,6 @@
 { self, lib, ... }:
 {
-  flake.modules.nixos.cursor =
+  m.cursor =
     { pkgs, config, ... }:
     let
       gtkCursor = config.custom.gtk.cursor;
@@ -80,7 +80,7 @@
       };
     };
 
-  flake.modules.nixos.default =
+  m.default =
     { pkgs, ... }:
     {
       options.custom = {

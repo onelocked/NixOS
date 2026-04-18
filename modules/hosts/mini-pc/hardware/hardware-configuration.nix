@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.hardware-mini-pc =
+  m.hardware-mini-pc =
     {
       config,
       lib,

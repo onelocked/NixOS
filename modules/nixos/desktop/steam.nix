@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.gaming =
+  m.gaming =
     {
       config,
       lib,

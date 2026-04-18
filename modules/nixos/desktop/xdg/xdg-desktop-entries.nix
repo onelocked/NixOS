@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.xdg =
+  m.xdg =
     {
       config,
       lib,
@@ -85,7 +85,7 @@
         };
       };
     };
-  flake.modules.nixos.default =
+  m.default =
     { lib, ... }:
     let
       inherit (lib) mkOption types;

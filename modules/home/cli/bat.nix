@@ -3,7 +3,7 @@
   ...
 }:
 {
-  flake.modules.nixos.bat =
+  m.bat =
     { pkgs, ... }:
     {
       hj.packages = [

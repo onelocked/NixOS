@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.nixos.niri =
+  m.niri =
     {
       pkgs,
       lib,

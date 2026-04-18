@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.default = {
+  m.default = {
     services = {
       devmon.enable = false;
       gvfs.enable = false;

@@ -22,7 +22,7 @@ let
   };
 in
 {
-  flake.modules.nixos.btop =
+  m.btop =
     { pkgs, ... }:
     {
       hj.packages = [

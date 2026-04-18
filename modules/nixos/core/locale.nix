@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.nixos.default =
+  m.default =
     let
       inherit (self.variables) timezone locale;
     in

@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.default = {
+  m.default = {
     security = {
       sudo.enable = false;
       sudo-rs = {

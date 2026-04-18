@@ -10,7 +10,7 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  flake.modules.nixos.zen-browser =
+  m.zen-browser =
     { pkgs, config, ... }:
     let
       cfg = config.custom.programs.zen-browser;
@@ -345,7 +345,7 @@
       );
     };
 
-  flake.modules.nixos.default =
+  m.default =
     { lib, ... }:
     {
       options.custom.programs.zen-browser = {

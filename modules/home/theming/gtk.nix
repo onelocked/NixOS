@@ -1,6 +1,6 @@
 { lib, ... }:
 {
-  flake.modules.nixos.gtk =
+  m.gtk =
     { config, ... }:
     let
       gtkCfg = config.custom.gtk;
@@ -70,7 +70,7 @@
         ];
       };
     };
-  flake.modules.nixos.default =
+  m.default =
     { pkgs, ... }:
     let
       inherit (lib) mkOption types literalExpression;

@@ -3,7 +3,7 @@ let
   inherit (self.variables) username homedir;
 in
 {
-  flake.modules.nixos.opkssh =
+  m.opkssh =
     { pkgs, config, ... }:
     {
       environment.systemPackages = [ pkgs.opkssh ];

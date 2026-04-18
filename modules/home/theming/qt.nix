@@ -1,6 +1,6 @@
 { lib, ... }:
 {
-  flake.modules.nixos.qt =
+  m.qt =
     { config, pkgs, ... }:
     let
       qtctConf = {
