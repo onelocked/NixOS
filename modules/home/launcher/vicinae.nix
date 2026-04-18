@@ -34,6 +34,7 @@
         };
 
         settings = {
+          telemetry.system_info = false;
           close_on_focus_loss = true;
           consider_preedit = true;
           activate_on_single_click = true;
