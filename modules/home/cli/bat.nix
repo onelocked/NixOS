@@ -1,7 +1,4 @@
-{
-  inputs,
-  ...
-}:
+{ inputs, ... }:
 {
   m.bat =
     { pkgs, ... }:
@@ -25,12 +22,6 @@
 
               mkdir -p $out/share/fish/vendor_completions.d
               echo 'complete batman --wraps man' > $out/share/fish/vendor_completions.d/batman.fish
-
-              mkdir -p $out/share/zsh/site-functions
-              cat << EOF > $out/share/zsh/site-functions/_batman
-              #compdef batman
-              _man "$@"
-              EOF
             '';
         }))
       ];
