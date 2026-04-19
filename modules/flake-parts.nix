@@ -4,10 +4,12 @@
   ...
 }:
 {
+
   imports = [
     inputs.flake-parts.flakeModules.modules
     (lib.mkAliasOptionModule [ "m" ] [ "flake" "modules" "nixos" ])
     inputs.flake-file.flakeModules.dendritic
+    (lib.mkAliasOptionModule [ "ff" ] [ "flake-file" "inputs" ])
   ];
 
   systems = [ "x86_64-linux" ];
