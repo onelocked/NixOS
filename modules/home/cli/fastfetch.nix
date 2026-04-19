@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
   m.fastfetch =
-    { pkgs, ... }:
+    { pkgs, lib, ... }:
     let
       logo = pkgs.writeText "nixos-logo.txt" ''
          _____  ___    __     ___  ___   ______    ________
@@ -87,18 +87,17 @@
               ]
             }
           '';
+
+      fastfetch = inputs.wrappers.lib.wrapPackage {
+        inherit pkgs;
+        package = pkgs.fastfetch;
+        flags = {
+          "--config" = "${fastfetch-config}";
+        };
+      };
     in
     {
-      hj = {
-        packages = [
-          (inputs.wrappers.lib.wrapPackage {
-            inherit pkgs;
-            package = pkgs.fastfetch;
-            flags = {
-              "--config" = "${fastfetch-config}";
-            };
-          })
-        ];
-      };
+      environment.shellAliases.ff = lib.getExe fastfetch;
+      hj.packages = [ fastfetch ];
     };
 }

@@ -32,7 +32,6 @@
         {
           ping = "${_ gping}";
           cat = "${_ bat}";
-          ff = "${_ fastfetch}";
           zip = "${_ zip}";
           gtop = "${_ amdgpu_top} --dark";
           gr = "cd (git rev-parse --show-toplevel)";
