@@ -1,6 +1,6 @@
 { self, lib, ... }:
 {
-  flake-file.inputs = {
+  ff = {
     extra-modules.url = "github:onelocked/extra-modules";
     nixpkgs.url = lib.mkForce "";
     nixpkgs.follows = "extra-modules/nixpkgs";

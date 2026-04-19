@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  flake-file.inputs = {
+  ff = {
     extra-modules = {
       url = "github:onelocked/extra-modules";
       inputs.flake-parts.follows = "flake-parts";
