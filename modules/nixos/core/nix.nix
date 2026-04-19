@@ -31,6 +31,7 @@
           experimental-features = [
             "nix-command"
             "flakes"
+            "pipe-operators"
           ];
           auto-optimise-store = true;
           use-xdg-base-directories = true;
