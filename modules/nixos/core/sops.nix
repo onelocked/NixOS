@@ -7,7 +7,7 @@ let
   inherit (self.variables) username homedir;
 in
 {
-  flake-file.inputs.sops-nix = {
+  ff.sops-nix = {
     url = "github:Mic92/sops-nix";
     inputs.nixpkgs.follows = "nixpkgs";
   };

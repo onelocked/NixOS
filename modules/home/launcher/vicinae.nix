@@ -5,7 +5,7 @@
   ...
 }:
 {
-  flake-file.inputs = {
+  ff = {
     vicinae = {
       url = "github:vicinaehq/vicinae";
       inputs.nixpkgs.follows = "nixpkgs";

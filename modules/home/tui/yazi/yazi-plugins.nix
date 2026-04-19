@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  flake-file.inputs.fuzzy-search-yazi = {
+  ff.fuzzy-search-yazi = {
     url = "github:onelocked/fuzzy-search.yazi/dev";
     inputs.nixpkgs.follows = "nixpkgs";
   };

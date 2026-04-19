@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  flake-file.inputs.vimmax = {
+  ff.vimmax = {
     url = "github:onelocked/vimmax";
     inputs.nixpkgs.follows = "nixpkgs";
     inputs.flake-parts.follows = "flake-parts";
