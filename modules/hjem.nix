@@ -14,6 +14,7 @@
   m.default =
     {
       lib,
+      config,
       ...
     }:
     let
@@ -32,6 +33,10 @@
         user = username;
         directory = homedir;
         clobberFiles = true;
+        files.".profile" = {
+          executable = true;
+          source = config.hj.environment.loadEnv;
+        };
       };
     };
 }

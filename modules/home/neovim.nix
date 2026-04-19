@@ -12,10 +12,10 @@
     {
       hj = {
         packages = [ inputs.vimmax.packages.${pkgs.stdenv.hostPlatform.system}.default ];
-      };
-      environment.sessionVariables = {
-        EDITOR = "nvim";
-        VISUAL = "nvim";
+        environment.sessionVariables = {
+          EDITOR = "nvim";
+          VISUAL = "nvim";
+        };
       };
     };
 }
