@@ -310,22 +310,22 @@
           let
             zenDesktop = [ "zen-twilight.desktop" ];
           in
-          builtins.listToAttrs (
-            map (mime: lib.nameValuePair mime zenDesktop) [
-              "application/x-extension-shtml"
-              "application/x-extension-xhtml"
-              "application/x-extension-html"
-              "application/x-extension-xht"
-              "application/x-extension-htm"
-              "x-scheme-handler/unknown"
-              "x-scheme-handler/https"
-              "x-scheme-handler/http"
-              "application/xhtml+xml"
-              "application/json"
-              "application/pdf"
-              "text/html"
-            ]
-          );
+          [
+            "application/x-extension-shtml"
+            "application/x-extension-xhtml"
+            "application/x-extension-html"
+            "application/x-extension-xht"
+            "application/x-extension-htm"
+            "x-scheme-handler/unknown"
+            "x-scheme-handler/https"
+            "x-scheme-handler/http"
+            "application/xhtml+xml"
+            "application/json"
+            "application/pdf"
+            "text/html"
+          ]
+          |> map (mime: lib.nameValuePair mime zenDesktop)
+          |> builtins.listToAttrs;
       };
 
       environment.sessionVariables = lib.mkIf cfg.setAsDefaultBrowser {
