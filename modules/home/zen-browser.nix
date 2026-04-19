@@ -35,9 +35,9 @@
       # Generate user.js content from profile settings
       mkUserJs =
         settings:
-        lib.concatStringsSep "\n" (
-          lib.mapAttrsToList (name: value: ''user_pref("${name}", ${builtins.toJSON value});'') settings
-        );
+        settings
+        |> lib.mapAttrsToList (name: value: ''user_pref("${name}", ${builtins.toJSON value});'')
+        |> lib.concatStringsSep "\n";
 
       profilesCfg = cfg.profiles;
 
@@ -248,12 +248,14 @@
       # Write profiles.ini + user.js for each profile
       hj.files =
         let
-          profileEntries = lib.imap0 (
-            i: name:
-            let
-              profile = profilesCfg.${name};
-            in
-            lib.concatStringsSep "\n" (
+          profileEntries =
+            profilesCfg
+            |> lib.attrNames
+            |> lib.imap0 (
+              i: name:
+              let
+                profile = profilesCfg.${name};
+              in
               [
                 "[Profile${toString i}]"
                 "Name=${name}"
@@ -261,39 +263,41 @@
                 "Path=${profile.path}"
               ]
               ++ lib.optional profile.isDefault "Default=1"
-            )
-          ) (lib.attrNames profilesCfg);
+              |> lib.concatStringsSep "\n"
+            );
 
           defaultPath =
             let
-              defaultName = lib.findFirst (n: profilesCfg.${n}.isDefault) (lib.head (lib.attrNames profilesCfg)) (
-                lib.attrNames profilesCfg
-              );
+              defaultName =
+                profilesCfg
+                |> lib.attrNames
+                |> (names: lib.findFirst (n: profilesCfg.${n}.isDefault) (lib.head names) names);
             in
             profilesCfg.${defaultName}.path;
 
           profilesIni =
-            lib.concatStringsSep "\n\n" (
-              [
-                ''
-                  [General]
-                  StartWithLastProfile=1''
-              ]
-              ++ profileEntries
-              ++ [
-                ''
-                  [Install]
-                  Default=${defaultPath}''
-              ]
-            )
-            + "\n";
+            [
+              ''
+                [General]
+                StartWithLastProfile=1''
+            ]
+            ++ profileEntries
+            ++ [
+              ''
+                [Install]
+                Default=${defaultPath}''
+            ]
+            |> lib.concatStringsSep "\n\n"
+            |> (s: s + "\n");
 
-          userJsFiles = lib.mapAttrs' (
-            name: profile:
-            lib.nameValuePair ".config/zen/${profile.path}/user.js" {
-              text = mkUserJs profile.settings + "\n";
-            }
-          ) profilesCfg;
+          userJsFiles =
+            profilesCfg
+            |> lib.mapAttrs' (
+              name: profile:
+              lib.nameValuePair ".config/zen/${profile.path}/user.js" {
+                text = mkUserJs profile.settings + "\n";
+              }
+            );
         in
         {
           ".config/zen/profiles.ini".text = profilesIni;
