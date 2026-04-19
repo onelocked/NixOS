@@ -122,7 +122,8 @@
 
           inherit (lib) optional isAttrs;
         in
-        lib.mapAttrs' (name: def: {
+        config.programs.fish.functions
+        |> lib.mapAttrs' (name: def: {
           name = "fish/functions/${name}.fish";
           value = {
             source =
@@ -135,7 +136,7 @@
                   with def;
                   modifierStr "description" description
                   ++ modifierStr "wraps" wraps
-                  ++ lib.concatMap (modifierStr "on-event") (lib.toList onEvent)
+                  ++ (onEvent |> lib.toList |> lib.concatMap (modifierStr "on-event"))
                   ++ modifierStr "on-variable" onVariable
                   ++ modifierStr "on-job-exit" onJobExit
                   ++ modifierStr "on-process-exit" onProcessExit
@@ -149,11 +150,11 @@
               in
               fishIndent "${name}.fish" ''
                 function ${name}${modifiers}
-                  ${lib.strings.removeSuffix "\n" body}
+                  ${body |> lib.strings.removeSuffix "\n"}
                 end
               '';
           };
-        }) config.programs.fish.functions;
+        });
     };
 
   m.default =
