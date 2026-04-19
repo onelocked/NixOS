@@ -41,7 +41,7 @@
     let
       cfg = config.custom.programs.fzf;
       renderedColors =
-        colors: lib.concatStringsSep "," (lib.mapAttrsToList (name: value: "${name}:${value}") colors);
+        colors: colors |> lib.mapAttrsToList (name: value: "${name}:${value}") |> lib.concatStringsSep ",";
     in
     {
       options.custom.programs.fzf = {
@@ -60,8 +60,8 @@
         environment.systemPackages = [ cfg.package ];
         environment.sessionVariables = {
           FZF_DEFAULT_OPTS =
-            lib.concatStringsSep " " cfg.defaultOptions
-            + lib.optionalString (cfg.colors != { }) " --color ${renderedColors cfg.colors}";
+            cfg.defaultOptions ++ lib.optional (cfg.colors != { }) "--color=${renderedColors cfg.colors}"
+            |> lib.concatStringsSep " ";
         };
         programs.fish.interactiveShellInit = "${lib.getExe cfg.package} --fish | source";
       };
