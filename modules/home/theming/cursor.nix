@@ -42,14 +42,6 @@
         default_index_theme_package
       ];
 
-      hj.environment.sessionVariables = {
-        # Set directory to look for cursors in, needed for some applications
-        # that are unable to find cursors otherwise. See:
-        # https://github.com/nix-community/home-manager/issues/2812
-        # https://wiki.archlinux.org/title/Cursor_themes#Environment_variable
-        XCURSOR_PATH = "${self.variables.homedir}/.local/share/icons";
-      };
-
       hj.files.".icons/default/index.theme".source =
         "${default_index_theme_package}/share/icons/default/index.theme";
       hj.files.".icons/${gtkCursor.name}".source = "${gtkCursor.package}/share/icons/${gtkCursor.name}";
