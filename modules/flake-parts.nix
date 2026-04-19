@@ -19,6 +19,8 @@
     };
 
     do-not-edit = "";
+    outputs = # nix
+      "inputs: ./modules |> inputs.import-tree |> inputs.flake-parts.lib.mkFlake { inherit inputs; }";
     description = "onelock's dendritic nixos flake configuration";
     style = {
       sortPriority.inputs = [
