@@ -6,8 +6,7 @@
       hj.packages = [
         (inputs.wrappers.wrappers.btop.wrap {
           inherit pkgs;
-          inherit (config.custom.programs.btop) settings;
-          inherit (config.custom.programs.btop) themes;
+          inherit (config.custom.programs.btop) settings themes;
         })
       ];
       custom.programs.btop = {
@@ -82,14 +81,14 @@
         in
         {
           settings = lib.mkOption {
-            type = types.attrsOf (
-              types.oneOf [
-                types.bool
-                types.float
-                types.int
-                types.str
-              ]
-            );
+            type =
+              with types;
+              attrsOf (oneOf [
+                bool
+                float
+                int
+                str
+              ]);
             default = "";
             description = "btop settings";
           };
