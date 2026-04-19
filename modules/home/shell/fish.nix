@@ -73,6 +73,13 @@
                 commandline -f repaint
               '';
           };
+          shellAbbrs = {
+            nb = "nix build";
+            nd = "nix develop";
+            nr = "nix run";
+            nf = "nix flake update";
+            wf = "nix run ~/NixOS#write-flake";
+          };
           interactiveShellInit = # fish
             ''
               bind Z __yazi-fuzzy-zoxide
@@ -123,38 +130,40 @@
           inherit (lib) optional isAttrs;
         in
         config.programs.fish.functions
-        |> lib.mapAttrs' (name: def: {
-          name = "fish/functions/${name}.fish";
-          value = {
-            source =
-              let
-                modifierStr = n: v: optional (v != null) ''--${n}="${toString v}"'';
-                modifierStrs = n: v: optional (v != null) "--${n}=${toString v}";
-                modifierBool = n: v: optional (v != null && v) "--${n}";
+        |> lib.mapAttrs' (
+          name: def: {
+            name = "fish/functions/${name}.fish";
+            value = {
+              source =
+                let
+                  modifierStr = n: v: optional (v != null) ''--${n}="${toString v}"'';
+                  modifierStrs = n: v: optional (v != null) "--${n}=${toString v}";
+                  modifierBool = n: v: optional (v != null && v) "--${n}";
 
-                mods =
-                  with def;
-                  modifierStr "description" description
-                  ++ modifierStr "wraps" wraps
-                  ++ (onEvent |> lib.toList |> lib.concatMap (modifierStr "on-event"))
-                  ++ modifierStr "on-variable" onVariable
-                  ++ modifierStr "on-job-exit" onJobExit
-                  ++ modifierStr "on-process-exit" onProcessExit
-                  ++ modifierStr "on-signal" onSignal
-                  ++ modifierBool "no-scope-shadowing" noScopeShadowing
-                  ++ modifierStr "inherit-variable" inheritVariable
-                  ++ modifierStrs "argument-names" argumentNames;
+                  mods =
+                    with def;
+                    modifierStr "description" description
+                    ++ modifierStr "wraps" wraps
+                    ++ (onEvent |> lib.toList |> lib.concatMap (modifierStr "on-event"))
+                    ++ modifierStr "on-variable" onVariable
+                    ++ modifierStr "on-job-exit" onJobExit
+                    ++ modifierStr "on-process-exit" onProcessExit
+                    ++ modifierStr "on-signal" onSignal
+                    ++ modifierBool "no-scope-shadowing" noScopeShadowing
+                    ++ modifierStr "inherit-variable" inheritVariable
+                    ++ modifierStrs "argument-names" argumentNames;
 
-                modifiers = if isAttrs def then " ${toString mods}" else "";
-                body = if isAttrs def then def.body else def;
-              in
-              fishIndent "${name}.fish" ''
-                function ${name}${modifiers}
-                  ${body |> lib.strings.removeSuffix "\n"}
-                end
-              '';
-          };
-        });
+                  modifiers = if isAttrs def then " ${toString mods}" else "";
+                  body = if isAttrs def then def.body else def;
+                in
+                fishIndent "${name}.fish" ''
+                  function ${name}${modifiers}
+                    ${body |> lib.strings.removeSuffix "\n"}
+                  end
+                '';
+            };
+          }
+        );
     };
 
   m.default =
