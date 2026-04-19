@@ -1,7 +1,8 @@
 {
   description = "onelock's dendritic nixos flake configuration";
 
-  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
+  outputs =
+    inputs: ./modules |> inputs.import-tree |> inputs.flake-parts.lib.mkFlake { inherit inputs; };
 
   inputs = {
     nixpkgs.follows = "extra-modules/nixpkgs";
