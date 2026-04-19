@@ -348,12 +348,12 @@
 
         hj.xdg =
           let
-            themeFiles = lib.mapAttrs' (
+            themeFiles = cfg.themes |> lib.mapAttrs' (
               name: theme:
               lib.nameValuePair "vicinae/themes/${name}.toml" {
                 source = tomlFormat.generate "vicinae-${name}-theme" theme;
               }
-            ) cfg.themes;
+            );
           in
           {
             config.files = {
@@ -363,12 +363,12 @@
             };
 
             data.files =
-              builtins.listToAttrs (
-                map (item: {
-                  name = "vicinae/extensions/${item.name}";
-                  value.source = item;
-                }) cfg.extensions
-              )
+              (cfg.extensions
+              |> map (item: {
+                name = "vicinae/extensions/${item.name}";
+                value.source = item;
+              })
+              |> builtins.listToAttrs)
               // themeFiles;
           };
 
