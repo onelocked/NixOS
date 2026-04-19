@@ -307,9 +307,6 @@
       # Default browser via xdg mime
       xdg.mime = lib.mkIf cfg.setAsDefaultBrowser {
         defaultApplications =
-          let
-            zenDesktop = [ "zen-twilight.desktop" ];
-          in
           [
             "application/x-extension-shtml"
             "application/x-extension-xhtml"
@@ -324,7 +321,7 @@
             "application/pdf"
             "text/html"
           ]
-          |> map (mime: lib.nameValuePair mime zenDesktop)
+          |> map (mime: lib.nameValuePair mime [ "zen-twilight.desktop" ])
           |> builtins.listToAttrs;
       };
 
