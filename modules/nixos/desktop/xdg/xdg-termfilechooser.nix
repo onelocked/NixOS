@@ -20,7 +20,7 @@
           ''
             [filechooser]
             cmd=yazi-wrapper.sh
-            default_dir=${config.hj.directory}/Downloads";
+            default_dir=${config.hj.xdg.config.directory}/Downloads";
             open_mode=default
             save_mode=default
           '';
