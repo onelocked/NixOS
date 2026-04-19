@@ -20,7 +20,7 @@
         fish = {
           enable = true;
           functions = {
-            store = "y (dirname (dirname (readlink -f (which $argv[1]))))";
+            store = ''y (string match -r "/nix/store/[^/]*" (builtin realpath (type -fP $argv[1])))'';
             ncp = ''echo "pkgs.$(nurl $argv[1]);" | string collect  | wl-copy'';
 
             # Run a nix run with a package
