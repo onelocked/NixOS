@@ -1,4 +1,9 @@
-{ lib, inputs, ... }:
+{
+  lib,
+  inputs,
+  self,
+  ...
+}:
 {
   flake-file.inputs = {
     vicinae = {
@@ -14,7 +19,7 @@
   };
 
   m.vicinae =
-    { pkgs, ... }:
+    { pkgs, config, ... }:
     {
       nixpkgs.overlays = [ inputs.vicinae.overlays.default ];
 
@@ -102,8 +107,8 @@
             applications = {
               preferences = {
                 paths = [
-                  "/home/onelock/.local/share/applications"
-                  "/etc/profiles/per-user/onelock/share/applications"
+                  "${config.hj.xdg.data.directory}/share/applications"
+                  "/etc/profiles/per-user/${self.variables.username}/share/applications"
                   "/run/current-system/sw/share/applications"
                 ];
                 defaultAction = "focus";
@@ -348,12 +353,14 @@
 
         hj.xdg =
           let
-            themeFiles = cfg.themes |> lib.mapAttrs' (
-              name: theme:
-              lib.nameValuePair "vicinae/themes/${name}.toml" {
-                source = tomlFormat.generate "vicinae-${name}-theme" theme;
-              }
-            );
+            themeFiles =
+              cfg.themes
+              |> lib.mapAttrs' (
+                name: theme:
+                lib.nameValuePair "vicinae/themes/${name}.toml" {
+                  source = tomlFormat.generate "vicinae-${name}-theme" theme;
+                }
+              );
           in
           {
             config.files = {
@@ -363,12 +370,14 @@
             };
 
             data.files =
-              (cfg.extensions
-              |> map (item: {
-                name = "vicinae/extensions/${item.name}";
-                value.source = item;
-              })
-              |> builtins.listToAttrs)
+              (
+                cfg.extensions
+                |> map (item: {
+                  name = "vicinae/extensions/${item.name}";
+                  value.source = item;
+                })
+                |> builtins.listToAttrs
+              )
               // themeFiles;
           };
 
