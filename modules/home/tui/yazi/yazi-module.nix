@@ -32,9 +32,7 @@
         })
       ];
 
-      hj.packages = [
-        pkgs.yazi
-      ];
+      hj.packages = [ pkgs.yazi ];
       programs.fish.functions.y = # fish
         ''
           set -l tmp (mktemp -t "yazi-cwd.XXXXX")
