@@ -26,11 +26,15 @@
         theme.package
         iconTheme.package
       ];
-      hj.xdg.config.files = {
-        "gtk-4.0/gtk.css".text = config.custom.gtk.theme.css;
-        "gtk-3.0/gtk.css".text = config.custom.gtk.theme.css;
-        "gtk-2.0/gtk.css".text = config.custom.gtk.theme.css;
-      };
+      hj.xdg.config.files =
+        [
+          "4.0"
+          "3.0"
+          "2.0"
+        ]
+        |> map (version: lib.nameValuePair "gtk-${version}/gtk.css" { text = config.custom.gtk.theme.css; })
+        |> builtins.listToAttrs;
+
       environment = {
         etc = {
           "xdg/gtk-3.0/settings.ini".text = gtkIni;
