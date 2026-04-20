@@ -35,6 +35,9 @@
         extraConfig = # tmux
           ''
 
+            set -g extended-keys on
+            set -s extended-keys always
+            set -as terminal-features 'xterm*:extkeys'
             set -g prefix ^A
             set  -g mouse on
             set -g allow-passthrough on
