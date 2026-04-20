@@ -68,9 +68,7 @@
               border_width = 1;
             };
 
-            compact_mode = {
-              enabled = false;
-            };
+            compact_mode.enabled = false;
 
           };
 
@@ -116,23 +114,13 @@
               };
             };
 
-            "browser-extension" = {
-              enabled = false;
-            };
+            "browser-extension".enabled = false;
 
-            clipboard = {
-              preferences = {
-                monitoring = true;
-              };
-            };
+            clipboard.preferences.monitoring = true;
 
-            core = {
-              enabled = true;
-            };
+            core.enabled = true;
 
-            developer = {
-              enabled = false;
-            };
+            developer.enabled = false;
 
             files = {
               enabled = false;
@@ -141,33 +129,19 @@
               };
             };
 
-            font = {
-              enabled = false;
-            };
+            font.enabled = false;
 
-            "manage-shortcuts" = {
-              enabled = false;
-            };
+            "manage-shortcuts".enabled = false;
 
-            power = {
-              enabled = false;
-            };
+            power.enabled = false;
 
-            "raycast-compat" = {
-              enabled = true;
-            };
+            "raycast-compat".enabled = true;
 
-            system = {
-              enabled = false;
-            };
+            system.enabled = false;
 
-            theme = {
-              enabled = false;
-            };
+            theme.enabled = false;
 
-            wm = {
-              enabled = false;
-            };
+            wm.enabled = false;
           };
 
         };
