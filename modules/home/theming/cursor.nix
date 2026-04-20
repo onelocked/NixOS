@@ -1,4 +1,4 @@
-{ self, lib, ... }:
+{ lib, ... }:
 {
   m.cursor =
     { pkgs, config, ... }:

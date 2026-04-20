@@ -12,17 +12,19 @@
           in
           "${lib.escape [ "=" ] key}=${value'}";
       };
-      gtkIni = toIni {
-        Settings = {
-          gtk-theme-name = gtkCfg.theme.name;
-          gtk-icon-theme-name = config.custom.gtk.iconTheme.name;
-          gtk-application-prefer-dark-theme = 1;
-          gtk-error-bell = 0;
-        };
-      };
+      gtkIni =
+        {
+          Settings = {
+            gtk-theme-name = gtkCfg.theme.name;
+            gtk-icon-theme-name = gtkCfg.iconTheme.name;
+            gtk-application-prefer-dark-theme = 1;
+            gtk-error-bell = 0;
+          };
+        }
+        |> toIni;
     in
     {
-      hj.packages = with config.custom.gtk; [
+      hj.packages = with gtkCfg; [
         theme.package
         iconTheme.package
       ];
@@ -32,22 +34,28 @@
           "3.0"
           "2.0"
         ]
-        |> map (version: lib.nameValuePair "gtk-${version}/gtk.css" { text = config.custom.gtk.theme.css; })
+        |> map (version: lib.nameValuePair "gtk-${version}/gtk.css" { text = gtkCfg.theme.css; })
         |> builtins.listToAttrs;
 
       environment = {
-        etc = {
-          "xdg/gtk-3.0/settings.ini".text = gtkIni;
-          "xdg/gtk-4.0/settings.ini".text = gtkIni;
-          "xdg/gtk-2.0/gtkrc".text = ''
-            gtk-icon-theme-name = "${config.custom.gtk.iconTheme.name}";
-            gtk-theme-name = "${gtkCfg.theme.name}";
-          '';
-        };
-
-        sessionVariables = {
-          GTK2_RC_FILES = "/etc/xdg/gtk-2.0/gtkrc";
-        };
+        etc =
+          [
+            "3.0"
+            "4.0"
+          ]
+          |> map (version: lib.nameValuePair "xdg/gtk-${version}/settings.ini" { text = gtkIni; })
+          |> builtins.listToAttrs
+          |> (
+            x:
+            x
+            // {
+              "xdg/gtk-2.0/gtkrc".text = ''
+                gtk-icon-theme-name = "${gtkCfg.iconTheme.name}";
+                gtk-theme-name = "${gtkCfg.theme.name}";
+              '';
+            }
+          );
+        sessionVariables.GTK2_RC_FILES = "/etc/xdg/gtk-2.0/gtkrc";
       };
 
       programs.dconf = {
