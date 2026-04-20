@@ -46,7 +46,7 @@
     {
       options.custom.programs.fuzzel = {
         settings = lib.mkOption {
-          type = iniFmt.type;
+          inherit (iniFmt) type;
           default = { };
           description = ''
             Configuration of fuzzel.

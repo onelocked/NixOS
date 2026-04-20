@@ -171,20 +171,22 @@
               types.submodule (
                 { name, ... }:
                 {
-                  options.name = mkOption {
-                    type = types.str;
-                    default = name;
-                    description = "Name of the action.";
-                  };
-                  options.exec = mkOption {
-                    type = types.nullOr types.str;
-                    default = null;
-                    description = "Program to execute.";
-                  };
-                  options.icon = mkOption {
-                    type = with types; nullOr (either str path);
-                    default = null;
-                    description = "Icon to display.";
+                  options = {
+                    name = mkOption {
+                      type = types.str;
+                      default = name;
+                      description = "Name of the action.";
+                    };
+                    exec = mkOption {
+                      type = types.nullOr types.str;
+                      default = null;
+                      description = "Program to execute.";
+                    };
+                    icon = mkOption {
+                      type = with types; nullOr (either str path);
+                      default = null;
+                      description = "Icon to display.";
+                    };
                   };
                 }
               )

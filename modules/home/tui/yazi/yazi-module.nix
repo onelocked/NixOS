@@ -16,9 +16,8 @@
             ];
             inherit (config.custom.programs.yazi) plugins;
             settings = with config.custom.programs; {
-              keymap = yazi.keymap;
+              inherit (yazi) keymap theme;
               yazi = yazi.settings;
-              theme = yazi.theme;
             };
             constructFiles.initLua = {
               relPath = "yazi-config/init.lua";
@@ -81,7 +80,7 @@
         };
 
         theme = lib.mkOption {
-          type = type;
+          inherit type;
           default = { };
           description = "Theme settings";
         };

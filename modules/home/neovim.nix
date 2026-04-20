@@ -2,10 +2,12 @@
 {
   ff.vimmax = {
     url = "github:onelocked/vimmax";
-    inputs.nixpkgs.follows = "nixpkgs";
-    inputs.flake-parts.follows = "flake-parts";
-    inputs.import-tree.follows = "import-tree";
-    inputs.systems.follows = "systems";
+    inputs = {
+      nixpkgs.follows = "nixpkgs";
+      flake-parts.follows = "flake-parts";
+      import-tree.follows = "import-tree";
+      systems.follows = "systems";
+    };
   };
   m.neovim =
     { pkgs, ... }:
