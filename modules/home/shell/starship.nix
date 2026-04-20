@@ -76,21 +76,17 @@
         })
       ];
       hj.packages = [ pkgs.starship ];
-      programs = {
-        fish = {
-          promptInit = # fish
-            ''
-                if test "$TERM" != "dumb"
-                  ${lib.getExe pkgs.starship} init fish | source
-                  "enable_transience"
-                end
+      programs.fish.promptInit = # fish
+        ''
+            if test "$TERM" != "dumb"
+              ${lib.getExe pkgs.starship} init fish | source
+              "enable_transience"
+            end
 
-              # Starship transient prompt
-                function starship_transient_prompt_func
-                    printf " \e[38;2;232;196;216m\e[0m "
-                end
-            '';
-        };
-      };
+          # Starship transient prompt
+            function starship_transient_prompt_func
+                printf " \e[38;2;232;196;216m\e[0m "
+            end
+        '';
     };
 }
