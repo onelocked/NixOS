@@ -32,27 +32,21 @@
       # use dynamic theme for qt5ct.conf and qt6ct.conf
       hj.xdg.config.files =
         let
-          default = ''"${defaultFont},-1,5,400,0,0,0,0,0,0,0,0,0,0,1"'';
+          font = ''"${defaultFont},-1,5,400,0,0,0,0,0,0,0,0,0,0,1"'';
+          conf = qtctConf // {
+            Fonts = {
+              fixed = font;
+              general = font;
+            };
+          };
         in
-        {
-          "qt5ct/qt5ct.conf".text = lib.generators.toINI { } (
-            qtctConf
-            // {
-              Fonts = {
-                fixed = default;
-                general = default;
-              };
-            }
-          );
-          "qt6ct/qt6ct.conf".text = lib.generators.toINI { } (
-            qtctConf
-            // {
-              Fonts = {
-                fixed = default;
-                general = default;
-              };
-            }
-          );
-        };
+        [
+          "qt5ct"
+          "qt6ct"
+        ]
+        |> map (
+          version: lib.nameValuePair "${version}/${version}.conf" { text = lib.generators.toINI { } conf; }
+        )
+        |> builtins.listToAttrs;
     };
 }
