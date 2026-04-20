@@ -1,5 +1,5 @@
 {
-  flake.modules.homeManager.tmux =
+  flake.modules.nixos.tmux =
     { pkgs, ... }:
     let
       tmux-floax = pkgs.tmuxPlugins.mkTmuxPlugin {
@@ -29,14 +29,14 @@
         enable = true;
         terminal = "tmux-256color";
         newSession = false;
-        mouse = true;
-        prefix = "^A";
         clock24 = true;
         keyMode = "vi";
         historyLimit = 100000;
         extraConfig = # tmux
           ''
 
+            set -g prefix ^A
+            set  -g mouse on
             set -g allow-passthrough on
             set -ga update-environment TERM
             set -ga update-environment TERM_PROGRAM

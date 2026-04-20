@@ -47,6 +47,7 @@ with self.modules.nixos;
       qt
 
       zen-browser
+      tmux
     ];
   };
 }
