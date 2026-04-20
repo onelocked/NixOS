@@ -3,13 +3,16 @@
   m.fuzzel =
     { pkgs, config, ... }:
     {
-      hj.packages = [
-        (inputs.wrappers.wrappers.foot.wrap {
-          package = pkgs.fuzzel;
-          inherit pkgs;
-          inherit (config.custom.programs.fuzzel) settings;
+      nixpkgs.overlays = [
+        (_: prev: {
+          fuzzel = inputs.wrappers.wrappers.foot.wrap {
+            package = prev.fuzzel;
+            pkgs = prev;
+            inherit (config.custom.programs.fuzzel) settings;
+          };
         })
       ];
+      hj.packages = [ pkgs.fuzzel ];
       custom.programs.fuzzel.settings = {
         main = {
           dpi-aware = "yes";
