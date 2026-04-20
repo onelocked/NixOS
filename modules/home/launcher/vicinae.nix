@@ -355,7 +355,7 @@
               // themeFiles;
           };
 
-        hj.systemd.services.vicinae = lib.mkIf (cfg.systemd.enable) {
+        hj.systemd.services.vicinae = lib.mkIf cfg.systemd.enable {
           description = "Vicinae server daemon";
           documentation = [ "https://docs.vicinae.com" ];
           after = [ cfg.systemd.target ];
