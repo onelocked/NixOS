@@ -349,7 +349,7 @@
       };
 
       config = lib.mkIf cfg.enable {
-        environment.systemPackages = [ cfg.package ];
+        hj.packages = [ cfg.package ];
 
         hj.xdg =
           let
