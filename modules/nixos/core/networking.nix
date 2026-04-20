@@ -16,9 +16,13 @@
         interfaces.eno1.wakeOnLan.enable = true;
       };
       # TCP fq optimisation
-      boot.kernelModules = [ "tcp_bbr" ];
-      boot.kernel.sysctl."net.ipv4.tcp_congestion_control" = "bbr";
-      boot.kernel.sysctl."net.core.default_qdisc" = "cake"; # or "cake" for newer kernels
+      boot = {
+        kernelModules = [ "tcp_bbr" ];
+        kernel.sysctl = {
+          "net.ipv4.tcp_congestion_control" = "bbr";
+          "net.core.default_qdisc" = "cake"; # or "cake" for newer kernels
+        };
+      };
 
       services.avahi = {
         enable = true;

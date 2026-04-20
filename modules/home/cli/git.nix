@@ -12,7 +12,7 @@
           config = {
             user = {
               name = username + "ed";
-              email = email;
+              inherit email;
             };
             interactive = {
               diffFilter = "delta --color-only";

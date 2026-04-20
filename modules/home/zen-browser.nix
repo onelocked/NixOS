@@ -45,7 +45,7 @@
       modsActivationScript =
         profileName: profile:
         let
-          mods = profile.mods;
+          inherit (profile) mods;
           profilePath = "${config.hj.xdg.config.directory}/zen/${profile.path}";
         in
         pkgs.writeShellScript "zen-mods-update-${profileName}" ''

@@ -3,9 +3,11 @@
   ff = {
     extra-modules = {
       url = "github:onelocked/extra-modules";
-      inputs.flake-parts.follows = "flake-parts";
-      inputs.import-tree.follows = "import-tree";
-      inputs.systems.follows = "systems";
+      inputs = {
+        flake-parts.follows = "flake-parts";
+        import-tree.follows = "import-tree";
+        systems.follows = "systems";
+      };
     };
   };
 

@@ -2,14 +2,12 @@
   m.obs-studio =
     { pkgs, lib, ... }:
     let
-      obs-wrapped = (
-        pkgs.wrapOBS {
-          plugins = with pkgs.obs-studio-plugins; [
-            distroav
-            obs-pipewire-audio-capture
-          ];
-        }
-      );
+      obs-wrapped = pkgs.wrapOBS {
+        plugins = with pkgs.obs-studio-plugins; [
+          distroav
+          obs-pipewire-audio-capture
+        ];
+      };
     in
     {
       hj = {
