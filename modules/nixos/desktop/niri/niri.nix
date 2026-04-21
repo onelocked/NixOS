@@ -12,12 +12,11 @@
       ...
     }:
     let
-      inherit (config.custom.programs.niri) settings;
       niriWrapped = inputs.wrappers.wrappers.niri.wrap {
         inherit pkgs;
         package = pkgs.niri;
         v2-settings = true;
-        inherit settings;
+        inherit (config.custom.programs.niri) settings;
       };
     in
     lib.mkMerge [
@@ -36,10 +35,8 @@
           xdg.portal = {
             config = {
               niri = {
-                "org.freedesktop.impl.portal.FileChooser" = lib.mkForce [
-                  "termfilechooser"
-                ];
                 default = lib.mkForce [ "gnome" ];
+                "org.freedesktop.impl.portal.FileChooser" = lib.mkForce [ "termfilechooser" ];
                 "org.freedesktop.impl.portal.Secret" = lib.mkForce [ "gnome-keyring" ];
                 "org.freedesktop.impl.portal.Chooser" = lib.mkForce [ "none" ];
               };

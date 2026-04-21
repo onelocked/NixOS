@@ -10,7 +10,7 @@
         gnome.gnome-keyring.enable = true;
         xserver.enable = mkForce false;
         journald.storage = "volatile";
-        dbus.implementation = "broker";
+        dbus.implementation = mkForce "broker";
         flatpak.enable = mkForce false;
       };
       programs.seahorse.enable = mkForce false;
