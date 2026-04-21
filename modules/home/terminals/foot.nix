@@ -12,7 +12,20 @@
           };
         })
       ];
-      hj.packages = [ pkgs.foot ];
+
+      hj = {
+        packages = [ pkgs.foot ];
+        systemd.services.foot-server = {
+          description = "Fast, lightweight and minimalistic Wayland terminal emulator.";
+          after = [ "graphical-session.target" ];
+          wantedBy = [ "graphical-session.target" ];
+          serviceConfig = {
+            ExecStart = "${pkgs.foot}/bin/foot --server";
+            Restart = "on-failure";
+            OOMPolicy = "continue";
+          };
+        };
+      };
       custom.programs.foot.settings = {
         main = {
           font = "Maple Mono NL NF:style=ExtraBold:size=13";
