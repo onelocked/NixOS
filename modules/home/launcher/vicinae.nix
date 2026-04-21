@@ -7,15 +7,14 @@
 {
   ff = {
     vicinae = {
-      url = "github:vicinaehq/vicinae";
+      url = "github:vicinaehq/vicinae/c0e4aa7dd2c21459cc9015b71841d0847f9749ef";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        vicinae.follows = "vicinae";
         systems.follows = "systems";
       };
     };
     vicinae-extensions = {
-      url = "github:vicinaehq/extensions";
+      url = "github:vicinaehq/extensions/c89b22546cb8015b5a116bdf016996d7f8a2cfed";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         vicinae.follows = "vicinae";
