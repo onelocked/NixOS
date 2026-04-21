@@ -11,9 +11,7 @@
         (_: prev: {
           yazi = inputs.wrappers.wrappers.yazi.wrap {
             pkgs = prev;
-            extraPackages = with prev; [
-              ouch
-            ];
+            extraPackages = with prev; [ ouch ];
             inherit (config.custom.programs.yazi) plugins;
             settings = with config.custom.programs; {
               inherit (yazi) keymap theme;
