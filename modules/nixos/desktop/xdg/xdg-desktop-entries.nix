@@ -1,5 +1,5 @@
 {
-  m.xdg =
+  m.desktop =
     {
       config,
       lib,
@@ -31,7 +31,7 @@
     in
     {
       config = {
-        hj.packages = map lib.hiPrio (lib.mapAttrsToList makeFile config.custom.xdg.desktopEntries);
+        hj.packages = config.custom.xdg.desktopEntries |> lib.mapAttrsToList makeFile |> map lib.hiPrio;
         custom.xdg.desktopEntries = {
           "yazi" = {
             name = "Yazi";
@@ -91,12 +91,6 @@
       inherit (lib) mkOption types;
 
       desktopEntry = {
-        imports = [
-          (lib.mkRemovedOptionModule [
-            "extraConfig"
-          ] "The `extraConfig` option of `xdg.desktopEntries` has been removed.")
-          (lib.mkRemovedOptionModule [ "fileValidation" ] "Validation of the desktop file is always enabled.")
-        ];
         options = {
           type = mkOption {
             description = "The type of the desktop entry.";
@@ -199,9 +193,9 @@
     in
     {
       options.custom.xdg.desktopEntries = mkOption {
-        description = "Custom Desktop Entries for my user wrapper";
+        description = "Custom Desktop Entries";
         default = { };
-        type = types.attrsOf (types.submodule desktopEntry);
+        type = desktopEntry |> types.submodule |> types.attrsOf;
       };
     };
 }
