@@ -12,9 +12,7 @@
     {
       custom.programs.niri.settings = {
         extraConfig = # kdl
-          ''
-            spawn-sh-at-startup "${pkgs.libsecret}/bin/secret-tool lookup app keyring-init || echo 'init' | secret-tool store --label='keyring-init' app keyring-init"
-          '';
+          ''spawn-sh-at-startup "${pkgs.libsecret}/bin/secret-tool lookup app keyring-init || echo 'init' | secret-tool store --label='keyring-init' app keyring-init" '';
         prefer-no-csd = true;
         clipboard.disable-primary = true;
 
@@ -44,10 +42,6 @@
         };
 
         layer-rules = [
-          {
-            matches = [ { namespace = "^noctalia-wallpaper*"; } ];
-            place-within-backdrop = true;
-          }
           {
             matches = [ { namespace = "^awww-daemon$"; } ];
             place-within-backdrop = true;
