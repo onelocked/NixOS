@@ -42,22 +42,55 @@
           profilePath = "${config.hj.xdg.config.directory}/zen/${profile.path}";
         in
         pkgs.writeShellScript "zen-mods-update-${profileName}" ''
+          set -uo pipefail
           export PATH=${
             lib.makeBinPath [
               pkgs.jq
               pkgs.curl
+              pkgs.util-linux
             ]
           }:$PATH
+
           THEMES_FILE="${profilePath}/zen-themes.json"
           MODS="${lib.concatStringsSep " " mods}"
           BASE_DIR="${profilePath}"
           MANAGED_FILE="$BASE_DIR/zen-mods-nix-managed.json"
+          LOCK_FILE="$BASE_DIR/.zen-mods.lock"
 
           mkdir -p "$BASE_DIR/chrome/zen-themes"
 
-          if [ ! -f "$THEMES_FILE" ]; then
-            echo '{}' > "$THEMES_FILE"
+          exec 9>"$LOCK_FILE"
+          if ! flock -n 9; then
+            echo "Another zen-mods update in progress, exiting"
+            exit 0
           fi
+
+          [ -f "$THEMES_FILE" ] || echo '{}' > "$THEMES_FILE"
+
+          update_json() {
+            local tmp
+            tmp=$(mktemp)
+            if jq "$@" "$THEMES_FILE" > "$tmp" && jq empty "$tmp" 2>/dev/null; then
+              mv "$tmp" "$THEMES_FILE"
+              return 0
+            fi
+            rm -f "$tmp"
+            return 1
+          }
+
+          wait_for_network() {
+            local i delay
+            for i in 1 2 3 4 5 6; do
+              if curl -sfI --max-time 5 --connect-timeout 3 \
+                https://raw.githubusercontent.com >/dev/null 2>&1; then
+                return 0
+              fi
+              delay=$((i * 3))
+              echo "Network check failed ($i/6), retrying in ''${delay}s..."
+              sleep "$delay"
+            done
+            return 1
+          }
 
           if [ -f "$MANAGED_FILE" ]; then
             CURRENT_MANAGED=$(jq -r '.[]' "$MANAGED_FILE" 2>/dev/null || echo "")
@@ -67,46 +100,69 @@
 
           for uuid in $CURRENT_MANAGED; do
             if [[ " $MODS " != *" $uuid "* ]]; then
-              jq "del(.[\"$uuid\"])" "$THEMES_FILE" > "$THEMES_FILE.tmp" && mv "$THEMES_FILE.tmp" "$THEMES_FILE"
+              update_json --arg u "$uuid" 'del(.[$u])' || true
               rm -rf "$BASE_DIR/chrome/zen-themes/$uuid"
               echo "Removed mod $uuid"
             fi
           done
 
+          needs_fetch=0
           for mod_uuid in $MODS; do
             MOD_DIR="$BASE_DIR/chrome/zen-themes/$mod_uuid"
-            [ -d "$MOD_DIR" ] && continue
-
-            THEME_URL="https://raw.githubusercontent.com/zen-browser/theme-store/main/themes/$mod_uuid/theme.json"
-            echo "Fetching mod $mod_uuid from $THEME_URL"
-
-            THEME_JSON=$(curl -s "$THEME_URL")
-            if [ -z "$THEME_JSON" ]; then
-              echo "Failed to fetch theme for mod $mod_uuid"
-              continue
+            has_entry=$(jq --arg u "$mod_uuid" 'has($u)' "$THEMES_FILE" 2>/dev/null || echo false)
+            if [ ! -d "$MOD_DIR" ] || [ "$has_entry" != "true" ]; then
+              needs_fetch=1
+              break
             fi
-
-            if ! echo "$THEME_JSON" | jq empty 2>/dev/null; then
-              echo "Invalid JSON for mod $mod_uuid"
-              continue
-            fi
-
-            jq --arg uuid "$mod_uuid" --argjson theme "$THEME_JSON" '.[$uuid] = $theme' "$THEMES_FILE" > "$THEMES_FILE.tmp" && mv "$THEMES_FILE.tmp" "$THEMES_FILE"
-
-            mkdir -p "$MOD_DIR"
-            for file in chrome.css preferences.json readme.md; do
-              curl -s "https://raw.githubusercontent.com/zen-browser/theme-store/main/themes/$mod_uuid/$file" -o "$MOD_DIR/$file" || true
-            done
           done
 
-          echo "$MODS" | tr ' ' '\n' | jq -R -s 'split("\n") | map(select(. != ""))' > "$MANAGED_FILE"
+          network_ok=1
+          if [ "$needs_fetch" = "1" ] && ! wait_for_network; then
+            echo "Network unavailable, skipping fetch (regenerating CSS from cache)"
+            network_ok=0
+          fi
+
+          if [ "$network_ok" = "1" ]; then
+            for mod_uuid in $MODS; do
+              MOD_DIR="$BASE_DIR/chrome/zen-themes/$mod_uuid"
+              has_entry=$(jq --arg u "$mod_uuid" 'has($u)' "$THEMES_FILE" 2>/dev/null || echo false)
+              if [ -d "$MOD_DIR" ] && [ "$has_entry" = "true" ]; then
+                continue
+              fi
+
+              THEME_URL="https://raw.githubusercontent.com/zen-browser/theme-store/main/themes/$mod_uuid/theme.json"
+              echo "Fetching mod $mod_uuid"
+
+              THEME_JSON=$(curl -sfL --retry 3 --retry-delay 2 --retry-connrefused \
+                --max-time 30 "$THEME_URL" || true)
+              if [ -z "$THEME_JSON" ] || ! echo "$THEME_JSON" | jq empty 2>/dev/null; then
+                echo "Failed to fetch theme for mod $mod_uuid, skipping"
+                continue
+              fi
+
+              if ! update_json --arg uuid "$mod_uuid" --argjson theme "$THEME_JSON" \
+                '.[$uuid] = $theme'; then
+                echo "Failed to update themes.json for $mod_uuid, skipping"
+                continue
+              fi
+
+              mkdir -p "$MOD_DIR"
+              for file in chrome.css preferences.json readme.md; do
+                curl -sfL --retry 3 --retry-delay 2 --retry-connrefused --max-time 30 \
+                  "https://raw.githubusercontent.com/zen-browser/theme-store/main/themes/$mod_uuid/$file" \
+                  -o "$MOD_DIR/$file" || true
+              done
+            done
+          fi
+
+          jq -R 'split(" ") | map(select(length > 0))' <<<"$MODS" > "$MANAGED_FILE"
 
           ZEN_THEMES_CSS="$BASE_DIR/chrome/zen-themes.css"
-          echo "/* Zen Mods - Generated by NixOS activation." > "$ZEN_THEMES_CSS"
-          cat >> "$ZEN_THEMES_CSS" << 'EOFCSS'
-          * DO NOT EDIT THIS FILE DIRECTLY!
-          * Your changes will be overwritten.
-          */
+          cat > "$ZEN_THEMES_CSS" <<'EOFCSS'
+          /* Zen Mods - Generated by NixOS activation.
+           * DO NOT EDIT THIS FILE DIRECTLY!
+           * Your changes will be overwritten.
+           */
           EOFCSS
 
           ENABLED_MODS=$(jq -r 'to_entries[] | select(.value.enabled == null or .value.enabled == true) | .key' "$THEMES_FILE")
@@ -114,7 +170,9 @@
           for mod_uuid in $ENABLED_MODS; do
             MOD_CSS="$BASE_DIR/chrome/zen-themes/$mod_uuid/chrome.css"
             if [ -f "$MOD_CSS" ]; then
-              MOD_INFO=$(jq -r ".\"$mod_uuid\" | \"/* Name: \(.name) */\\n/* Description: \(.description) */\\n/* Author: @\(.author) */\"" "$THEMES_FILE")
+              MOD_INFO=$(jq -r --arg u "$mod_uuid" \
+                '.[$u] | "/* Name: \(.name) */\n/* Description: \(.description) */\n/* Author: @\(.author) */"' \
+                "$THEMES_FILE")
               echo "$MOD_INFO" >> "$ZEN_THEMES_CSS"
               cat "$MOD_CSS" >> "$ZEN_THEMES_CSS"
               echo "" >> "$ZEN_THEMES_CSS"
@@ -122,10 +180,6 @@
           done
 
           echo "/* End of Zen Mods */" >> "$ZEN_THEMES_CSS"
-
-          if ! jq empty "$THEMES_FILE" 2>/dev/null; then echo "Error: Generated invalid JSON in $THEMES_FILE"
-            exit 1
-          fi
         '';
     in
     {
