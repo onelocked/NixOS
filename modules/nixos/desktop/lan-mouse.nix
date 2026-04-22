@@ -3,7 +3,7 @@
     { pkgs, lib, ... }:
     {
       networking.firewall.allowedUDPPorts = [ 4242 ];
-      systemd.user.services.lan-mouse = {
+      hj.systemd.services.lan-mouse = {
         description = "Lan Mouse Daemon";
         wantedBy = [ "graphical-session.target" ];
         partOf = [ "graphical-session.target" ];
