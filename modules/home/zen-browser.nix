@@ -157,20 +157,20 @@
         };
         profiles.default = {
           isDefault = true;
-          mods = [
-            "ae7868dc-1fa1-469e-8b89-a5edf7ab1f24" # Load Bar
-            "e122b5d9-d385-4bf8-9971-e137809097d0" # No Top Sites
-            "e51b85e6-cef5-45d4-9fff-6986637974e1" # smaller zen toast popup
-            "b51ff956-6aea-47ab-80c7-d6c047c0d510" # Disable Status Bar
-            "ad97bb70-0066-4e42-9b5f-173a5e42c6fc" # SuperPins
-            "a6335949-4465-4b71-926c-4a52d34bc9c0" # Better Find Bar
-          ];
+          mods = {
+            "Load Bar" = "ae7868dc-1fa1-469e-8b89-a5edf7ab1f24";
+            "No Top Sites" = "e122b5d9-d385-4bf8-9971-e137809097d0";
+            "Smaller Zen Toast Popup" = "e51b85e6-cef5-45d4-9fff-6986637974e1";
+            "Disable Status Bar" = "b51ff956-6aea-47ab-80c7-d6c047c0d510";
+            "SuperPins" = "ad97bb70-0066-4e42-9b5f-173a5e42c6fc";
+            "Better Find Bar" = "a6335949-4465-4b71-926c-4a52d34bc9c0";
+          };
         };
       };
 
       hj.packages = [ wrapped ];
 
-      hj.files =
+      hj.files = lib.mkIf (profilesCfg != { }) (
         let
           profileValues = lib.attrValues profilesCfg;
 
@@ -214,7 +214,7 @@
             |> lib.mapAttrsToList (
               _: profile:
               let
-                mods = map mkModData profile.mods;
+                mods = map mkModData (lib.attrValues profile.mods);
                 base = ".config/zen/${profile.path}/chrome";
                 perMod = lib.concatMap (
                   m:
@@ -242,7 +242,8 @@
           ".config/zen/profiles.ini".text = profilesIni;
         }
         // userJsFiles
-        // modFiles;
+        // modFiles
+      );
 
       xdg.mime = lib.mkIf cfg.setAsDefaultBrowser {
         defaultApplications =
@@ -322,9 +323,9 @@
                   };
 
                   mods = lib.mkOption {
-                    type = lib.types.listOf lib.types.str;
-                    default = [ ];
-                    description = "List of mod UUIDs from Zen theme store.";
+                    type = lib.types.attrsOf lib.types.str;
+                    default = { };
+                    description = "Attrset of mod display name → UUID from Zen theme store.";
                   };
                 };
               }
