@@ -1,9 +1,4 @@
-{
-  inputs,
-  lib,
-  self,
-  ...
-}:
+{ inputs, lib, ... }:
 {
   ff.zen-browser = {
     url = "github:0xc000022070/zen-browser-flake";
@@ -128,8 +123,7 @@
 
           echo "/* End of Zen Mods */" >> "$ZEN_THEMES_CSS"
 
-          if ! jq empty "$THEMES_FILE" 2>/dev/null; then
-            echo "Error: Generated invalid JSON in $THEMES_FILE"
+          if ! jq empty "$THEMES_FILE" 2>/dev/null; then echo "Error: Generated invalid JSON in $THEMES_FILE"
             exit 1
           fi
         '';
@@ -298,17 +292,21 @@
         BROWSER = "zen-twilight";
       };
 
-      system.activationScripts =
+      hj.systemd.services =
         profilesCfg
         |> lib.mapAttrsToList (
           name: profile:
           lib.mkIf (profile.mods != [ ]) {
-            "zen-mods-${name}" = {
-              text = ''
-                echo "zen-mods: Updating mods for profile '${name}'..."
-                /run/wrappers/bin/su ${self.variables.username} -s /bin/sh -c '${modsActivationScript name profile}'
-              '';
-              deps = [ "users" ];
+            "zen-profile-${name}" = {
+              description = "Update Zen Browser mods for profile '${name}'";
+              wantedBy = [ "graphical-session.target" ];
+              partOf = [ "graphical-session.target" ];
+              after = [ "graphical-session.target" ];
+              serviceConfig = {
+                Type = "oneshot";
+                ExecStart = "${modsActivationScript name profile}";
+                RemainAfterExit = true;
+              };
             };
           }
         )
