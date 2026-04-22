@@ -5,7 +5,7 @@
     {
       nixpkgs.overlays = [
         (_: prev: {
-          fuzzel = inputs.wrappers.wrappers.foot.wrap {
+          fuzzel = inputs.wrappers.wrappers.fuzzel.wrap {
             package = prev.fuzzel;
             pkgs = prev;
             inherit (config.custom.programs.fuzzel) settings;
