@@ -36,8 +36,8 @@
       custom.services.vicinae = {
         enable = true;
         systemd = {
-          enable = true;
-          autoStart = true;
+          enable = false;
+          autoStart = false;
           environment = {
             USE_LAYER_SHELL = 1;
           };
@@ -329,7 +329,10 @@
 
       config = lib.mkIf cfg.enable {
         hj = {
-          packages = [ cfg.package ];
+          packages = [
+            cfg.package
+            pkgs.app2unit
+          ];
           xdg =
             let
               themeFiles =
