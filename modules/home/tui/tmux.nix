@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.tmux =
+  m.tmux =
     { pkgs, ... }:
     let
       tmux-floax = pkgs.tmuxPlugins.mkTmuxPlugin {
