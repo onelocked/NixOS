@@ -30,7 +30,10 @@
             repeat = false;
           };
           content = {
-            spawn = [ "${pkgs.foot}/bin/foot" ];
+            spawn = [
+              "${pkgs.kitty}/bin/kitty"
+              "-1"
+            ];
           };
         };
         "Mod+B" = _: {
