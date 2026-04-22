@@ -31,7 +31,7 @@
                 path="$4"
                 out="$5"
 
-                command="${lib.getExe pkgs.foot} --app-id=FileChooser -e ${lib.getExe pkgs.yazi}"
+                command="${lib.getExe pkgs.kitty} --app-id=FileChooser -e ${lib.getExe pkgs.yazi}"
 
                 if [ "$save" = "1" ]; then
                     set -- --chooser-file="$out" "$path"

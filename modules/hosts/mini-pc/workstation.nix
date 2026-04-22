@@ -27,6 +27,7 @@ with self.modules.nixos;
       jellyfin-tui
       starship
       foot
+      kitty
       fish
 
       obs-studio
