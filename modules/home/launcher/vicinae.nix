@@ -36,8 +36,8 @@
       custom.services.vicinae = {
         enable = true;
         systemd = {
-          enable = false;
-          autoStart = false;
+          enable = true;
+          autoStart = true;
           environment = {
             USE_LAYER_SHELL = 1;
           };
@@ -115,7 +115,7 @@
                   "/run/current-system/sw/share/applications"
                 ];
                 defaultAction = "focus";
-                launchPrefix = "uwsm app --";
+                launchPrefix = "app2unit --";
               };
             };
 
@@ -130,7 +130,7 @@
             files = {
               enabled = false;
               preferences = {
-                paths = "/home/onelock/Pictures";
+                paths = "${config.hj.directory}/Pictures";
               };
             };
 
@@ -330,7 +330,6 @@
       config = lib.mkIf cfg.enable {
         hj = {
           packages = [ cfg.package ];
-
           xdg =
             let
               themeFiles =
@@ -344,7 +343,7 @@
             in
             {
               config.files = {
-                "vicinae/nix.json" = lib.mkIf (cfg.settings != { }) {
+                "vicinae/settings.json" = lib.mkIf (cfg.settings != { }) {
                   source = jsonFormat.generate "vicinae-settings" cfg.settings;
                 };
               };
@@ -366,10 +365,15 @@
             documentation = [ "https://docs.vicinae.com" ];
             after = [ cfg.systemd.target ];
             partOf = [ cfg.systemd.target ];
+            path = [
+              pkgs.app2unit
+              "/run/current-system/sw"
+              "/etc/profiles/per-user/${config.hj.user}"
+            ];
             environment =
               cfg.systemd.environment
               // (lib.mkIf (cfg.settings != { }) {
-                VICINAE_OVERRIDES = "${config.hj.xdg.config.directory}/vicinae/nix.json";
+                VICINAE_OVERRIDES = "${config.hj.xdg.config.directory}/vicinae/settings.json";
               })
               // (lib.mkIf (cfg.settingOverrides != [ ]) {
                 VICINAE_OVERRIDES = "${lib.concatStringsSep ":" cfg.settingOverrides}";
