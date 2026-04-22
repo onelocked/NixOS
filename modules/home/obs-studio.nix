@@ -14,12 +14,8 @@
         packages = [ obs-wrapped ];
         systemd.services."obs-startup" = {
           description = "OBS Auto Startup";
-
           after = [ "graphical-session.target" ];
-          wants = [ "graphical-session.target" ];
-
           wantedBy = [ "graphical-session.target" ];
-
           serviceConfig = {
             Type = "simple";
             ExecStart = lib.getExe obs-wrapped;
