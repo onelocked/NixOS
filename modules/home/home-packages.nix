@@ -16,7 +16,11 @@
         killall
         # Coreutils rewrite in rust
         uutils-coreutils-noprefix
-        wl-clipboard-rs
+        wl-clipboard
+
+        isd # TUI systemd
+        nap # Snippets
+        scooter # search and replace
       ];
     };
 }
