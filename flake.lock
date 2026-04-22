@@ -552,7 +552,8 @@
         "vicinae-extensions": "vicinae-extensions",
         "vimmax": "vimmax",
         "wrappers": "wrappers",
-        "zen-browser": "zen-browser"
+        "zen-browser": "zen-browser",
+        "zen-theme-store": "zen-theme-store"
       }
     },
     "rust-overlay": {
@@ -791,6 +792,22 @@
       "original": {
         "owner": "0xc000022070",
         "repo": "zen-browser-flake",
+        "type": "github"
+      }
+    },
+    "zen-theme-store": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1773250467,
+        "narHash": "sha256-Vq0AboLzase+tTZ1Erf2cKpF55cm3eHNuXmmQuOknvw=",
+        "owner": "zen-browser",
+        "repo": "theme-store",
+        "rev": "7173dba5d060417fd65764b706856ae609496e31",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zen-browser",
+        "repo": "theme-store",
         "type": "github"
       }
     }
