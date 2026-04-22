@@ -6,7 +6,6 @@ with self.modules.nixos;
     modules = [
       hardware-mini-pc
       user
-      overlays
       desktop
       sunshine
       niri
