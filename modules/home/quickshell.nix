@@ -52,6 +52,7 @@
             gnugrep
             gnused
             gawk
+            procps
           ];
           serviceConfig = {
             Type = "dbus";
