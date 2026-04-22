@@ -99,6 +99,7 @@
         gestures.hot-corners.off = set;
 
         layout = {
+          empty-workspace-above-first = set;
           background-color = "transparent";
           always-center-single-column = set;
           gaps = 9;
