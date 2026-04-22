@@ -77,5 +77,9 @@
       url = "github:0xc000022070/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    zen-theme-store = {
+      url = "github:zen-browser/theme-store";
+      flake = false;
+    };
   };
 }
