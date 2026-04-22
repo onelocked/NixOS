@@ -28,41 +28,35 @@
             ;
           fuzzy-search = inputs.fuzzy-search-yazi;
         };
-        settings =
+        settings.plugin =
           let
-            _ = lib.getExe;
+            piper = "piper -- CLICOLOR_FORCE=1 ${lib.getExe pkgs.glow} -w=$w -s=dracula -- $1";
           in
           {
-            plugin =
-              let
-                piper = "piper -- CLICOLOR_FORCE=1 ${_ pkgs.glow} -w=$w -s=dracula -- $1";
-              in
+            prepend_previewers = [
               {
-                prepend_previewers = [
-                  {
-                    url = "*.md";
-                    run = piper;
-                  }
-                ];
-                prepend_preloaders = [
-                  {
-                    url = "*.md";
-                    run = piper;
-                  }
-                ];
-                prepend_fetchers = [
-                  {
-                    id = "git";
-                    url = "*";
-                    run = "git";
-                  }
-                  {
-                    id = "git";
-                    url = "*/";
-                    run = "git";
-                  }
-                ];
-              };
+                url = "*.md";
+                run = piper;
+              }
+            ];
+            prepend_preloaders = [
+              {
+                url = "*.md";
+                run = piper;
+              }
+            ];
+            prepend_fetchers = [
+              {
+                id = "git";
+                url = "*";
+                run = "git";
+              }
+              {
+                id = "git";
+                url = "*/";
+                run = "git";
+              }
+            ];
           };
         keymap = {
           mgr.prepend_keymap = [

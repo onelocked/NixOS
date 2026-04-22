@@ -26,6 +26,7 @@
         opener =
           let
             inherit (lib) getExe;
+            mkOpener = pkg: desc: [ { run = "${getExe pkg} %s"; inherit desc; } ];
           in
           with pkgs;
           {
@@ -35,24 +36,9 @@
                 desc = "Set Wallpaper";
               }
             ];
-            loupe = [
-              {
-                run = "${getExe loupe} %s";
-                desc = "Loupe";
-              }
-            ];
-            nomacs = [
-              {
-                run = "${getExe nomacs} %s";
-                desc = "Image Editor";
-              }
-            ];
-            video-trimmer = [
-              {
-                run = "${getExe video-trimmer} %s";
-                desc = "Video Trimmer";
-              }
-            ];
+            loupe = mkOpener loupe "Loupe";
+            nomacs = mkOpener nomacs "Image Editor";
+            video-trimmer = mkOpener video-trimmer "Video Trimmer";
           };
       };
     };
