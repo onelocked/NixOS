@@ -40,21 +40,25 @@
       fonts.packages = [ pkgs.lucide ];
       hj = {
         packages = [ quickshellWrapped ];
-      };
 
-      # systemd.user.services.quickshell = {
-      #   enable = true;
-      #   wantedBy = [ "graphical-session.target" ];
-      #   serviceConfig = {
-      #     ExecStart = "${quickshellWrapped}/bin/qs --no-duplicate";
-      #     Restart = "on-failure";
-      #     RestartSec = 5;
-      #   };
-      #   unitConfig = {
-      #     Description = "quickshell startup";
-      #     After = [ "graphical-session-pre.target" ];
-      #     PartOf = [ "graphical-session.target" ];
-      #   };
-      # };
+        systemd.services.quickshell = {
+          description = "quickshell";
+          after = [ "graphical-session.target" ];
+          wantedBy = [ "graphical-session.target" ];
+          path = with pkgs; [
+            bash
+            coreutils
+            gnugrep
+            gnused
+            gawk
+          ];
+          serviceConfig = {
+            Type = "dbus";
+            BusName = "org.kde.StatusNotifierWatcher";
+            ExecStart = "${quickshellWrapped}/bin/qs --no-duplicate";
+            Restart = "on-failure";
+          };
+        };
+      };
     };
 }
