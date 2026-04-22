@@ -18,6 +18,7 @@
         v2-settings = true;
         inherit (config.custom.programs.niri) settings;
       };
+      inherit (self.variables) username;
     in
     lib.mkMerge [
       {
@@ -27,46 +28,41 @@
           useNautilus = false;
         };
       }
-      (lib.mkIf (config.programs.niri.enable or false) (
-        let
-          inherit (self.variables) username;
-        in
-        {
-          xdg.portal = {
-            config = {
-              niri = {
-                default = lib.mkForce [ "gnome" ];
-                "org.freedesktop.impl.portal.FileChooser" = lib.mkForce [ "termfilechooser" ];
-                "org.freedesktop.impl.portal.Secret" = lib.mkForce [ "gnome-keyring" ];
-                "org.freedesktop.impl.portal.Chooser" = lib.mkForce [ "none" ];
-              };
+      (lib.mkIf (config.programs.niri.enable or false) {
+        xdg.portal = {
+          config = {
+            niri = {
+              default = lib.mkForce [ "gnome" ];
+              "org.freedesktop.impl.portal.FileChooser" = lib.mkForce [ "termfilechooser" ];
+              "org.freedesktop.impl.portal.Secret" = lib.mkForce [ "gnome-keyring" ];
+              "org.freedesktop.impl.portal.Chooser" = lib.mkForce [ "none" ];
             };
           };
-          programs.uwsm = {
+        };
+        programs.uwsm = {
+          enable = true;
+          waylandCompositors = {
+            niri = {
+              prettyName = "niri";
+              comment = "Niri compositor managed by UWSM";
+              binPath = "${lib.getExe config.programs.niri.package}"; # NOTE: /run/current-system/sw/bin/niri is more preferred to avoid version mismatch
+              extraArgs = [ "--session" ];
+            };
+          };
+        };
+        services = {
+          displayManager.enable = lib.mkForce false;
+          greetd = {
             enable = true;
-            waylandCompositors = {
-              niri = {
-                prettyName = "niri";
-                comment = "Niri compositor managed by UWSM";
-                binPath = "${lib.getExe config.programs.niri.package}"; # NOTE: /run/current-system/sw/bin/niri is more preferred to avoid version mismatch
-                extraArgs = [ "--session" ];
+            settings = {
+              default_session = {
+                command = "${lib.getExe config.programs.uwsm.package} start niri-uwsm.desktop";
+                user = username;
               };
             };
           };
-          services = {
-            displayManager.enable = lib.mkForce false;
-            greetd = {
-              enable = true;
-              settings = {
-                default_session = {
-                  command = "${lib.getExe config.programs.uwsm.package} start niri-uwsm.desktop";
-                  user = username;
-                };
-              };
-            };
-          };
-        }
-      ))
+        };
+      })
     ];
   m.default =
     { lib, ... }:
