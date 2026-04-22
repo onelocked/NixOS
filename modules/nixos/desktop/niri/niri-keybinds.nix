@@ -46,7 +46,7 @@
           };
         };
 
-        # Noctalia IPC calls
+        # Quickshell IPC calls
         "Mod+ALT+L" = _: {
           props = {
             repeat = false;
@@ -90,7 +90,7 @@
           };
         };
 
-        # Hardware Controls via Noctalia
+        # Hardware Controls via Quickshell
         "ALT+Shift+Equal" = _: {
           props = {
             repeat = false;
@@ -170,7 +170,7 @@
           content = {
             spawn = [
               "vicinae"
-              "vicinae://extensions/vicinae/core/search-emojis"
+              "vicinae://launch/core/search-emojis"
             ];
           };
         };
@@ -205,7 +205,7 @@
           content = {
             spawn = [
               "vicinae"
-              "vicinae://extensions/vicinae/clipboard/history"
+              "vicinae://launch/clipboard/history"
             ];
           };
         };
