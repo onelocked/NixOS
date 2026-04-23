@@ -22,6 +22,7 @@
         nap # Snippets
         scooter # search and replace
         silicon
+        mcat
       ];
     };
 }
