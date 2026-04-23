@@ -27,13 +27,14 @@
       hj.packages = [ pkgs.kitty ];
       custom.programs.kitty = {
         settings = {
-          text_composition_strategy = "legacy"; # fix blurry font
-          font_family = "family='Maple Mono NL NF' style=ExtraBold";
-          bold_font = "family='LigaSFMono Nerd Font' style=Heavy";
-          italic_font = "family='LigaSFMono Nerd Font' style='Bold Italic'";
-          bold_italic_font = "family='LigaSFMono Nerd Font' style='Heavy Italic'";
+          text_composition_strategy = "legacy";
+          font_family = ''family="Maple Mono NF" style="ExtraBold"'';
+          bold_font = ''family="Montserrat" style="Black"'';
+          italic_font = ''family="Maple Mono NF" style="Bold Italic"'';
+          bold_italic_font = ''family="Maple Mono NF" style="ExtraBold Italic"'';
           font_size = "15";
           # font_features = "MapleMono-NL-NF-ExtraBold +zero +onum";
+          disable_ligatures = "never";
 
           wayland_enable_ime = "no";
 
@@ -59,12 +60,12 @@
 
           cursor_trail = "1";
           cursor_trail_decay = "0.1 0.2";
-          cursor_shape = "beam";
+          cursor_shape = "block";
           cursor_blink_interval = "0.5";
           cursor_stop_blinking_after = "15.0";
           enabled_layouts = "splits,stack";
 
-          window_padding_width = "0 3 0 3";
+          window_padding_width = "0 1 0 1";
 
           # Better URL handling
           detect_urls = "yes";
@@ -90,7 +91,13 @@
           "ctrl+x" = "close_window";
         };
         extraConfig = # toml
-          "mouse_map right press ungrabbed combine : copy_to_clipboard : clear_selection ";
+          ''
+            font_features MapleMono-NF-Bold +cv01 +cv04 +cv05 +cv06 +cv07 +cv08 +cv32 +cv34 +cv36 +cv37 +cv39 +cv40 +cv41 +cv66 +ss03 +ss04 +ss05 +ss06 +ss07 +ss08 +ss09 +ss10 +ss11 +zero
+            font_features MapleMono-NF-ExtraBold +cv01 +cv04 +cv05 +cv06 +cv07 +cv08 +cv32 +cv34 +cv36 +cv37 +cv39 +cv40 +cv41 +cv66 +ss03 +ss04 +ss05 +ss06 +ss07 +ss08 +ss09 +ss10 +ss11 +zero
+            font_features MapleMono-NF-BoldItalic +cv01 +cv04 +cv05 +cv06 +cv07 +cv08 +cv32 +cv34 +cv36 +cv37 +cv39 +cv40 +cv41 +cv66 +ss03 +ss04 +ss05 +ss06 +ss07 +ss08 +ss09 +ss10 +ss11 +zero
+            font_features MapleMono-NF-ExtraBoldItalic +cv01 +cv04 +cv05 +cv06 +cv07 +cv08 +cv32 +cv34 +cv36 +cv37 +cv39 +cv40 +cv41 +cv66 +ss03 +ss04 +ss05 +ss06 +ss07 +ss08 +ss09 +ss10 +ss11 +zero
+            mouse_map right press ungrabbed combine : copy_to_clipboard : clear_selection
+          '';
         theme = # bash
           ''
             color0  #131316
