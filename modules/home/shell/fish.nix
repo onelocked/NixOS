@@ -122,20 +122,17 @@
             with pkgs; # fish
             with lib;
             ''
-              ${getExe pay-respects} fish | source
+              ${getExe zoxide} init fish | source
               ${getExe nix-your-shell} fish | source
               ${getExe carapace} _carapace fish | source
               ${getExe atuin} init fish | source
-
             '';
         };
-        pay-respects.enable = true;
-        zoxide = {
-          enable = true;
-          enableFishIntegration = true;
-        };
       };
-      hj.packages = [ pkgs.atuin ];
+      hj.packages = with pkgs; [
+        zoxide
+        atuin
+      ];
       nixpkgs.overlays = [
         (_: prev: {
           atuin = inputs.wrappers.lib.wrapPackage (
