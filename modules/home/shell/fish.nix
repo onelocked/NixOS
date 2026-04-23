@@ -1,3 +1,4 @@
+{ inputs, ... }:
 {
   m.fish =
     {
@@ -6,6 +7,9 @@
       lib,
       ...
     }:
+    let
+      tomlFormat = pkgs.formats.toml { };
+    in
     {
       programs = {
         bash.interactiveShellInit =
@@ -83,13 +87,11 @@
             nf = "nix flake update";
             wf = "nix run ~/NixOS#write-flake";
           };
-          interactiveShellInit = # fish
+          shellInit = # fish
             ''
               bind Z __yazi-fuzzy-zoxide
               bind -M insert Z __yazi-fuzzy-zoxide
-            '';
-          shellInit = # fish
-            ''
+
               set -g fish_greeting # Disable greeting
 
               set -g fish_color_normal        "#cfd3e7"
@@ -116,8 +118,56 @@
               set -g fish_color_bracket       "#b8db8c"
               set -g fish_color_escape        "#f2b8a0"
             '';
+          interactiveShellInit =
+            with pkgs; # fish
+            with lib;
+            ''
+              ${getExe pay-respects} fish | source
+              ${getExe nix-your-shell} fish | source
+              ${getExe carapace} _carapace fish | source
+              ${getExe atuin} init fish | source
+
+            '';
+        };
+        pay-respects.enable = true;
+        zoxide = {
+          enable = true;
+          enableFishIntegration = true;
         };
       };
+      hj.packages = [ pkgs.atuin ];
+      nixpkgs.overlays = [
+        (_: prev: {
+          atuin = inputs.wrappers.lib.wrapPackage (
+            { config, ... }:
+            {
+              pkgs = prev;
+              package = prev.atuin;
+              env.ATUIN_CONFIG_DIR = dirOf config.constructFiles.atuin-config.path;
+              constructFiles.atuin-config = {
+                relPath = "atuin-config/config.toml";
+                content = builtins.readFile (
+                  tomlFormat.generate "config.toml" {
+                    enter_accept = true;
+                    filter_mode = "session-preload";
+                    search_mode = "fuzzy";
+                  }
+                );
+              };
+            }
+          );
+        })
+      ];
+      environment.shellAliases =
+        with pkgs;
+        with lib;
+        {
+          ping = getExe gping;
+          cat = getExe bat;
+          zip = getExe zip;
+          gtop = "${getExe amdgpu_top} --dark";
+          gr = "cd (git rev-parse --show-toplevel)";
+        };
       hj.xdg.config.files =
         let
 
