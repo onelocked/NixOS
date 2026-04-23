@@ -4,6 +4,54 @@
     { pkgs, config, ... }:
     let
       cfg = config.custom.programs.kitty;
+      mkKittyLatest =
+        prev:
+        let
+          go_1_26_2 = prev.go_1_26.overrideAttrs (
+            finalAttrs: previousAttrs: {
+              version = "1.26.2";
+              src = prev.fetchurl {
+                url = "https://go.dev/dl/go${finalAttrs.version}.src.tar.gz";
+                hash = "sha256-LpHrtpR6lulDb7KzkmqIAu/mOm03Xf/sT4Kqnb1v1Ds=";
+              };
+              doCheck = false;
+              doInstallCheck = false;
+            }
+          );
+
+          buildGo126Module = prev.buildGo126Module.override { go = go_1_26_2; };
+        in
+        (prev.kitty.override {
+          buildGo126Module = buildGo126Module;
+          go_1_26 = go_1_26_2;
+        }).overrideAttrs
+          (
+            finalAttrs: previousAttrs: {
+              pname = "kitty";
+              version = "cadaec5712de8583be1409dff6c9a3967f1e4ab4";
+
+              src = prev.fetchFromGitHub {
+                owner = "kovidgoyal";
+                repo = "kitty";
+                rev = finalAttrs.version;
+                hash = "sha256-A+0vyWiNA4OcmhVEAE3lNOKG5i89tADnLWV64rN39nM=";
+              };
+
+              pyproject = false;
+              doCheck = false;
+              dontCheck = true;
+              checkPhase = "true";
+              installCheckPhase = "true";
+
+              goModules =
+                (buildGo126Module {
+                  pname = "kitty-go-modules";
+                  src = finalAttrs.src;
+                  version = finalAttrs.version;
+                  vendorHash = "sha256-jkWijMZrDapttSOrOjKuXLzZI+Lp6BhS1jWbMHJbniI=";
+                }).goModules;
+            }
+          );
     in
     {
       nixpkgs.overlays = [
@@ -12,6 +60,7 @@
             { config, ... }:
             {
               pkgs = prev;
+              package = mkKittyLatest prev;
               inherit (cfg) extraConfig keybindings;
               settings = cfg.settings // {
                 include = config.constructFiles.theme.path;
@@ -97,6 +146,7 @@
             font_features MapleMono-NF-BoldItalic +cv01 +cv04 +cv05 +cv06 +cv07 +cv08 +cv32 +cv34 +cv36 +cv37 +cv39 +cv40 +cv41 +cv66 +ss03 +ss04 +ss05 +ss06 +ss07 +ss08 +ss09 +ss10 +ss11 +zero
             font_features MapleMono-NF-ExtraBoldItalic +cv01 +cv04 +cv05 +cv06 +cv07 +cv08 +cv32 +cv34 +cv36 +cv37 +cv39 +cv40 +cv41 +cv66 +ss03 +ss04 +ss05 +ss06 +ss07 +ss08 +ss09 +ss10 +ss11 +zero
             mouse_map right press ungrabbed combine : copy_to_clipboard : clear_selection
+            mouse_map left press ungrabbed mouse_selection drag_or_normal_select
           '';
         theme = # bash
           ''
