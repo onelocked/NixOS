@@ -31,7 +31,7 @@
           };
           content = {
             spawn = [
-              "${pkgs.kitty}/bin/kitty"
+              "kitty"
               "-1"
             ];
           };
