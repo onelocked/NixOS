@@ -12,7 +12,7 @@
         hostName = hostname;
         useDHCP = mkDefault true;
         networkmanager.enable = true;
-        firewall.enable = true;
+        firewall.enable = false;
         interfaces.eno1.wakeOnLan.enable = true;
       };
       # TCP fq optimisation

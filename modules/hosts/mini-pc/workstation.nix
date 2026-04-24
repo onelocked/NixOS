@@ -30,8 +30,6 @@ with self.modules.nixos;
       kitty
       fish
 
-      obs-studio
-
       cursor
       vesktop
 
