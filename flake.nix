@@ -2,7 +2,14 @@
   description = "onelock's dendritic nixos flake configuration";
 
   outputs =
-    inputs: ./modules |> inputs.import-tree |> inputs.flake-parts.lib.mkFlake { inherit inputs; };
+    inputs@{ flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      imports =
+        with inputs.nixpkgs.lib;
+        ./modules
+        |> fileset.fileFilter (file: file.hasExt "nix" && !hasPrefix "_" file.name)
+        |> fileset.toList;
+    };
 
   inputs = {
     nixpkgs.follows = "extra-modules/nixpkgs";

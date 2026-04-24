@@ -22,7 +22,16 @@
 
     do-not-edit = "";
     outputs = # nix
-      "inputs: ./modules |> inputs.import-tree |> inputs.flake-parts.lib.mkFlake { inherit inputs; }";
+      ''
+        inputs@{ flake-parts, ... }:
+        flake-parts.lib.mkFlake { inherit inputs; } {
+          imports =
+            with inputs.nixpkgs.lib;
+            ./modules
+            |> fileset.fileFilter (file: file.hasExt "nix" && !hasPrefix "_" file.name)
+            |> fileset.toList;
+        }
+      '';
     description = "onelock's dendritic nixos flake configuration";
     style = {
       sortPriority.inputs = [
