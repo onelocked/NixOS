@@ -24,7 +24,6 @@ with self.modules.nixos;
 
       worktrunk
       qview
-      jellyfin-tui
       starship
       foot
       kitty
