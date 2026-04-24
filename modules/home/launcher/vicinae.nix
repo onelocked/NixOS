@@ -19,6 +19,7 @@
         nixpkgs.follows = "nixpkgs";
         vicinae.follows = "vicinae";
         systems.follows = "systems";
+        flake-compat.follows = "flake-compat";
       };
     };
   };
