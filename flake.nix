@@ -23,16 +23,26 @@
         systems.follows = "systems";
       };
     };
+    flake-compat.url = "github:NixOS/flake-compat";
     fuzzy-search-yazi = {
       url = "github:onelocked/fuzzy-search.yazi/dev";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems";
+      };
     };
     hjem = {
       url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     import-tree.url = "github:vic/import-tree";
-    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
+    nix-cachyos-kernel = {
+      url = "github:xddxdd/nix-cachyos-kernel/release";
+      inputs = {
+        flake-parts.follows = "flake-parts";
+        flake-compat.follows = "flake-compat";
+      };
+    };
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -60,6 +70,7 @@
       url = "github:vicinaehq/extensions/c89b22546cb8015b5a116bdf016996d7f8a2cfed";
       inputs = {
         nixpkgs.follows = "nixpkgs";
+        flake-compat.follows = "flake-compat";
         systems.follows = "systems";
         vicinae.follows = "vicinae";
       };

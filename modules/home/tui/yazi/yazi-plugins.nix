@@ -3,6 +3,7 @@
   ff.fuzzy-search-yazi = {
     url = "github:onelocked/fuzzy-search.yazi/dev";
     inputs.nixpkgs.follows = "nixpkgs";
+    inputs.systems.follows = "systems";
   };
   m.yazi =
     {

@@ -3,6 +3,7 @@
   ff = {
     extra-modules.url = "github:onelocked/extra-modules";
     nixpkgs.url = lib.mkForce "";
+    flake-compat.url = "github:NixOS/flake-compat";
     nixpkgs.follows = "extra-modules/nixpkgs";
     systems.url = "github:nix-systems/x86_64-linux";
   };

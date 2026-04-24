@@ -1,6 +1,12 @@
 { inputs, ... }:
 {
-  ff.nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
+  ff = {
+    nix-cachyos-kernel = {
+      url = "github:xddxdd/nix-cachyos-kernel/release";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.flake-compat.follows = "flake-compat";
+    };
+  };
 
   m.default =
     { pkgs, ... }:
