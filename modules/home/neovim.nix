@@ -3,7 +3,6 @@
   ff.vimmax = {
     url = "github:onelocked/vimmax";
     inputs = {
-      nixpkgs.follows = "nixpkgs";
       flake-parts.follows = "flake-parts";
       import-tree.follows = "import-tree";
       systems.follows = "systems";

@@ -5,10 +5,13 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  m.default = {
-    imports = [ inputs.nix-index-database.nixosModules.default ];
-    programs.nix-index-database = {
-      comma.enable = true;
+  m.default =
+    { lib, ... }:
+    {
+      imports = [ inputs.nix-index-database.nixosModules.default ];
+      programs.command-not-found.enable = lib.mkForce false;
+      programs.nix-index-database = {
+        comma.enable = true;
+      };
     };
-  };
 }
