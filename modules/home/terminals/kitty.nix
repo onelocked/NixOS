@@ -56,20 +56,20 @@
     };
   m.kitty =
     { pkgs, config, ... }:
-    let
-      cfg = config.custom.programs.kitty;
-    in
     {
       nixpkgs.overlays = [
         (_: prev: {
           kitty = inputs.wrappers.wrappers.kitty.wrap (
-            { config, ... }:
+            wrapper:
+            let
+              cfg = config.custom.programs.kitty;
+            in
             {
               pkgs = prev;
               package = self.packages.${prev.stdenv.hostPlatform.system}.kitty;
               inherit (cfg) extraConfig keybindings;
               settings = cfg.settings // {
-                include = config.constructFiles.theme.path;
+                include = wrapper.config.constructFiles.theme.path;
               };
               constructFiles.theme = {
                 relPath = "oneshill.conf";
