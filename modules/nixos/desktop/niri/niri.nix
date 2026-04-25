@@ -15,6 +15,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
+  perSystem =
+    { inputs', ... }:
+    {
+      packages.niri = inputs'.niri.packages.default.overrideAttrs { doCheck = false; };
+    };
   m.niri =
     {
       pkgs,
@@ -25,7 +30,7 @@
     let
       niriWrapped = inputs.wrappers.wrappers.niri.wrap {
         inherit pkgs;
-        package = inputs.niri.packages.${pkgs.stdenv.hostPlatform.system}.niri;
+        package = self.packages.${pkgs.stdenv.hostPlatform.system}.niri;
         v2-settings = true;
         inherit (config.custom.programs.niri) settings;
       };
