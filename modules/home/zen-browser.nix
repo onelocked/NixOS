@@ -2,7 +2,7 @@
 {
   ff = {
     zen-browser = {
-      url = "github:0xc000022070/zen-browser-flake";
+      url = "github:0xc000022070/zen-browser-flake/e272c7d4a4e6c99fbc164f38ade789c8103f8c0f";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     zen-theme-store = {
