@@ -1,4 +1,20 @@
+{ self, ... }:
 {
+
+  ff = {
+    lan-mouse = {
+      url = "github:feschber/lan-mouse";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.rust-overlay.follows = "niri/rust-overlay";
+    };
+  };
+  perSystem =
+    { inputs', ... }:
+    {
+      packages.lan-mouse = inputs'.lan-mouse.packages.default.overrideAttrs {
+        doCheck = false;
+      };
+    };
   m.desktop =
     { pkgs, lib, ... }:
     {
@@ -14,7 +30,7 @@
         wants = [ "network-online.target" ];
         serviceConfig = {
           Type = "simple";
-          ExecStart = "${pkgs.lan-mouse}/bin/lan-mouse daemon";
+          ExecStart = "${self.packages.${pkgs.stdenv.hostPlatform.system}.lan-mouse}/bin/lan-mouse daemon";
           Restart = "on-failure";
           RestartSec = 1;
           TimeoutStopSec = 10;
