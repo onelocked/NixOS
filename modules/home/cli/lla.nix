@@ -1,4 +1,16 @@
+{ self, ... }:
 {
+  perSystem =
+    { pkgs, ... }:
+    {
+      packages.lla = pkgs.lla.overrideAttrs (oldAttrs: {
+        doCheck = false;
+        postPatch = ''
+          substituteInPlace lla/src/formatter/column_config.rs \
+            --replace-fail '"Permissions".to_string()' '"Perms".to_string()'
+        '';
+      });
+    };
   m.lla =
     {
       pkgs,
@@ -7,11 +19,12 @@
       ...
     }:
     let
+      lla = self.packages.${pkgs.stdenv.hostPlatform.system}.lla;
       tomlFormat = pkgs.formats.toml { };
       _ = lib.getExe;
     in
     {
-      environment.shellAliases = with pkgs; {
+      environment.shellAliases = {
         ls = "${_ lla} --sort-dirs-first --no-dotfiles";
         la = "${_ lla} --sort-dirs-first";
         ll = "${_ lla} -S";
