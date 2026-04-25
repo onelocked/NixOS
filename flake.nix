@@ -66,20 +66,13 @@
       };
     };
     systems.url = "github:nix-systems/x86_64-linux";
-    vicinae = {
-      url = "github:vicinaehq/vicinae/c0e4aa7dd2c21459cc9015b71841d0847f9749ef";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        systems.follows = "systems";
-      };
-    };
     vicinae-extensions = {
-      url = "github:vicinaehq/extensions/c89b22546cb8015b5a116bdf016996d7f8a2cfed";
+      url = "github:vicinaehq/extensions";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-compat.follows = "flake-compat";
         systems.follows = "systems";
-        vicinae.follows = "vicinae";
+        vicinae.follows = "extra-modules/vicinae";
       };
     };
     vimmax = {
