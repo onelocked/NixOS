@@ -6,22 +6,38 @@
 }:
 {
   ff = {
+    vicinae = {
+      url = "github:vicinaehq/vicinae";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems";
+      };
+    };
     vicinae-extensions = {
       url = "github:vicinaehq/extensions";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        vicinae.follows = "extra-modules/vicinae";
+        vicinae.follows = "vicinae";
         systems.follows = "systems";
         flake-compat.follows = "flake-compat";
       };
     };
   };
 
+  perSystem =
+    { system, ... }:
+    {
+      packages.vicinae = inputs.vicinae.packages.${system}.default.overrideAttrs {
+        doCheck = false;
+      };
+    };
+
   m.vicinae =
     { pkgs, config, ... }:
     {
       custom.services.vicinae = {
         enable = true;
+        package = self.packages.${pkgs.stdenv.hostPlatform.system}.vicinae;
         systemd = {
           enable = false;
           autoStart = false;
