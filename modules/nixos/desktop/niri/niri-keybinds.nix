@@ -55,6 +55,18 @@
             ];
           };
         };
+
+        "Ctrl+SPACE" = _: {
+          props = {
+            repeat = false;
+          };
+          content = {
+            spawn = [
+              "kitten"
+              "quick-access-terminal"
+            ];
+          };
+        };
         "Mod+B" = _: {
           props = {
             repeat = false;
