@@ -17,12 +17,16 @@
         # Coreutils rewrite in rust
         uutils-coreutils-noprefix
         wl-clipboard
-
         isd # TUI systemd
         nap # Snippets
         scooter # search and replace
         silicon
         mcat
+      ];
+      nixpkgs.overlays = [
+        (final: prev: {
+          wl-clipboard = prev.wl-clipboard-rs;
+        })
       ];
     };
 }
