@@ -131,12 +131,36 @@
           # Match foot's hollow cursor when unfocused
           focus_follows_mouse = "no"; # if you don't already have FFM
           cursor_shape_unfocused = "hollow"; # kitty 0.36+
+
+          # Use powerline styling
+          tab_bar_style = "powerline";
+          tab_powerline_style = "round"; # Options: angled, slanted, round
+
+          # --- Tab Naming ---
+          tab_title_template = "{index}";
+          active_tab_title_template = "{index}";
+          # --- Tab Colors (Example: Catppuccin Mocha-ish) ---
+          active_tab_foreground = "#1e1e2e";
+          active_tab_background = "#c5c0ff";
+          active_tab_font_style = "bold-italic";
+
+          inactive_tab_foreground = "#bac2de";
+          inactive_tab_background = "#313244";
+          inactive_tab_font_style = "normal";
+
+          # Border styling
+          window_border_width = "1.5pt";
+          active_border_color = "#b4befe"; # A nice pastel highlight
+          inactive_border_color = "#45475a"; # Subdued grey for inactive panes
+
+          # Hide the top window title bar on Wayland
         };
         keybindings = {
           # Splits
           "ctrl+a>p>d" = "launch --location=hsplit";
           "ctrl+a>p>n" = "launch --location=vsplit";
           "ctrl+n" = "launch --location=vsplit";
+
           # Navigation with Alt + arrows
           "alt+left" = "neighboring_window left";
           "alt+right" = "neighboring_window right";
@@ -144,6 +168,28 @@
           "alt+down" = "neighboring_window down";
 
           "ctrl+x" = "close_window";
+
+          # Resize panes
+          "ctrl+alt+left" = "resize_window narrower";
+          "ctrl+alt+right" = "resize_window wider";
+          "ctrl+alt+up" = "resize_window taller";
+          "ctrl+alt+down" = "resize_window shorter";
+          "ctrl+a>r" = "start_resizing_window";
+
+          # --- Tab Management ---
+          # Create a new tab
+          "ctrl+a>c" = "new_tab";
+
+          # Switch to specific tabs (1 through 9)
+          "ctrl+a>1" = "goto_tab 1";
+          "ctrl+a>2" = "goto_tab 2";
+          "ctrl+a>3" = "goto_tab 3";
+          "ctrl+a>4" = "goto_tab 4";
+          "ctrl+a>5" = "goto_tab 5";
+          "ctrl+a>6" = "goto_tab 6";
+          "ctrl+a>7" = "goto_tab 7";
+          "ctrl+a>8" = "goto_tab 8";
+          "ctrl+a>9" = "goto_tab 9";
         };
         extraConfig = # toml
           ''
