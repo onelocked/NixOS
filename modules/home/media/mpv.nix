@@ -113,6 +113,33 @@
           };
         })
       ];
-      hj.packages = [ pkgs.mpv ];
+      hj.packages =
+        let
+          mpv-wlpaste = pkgs.writeShellApplication {
+            name = "mpv-wlpaste";
+            runtimeInputs = with pkgs; [
+              wl-clipboard-rs
+              mpv
+              uutils-coreutils-noprefix
+            ];
+            text = # bash
+              ''
+                url=$(wl-paste | tr -d '[:space:]')
+                if [ -z "$url" ]; then
+                  exit 0
+                fi
+                case "$url" in
+                  *tiktok.com*)
+                    url="''${url%%\?*}"
+                    ;;
+                esac
+                exec mpv "$url"
+              '';
+          };
+        in
+        [
+          pkgs.mpv
+          mpv-wlpaste
+        ];
     };
 }
