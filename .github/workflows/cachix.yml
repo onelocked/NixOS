@@ -22,7 +22,7 @@ jobs:
       - name: Filter packages against Cachix
         id: set-matrix
         run: |
-          PACKAGES=("amdgpu_top" "loupe" "lan-mouse" "lla" "quickshell" "niri" "vicinae")
+          PACKAGES=("amdgpu_top" "loupe" "lan-mouse" "lla" "quickshell" "niri" "vicinae" "kitty")
           TO_BUILD=()
 
           for pkg in "${PACKAGES[@]}"; do

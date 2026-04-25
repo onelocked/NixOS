@@ -1,16 +1,14 @@
-{ inputs, ... }:
+{ inputs, self, ... }:
 {
-  m.kitty =
-    { pkgs, config, ... }:
+  perSystem =
+    { pkgs, ... }:
     let
-      cfg = config.custom.programs.kitty;
-      mkKittyLatest =
-        prev:
+      kitty =
         let
-          go_1_26_2 = prev.go_1_26.overrideAttrs (
+          go_1_26_2 = pkgs.go_1_26.overrideAttrs (
             finalAttrs: previousAttrs: {
               version = "1.26.2";
-              src = prev.fetchurl {
+              src = pkgs.fetchurl {
                 url = "https://go.dev/dl/go${finalAttrs.version}.src.tar.gz";
                 hash = "sha256-LpHrtpR6lulDb7KzkmqIAu/mOm03Xf/sT4Kqnb1v1Ds=";
               };
@@ -19,22 +17,22 @@
             }
           );
 
-          buildGo126Module = prev.buildGo126Module.override { go = go_1_26_2; };
+          buildGo126Module = pkgs.buildGo126Module.override { go = go_1_26_2; };
         in
-        (prev.kitty.override {
+        (pkgs.kitty.override {
           buildGo126Module = buildGo126Module;
           go_1_26 = go_1_26_2;
         }).overrideAttrs
           (
             finalAttrs: previousAttrs: {
               pname = "kitty";
-              version = "cadaec5712de8583be1409dff6c9a3967f1e4ab4";
+              version = "f42a5f89c3a17ef914b4e29168b70dc2fe59fb37";
 
-              src = prev.fetchFromGitHub {
+              src = pkgs.fetchFromGitHub {
                 owner = "kovidgoyal";
                 repo = "kitty";
                 rev = finalAttrs.version;
-                hash = "sha256-A+0vyWiNA4OcmhVEAE3lNOKG5i89tADnLWV64rN39nM=";
+                hash = "sha256-m8QrxeqIlInoCaj/O7yLQ4Sh1MXTqoDgJVnk29FI5mk=";
               };
 
               pyproject = false;
@@ -54,13 +52,21 @@
           );
     in
     {
+      packages = { inherit kitty; };
+    };
+  m.kitty =
+    { pkgs, config, ... }:
+    let
+      cfg = config.custom.programs.kitty;
+    in
+    {
       nixpkgs.overlays = [
         (_: prev: {
           kitty = inputs.wrappers.wrappers.kitty.wrap (
             { config, ... }:
             {
               pkgs = prev;
-              package = mkKittyLatest prev;
+              package = self.packages.${prev.stdenv.hostPlatform.system}.kitty;
               inherit (cfg) extraConfig keybindings;
               settings = cfg.settings // {
                 include = config.constructFiles.theme.path;
