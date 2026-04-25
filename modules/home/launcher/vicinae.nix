@@ -6,18 +6,11 @@
 }:
 {
   ff = {
-    vicinae = {
-      url = "github:vicinaehq/vicinae/c0e4aa7dd2c21459cc9015b71841d0847f9749ef";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        systems.follows = "systems";
-      };
-    };
     vicinae-extensions = {
-      url = "github:vicinaehq/extensions/c89b22546cb8015b5a116bdf016996d7f8a2cfed";
+      url = "github:vicinaehq/extensions";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        vicinae.follows = "vicinae";
+        vicinae.follows = "extra-modules/vicinae";
         systems.follows = "systems";
         flake-compat.follows = "flake-compat";
       };
@@ -27,13 +20,6 @@
   m.vicinae =
     { pkgs, config, ... }:
     {
-      nixpkgs.overlays = [ inputs.vicinae.overlays.default ];
-
-      nix.settings = {
-        extra-substituters = [ "https://vicinae.cachix.org" ];
-        extra-trusted-public-keys = [ "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc=" ];
-      };
-
       custom.services.vicinae = {
         enable = true;
         systemd = {
