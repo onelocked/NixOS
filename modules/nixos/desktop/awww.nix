@@ -1,6 +1,6 @@
 {
   m.default =
-    { lib, pkgs, ... }:
+    { pkgs, ... }:
     {
       hj = {
         packages = [ pkgs.awww ];
@@ -15,10 +15,6 @@
             Restart = "on-failure";
             RestartSec = 1;
             TimeoutStopSec = 10;
-            Environment = lib.mkForce [
-              "RUST_BACKTRACE=0"
-              "RUST_LOG=error"
-            ];
           };
         };
       };
