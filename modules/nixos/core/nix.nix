@@ -6,6 +6,10 @@
     flake-compat.url = "github:NixOS/flake-compat";
     nixpkgs.follows = "extra-modules/nixpkgs";
     systems.url = "github:nix-systems/x86_64-linux";
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   m.default =
