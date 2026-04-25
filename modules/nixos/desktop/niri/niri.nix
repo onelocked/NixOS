@@ -8,6 +8,11 @@
     niri = {
       url = "github:niri-wm/niri/b82d52705e1424cf47b26dd7b096832901c31f56";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.rust-overlay.follows = "rust-overlay";
+    };
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
   m.niri =
