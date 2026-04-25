@@ -39,7 +39,6 @@
         "flake-parts"
         "flake-file"
         "wrappers"
-        "extra-modules"
       ];
     };
   };
