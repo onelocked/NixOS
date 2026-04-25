@@ -1,5 +1,39 @@
-{ inputs, ... }:
+{ inputs, self, ... }:
 {
+  ff = {
+    quickshell = {
+      url = "github:quickshell-mirror/quickshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    qml-niri = {
+      url = "github:imiric/qml-niri/main";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        quickshell.follows = "quickshell";
+        flake-parts.follows = "flake-parts";
+        treefmt-nix.follows = "treefmt-nix";
+      };
+    };
+  };
+  perSystem =
+    { system, ... }:
+    {
+      packages.quickshell =
+        (inputs.qml-niri.packages.${system}.quickshell.override {
+          withWayland = true;
+          withPipewire = true;
+          withQtSvg = true;
+          withJemalloc = true;
+
+          withNetworkManager = false;
+          withPolkit = false;
+          withHyprland = false;
+          withPam = false;
+          withX11 = false;
+          withI3 = false;
+        }).overrideAttrs
+          { doCheck = false; };
+    };
   m.quickshell =
     {
       pkgs,
@@ -24,7 +58,7 @@
 
       quickshellWrapped = inputs.wrappers.lib.wrapPackage {
         inherit pkgs;
-        package = pkgs.quickshell;
+        package = self.packages.${pkgs.stdenv.hostPlatform.system}.quickshell;
         aliases = [ "qs" ];
         extraPackages = quickshellDeps;
         env = {
