@@ -4,6 +4,12 @@
   ...
 }:
 {
+  ff = {
+    niri = {
+      url = "github:niri-wm/niri/b82d52705e1424cf47b26dd7b096832901c31f56";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
   m.niri =
     {
       pkgs,
@@ -14,7 +20,7 @@
     let
       niriWrapped = inputs.wrappers.wrappers.niri.wrap {
         inherit pkgs;
-        package = pkgs.niri;
+        package = inputs.niri.packages.${pkgs.stdenv.hostPlatform.system}.niri;
         v2-settings = true;
         inherit (config.custom.programs.niri) settings;
       };

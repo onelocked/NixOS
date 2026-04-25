@@ -5,7 +5,6 @@
     lan-mouse = {
       url = "github:feschber/lan-mouse";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.rust-overlay.follows = "niri/rust-overlay";
     };
   };
   perSystem =
