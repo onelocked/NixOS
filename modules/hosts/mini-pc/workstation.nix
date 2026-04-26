@@ -25,7 +25,6 @@ with self.modules.nixos;
       worktrunk
       qview
       starship
-      foot
       kitty
       fish
 

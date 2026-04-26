@@ -29,9 +29,7 @@
             inherit (cfg) policies;
           };
 
-      wrapped = pkgs.wrapFirefox unwrapped {
-        inherit (cfg) extraPrefs nativeMessagingHosts;
-      };
+      wrapped = pkgs.wrapFirefox unwrapped { inherit (cfg) extraPrefs nativeMessagingHosts; };
 
       mkUserJs =
         settings:
