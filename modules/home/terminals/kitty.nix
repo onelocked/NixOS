@@ -191,12 +191,18 @@
           "ctrl+a>8" = "goto_tab 8";
           "ctrl+a>9" = "goto_tab 9";
         };
-        extraConfig = # toml
+
+        extraConfig =
+          let
+            mapleFeatures = "+cv01 +cv04 +cv05 +cv06 +cv07 +cv08 +cv32 +cv34 +cv36 +cv37 +cv39 +cv40 +cv41 +cv66 +ss03 +ss04 +ss05 +ss06 +ss07 +ss08 +ss09 +ss10 +ss11 +zero";
+          in
+          # toml
           ''
-            font_features MapleMono-NF-Bold +cv01 +cv04 +cv05 +cv06 +cv07 +cv08 +cv32 +cv34 +cv36 +cv37 +cv39 +cv40 +cv41 +cv66 +ss03 +ss04 +ss05 +ss06 +ss07 +ss08 +ss09 +ss10 +ss11 +zero
-            font_features MapleMono-NF-ExtraBold +cv01 +cv04 +cv05 +cv06 +cv07 +cv08 +cv32 +cv34 +cv36 +cv37 +cv39 +cv40 +cv41 +cv66 +ss03 +ss04 +ss05 +ss06 +ss07 +ss08 +ss09 +ss10 +ss11 +zero
-            font_features MapleMono-NF-BoldItalic +cv01 +cv04 +cv05 +cv06 +cv07 +cv08 +cv32 +cv34 +cv36 +cv37 +cv39 +cv40 +cv41 +cv66 +ss03 +ss04 +ss05 +ss06 +ss07 +ss08 +ss09 +ss10 +ss11 +zero
-            font_features MapleMono-NF-ExtraBoldItalic +cv01 +cv04 +cv05 +cv06 +cv07 +cv08 +cv32 +cv34 +cv36 +cv37 +cv39 +cv40 +cv41 +cv66 +ss03 +ss04 +ss05 +ss06 +ss07 +ss08 +ss09 +ss10 +ss11 +zero
+            font_features MapleMono-NF-Bold ${mapleFeatures}
+            font_features MapleMono-NF-ExtraBold ${mapleFeatures}
+            font_features MapleMono-NF-BoldItalic ${mapleFeatures}
+            font_features MapleMono-NF-ExtraBoldItalic ${mapleFeatures}
+
             mouse_map right press ungrabbed combine : copy_to_clipboard : clear_selection
             mouse_map left press ungrabbed mouse_selection drag_or_normal_select
           '';
