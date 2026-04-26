@@ -66,10 +66,8 @@
             }
           ];
           open-on-workspace = "social";
-          open-fullscreen = false;
-          open-floating = true;
-          default-column-width.fixed = 1945;
-          default-window-height.fixed = 1095;
+          open-fullscreen = true;
+          open-focused = true;
         }
         {
           matches = [ { app-id = "vesktop"; } ];
