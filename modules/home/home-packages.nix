@@ -23,10 +23,6 @@
         silicon
         mcat
       ];
-      nixpkgs.overlays = [
-        (final: prev: {
-          wl-clipboard = prev.wl-clipboard-rs;
-        })
-      ];
+      nixpkgs.overlays = [ (_: p: { wl-clipboard = p.wl-clipboard-rs; }) ];
     };
 }
