@@ -1,21 +1,27 @@
 { inputs, self, ... }:
 {
+  nv = {
+    kitty = {
+      src.git = "https://github.com/kovidgoyal/kitty";
+      fetch.github = "kovidgoyal/kitty";
+    };
+    go = {
+      src.github_tag = "golang/go";
+      src.include_regex = "go[0-9]+\\.[0-9]+\\.[0-9]+";
+      src.prefix = "go";
+      fetch.url = "https://go.dev/dl/go$ver.src.tar.gz";
+    };
+  };
   perSystem =
-    { pkgs, ... }:
+    { pkgs, nvfetcher, ... }:
     let
       kitty =
         let
-          go_1_26_2 = pkgs.go_1_26.overrideAttrs (
-            finalAttrs: previousAttrs: {
-              version = "1.26.2";
-              src = pkgs.fetchurl {
-                url = "https://go.dev/dl/go${finalAttrs.version}.src.tar.gz";
-                hash = "sha256-LpHrtpR6lulDb7KzkmqIAu/mOm03Xf/sT4Kqnb1v1Ds=";
-              };
-              doCheck = false;
-              doInstallCheck = false;
-            }
-          );
+          go_1_26_2 = pkgs.go_1_26.overrideAttrs (_: {
+            inherit (nvfetcher.go) src version;
+            doCheck = false;
+            doInstallCheck = false;
+          });
 
           buildGo126Module = pkgs.buildGo126Module.override { go = go_1_26_2; };
         in
@@ -26,14 +32,7 @@
           (
             finalAttrs: previousAttrs: {
               pname = "kitty";
-              version = "f42a5f89c3a17ef914b4e29168b70dc2fe59fb37";
-
-              src = pkgs.fetchFromGitHub {
-                owner = "kovidgoyal";
-                repo = "kitty";
-                rev = finalAttrs.version;
-                hash = "sha256-m8QrxeqIlInoCaj/O7yLQ4Sh1MXTqoDgJVnk29FI5mk=";
-              };
+              inherit (nvfetcher.kitty) src version;
 
               pyproject = false;
               doCheck = false;

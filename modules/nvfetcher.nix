@@ -2,6 +2,7 @@
 let
   topConfig = config;
   generated = import ../nvfetcher/generated.nix;
+  injectArg = { pkgs, ... }: { _module.args.nvfetcher = pkgs.callPackage generated { }; };
 
   srcTagKeys = [
     "github"
@@ -83,11 +84,7 @@ in
   imports = [ (lib.mkAliasOptionModule [ "nv" ] [ "nvfetcher" "sources" ]) ];
 
   config = {
-    m.default =
-      { pkgs, ... }:
-      {
-        _module.args.nvfetcher = pkgs.callPackage generated { };
-      };
+    m.default = injectArg;
 
     perSystem =
       { pkgs, ... }:
@@ -95,7 +92,7 @@ in
         tomlFile = (pkgs.formats.toml { }).generate "nvfetcher.toml" topConfig.nvfetcher.sources;
       in
       {
-        _module.args.nvfetcher = pkgs.callPackage generated { };
+        imports = [ injectArg ];
         apps.write-sources = {
           meta.description = "Run nvfetcher to generate sources";
           program = pkgs.writeShellApplication {
