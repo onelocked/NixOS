@@ -1,0 +1,44 @@
+{
+    "fuzzy-search": {
+        "cargoLock": null,
+        "date": "2026-03-25",
+        "extract": null,
+        "name": "fuzzy-search",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "onelocked",
+            "repo": "fuzzy-search.yazi",
+            "rev": "16cea088a39c7769fbd22c4810347b04dd38c6b2",
+            "sha256": "sha256-3YsZQ7SOkJZfUWP2KGzp8fPpT42M+x2aThs/AYmdy0o=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "16cea088a39c7769fbd22c4810347b04dd38c6b2"
+    },
+    "grubTheme": {
+        "cargoLock": null,
+        "date": "2026-01-11",
+        "extract": null,
+        "name": "grubTheme",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "onelocked",
+            "repo": "grub2-theme",
+            "rev": "207dfe09411f08916666acf65bf6262e5ef5e6d0",
+            "sha256": "sha256-ChnML4zm4EnVX/WmZW5RWHnK/tqjXSeR4BK8XfN0xxA=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "207dfe09411f08916666acf65bf6262e5ef5e6d0"
+    }
+}

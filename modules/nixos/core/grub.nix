@@ -1,7 +1,11 @@
 { self, ... }:
 {
+  nv.grubTheme = {
+    src.git = "https://github.com/onelocked/grub2-theme";
+    fetch.github = "onelocked/grub2-theme";
+  };
   m.default =
-    { pkgs, ... }:
+    { pkgs, nvfetcher, ... }:
     {
       boot.loader =
         let
@@ -24,13 +28,7 @@
             splashImage = homedir + "/Pictures/grub.png";
             theme = pkgs.stdenv.mkDerivation {
               pname = "grub-theme";
-              version = "v1.0";
-              src = pkgs.fetchFromGitHub {
-                owner = "onelocked";
-                repo = "grub2-theme";
-                rev = "207dfe09411f08916666acf65bf6262e5ef5e6d0";
-                hash = "sha256-ChnML4zm4EnVX/WmZW5RWHnK/tqjXSeR4BK8XfN0xxA=";
-              };
+              inherit (nvfetcher.grubTheme) src version;
               installPhase = ''
                 install -dm755 $out
                 cp -rf theme/* $out/
