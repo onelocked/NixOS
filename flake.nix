@@ -27,7 +27,6 @@
       url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    import-tree.url = "github:vic/import-tree";
     lan-mouse = {
       url = "github:feschber/lan-mouse";
       inputs = {

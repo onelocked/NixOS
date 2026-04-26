@@ -574,9 +574,6 @@
         "flake-parts": [
           "flake-parts"
         ],
-        "import-tree": [
-          "import-tree"
-        ],
         "nixpkgs": "nixpkgs_3",
         "nixvim": "nixvim",
         "systems": [
@@ -584,11 +581,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1776972978,
-        "narHash": "sha256-D9GrBoSPSC2zaZftwLOzDIredZJTjTrftvIDW2XNMKM=",
+        "lastModified": 1777221417,
+        "narHash": "sha256-5NV5uEzIFtmOeIIBGUg2kBqDWNZ6yYZhKaCNremo6M8=",
         "owner": "onelocked",
         "repo": "vimmax",
-        "rev": "739ae0b54627ae11d118472b70a0824cdf068c6c",
+        "rev": "34e73c7a2851a67eb38a849407901c61a3fed6a7",
         "type": "github"
       },
       "original": {
