@@ -98,30 +98,6 @@
         "type": "github"
       }
     },
-    "fuzzy-search-yazi": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "systems": [
-          "systems"
-        ]
-      },
-      "locked": {
-        "lastModified": 1774867734,
-        "narHash": "sha256-TXMkw+WdPKkxni4sTCG6qhJV6Cm2Gneo759wTeM1g2I=",
-        "owner": "onelocked",
-        "repo": "fuzzy-search.yazi",
-        "rev": "5d3eadb79b98df577c53e359a3531bbb35c2c83a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "onelocked",
-        "ref": "dev",
-        "repo": "fuzzy-search.yazi",
-        "type": "github"
-      }
-    },
     "hjem": {
       "inputs": {
         "nix-darwin": "nix-darwin",
@@ -420,7 +396,6 @@
         "flake-compat": "flake-compat",
         "flake-file": "flake-file",
         "flake-parts": "flake-parts",
-        "fuzzy-search-yazi": "fuzzy-search-yazi",
         "hjem": "hjem",
         "import-tree": "import-tree",
         "lan-mouse": "lan-mouse",

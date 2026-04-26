@@ -1,10 +1,4 @@
-{ inputs, ... }:
 {
-  ff.fuzzy-search-yazi = {
-    url = "github:onelocked/fuzzy-search.yazi/dev";
-    inputs.nixpkgs.follows = "nixpkgs";
-    inputs.systems.follows = "systems";
-  };
   m.yazi =
     {
       pkgs,
@@ -27,7 +21,19 @@
             smart-filter
             wl-clipboard
             ;
-          fuzzy-search = inputs.fuzzy-search-yazi;
+          fuzzy-search = pkgs.yaziPlugins.mkYaziPlugin {
+            pname = "fuzzy-search.yazi";
+            version = "unstable";
+            src = lib.cleanSourceWith {
+              src = pkgs.fetchFromGitHub {
+                owner = "onelocked";
+                repo = "fuzzy-search.yazi";
+                rev = "16cea088a39c7769fbd22c4810347b04dd38c6b2";
+                hash = "sha256-3YsZQ7SOkJZfUWP2KGzp8fPpT42M+x2aThs/AYmdy0o=";
+              };
+              filter = name: type: (baseNameOf name == "main.lua");
+            };
+          };
         };
         settings.plugin =
           let
