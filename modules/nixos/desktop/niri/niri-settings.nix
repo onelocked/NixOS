@@ -1,9 +1,9 @@
-{ self, ... }:
 {
   m.niri =
     {
       pkgs,
       lib,
+      config,
       ...
     }:
     let
@@ -50,7 +50,8 @@
 
         hotkey-overlay.skip-at-startup = set;
 
-        screenshot-path = self.variables.homedir + "/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
+        screenshot-path =
+          config.hj.directory + "/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
 
         debug.honor-xdg-activation-with-invalid-serial = set;
 
