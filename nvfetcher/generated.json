@@ -20,6 +20,21 @@
         },
         "version": "16cea088a39c7769fbd22c4810347b04dd38c6b2"
     },
+    "go": {
+        "cargoLock": null,
+        "date": null,
+        "extract": null,
+        "name": "go",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "name": null,
+            "sha256": "sha256-LpHrtpR6lulDb7KzkmqIAu/mOm03Xf/sT4Kqnb1v1Ds=",
+            "type": "url",
+            "url": "https://go.dev/dl/go1.26.2.src.tar.gz"
+        },
+        "version": "1.26.2"
+    },
     "grubTheme": {
         "cargoLock": null,
         "date": "2026-01-11",
@@ -40,5 +55,26 @@
             "type": "github"
         },
         "version": "207dfe09411f08916666acf65bf6262e5ef5e6d0"
+    },
+    "kitty": {
+        "cargoLock": null,
+        "date": "2026-04-26",
+        "extract": null,
+        "name": "kitty",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "kovidgoyal",
+            "repo": "kitty",
+            "rev": "3e46fa9f81930c595f1a519f4c56c9e77e0e9b79",
+            "sha256": "sha256-4HAxZRjdCPvYxD/nNRexjftvDVb9fXMWInrk1wtdjpM=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "3e46fa9f81930c595f1a519f4c56c9e77e0e9b79"
     }
 }
