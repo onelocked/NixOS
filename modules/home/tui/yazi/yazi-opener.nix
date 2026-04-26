@@ -1,26 +1,5 @@
 { self, ... }:
 {
-  perSystem =
-    { pkgs, ... }:
-    {
-      packages.loupe = pkgs.loupe.overrideAttrs (oldAttrs: {
-        doCheck = false;
-        postPatch =
-          (oldAttrs.postPatch or "")
-          # nix
-          + ''
-            substituteInPlace src/widgets/edit/crop.ui \
-              --replace-fail '"yes">5:4</attribute>' '"yes">43:18</attribute>' \
-              --replace-fail '"yes">4:3</attribute>'  '"yes">32:9</attribute>' \
-              --replace-fail '"yes">_5:4</property>'  '"yes">_43:18</property>' \
-              --replace-fail '"yes">_4:3</property>'  '"yes">_32:9</property>'
-
-            substituteInPlace src/widgets/edit/crop_selection.rs \
-              --replace-fail 'Self::R5to4 => Some((5, 4)),'  'Self::R5to4 => Some((43, 18)),' \
-              --replace-fail 'Self::R4to3 => Some((4, 3)),'  'Self::R4to3 => Some((32, 9)),'
-          '';
-      });
-    };
   m.yazi =
     { pkgs, lib, ... }:
     {
@@ -68,5 +47,26 @@
             video-trimmer = mkOpener video-trimmer "Video Trimmer";
           };
       };
+    };
+  perSystem =
+    { pkgs, ... }:
+    {
+      packages.loupe = pkgs.loupe.overrideAttrs (oldAttrs: {
+        doCheck = false;
+        postPatch =
+          (oldAttrs.postPatch or "")
+          # nix
+          + ''
+            substituteInPlace src/widgets/edit/crop.ui \
+              --replace-fail '"yes">5:4</attribute>' '"yes">43:18</attribute>' \
+              --replace-fail '"yes">4:3</attribute>'  '"yes">32:9</attribute>' \
+              --replace-fail '"yes">_5:4</property>'  '"yes">_43:18</property>' \
+              --replace-fail '"yes">_4:3</property>'  '"yes">_32:9</property>'
+
+            substituteInPlace src/widgets/edit/crop_selection.rs \
+              --replace-fail 'Self::R5to4 => Some((5, 4)),'  'Self::R5to4 => Some((43, 18)),' \
+              --replace-fail 'Self::R4to3 => Some((4, 3)),'  'Self::R4to3 => Some((32, 9)),'
+          '';
+      });
     };
 }
