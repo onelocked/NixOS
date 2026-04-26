@@ -1,9 +1,15 @@
 {
+  nv.fuzzy-search = {
+    src.git = "https://github.com/onelocked/fuzzy-search.yazi";
+    fetch.github = "onelocked/fuzzy-search.yazi";
+  };
+
   m.yazi =
     {
       pkgs,
       lib,
       config,
+      nvfetcher,
       ...
     }:
     {
@@ -23,15 +29,10 @@
             ;
           fuzzy-search = pkgs.yaziPlugins.mkYaziPlugin {
             pname = "fuzzy-search.yazi";
-            version = "unstable";
+            inherit (nvfetcher.fuzzy-search) version;
             src = lib.cleanSourceWith {
-              src = pkgs.fetchFromGitHub {
-                owner = "onelocked";
-                repo = "fuzzy-search.yazi";
-                rev = "16cea088a39c7769fbd22c4810347b04dd38c6b2";
-                hash = "sha256-3YsZQ7SOkJZfUWP2KGzp8fPpT42M+x2aThs/AYmdy0o=";
-              };
-              filter = name: type: (baseNameOf name == "main.lua");
+              inherit (nvfetcher.fuzzy-search) src;
+              filter = name: _: baseNameOf name == "main.lua";
             };
           };
         };
