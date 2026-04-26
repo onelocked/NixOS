@@ -4,12 +4,7 @@
     {
       hj.packages = [ pkgs.sonobus ];
       networking.firewall = {
-        # 10998: The specific UDP port for P2P audio (Set this in SonoBus GUI)
-        # 10999: Only needed if you are hosting a local connection server
-        allowedUDPPorts = [
-          10998
-          10999
-        ];
+        allowedUDPPorts = [ 45599 ]; # The specific UDP port for P2P audio (Set this in SonoBus GUI)
         allowedTCPPorts = [ 10999 ];
       };
       systemd.user.services.system-audio-capture = {
