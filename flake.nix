@@ -105,7 +105,6 @@
       url = "github:onelocked/vimmax";
       inputs = {
         flake-parts.follows = "flake-parts";
-        import-tree.follows = "import-tree";
         systems.follows = "systems";
       };
     };
