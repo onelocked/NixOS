@@ -1,17 +1,15 @@
 {
+  nv.tmuxFloax = {
+    src.git = "https://github.com/omerxx/tmux-floax";
+    fetch.github = "omerxx/tmux-floax";
+  };
   m.tmux =
-    { pkgs, ... }:
+    { pkgs, nvfetcher, ... }:
     let
       tmux-floax = pkgs.tmuxPlugins.mkTmuxPlugin {
         pluginName = "tmux-floax";
-        version = "unstable-21-11-24";
         rtpFilePath = "floax.tmux";
-        src = pkgs.fetchFromGitHub {
-          owner = "omerxx";
-          repo = "tmux-floax";
-          rev = "3015164722a74716bd1930aacd98201e691f92b1";
-          hash = "sha256-TCY3W0/4c4KIsY55uClrlzu90XcK/mgbD58WWu6sPrU=";
-        };
+        inherit (nvfetcher.tmuxFloax) src version;
       };
       tmuxRun =
         plugin:

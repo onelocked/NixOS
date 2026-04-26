@@ -50,4 +50,16 @@
     };
     date = "2026-04-26";
   };
+  tmuxFloax = {
+    pname = "tmuxFloax";
+    version = "133f526793d90d2caa323c47687dd5544a2c704b";
+    src = fetchFromGitHub {
+      owner = "omerxx";
+      repo = "tmux-floax";
+      rev = "133f526793d90d2caa323c47687dd5544a2c704b";
+      fetchSubmodules = false;
+      sha256 = "sha256-9Hb9dn2qHF6KcIhtogvycX3Z0MoQrLPLCzZXtjGlPHw=";
+    };
+    date = "2026-02-24";
+  };
 }
