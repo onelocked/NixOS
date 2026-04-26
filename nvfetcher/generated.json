@@ -76,5 +76,26 @@
             "type": "github"
         },
         "version": "3e46fa9f81930c595f1a519f4c56c9e77e0e9b79"
+    },
+    "tmuxFloax": {
+        "cargoLock": null,
+        "date": "2026-02-24",
+        "extract": null,
+        "name": "tmuxFloax",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "omerxx",
+            "repo": "tmux-floax",
+            "rev": "133f526793d90d2caa323c47687dd5544a2c704b",
+            "sha256": "sha256-9Hb9dn2qHF6KcIhtogvycX3Z0MoQrLPLCzZXtjGlPHw=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "133f526793d90d2caa323c47687dd5544a2c704b"
     }
 }
