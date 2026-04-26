@@ -8,16 +8,23 @@
   imports = [
     inputs.flake-parts.flakeModules.modules
     (lib.mkAliasOptionModule [ "m" ] [ "flake" "modules" "nixos" ])
-    inputs.flake-file.flakeModules.dendritic
+    inputs.flake-file.flakeModules.default
     (lib.mkAliasOptionModule [ "ff" ] [ "flake-file" "inputs" ])
   ];
 
   systems = [ "x86_64-linux" ];
 
   flake-file = {
-    inputs.wrappers = {
-      url = "github:BirdeeHub/nix-wrapper-modules";
-      inputs.nixpkgs.follows = "nixpkgs";
+    inputs = {
+      flake-parts = {
+        url = "github:hercules-ci/flake-parts";
+        inputs.nixpkgs-lib.follows = "nixpkgs";
+      };
+      flake-file.url = "github:vic/flake-file";
+      wrappers = {
+        url = "github:BirdeeHub/nix-wrapper-modules";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
     };
 
     do-not-edit = "";
