@@ -1,7 +1,11 @@
-{ self, ... }:
 {
   m.yazi =
-    { pkgs, lib, ... }:
+    {
+      pkgs,
+      lib,
+      self',
+      ...
+    }:
     {
       custom.programs.yazi.settings = {
         open = {
@@ -42,7 +46,7 @@
                 desc = "Set Wallpaper";
               }
             ];
-            loupe = mkOpener self.packages.${pkgs.stdenv.hostPlatform.system}.loupe "Loupe";
+            loupe = mkOpener self'.packages.loupe "Loupe";
             nomacs = mkOpener nomacs "Image Editor";
             video-trimmer = mkOpener video-trimmer "Video Trimmer";
           };
