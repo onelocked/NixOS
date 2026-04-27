@@ -125,8 +125,8 @@
           "ctrl+a>9" = "goto_tab 9";
         };
         mouseBindings = {
-          "mouse_map right press ungrabbed" = "combine : copy_to_clipboard : clear_selection";
-          "mouse_map left press ungrabbed" = "mouse_selection drag_or_normal_select";
+          "right press ungrabbed" = "combine : copy_to_clipboard : clear_selection";
+          "left press ungrabbed" = "mouse_selection drag_or_normal_select";
         };
         fontConfig =
           let
