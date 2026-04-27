@@ -1,9 +1,5 @@
 {
-  nv.fuzzy-search = {
-    src.git = "https://github.com/onelocked/fuzzy-search.yazi";
-    fetch.github = "onelocked/fuzzy-search.yazi";
-  };
-
+  nv.fuzzy-search.github = "onelocked/fuzzy-search.yazi";
   m.yazi =
     {
       pkgs,

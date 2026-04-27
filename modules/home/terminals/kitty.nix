@@ -264,10 +264,7 @@
       };
     };
 
-  nv.kitty = {
-    src.git = "https://github.com/kovidgoyal/kitty";
-    fetch.github = "kovidgoyal/kitty";
-  };
+  nv.kitty.github = "kovidgoyal/kitty";
   perSystem =
     { pkgs, nvfetcher, ... }:
     {
