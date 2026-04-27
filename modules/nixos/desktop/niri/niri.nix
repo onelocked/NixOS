@@ -25,12 +25,13 @@
       pkgs,
       config,
       lib,
+      self',
       ...
     }:
     let
       niriWrapped = inputs.wrappers.wrappers.niri.wrap {
         inherit pkgs;
-        package = self.packages.${pkgs.stdenv.hostPlatform.system}.niri;
+        package = self'.packages.niri;
         v2-settings = true;
         inherit (config.custom.programs.niri) settings;
       };
