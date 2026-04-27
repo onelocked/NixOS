@@ -1,4 +1,4 @@
-{ inputs, lib, ... }:
+{ lib, inputs, ... }:
 {
   ff = {
     zen-browser = {
@@ -12,7 +12,12 @@
   };
 
   m.zen-browser =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      config,
+      inputs',
+      ...
+    }:
     let
       cfg = config.custom.programs.zen-browser;
 
@@ -23,11 +28,7 @@
         }
       );
 
-      unwrapped =
-        inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.twilight-unwrapped.override
-          {
-            inherit (cfg) policies;
-          };
+      unwrapped = inputs'.zen-browser.packages.twilight-unwrapped.override { inherit (cfg) policies; };
 
       wrapped = pkgs.wrapFirefox unwrapped { inherit (cfg) extraPrefs nativeMessagingHosts; };
 
