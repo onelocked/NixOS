@@ -1,56 +1,4 @@
 {
-  nv = {
-    kitty = {
-      src.git = "https://github.com/kovidgoyal/kitty";
-      fetch.github = "kovidgoyal/kitty";
-    };
-    go = {
-      src.github_tag = "golang/go";
-      src.include_regex = "go[0-9]+\\.[0-9]+\\.[0-9]+";
-      src.prefix = "go";
-      fetch.url = "https://go.dev/dl/go$ver.src.tar.gz";
-    };
-  };
-  perSystem =
-    { pkgs, nvfetcher, ... }:
-    let
-      kitty =
-        let
-          go_1_26_2 = pkgs.go_1_26.overrideAttrs (_: {
-            inherit (nvfetcher.go) src version;
-            doCheck = false;
-            doInstallCheck = false;
-          });
-
-          buildGo126Module = pkgs.buildGo126Module.override { go = go_1_26_2; };
-        in
-        (pkgs.kitty.override {
-          buildGo126Module = buildGo126Module;
-          go_1_26 = go_1_26_2;
-        }).overrideAttrs
-          (
-            finalAttrs: previousAttrs: {
-              inherit (nvfetcher.kitty) pname src version;
-
-              pyproject = false;
-              doCheck = false;
-              dontCheck = true;
-              checkPhase = "true";
-              installCheckPhase = "true";
-
-              goModules =
-                (buildGo126Module {
-                  pname = "kitty-go-modules";
-                  src = finalAttrs.src;
-                  version = finalAttrs.version;
-                  vendorHash = "sha256-jkWijMZrDapttSOrOjKuXLzZI+Lp6BhS1jWbMHJbniI=";
-                }).goModules;
-            }
-          );
-    in
-    {
-      packages = { inherit kitty; };
-    };
   m.kitty =
     {
       pkgs,
@@ -63,21 +11,14 @@
       nixpkgs.overlays = [
         (_: prev: {
           kitty = wrappers.wrappers.kitty.wrap (
-            wrapper:
-            let
-              cfg = config.custom.programs.kitty;
-            in
-            {
+            wrapper: with config.custom.programs.kitty; {
               pkgs = prev;
               package = self'.packages.kitty;
-              inherit (cfg) extraConfig keybindings;
-              settings = cfg.settings // {
-                include = wrapper.config.constructFiles.theme.path;
-              };
-              constructFiles.theme = {
-                relPath = "oneshill.conf";
-                content = cfg.theme;
-              };
+              settings = settings // theme // fontConfig;
+              inherit
+                keybindings
+                mouseBindings
+                ;
             }
           );
         })
@@ -85,15 +26,6 @@
       hj.packages = [ pkgs.kitty ];
       custom.programs.kitty = {
         settings = {
-          text_composition_strategy = "legacy";
-          font_family = ''family="Maple Mono NF" style="ExtraBold"'';
-          bold_font = ''family="Montserrat" style="Black"'';
-          italic_font = ''family="Maple Mono NF" style="Bold Italic"'';
-          bold_italic_font = ''family="Maple Mono NF" style="ExtraBold Italic"'';
-          font_size = "15";
-          # font_features = "MapleMono-NL-NF-ExtraBold +zero +onum";
-          disable_ligatures = "never";
-
           wayland_enable_ime = "no";
 
           sync_to_monitor = "yes";
@@ -155,8 +87,6 @@
           window_border_width = "1.5pt";
           active_border_color = "#b4befe"; # A nice pastel highlight
           inactive_border_color = "#45475a"; # Subdued grey for inactive panes
-
-          # Hide the top window title bar on Wayland
         };
         keybindings = {
           # Splits
@@ -194,60 +124,65 @@
           "ctrl+a>8" = "goto_tab 8";
           "ctrl+a>9" = "goto_tab 9";
         };
-
-        extraConfig =
+        mouseBindings = {
+          "mouse_map right press ungrabbed" = "combine : copy_to_clipboard : clear_selection";
+          "mouse_map left press ungrabbed" = "mouse_selection drag_or_normal_select";
+        };
+        fontConfig =
           let
             mapleFeatures = "+cv01 +cv04 +cv05 +cv06 +cv07 +cv08 +cv32 +cv34 +cv36 +cv37 +cv39 +cv40 +cv41 +cv66 +ss03 +ss04 +ss05 +ss06 +ss07 +ss08 +ss09 +ss10 +ss11 +zero";
           in
-          # toml
-          ''
-            font_features MapleMono-NF-Bold ${mapleFeatures}
-            font_features MapleMono-NF-ExtraBold ${mapleFeatures}
-            font_features MapleMono-NF-BoldItalic ${mapleFeatures}
-            font_features MapleMono-NF-ExtraBoldItalic ${mapleFeatures}
+          {
+            text_composition_strategy = "legacy";
+            font_family = ''family="Maple Mono NF" style="ExtraBold"'';
+            bold_font = ''family="Montserrat" style="Black"'';
+            italic_font = ''family="Maple Mono NF" style="Bold Italic"'';
+            bold_italic_font = ''family="Maple Mono NF" style="ExtraBold Italic"'';
+            font_size = "15";
+            disable_ligatures = "never";
+            "font_features MapleMono-NF-Bold" = mapleFeatures;
+            "font_features MapleMono-NF-ExtraBold" = mapleFeatures;
+            "font_features MapleMono-NF-BoldItalic" = mapleFeatures;
+            "font_features MapleMono-NF-ExtraBoldItalic" = mapleFeatures;
+          };
+        theme = {
+          color0 = "#131316";
+          color1 = "#ffb4ab";
+          color2 = "#a6e3a1";
+          color3 = "#d4b483";
+          color4 = "#c5c0ff";
+          color5 = "#e4a8d4";
+          color6 = "#6fbac2";
+          color7 = "#c8c5d0";
+          color8 = "#6f6d78";
+          color9 = "#ffcbc2";
+          color10 = "#c1ecbd";
+          color11 = "#e5cfa8";
+          color12 = "#dcd8ff";
+          color13 = "#f0c4e4";
+          color14 = "#b5e5e9";
+          color15 = "#e5e1e6";
 
-            mouse_map right press ungrabbed combine : copy_to_clipboard : clear_selection
-            mouse_map left press ungrabbed mouse_selection drag_or_normal_select
-          '';
-        theme = # bash
-          ''
-            color0  #131316
-            color1  #ffb4ab
-            color2  #a6e3a1
-            color3  #d4b483
-            color4  #c5c0ff
-            color5  #e4a8d4
-            color6  #6fbac2
-            color7  #c8c5d0
-            color8  #6f6d78
-            color9  #ffcbc2
-            color10 #c1ecbd
-            color11 #e5cfa8
-            color12 #dcd8ff
-            color13 #f0c4e4
-            color14 #b5e5e9
-            color15 #e5e1e6
+          background = "#131316";
+          foreground = "#e5e1e6";
 
-            background            #131316
-            foreground            #e5e1e6
+          cursor = "#c5c0ff";
+          cursor_text_color = "#131316";
+          cursor_trail_color = "#c5c0ff";
 
-            cursor                #c5c0ff
-            cursor_text_color     #131316
-            cursor_trail_color    #c5c0ff
+          selection_background = "#c5c0ff";
+          selection_foreground = "#131316";
 
-            selection_background  #c5c0ff
-            selection_foreground  #131316
+          active_border_color = "#c5c0ff";
+          inactive_border_color = "#47464f";
 
-            active_border_color   #c5c0ff
-            inactive_border_color #47464f
+          url_color = "#a89cc7";
 
-            url_color             #a89cc7
-
-            active_tab_foreground   #131316
-            active_tab_background   #c5c0ff
-            inactive_tab_foreground #c8c5d0
-            inactive_tab_background #2a2932
-          '';
+          active_tab_foreground = "#131316";
+          active_tab_background = "#c5c0ff";
+          inactive_tab_foreground = "#c8c5d0";
+          inactive_tab_background = "#2a2932";
+        };
       };
     };
   m.default =
@@ -286,11 +221,21 @@
           '';
         };
         theme = mkOption {
-          type = with lib.types; nullOr (either path lines);
-          default = "";
-          description = ''
-            Color scheme for kitty
+          type = types.attrsOf types.str;
+          default = { };
+          description = "Color scheme attributes for kitty, structurally merged into settings.";
+          example = literalExpression ''
+            {
+              color0 = "#131316";
+              background = "#131316";
+            }
           '';
+        };
+
+        fontConfig = mkOption {
+          type = types.attrsOf types.str;
+          default = { };
+          description = "Font configuration for kitty";
         };
 
         keybindings = mkOption {
@@ -305,11 +250,58 @@
           description = "Mapping of keybindings to actions.";
         };
 
-        extraConfig = mkOption {
-          type = types.lines;
-          default = "";
-          description = "Additional configuration appended verbatim to kitty.conf.";
+        mouseBindings = mkOption {
+          type = types.attrsOf types.str;
+          default = { };
+          description = "Mapping of mouse bindings to actions.";
+          example = literalExpression ''
+            {
+              "ctrl+left click" = "ungrabbed mouse_handle_click selection link prompt";
+              "left click" = "ungrabbed no-op";
+            };
+          '';
         };
       };
+    };
+
+  nv = {
+    kitty = {
+      src.git = "https://github.com/kovidgoyal/kitty";
+      fetch.github = "kovidgoyal/kitty";
+    };
+    go = {
+      src.github_tag = "golang/go";
+      src.include_regex = "go[0-9]+\\.[0-9]+\\.[0-9]+";
+      src.prefix = "go";
+      fetch.url = "https://go.dev/dl/go$ver.src.tar.gz";
+    };
+  };
+  perSystem =
+    { pkgs, nvfetcher, ... }:
+    let
+      go_1_26_2 = pkgs.go_1_26.overrideAttrs (_: {
+        inherit (nvfetcher.go) src version;
+        doCheck = false;
+        doInstallCheck = false;
+      });
+      buildGo126Module = pkgs.buildGo126Module.override { go = go_1_26_2; };
+    in
+    {
+      packages.kitty =
+        (pkgs.kitty.override {
+          inherit buildGo126Module;
+          go_1_26 = go_1_26_2;
+        }).overrideAttrs
+          (finalAttrs: {
+            inherit (nvfetcher.kitty) pname src version;
+            pyproject = false;
+            dontCheck = true;
+            goModules =
+              (buildGo126Module {
+                pname = "kitty-go-modules";
+                inherit (finalAttrs) src version;
+                vendorHash = "sha256-jkWijMZrDapttSOrOjKuXLzZI+Lp6BhS1jWbMHJbniI=";
+              }).goModules;
+          });
     };
 }
