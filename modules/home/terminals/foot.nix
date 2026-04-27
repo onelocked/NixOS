@@ -1,12 +1,16 @@
-{ inputs, ... }:
 {
   m.foot =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      config,
+      wrappers,
+      ...
+    }:
     {
 
       nixpkgs.overlays = [
         (_: prev: {
-          foot = inputs.wrappers.wrappers.foot.wrap {
+          foot = wrappers.wrappers.foot.wrap {
             pkgs = prev;
             inherit (config.custom.programs.foot) settings;
           };

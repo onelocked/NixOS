@@ -1,14 +1,18 @@
-{ inputs, ... }:
 {
   m.starship =
-    { pkgs, lib, ... }:
+    {
+      pkgs,
+      lib,
+      wrappers,
+      ...
+    }:
     let
       tomlFormat = pkgs.formats.toml { };
     in
     {
       nixpkgs.overlays = [
         (_: prev: {
-          starship = inputs.wrappers.lib.wrapPackage {
+          starship = wrappers.lib.wrapPackage {
             pkgs = prev;
             package = prev.starship;
             env.STARSHIP_CONFIG = tomlFormat.generate "starship.toml" {

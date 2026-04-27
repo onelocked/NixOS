@@ -1,10 +1,9 @@
-{ inputs, ... }:
 {
   m.bat =
-    { pkgs, ... }:
+    { pkgs, wrappers, ... }:
     {
       hj.packages = [
-        (inputs.wrappers.lib.wrapPackage {
+        (wrappers.lib.wrapPackage {
           inherit pkgs;
           package = pkgs.bat;
           flags = {
