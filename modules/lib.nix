@@ -2,6 +2,7 @@
   lib,
   self,
   inputs,
+  withSystem,
   ...
 }:
 {
@@ -15,9 +16,16 @@
         modules,
         system ? "x86_64-linux",
       }:
-      inputs.nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = modules ++ [ self.modules.nixos.default ];
-      };
+      withSystem system (
+        { self', inputs', ... }:
+        inputs.nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit self' inputs';
+            inherit (inputs) wrappers;
+          };
+          modules = modules ++ [ self.modules.nixos.default ];
+        }
+      );
   };
 }
