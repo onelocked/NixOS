@@ -1,4 +1,3 @@
-{ self, ... }:
 {
   perSystem =
     { pkgs, ... }:
@@ -16,10 +15,11 @@
       pkgs,
       config,
       lib,
+      self',
       ...
     }:
     let
-      lla = self.packages.${pkgs.stdenv.hostPlatform.system}.lla;
+      lla = self'.packages.lla;
       tomlFormat = pkgs.formats.toml { };
       _ = lib.getExe;
     in
