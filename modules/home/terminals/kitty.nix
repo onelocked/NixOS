@@ -1,4 +1,4 @@
-{ inputs, self, ... }:
+{ inputs, ... }:
 {
   nv = {
     kitty = {
@@ -53,7 +53,12 @@
       packages = { inherit kitty; };
     };
   m.kitty =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      config,
+      self',
+      ...
+    }:
     {
       nixpkgs.overlays = [
         (_: prev: {
@@ -64,7 +69,7 @@
             in
             {
               pkgs = prev;
-              package = self.packages.${prev.stdenv.hostPlatform.system}.kitty;
+              package = self'.packages.kitty;
               inherit (cfg) extraConfig keybindings;
               settings = cfg.settings // {
                 include = wrapper.config.constructFiles.theme.path;
