@@ -1,4 +1,3 @@
-{ self, ... }:
 {
   ff = {
     rust-overlay = {
@@ -19,7 +18,7 @@
       };
     };
   m.desktop =
-    { pkgs, lib, ... }:
+    { self', lib, ... }:
     {
       networking.firewall.allowedUDPPorts = [ 4242 ];
       hj.systemd.services.lan-mouse = {
@@ -33,7 +32,7 @@
         wants = [ "network-online.target" ];
         serviceConfig = {
           Type = "simple";
-          ExecStart = "${self.packages.${pkgs.stdenv.hostPlatform.system}.lan-mouse}/bin/lan-mouse daemon";
+          ExecStart = "${self'.packages.lan-mouse}/bin/lan-mouse daemon";
           Restart = "on-failure";
           RestartSec = 1;
           TimeoutStopSec = 10;
