@@ -1,4 +1,4 @@
-{ inputs, self, ... }:
+{ inputs, ... }:
 {
   ff = {
     quickshell = {
@@ -16,10 +16,10 @@
     };
   };
   perSystem =
-    { system, ... }:
+    { inputs', ... }:
     {
       packages.quickshell =
-        (inputs.qml-niri.packages.${system}.quickshell.override {
+        (inputs'.qml-niri.packages.quickshell.override {
           withWayland = true;
           withPipewire = true;
           withQtSvg = true;
@@ -39,6 +39,7 @@
       pkgs,
       lib,
       config,
+      self',
       ...
     }:
     let
@@ -58,7 +59,7 @@
 
       quickshellWrapped = inputs.wrappers.lib.wrapPackage {
         inherit pkgs;
-        package = self.packages.${pkgs.stdenv.hostPlatform.system}.quickshell;
+        package = self'.packages.quickshell;
         aliases = [ "qs" ];
         extraPackages = quickshellDeps;
         env = {
