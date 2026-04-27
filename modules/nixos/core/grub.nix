@@ -27,8 +27,7 @@
             splashMode = "normal";
             splashImage = homedir + "/Pictures/grub.png";
             theme = pkgs.stdenv.mkDerivation {
-              pname = "grub-theme";
-              inherit (nvfetcher.grubTheme) src version;
+              inherit (nvfetcher.grubTheme) pname src version;
               installPhase = ''
                 install -dm755 $out
                 cp -rf theme/* $out/
