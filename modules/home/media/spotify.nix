@@ -7,9 +7,9 @@
   };
 
   m.spotify =
-    { pkgs, ... }:
+    { inputs', ... }:
     let
-      spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+      spicePkgs = inputs'.spicetify-nix.legacyPackages;
     in
     {
       imports = [ inputs.spicetify-nix.nixosModules.default ];
