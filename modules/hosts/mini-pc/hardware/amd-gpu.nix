@@ -1,18 +1,13 @@
-{ self, ... }:
 {
   m.hardware-mini-pc =
-    { pkgs, ... }:
+    { pkgs, self', ... }:
     {
       nixpkgs.config.rocmSupport = true;
       environment.systemPackages = with pkgs; [ rocmPackages.amdsmi ];
       hardware.amdgpu = {
         opencl.enable = true;
       };
-      nixpkgs.overlays = [
-        (final: _: {
-          amdgpu_top = self.packages.${final.stdenv.hostPlatform.system}.amdgpu_top;
-        })
-      ];
+      nixpkgs.overlays = [ (_: _: { amdgpu_top = self'.packages.amdgpu_top; }) ];
     };
   perSystem =
     { pkgs, ... }:
