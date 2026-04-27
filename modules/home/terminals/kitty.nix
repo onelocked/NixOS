@@ -1,4 +1,3 @@
-{ inputs, ... }:
 {
   nv = {
     kitty = {
@@ -57,12 +56,13 @@
       pkgs,
       config,
       self',
+      wrappers,
       ...
     }:
     {
       nixpkgs.overlays = [
         (_: prev: {
-          kitty = inputs.wrappers.wrappers.kitty.wrap (
+          kitty = wrappers.wrappers.kitty.wrap (
             wrapper:
             let
               cfg = config.custom.programs.kitty;

@@ -1,8 +1,4 @@
-{
-  inputs,
-  self,
-  ...
-}:
+{ self, ... }:
 {
   ff = {
     niri = {
@@ -25,11 +21,12 @@
       pkgs,
       config,
       lib,
+      wrappers,
       self',
       ...
     }:
     let
-      niriWrapped = inputs.wrappers.wrappers.niri.wrap {
+      niriWrapped = wrappers.wrappers.niri.wrap {
         inherit pkgs;
         package = self'.packages.niri;
         v2-settings = true;

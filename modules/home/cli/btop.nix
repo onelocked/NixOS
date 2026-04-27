@@ -1,10 +1,14 @@
-{ inputs, ... }:
 {
   m.btop =
-    { pkgs, config, ... }:
+    {
+      wrappers,
+      pkgs,
+      config,
+      ...
+    }:
     {
       hj.packages = [
-        (inputs.wrappers.wrappers.btop.wrap {
+        (wrappers.wrappers.btop.wrap {
           inherit pkgs;
           inherit (config.custom.programs.btop) settings themes;
         })

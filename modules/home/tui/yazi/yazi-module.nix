@@ -1,15 +1,15 @@
-{ inputs, ... }:
 {
   m.yazi =
     {
       pkgs,
       config,
+      wrappers,
       ...
     }:
     {
       nixpkgs.overlays = [
         (_: prev: {
-          yazi = inputs.wrappers.wrappers.yazi.wrap {
+          yazi = wrappers.wrappers.yazi.wrap {
             pkgs = prev;
             extraPackages = with prev; [ ouch ];
             inherit (config.custom.programs.yazi) plugins;

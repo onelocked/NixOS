@@ -1,11 +1,11 @@
-{ self, inputs, ... }:
+{ self, ... }:
 {
   m.mpv =
-    { pkgs, ... }:
+    { pkgs, wrappers, ... }:
     {
       nixpkgs.overlays = [
         (final: prev: {
-          mpv = inputs.wrappers.wrappers.mpv.wrap {
+          mpv = wrappers.wrappers.mpv.wrap {
             inherit (final) pkgs;
             package = prev.mpv;
             script = {

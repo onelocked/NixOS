@@ -1,7 +1,7 @@
-{ inputs, self, ... }:
+{ self, ... }:
 {
   m.git =
-    { pkgs, ... }:
+    { pkgs, wrappers, ... }:
     {
       programs.git =
         let
@@ -47,7 +47,7 @@
             yamlFormat = prev.formats.yaml { };
           in
           {
-            lazygit = inputs.wrappers.lib.wrapPackage {
+            lazygit = wrappers.lib.wrapPackage {
               pkgs = prev;
               package = prev.lazygit;
               env.LG_CONFIG_FILE = yamlFormat.generate "config.yml" {

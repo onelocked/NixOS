@@ -1,7 +1,11 @@
-{ inputs, ... }:
 {
   m.fastfetch =
-    { pkgs, lib, ... }:
+    {
+      pkgs,
+      lib,
+      wrappers,
+      ...
+    }:
     let
       logo = pkgs.writeText "nixos-logo.txt" ''
          _____  ___    __     ___  ___   ______    ________
@@ -88,7 +92,7 @@
             }
           '';
 
-      fastfetch = inputs.wrappers.lib.wrapPackage {
+      fastfetch = wrappers.lib.wrapPackage {
         inherit pkgs;
         package = pkgs.fastfetch;
         flags = {

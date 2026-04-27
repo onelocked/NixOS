@@ -1,11 +1,15 @@
-{ inputs, ... }:
 {
   m.fuzzel =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      config,
+      wrappers,
+      ...
+    }:
     {
       nixpkgs.overlays = [
         (_: prev: {
-          fuzzel = inputs.wrappers.wrappers.fuzzel.wrap {
+          fuzzel = wrappers.wrappers.fuzzel.wrap {
             package = prev.fuzzel;
             pkgs = prev;
             inherit (config.custom.programs.fuzzel) settings;

@@ -1,4 +1,3 @@
-{ inputs, ... }:
 {
   ff = {
     quickshell = {
@@ -40,6 +39,7 @@
       lib,
       config,
       self',
+      wrappers,
       ...
     }:
     let
@@ -57,7 +57,7 @@
 
       qtPluginPath = lib.makeSearchPath pkgs.kdePackages.qtbase.qtPluginPrefix quickshellDeps; # lib/qt-6/plugins
 
-      quickshellWrapped = inputs.wrappers.lib.wrapPackage {
+      quickshellWrapped = wrappers.lib.wrapPackage {
         inherit pkgs;
         package = self'.packages.quickshell;
         aliases = [ "qs" ];

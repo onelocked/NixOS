@@ -1,10 +1,10 @@
-{ inputs, ... }:
 {
   m.fish =
     {
       pkgs,
       config,
       lib,
+      wrappers,
       ...
     }:
     let
@@ -135,7 +135,7 @@
       ];
       nixpkgs.overlays = [
         (_: prev: {
-          atuin = inputs.wrappers.lib.wrapPackage (
+          atuin = wrappers.lib.wrapPackage (
             { config, ... }:
             {
               pkgs = prev;
