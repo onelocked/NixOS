@@ -1,8 +1,5 @@
 {
-  nv.tmuxFloax = {
-    src.git = "https://github.com/omerxx/tmux-floax";
-    fetch.github = "omerxx/tmux-floax";
-  };
+  nv.tmuxFloax.github = "omerxx/tmux-floax";
   m.tmux =
     { pkgs, nvfetcher, ... }:
     let

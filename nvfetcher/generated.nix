@@ -18,14 +18,6 @@
     };
     date = "2026-03-25";
   };
-  go = {
-    pname = "go";
-    version = "1.26.2";
-    src = fetchurl {
-      url = "https://go.dev/dl/go1.26.2.src.tar.gz";
-      sha256 = "sha256-LpHrtpR6lulDb7KzkmqIAu/mOm03Xf/sT4Kqnb1v1Ds=";
-    };
-  };
   grubTheme = {
     pname = "grubTheme";
     version = "207dfe09411f08916666acf65bf6262e5ef5e6d0";
@@ -40,15 +32,15 @@
   };
   kitty = {
     pname = "kitty";
-    version = "3e46fa9f81930c595f1a519f4c56c9e77e0e9b79";
+    version = "dc29e102cc44a8d121a90af35637e0b1b642e7c4";
     src = fetchFromGitHub {
       owner = "kovidgoyal";
       repo = "kitty";
-      rev = "3e46fa9f81930c595f1a519f4c56c9e77e0e9b79";
+      rev = "dc29e102cc44a8d121a90af35637e0b1b642e7c4";
       fetchSubmodules = false;
-      sha256 = "sha256-4HAxZRjdCPvYxD/nNRexjftvDVb9fXMWInrk1wtdjpM=";
+      sha256 = "sha256-FVMhZsKIeb2WzhqIEQAOy+vhT8r2saFkvxbxbfeeXic=";
     };
-    date = "2026-04-26";
+    date = "2026-04-27";
   };
   tmuxFloax = {
     pname = "tmuxFloax";

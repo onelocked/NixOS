@@ -1,9 +1,6 @@
 { self, ... }:
 {
-  nv.grubTheme = {
-    src.git = "https://github.com/onelocked/grub2-theme";
-    fetch.github = "onelocked/grub2-theme";
-  };
+  nv.grubTheme.github = "onelocked/grub2-theme";
   m.default =
     { pkgs, nvfetcher, ... }:
     {
