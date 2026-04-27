@@ -264,12 +264,12 @@
       };
     };
 
-  nv.kitty.github = "kovidgoyal/kitty";
+  envoy.kitty.github = "kovidgoyal/kitty";
   perSystem =
-    { pkgs, nvfetcher, ... }:
+    { pkgs, envoy, ... }:
     {
       packages.kitty = pkgs.kitty.overrideAttrs (finalAttrs: {
-        inherit (nvfetcher.kitty) pname src version;
+        inherit (envoy.kitty) pname src version;
         pyproject = false;
         dontCheck = true;
         goModules =

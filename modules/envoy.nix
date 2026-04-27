@@ -1,10 +1,10 @@
-topLevel@{ lib, ... }:
+topLevel@{ lib, self, ... }:
 let
-  generated = import ../nvfetcher/generated.nix;
+  generated = import (self + /envoy/generated.nix);
   injectArg =
     { pkgs, ... }:
     {
-      _module.args.nvfetcher = pkgs.callPackage generated { };
+      _module.args.envoy = pkgs.callPackage generated { };
     };
 
   # See: https://github.com/berberman/nvfetcher for the full list of source
@@ -70,14 +70,26 @@ let
     "gitlab"
     "codeberg"
     "srchut"
+    "tarball"
+    "url"
   ];
-  stripShorthands = source: lib.filterAttrs (n: _: !lib.elem n shorthandKeys) source;
+  # Keys consumed by this module, never passed to nvfetcher.
+  internalKeys = shorthandKeys ++ [ "locked" ];
+  stripInternal = source: lib.filterAttrs (n: _: !lib.elem n internalKeys) source;
 
   sourceType = lib.types.submodule (
     { name, config, ... }:
     {
       freeformType = lib.types.attrsOf lib.types.anything;
       options = {
+        locked = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+          description = ''
+            If true, nvfetcher will not update this source. The cached entry
+            in `generated.nix` is preserved as-is.
+          '';
+        };
         github = lib.mkOption {
           type = lib.types.nullOr lib.types.str;
           default = null;
@@ -99,6 +111,24 @@ let
           description = ''
             Shorthand for SourceHut sources, given as `owner/repo` (no `~`).
             Sets src.git and fetch.git to `https://git.sr.ht/~owner/repo`.
+          '';
+        };
+        tarball = lib.mkOption {
+          type = lib.types.nullOr lib.types.str;
+          default = null;
+          description = ''
+            Shorthand for fixed-URL tarballs. Sets fetch.tarball and pins
+            src.manual to the URL so the hash is recomputed only when the
+            URL itself changes.
+          '';
+        };
+        url = lib.mkOption {
+          type = lib.types.nullOr lib.types.str;
+          default = null;
+          description = ''
+            Shorthand for fixed-URL fetches. Sets fetch.url and pins
+            src.manual to the URL so the hash is recomputed only when the
+            URL itself changes.
           '';
         };
         src = lib.mkOption {
@@ -144,6 +174,14 @@ let
             src.git = lib.mkDefault "https://git.sr.ht/~${config.srchut}";
             fetch.git = lib.mkDefault "https://git.sr.ht/~${config.srchut}";
           })
+          (lib.mkIf (config.tarball != null) {
+            src.manual = lib.mkDefault config.tarball;
+            fetch.tarball = lib.mkDefault config.tarball;
+          })
+          (lib.mkIf (config.url != null) {
+            src.manual = lib.mkDefault config.url;
+            fetch.url = lib.mkDefault config.url;
+          })
           (lib.mkIf (setShorthands == [ ]) (
             let
               inferred = inferFetch config.src;
@@ -155,7 +193,7 @@ let
   );
 in
 {
-  options.nvfetcher.sources = lib.mkOption {
+  options.envoy = lib.mkOption {
     type = lib.types.attrsOf sourceType;
     default = { };
     description = "nvfetcher source definitions, written to nvfetcher.toml.";
@@ -175,8 +213,6 @@ in
     '';
   };
 
-  imports = [ (lib.mkAliasOptionModule [ "nv" ] [ "nvfetcher" "sources" ]) ];
-
   config = {
     m.default = injectArg;
 
@@ -185,17 +221,36 @@ in
       let
         # `topLevel.config.…` (not perSystem `config`) because sources are
         # defined at the top level, not per-system.
-        processedSources = lib.mapAttrs (_: stripShorthands) topLevel.config.nvfetcher.sources;
+        sources = topLevel.config.envoy;
+        processedSources = lib.mapAttrs (_: stripInternal) sources;
         tomlFile = (pkgs.formats.toml { }).generate "nvfetcher.toml" processedSources;
+        unlockedNames = lib.attrNames (lib.filterAttrs (_: s: !s.locked) sources);
+        unlockedNamesStr = lib.concatStringsSep "\n" unlockedNames;
       in
       {
         imports = [ injectArg ];
         apps.write-sources = {
-          meta.description = "Run nvfetcher to generate sources";
+          meta.description = "Update sources. Usage: write-sources [name-regex]. Locked sources are always skipped.";
           program = pkgs.writeShellApplication {
             name = "write-sources";
-            runtimeInputs = [ pkgs.nvfetcher ];
-            text = "nvfetcher -c ${tomlFile} -o nvfetcher ";
+            runtimeInputs = [
+              pkgs.nvfetcher
+              pkgs.ripgrep
+            ];
+            text = ''
+              user_filter="''${1:-.}"
+              # Intersect unlocked source names with user-supplied regex.
+              # nvfetcher's -f matches by full source name, so we build an
+              # alternation of just the names we want to update.
+              matched=$(printf '%s\n' ${lib.escapeShellArg unlockedNamesStr} \
+                | rg -e "$user_filter" || true)
+              if [ -z "$matched" ]; then
+                echo "No unlocked sources match '$user_filter'; nothing to update." >&2
+                exit 0
+              fi
+              regex="^($(echo "$matched" | paste -sd'|' -))$"
+              nvfetcher -c ${tomlFile} -o envoy -f "$regex"
+            '';
           };
         };
       };

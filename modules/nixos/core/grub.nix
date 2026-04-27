@@ -1,8 +1,8 @@
 { self, ... }:
 {
-  nv.grubTheme.github = "onelocked/grub2-theme";
+  envoy.grubTheme.github = "onelocked/grub2-theme";
   m.default =
-    { pkgs, nvfetcher, ... }:
+    { pkgs, envoy, ... }:
     {
       boot.loader =
         let
@@ -24,7 +24,7 @@
             splashMode = "normal";
             splashImage = homedir + "/Pictures/grub.png";
             theme = pkgs.stdenv.mkDerivation {
-              inherit (nvfetcher.grubTheme) pname src version;
+              inherit (envoy.grubTheme) pname src version;
               installPhase = ''
                 install -dm755 $out
                 cp -rf theme/* $out/
