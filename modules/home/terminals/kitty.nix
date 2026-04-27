@@ -31,8 +31,7 @@
         }).overrideAttrs
           (
             finalAttrs: previousAttrs: {
-              pname = "kitty";
-              inherit (nvfetcher.kitty) src version;
+              inherit (nvfetcher.kitty) pname src version;
 
               pyproject = false;
               doCheck = false;
