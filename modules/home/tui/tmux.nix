@@ -1,12 +1,12 @@
 {
-  nv.tmuxFloax.github = "omerxx/tmux-floax";
+  envoy.tmuxFloax.github = "omerxx/tmux-floax";
   m.tmux =
-    { pkgs, nvfetcher, ... }:
+    { pkgs, envoy, ... }:
     let
       tmux-floax = pkgs.tmuxPlugins.mkTmuxPlugin {
         pluginName = "tmux-floax";
         rtpFilePath = "floax.tmux";
-        inherit (nvfetcher.tmuxFloax) src version;
+        inherit (envoy.tmuxFloax) src version;
       };
       tmuxRun =
         plugin:

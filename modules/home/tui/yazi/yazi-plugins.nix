@@ -1,11 +1,11 @@
 {
-  nv.fuzzy-search.github = "onelocked/fuzzy-search.yazi";
+  envoy.fuzzy-search.github = "onelocked/fuzzy-search.yazi";
   m.yazi =
     {
       pkgs,
       lib,
       config,
-      nvfetcher,
+      envoy,
       ...
     }:
     {
@@ -24,9 +24,9 @@
             wl-clipboard
             ;
           fuzzy-search = pkgs.yaziPlugins.mkYaziPlugin {
-            inherit (nvfetcher.fuzzy-search) pname version;
+            inherit (envoy.fuzzy-search) pname version;
             src = lib.cleanSourceWith {
-              inherit (nvfetcher.fuzzy-search) src;
+              inherit (envoy.fuzzy-search) src;
               filter = name: _: baseNameOf name == "main.lua";
             };
           };
