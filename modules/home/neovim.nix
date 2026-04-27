@@ -1,4 +1,3 @@
-{ inputs, ... }:
 {
   ff.vimmax = {
     url = "github:onelocked/vimmax";
@@ -8,10 +7,10 @@
     };
   };
   m.neovim =
-    { pkgs, ... }:
+    { inputs', ... }:
     {
       hj = {
-        packages = [ inputs.vimmax.packages.${pkgs.stdenv.hostPlatform.system}.default ];
+        packages = [ inputs'.vimmax.packages.default ];
         environment.sessionVariables = {
           EDITOR = "nvim";
           VISUAL = "nvim";
