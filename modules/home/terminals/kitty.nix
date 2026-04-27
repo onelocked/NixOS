@@ -264,44 +264,23 @@
       };
     };
 
-  nv = {
-    kitty = {
-      src.git = "https://github.com/kovidgoyal/kitty";
-      fetch.github = "kovidgoyal/kitty";
-    };
-    go = {
-      src.github_tag = "golang/go";
-      src.include_regex = "go[0-9]+\\.[0-9]+\\.[0-9]+";
-      src.prefix = "go";
-      fetch.url = "https://go.dev/dl/go$ver.src.tar.gz";
-    };
+  nv.kitty = {
+    src.git = "https://github.com/kovidgoyal/kitty";
+    fetch.github = "kovidgoyal/kitty";
   };
   perSystem =
     { pkgs, nvfetcher, ... }:
-    let
-      go_1_26_2 = pkgs.go_1_26.overrideAttrs (_: {
-        inherit (nvfetcher.go) src version;
-        doCheck = false;
-        doInstallCheck = false;
-      });
-      buildGo126Module = pkgs.buildGo126Module.override { go = go_1_26_2; };
-    in
     {
-      packages.kitty =
-        (pkgs.kitty.override {
-          inherit buildGo126Module;
-          go_1_26 = go_1_26_2;
-        }).overrideAttrs
-          (finalAttrs: {
-            inherit (nvfetcher.kitty) pname src version;
-            pyproject = false;
-            dontCheck = true;
-            goModules =
-              (buildGo126Module {
-                pname = "kitty-go-modules";
-                inherit (finalAttrs) src version;
-                vendorHash = "sha256-jkWijMZrDapttSOrOjKuXLzZI+Lp6BhS1jWbMHJbniI=";
-              }).goModules;
-          });
+      packages.kitty = pkgs.kitty.overrideAttrs (finalAttrs: {
+        inherit (nvfetcher.kitty) pname src version;
+        pyproject = false;
+        dontCheck = true;
+        goModules =
+          (pkgs.buildGo126Module {
+            pname = "kitty-go-modules";
+            inherit (finalAttrs) src version;
+            vendorHash = "sha256-FaSWBeQJlvw9vXcHJ/OaFd48K8d7X86X8w7wpG84Ltw=";
+          }).goModules;
+      });
     };
 }
