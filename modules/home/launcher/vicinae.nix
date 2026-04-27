@@ -25,19 +25,24 @@
   };
 
   perSystem =
-    { system, ... }:
+    { inputs', ... }:
     {
-      packages.vicinae = inputs.vicinae.packages.${system}.default.overrideAttrs {
+      packages.vicinae = inputs'.vicinae.packages.default.overrideAttrs {
         doCheck = false;
       };
     };
 
   m.vicinae =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      config,
+      self',
+      ...
+    }:
     {
       custom.services.vicinae = {
         enable = true;
-        package = self.packages.${pkgs.stdenv.hostPlatform.system}.vicinae;
+        package = self'.packages.vicinae;
         systemd = {
           enable = false;
           autoStart = false;
