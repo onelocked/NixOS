@@ -28,8 +28,7 @@
             wl-clipboard
             ;
           fuzzy-search = pkgs.yaziPlugins.mkYaziPlugin {
-            pname = "fuzzy-search.yazi";
-            inherit (nvfetcher.fuzzy-search) version;
+            inherit (nvfetcher.fuzzy-search) pname version;
             src = lib.cleanSourceWith {
               inherit (nvfetcher.fuzzy-search) src;
               filter = name: _: baseNameOf name == "main.lua";
