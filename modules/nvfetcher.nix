@@ -1,8 +1,11 @@
-{ lib, config, ... }:
+topLevel@{ lib, ... }:
 let
-  topConfig = config;
   generated = import ../nvfetcher/generated.nix;
-  injectArg = { pkgs, ... }: { _module.args.nvfetcher = pkgs.callPackage generated { }; };
+  injectArg =
+    { pkgs, ... }:
+    {
+      _module.args.nvfetcher = pkgs.callPackage generated { };
+    };
 
   srcTagKeys = [
     "github"
@@ -89,7 +92,7 @@ in
     perSystem =
       { pkgs, ... }:
       let
-        tomlFile = (pkgs.formats.toml { }).generate "nvfetcher.toml" topConfig.nvfetcher.sources;
+        tomlFile = (pkgs.formats.toml { }).generate "nvfetcher.toml" topLevel.config.nvfetcher.sources;
       in
       {
         imports = [ injectArg ];
