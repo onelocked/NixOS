@@ -14,6 +14,14 @@
       sha256 = "sha256-SeTLhl6iFkCDowM87/BTa3mnknngjKpwY89wx8rOQGU=";
     };
   };
+  apple-font-emoji = {
+    pname = "apple-font-emoji";
+    version = "https://github.com/samuelngs/apple-emoji-linux/releases/latest/download/AppleColorEmoji-Linux.ttf";
+    src = fetchurl {
+      url = "https://github.com/samuelngs/apple-emoji-linux/releases/latest/download/AppleColorEmoji-Linux.ttf";
+      sha256 = "sha256-U1oEOvBHBtJEcQWeZHRb/IDWYXraLuo0NdxWINwPUxg=";
+    };
+  };
   fuzzy-search = {
     pname = "fuzzy-search";
     version = "16cea088a39c7769fbd22c4810347b04dd38c6b2";

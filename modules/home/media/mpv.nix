@@ -25,7 +25,7 @@
                 audio-buffer=0.1
                 audio-file-auto=fuzzy
                 sub-auto=fuzzy
-                sub-font="Noto Color Emoji"
+                sub-font="Apple Color Emoji"
                 gpu-context=auto
                 hwdec=auto
                 profile=gpu-hq
