@@ -162,7 +162,6 @@
           ping = getExe gping;
           cat = getExe bat;
           zip = getExe zip;
-          gtop = "${getExe amdgpu_top} --dark";
           gr = "cd (git rev-parse --show-toplevel)";
           ils = "${getExe mcat} ls --hyprlink --kitty --ls-opts 'height=10%,items_per_row=6'";
         };
