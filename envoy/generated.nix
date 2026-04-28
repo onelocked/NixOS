@@ -6,6 +6,14 @@
   dockerTools,
 }:
 {
+  apple-font = {
+    pname = "apple-font";
+    version = "https://s3.onelock.org/download/fonts/apple-nerd.tar.gz";
+    src = fetchTarball {
+      url = "https://s3.onelock.org/download/fonts/apple-nerd.tar.gz";
+      sha256 = "sha256-SeTLhl6iFkCDowM87/BTa3mnknngjKpwY89wx8rOQGU=";
+    };
+  };
   fuzzy-search = {
     pname = "fuzzy-search";
     version = "16cea088a39c7769fbd22c4810347b04dd38c6b2";

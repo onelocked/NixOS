@@ -1,5 +1,10 @@
 {
-  envoy.fuzzy-search.github = "onelocked/fuzzy-search.yazi";
+  envoy = {
+    fuzzy-search = {
+      github = "onelocked/fuzzy-search.yazi";
+      locked = true;
+    };
+  };
   m.yazi =
     {
       pkgs,

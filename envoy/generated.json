@@ -1,4 +1,18 @@
 {
+    "apple-font": {
+        "cargoLock": null,
+        "date": null,
+        "extract": null,
+        "name": "apple-font",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "sha256": "sha256-SeTLhl6iFkCDowM87/BTa3mnknngjKpwY89wx8rOQGU=",
+            "type": "tarball",
+            "url": "https://s3.onelock.org/download/fonts/apple-nerd.tar.gz"
+        },
+        "version": "https://s3.onelock.org/download/fonts/apple-nerd.tar.gz"
+    },
     "fuzzy-search": {
         "cargoLock": null,
         "date": "2026-03-25",
