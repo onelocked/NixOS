@@ -19,7 +19,6 @@
       withSystem system (
         { self', inputs', ... }:
         inputs.nixpkgs.lib.nixosSystem {
-          inherit system;
           specialArgs = {
             inherit self' inputs';
             inherit (inputs) wrappers;
