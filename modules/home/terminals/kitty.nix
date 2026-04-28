@@ -55,7 +55,7 @@
           cursor_stop_blinking_after = "15.0";
           enabled_layouts = "splits,stack";
 
-          window_padding_width = "0 1 0 1";
+          window_padding_width = "0 0 0 0";
 
           # Better URL handling
           detect_urls = "yes";
@@ -90,9 +90,9 @@
         };
         keybindings = {
           # Splits
-          "ctrl+a>p>d" = "launch --location=hsplit";
-          "ctrl+a>p>n" = "launch --location=vsplit";
-          "ctrl+n" = "launch --location=vsplit";
+          "ctrl+a>p>d" = "launch --location=hsplit --cwd=current";
+          "ctrl+a>p>n" = "launch --location=vsplit --cwd=current";
+          "ctrl+n" = "launch --location=vsplit --cwd=current";
 
           # Navigation with Alt + arrows
           "alt+left" = "neighboring_window left";
@@ -111,7 +111,7 @@
 
           # --- Tab Management ---
           # Create a new tab
-          "ctrl+a>c" = "new_tab";
+          "ctrl+a>c" = "new_tab_with_cwd";
 
           # Switch to specific tabs (1 through 9)
           "ctrl+a>1" = "goto_tab 1";
