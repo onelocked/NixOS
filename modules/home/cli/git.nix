@@ -1,11 +1,15 @@
-{ self, ... }:
 {
   m.git =
-    { pkgs, wrappers, ... }:
+    {
+      pkgs,
+      wrappers,
+      constants,
+      ...
+    }:
     {
       programs.git =
         let
-          inherit (self.variables) username email;
+          inherit (constants) username email;
         in
         {
           enable = true;

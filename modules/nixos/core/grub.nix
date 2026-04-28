@@ -1,12 +1,16 @@
-{ self, ... }:
 {
   envoy.grubTheme.github = "onelocked/grub2-theme";
   m.default =
-    { pkgs, envoy, ... }:
+    {
+      pkgs,
+      envoy,
+      constants,
+      ...
+    }:
     {
       boot.loader =
         let
-          inherit (self.variables) homedir;
+          inherit (constants) homedir;
         in
         {
           efi = {
