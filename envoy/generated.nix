@@ -38,18 +38,6 @@
     };
     date = "2026-01-11";
   };
-  kitty = {
-    pname = "kitty";
-    version = "dc29e102cc44a8d121a90af35637e0b1b642e7c4";
-    src = fetchFromGitHub {
-      owner = "kovidgoyal";
-      repo = "kitty";
-      rev = "dc29e102cc44a8d121a90af35637e0b1b642e7c4";
-      fetchSubmodules = false;
-      sha256 = "sha256-FVMhZsKIeb2WzhqIEQAOy+vhT8r2saFkvxbxbfeeXic=";
-    };
-    date = "2026-04-27";
-  };
   tmuxFloax = {
     pname = "tmuxFloax";
     version = "133f526793d90d2caa323c47687dd5544a2c704b";

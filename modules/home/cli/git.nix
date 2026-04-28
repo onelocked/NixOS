@@ -40,7 +40,7 @@
             init.defaultBranch = "main";
             advice.objectNameWarning = false;
             pull.rebase = true;
-            safe.directory = "/tmp"; # needed for ago.sh
+            safe.directory = "/tmp";
           };
         };
 
