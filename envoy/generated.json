@@ -55,27 +55,6 @@
         },
         "version": "207dfe09411f08916666acf65bf6262e5ef5e6d0"
     },
-    "kitty": {
-        "cargoLock": null,
-        "date": "2026-04-27",
-        "extract": null,
-        "name": "kitty",
-        "passthru": null,
-        "pinned": false,
-        "src": {
-            "deepClone": false,
-            "fetchSubmodules": false,
-            "leaveDotGit": false,
-            "name": null,
-            "owner": "kovidgoyal",
-            "repo": "kitty",
-            "rev": "dc29e102cc44a8d121a90af35637e0b1b642e7c4",
-            "sha256": "sha256-FVMhZsKIeb2WzhqIEQAOy+vhT8r2saFkvxbxbfeeXic=",
-            "sparseCheckout": [],
-            "type": "github"
-        },
-        "version": "dc29e102cc44a8d121a90af35637e0b1b642e7c4"
-    },
     "tmuxFloax": {
         "cargoLock": null,
         "date": "2026-02-24",
