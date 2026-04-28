@@ -1,10 +1,8 @@
 { inputs, ... }:
 {
-  flake-file = {
-    inputs.hjem = {
-      url = "github:feel-co/hjem";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+  ff.hjem = {
+    url = "github:feel-co/hjem";
+    inputs.nixpkgs.follows = "nixpkgs";
   };
 
   m.default =
