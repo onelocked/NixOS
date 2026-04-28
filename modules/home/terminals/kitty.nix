@@ -67,21 +67,26 @@
           focus_follows_mouse = "no"; # if you don't already have FFM
           cursor_shape_unfocused = "hollow"; # kitty 0.36+
 
-          # Use powerline styling
-          tab_bar_style = "powerline";
-          tab_powerline_style = "round"; # Options: angled, slanted, round
+          # Tab bar - minimal dots like tmux
+          tab_bar_edge = "bottom";
+          tab_bar_style = "custom";
+          tab_bar_align = "center";
+          tab_bar_min_tabs = "2";
+          tab_separator = "";
 
-          # --- Tab Naming ---
-          tab_title_template = "{index}";
-          active_tab_title_template = "{index}";
-          # --- Tab Colors (Example: Catppuccin Mocha-ish) ---
-          active_tab_foreground = "#1e1e2e";
-          active_tab_background = "#c5c0ff";
-          active_tab_font_style = "bold-italic";
+          tab_title_max_length = "1";
+          tab_title_template = "{fmt.fg._313244}●";
+          active_tab_title_template = "{fmt.fg._c5c0ff}{'' if layout_name == 'stack' else '●'}";
 
-          inactive_tab_foreground = "#bac2de";
-          inactive_tab_background = "#313244";
+          active_tab_foreground = "#c5c0ff";
+          active_tab_background = "#131316";
+          active_tab_font_style = "normal";
+          inactive_tab_foreground = "#313244";
+          inactive_tab_background = "#131316";
           inactive_tab_font_style = "normal";
+
+          bell_on_tab = "";
+          tab_activity_symbol = "";
 
           # Border styling
           window_border_width = "1.5pt";
@@ -93,6 +98,7 @@
           "ctrl+a>p>d" = "launch --location=hsplit --cwd=current";
           "ctrl+a>p>n" = "launch --location=vsplit --cwd=current";
           "ctrl+n" = "launch --location=vsplit --cwd=current";
+          "alt+f" = "toggle_layout stack";
 
           # Navigation with Alt + arrows
           "alt+left" = "neighboring_window left";
@@ -177,11 +183,6 @@
           inactive_border_color = "#47464f";
 
           url_color = "#a89cc7";
-
-          active_tab_foreground = "#131316";
-          active_tab_background = "#c5c0ff";
-          inactive_tab_foreground = "#c8c5d0";
-          inactive_tab_background = "#2a2932";
         };
       };
     };
