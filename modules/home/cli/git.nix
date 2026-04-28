@@ -4,45 +4,43 @@
       pkgs,
       wrappers,
       constants,
+      config,
+      lib,
       ...
     }:
     {
-      programs.git =
-        let
-          inherit (constants) username email;
-        in
-        {
-          enable = true;
-          config = {
-            user = {
-              name = username + "ed";
-              inherit email;
-            };
-            interactive = {
-              diffFilter = "delta --color-only";
-            };
-            core = {
-              editor = "$EDITOR";
-              pager = "delta";
-            };
-            delta = {
-              navigate = true;
-              dark = true;
-              line-numbers = true;
-              hyperlinks = true;
-            };
-            merge = {
-              conflictStyle = "zdiff3";
-            };
-            diff = {
-              colorMoved = "default";
-            };
-            init.defaultBranch = "main";
-            advice.objectNameWarning = false;
-            pull.rebase = true;
-            safe.directory = "/tmp";
+      programs.git = {
+        enable = true;
+        config = {
+          user = {
+            name = "onelocked";
+            inherit (constants) email;
           };
+          interactive = {
+            diffFilter = "delta --color-only";
+          };
+          core = {
+            editor = "$EDITOR";
+            pager = "delta";
+          };
+          delta = {
+            navigate = true;
+            dark = true;
+            line-numbers = true;
+            hyperlinks = true;
+          };
+          merge = {
+            conflictStyle = "zdiff3";
+          };
+          diff = {
+            colorMoved = "default";
+          };
+          init.defaultBranch = "main";
+          advice.objectNameWarning = false;
+          pull.rebase = true;
+          safe.directory = "/tmp";
         };
+      };
 
       nixpkgs.overlays = [
         (
@@ -128,6 +126,14 @@
         gh-dash
         delta
       ];
-      environment.shellAliases.lg = "${pkgs.lazygit}/bin/lazygit";
+      programs.fish.functions.lg = # fish
+        ''
+          set -x LAZYGIT_NEW_DIR_FILE ${config.hj.xdg.config.directory}/lazygit/newdir
+          command ${lib.getExe pkgs.lazygit} $argv
+          if test -f $LAZYGIT_NEW_DIR_FILE
+            cd (cat $LAZYGIT_NEW_DIR_FILE)
+            rm -f $LAZYGIT_NEW_DIR_FILE
+          end
+        '';
     };
 }
