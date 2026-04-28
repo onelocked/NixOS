@@ -226,11 +226,12 @@ in
         tomlFile = (pkgs.formats.toml { }).generate "nvfetcher.toml" processedSources;
         unlockedNames = lib.attrNames (lib.filterAttrs (_: s: !s.locked) sources);
         unlockedNamesStr = lib.concatStringsSep "\n" unlockedNames;
+        allNamesStr = lib.concatStringsSep "\n" (lib.attrNames sources);
       in
       {
         imports = [ injectArg ];
         apps.write-sources = {
-          meta.description = "Update sources. Usage: write-sources [name-regex]. Locked sources are always skipped.";
+          meta.description = "Update sources. Usage: write-sources [name-regex]. Without a filter, locked sources are skipped; with an explicit filter, locked sources matching the filter are updated too.";
           program = pkgs.writeShellApplication {
             name = "write-sources";
             runtimeInputs = [
@@ -238,14 +239,22 @@ in
               pkgs.ripgrep
             ];
             text = ''
-              user_filter="''${1:-.}"
-              # Intersect unlocked source names with user-supplied regex.
+              # Without a filter: update unlocked only (safe default).
+              # With an explicit filter: match against all sources, so users
+              # can force-update a locked entry by naming it.
+              if [ $# -eq 0 ]; then
+                user_filter="."
+                candidates=${lib.escapeShellArg unlockedNamesStr}
+              else
+                user_filter="$1"
+                candidates=${lib.escapeShellArg allNamesStr}
+              fi
               # nvfetcher's -f matches by full source name, so we build an
               # alternation of just the names we want to update.
-              matched=$(printf '%s\n' ${lib.escapeShellArg unlockedNamesStr} \
+              matched=$(printf '%s\n' "$candidates" \
                 | rg -e "$user_filter" || true)
               if [ -z "$matched" ]; then
-                echo "No unlocked sources match '$user_filter'; nothing to update." >&2
+                echo "No sources match '$user_filter'; nothing to update." >&2
                 exit 0
               fi
               regex="^($(echo "$matched" | paste -sd'|' -))$"
