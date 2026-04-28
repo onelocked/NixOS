@@ -1,7 +1,11 @@
-{ self, ... }:
 {
   m.mpv =
-    { pkgs, wrappers, ... }:
+    {
+      pkgs,
+      wrappers,
+      constants,
+      ...
+    }:
     {
       nixpkgs.overlays = [
         (final: prev: {
@@ -31,7 +35,7 @@
                 wayland-edge-pixels-touch=0
                 screenshot-format=webp
                 screenshot-webp-lossless=yes
-                screenshot-directory=${self.variables.homedir}/Pictures/Screenshots/mpv
+                screenshot-directory=${constants.homedir}/Pictures/Screenshots/mpv
                 screenshot-sw=yes
                 input-default-bindings=no
                 ytdl-format=bestvideo[height<=2160]+bestaudio/best[height<=2160]

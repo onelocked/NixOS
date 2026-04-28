@@ -1,10 +1,7 @@
-{ lib, ... }:
 {
-  flake = {
-    options.variables = lib.mkOption {
-      readOnly = true;
-      type = lib.types.attrsOf lib.types.unspecified;
-      default = {
+  m.default =
+    let
+      constants = {
         email = "onelock@mail.com";
         username = "onelock";
         homedir = "/home/onelock";
@@ -13,6 +10,8 @@
         timezone = "Europe/London";
         stateVersion = "25.11";
       };
+    in
+    {
+      _module.args = { inherit constants; };
     };
-  };
 }

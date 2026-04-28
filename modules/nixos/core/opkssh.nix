@@ -1,10 +1,14 @@
-{ self, ... }:
-let
-  inherit (self.variables) username homedir;
-in
 {
   m.opkssh =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      config,
+      constants,
+      ...
+    }:
+    let
+      inherit (constants) username homedir;
+    in
     {
       environment.systemPackages = [ pkgs.opkssh ];
       sops = {

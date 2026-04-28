@@ -1,9 +1,8 @@
-{ self, ... }:
 {
   m.default =
-    { lib, ... }:
+    { lib, constants, ... }:
     let
-      inherit (self.variables) hostname;
+      inherit (constants) hostname;
       inherit (lib) mkDefault;
     in
     {

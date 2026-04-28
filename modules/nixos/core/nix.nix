@@ -1,4 +1,3 @@
-{ self, ... }:
 {
   ff = {
     nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
@@ -11,9 +10,14 @@
   };
 
   m.default =
-    { pkgs, lib, ... }:
+    {
+      pkgs,
+      lib,
+      constants,
+      ...
+    }:
     let
-      inherit (self.variables) stateVersion username;
+      inherit (constants) stateVersion username;
     in
     {
       system.stateVersion = stateVersion;

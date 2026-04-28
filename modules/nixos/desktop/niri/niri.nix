@@ -1,4 +1,3 @@
-{ self, ... }:
 {
   ff = {
     niri = {
@@ -23,6 +22,7 @@
       lib,
       wrappers,
       self',
+      constants,
       ...
     }:
     let
@@ -32,7 +32,7 @@
         v2-settings = true;
         inherit (config.custom.programs.niri) settings;
       };
-      inherit (self.variables) username;
+      inherit (constants) username;
     in
     lib.mkMerge [
       {

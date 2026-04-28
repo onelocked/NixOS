@@ -1,8 +1,8 @@
-{ self, ... }:
 {
   m.default =
+    { constants, ... }:
     let
-      inherit (self.variables) timezone locale;
+      inherit (constants) timezone locale;
     in
     {
       # Timezone and locale

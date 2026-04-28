@@ -1,14 +1,15 @@
-{ self, ... }:
 {
-  m.nh = {
-    programs.nh = {
-      enable = true;
-      flake = self.variables.homedir + "/NixOS";
-      clean.enable = false;
-      clean.extraArgs = "--keep-since 4d --keep 3";
+  m.nh =
+    { constants, ... }:
+    {
+      programs.nh = {
+        enable = true;
+        flake = constants.homedir + "/NixOS";
+        clean.enable = false;
+        clean.extraArgs = "--keep-since 4d --keep 3";
+      };
+      environment.shellAliases = {
+        nhs = "nh os switch -H NixOS";
+      };
     };
-    environment.shellAliases = {
-      nhs = "nh os switch -H NixOS";
-    };
-  };
 }

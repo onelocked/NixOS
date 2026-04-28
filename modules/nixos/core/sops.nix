@@ -1,11 +1,4 @@
-{
-  inputs,
-  self,
-  ...
-}:
-let
-  inherit (self.variables) username homedir;
-in
+{ inputs, ... }:
 {
   ff.sops-nix = {
     url = "github:Mic92/sops-nix";
@@ -13,7 +6,15 @@ in
   };
 
   m.default =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      config,
+      constants,
+      ...
+    }:
+    let
+      inherit (constants) username homedir;
+    in
     {
       imports = [ inputs.sops-nix.nixosModules.sops ];
       environment.systemPackages = with pkgs; [ sops ];

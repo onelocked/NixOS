@@ -1,7 +1,6 @@
 {
   lib,
   inputs,
-  self,
   ...
 }:
 {
@@ -37,6 +36,7 @@
       pkgs,
       config,
       self',
+      constants,
       ...
     }:
     {
@@ -119,7 +119,7 @@
               preferences = {
                 paths = [
                   "${config.hj.xdg.data.directory}/share/applications"
-                  "/etc/profiles/per-user/${self.variables.username}/share/applications"
+                  "/etc/profiles/per-user/${constants.username}/share/applications"
                   "/run/current-system/sw/share/applications"
                 ];
                 defaultAction = "focus";

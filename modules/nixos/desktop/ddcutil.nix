@@ -1,7 +1,6 @@
-{ self, ... }:
 {
   m.desktop =
-    { pkgs, ... }:
+    { pkgs, constants, ... }:
     {
       environment.systemPackages = with pkgs; [ ddcutil ];
 
@@ -10,6 +9,6 @@
       '';
       boot.kernelModules = [ "i2c-dev" ];
       users.groups.i2c = { };
-      users.users.${self.variables.username}.extraGroups = [ "i2c" ];
+      users.users.${constants.username}.extraGroups = [ "i2c" ];
     };
 }

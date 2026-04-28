@@ -1,8 +1,4 @@
-{
-  inputs,
-  self,
-  ...
-}:
+{ inputs, ... }:
 {
   flake-file = {
     inputs.hjem = {
@@ -15,15 +11,16 @@
     {
       lib,
       config,
+      constants,
       ...
     }:
     let
-      inherit (self.variables) username homedir;
+      inherit (constants) username homedir;
     in
     {
       imports = [
         inputs.hjem.nixosModules.default
-        (lib.mkAliasOptionModule [ "hj" ] [ "hjem" "users" self.variables.username ])
+        (lib.mkAliasOptionModule [ "hj" ] [ "hjem" "users" constants.username ])
       ];
       hjem = {
         clobberByDefault = true;
