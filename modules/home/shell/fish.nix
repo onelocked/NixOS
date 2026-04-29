@@ -7,9 +7,6 @@
       wrappers,
       ...
     }:
-    let
-      tomlFormat = pkgs.formats.toml { };
-    in
     {
       programs = {
         bash.interactiveShellInit =
@@ -143,13 +140,12 @@
               env.ATUIN_CONFIG_DIR = dirOf config.constructFiles.atuin-config.path;
               constructFiles.atuin-config = {
                 relPath = "atuin-config/config.toml";
-                content = builtins.readFile (
-                  tomlFormat.generate "config.toml" {
-                    enter_accept = true;
-                    filter_mode = "session-preload";
-                    search_mode = "fuzzy";
-                  }
-                );
+                content = # toml
+                  ''
+                    enter_accept = true
+                    filter_mode = "session-preload"
+                    search_mode = "fuzzy"
+                  '';
               };
             }
           );
