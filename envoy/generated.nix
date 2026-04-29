@@ -46,6 +46,18 @@
     };
     date = "2026-01-11";
   };
+  otter-launcher = {
+    pname = "otter-launcher";
+    version = "ae647cef5b3c3dd52bedd7a8c881988e412a2dca";
+    src = fetchFromGitHub {
+      owner = "kuokuo123";
+      repo = "otter-launcher";
+      rev = "ae647cef5b3c3dd52bedd7a8c881988e412a2dca";
+      fetchSubmodules = false;
+      sha256 = "sha256-ImJeI5xbd/w4nchFwc0tSS8v2vYWx/ttwM5uk2BWsCk=";
+    };
+    date = "2026-04-23";
+  };
   tmuxFloax = {
     pname = "tmuxFloax";
     version = "133f526793d90d2caa323c47687dd5544a2c704b";
