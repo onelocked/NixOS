@@ -70,14 +70,13 @@
           QML_IMPORT_PATH = qmlImportPath;
           QML2_IMPORT_PATH = qmlImportPath;
           QT_PLUGIN_PATH = qtPluginPath;
+          FONTCONFIG_FILE = pkgs.makeFontsConf { fontDirectories = [ pkgs.lucide ]; };
         };
       };
     in
     {
-      fonts.packages = [ pkgs.lucide ];
       hj = {
         packages = [ quickshellWrapped ];
-
         systemd.services.quickshell = {
           description = "quickshell";
           after = [ "graphical-session.target" ];
