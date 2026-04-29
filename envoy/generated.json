@@ -111,5 +111,26 @@
             "type": "github"
         },
         "version": "133f526793d90d2caa323c47687dd5544a2c704b"
+    },
+    "zen-theme-store": {
+        "cargoLock": null,
+        "date": "2026-03-11",
+        "extract": null,
+        "name": "zen-theme-store",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "zen-browser",
+            "repo": "theme-store",
+            "rev": "7173dba5d060417fd65764b706856ae609496e31",
+            "sha256": "sha256-Vq0AboLzase+tTZ1Erf2cKpF55cm3eHNuXmmQuOknvw=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "7173dba5d060417fd65764b706856ae609496e31"
     }
 }

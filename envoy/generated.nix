@@ -70,4 +70,16 @@
     };
     date = "2026-02-24";
   };
+  zen-theme-store = {
+    pname = "zen-theme-store";
+    version = "7173dba5d060417fd65764b706856ae609496e31";
+    src = fetchFromGitHub {
+      owner = "zen-browser";
+      repo = "theme-store";
+      rev = "7173dba5d060417fd65764b706856ae609496e31";
+      fetchSubmodules = false;
+      sha256 = "sha256-Vq0AboLzase+tTZ1Erf2cKpF55cm3eHNuXmmQuOknvw=";
+    };
+    date = "2026-03-11";
+  };
 }
