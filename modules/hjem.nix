@@ -20,9 +20,6 @@
         inputs.hjem.nixosModules.default
         (lib.mkAliasOptionModule [ "hj" ] [ "hjem" "users" constants.username ])
       ];
-      hjem = {
-        clobberByDefault = true;
-      };
       hj = {
         enable = true;
         user = username;
