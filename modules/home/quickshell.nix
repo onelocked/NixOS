@@ -47,6 +47,7 @@
         with pkgs.kdePackages;
         [ qtmultimedia ]
         ++ (with pkgs; [
+          ddcutil
           imagemagick
           cava
           python3
