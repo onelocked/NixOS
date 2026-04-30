@@ -16,6 +16,7 @@
         packages =
           with pkgs;
           [
+            unifont
             nerd-fonts.symbols-only
             montserrat
             maple-mono.NF

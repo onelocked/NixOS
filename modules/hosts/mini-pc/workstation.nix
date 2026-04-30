@@ -11,6 +11,8 @@ with self.modules.nixos;
       niri
       opkssh
 
+      rtp-audio
+
       btop
       bat
       direnv

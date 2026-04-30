@@ -1,5 +1,5 @@
 {
-  m.desktop =
+  m.sonobus =
     { pkgs, ... }:
     {
       hj.packages = [ pkgs.sonobus ];
