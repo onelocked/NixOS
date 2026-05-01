@@ -4,15 +4,6 @@
       url = "github:quickshell-mirror/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    qml-niri = {
-      url = "github:imiric/qml-niri/main";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        quickshell.follows = "quickshell";
-        flake-parts.follows = "flake-parts";
-        treefmt-nix.follows = "treefmt-nix";
-      };
-    };
   };
   m.quickshell.forte.quickshell.enable = true;
   m.default =
@@ -104,66 +95,13 @@
             };
           };
         };
-        forte.niri.settings = {
-          layer-rules = [
-            {
-              matches = [ { namespace = "^awww-daemon$"; } ];
-              place-within-backdrop = true;
-            }
-          ];
-        };
-        forte.niri.settings.binds = {
-          "Shift+Alt+W" = _: {
-            props = {
-              repeat = false;
-            };
-            content = {
-              spawn = [
-                "qs"
-                "ipc"
-                "call"
-                "WallpaperPanel"
-                "toggle"
-              ];
-            };
-          };
-          # Hardware Controls via Quickshell
-          "ALT+Shift+Equal" = _: {
-            props = {
-              repeat = false;
-            };
-            content = {
-              spawn = [
-                "qs"
-                "ipc"
-                "call"
-                "brightness"
-                "increase"
-              ];
-            };
-          };
-          "ALT+Shift+Minus" = _: {
-            props = {
-              repeat = false;
-            };
-            content = {
-              spawn = [
-                "qs"
-                "ipc"
-                "call"
-                "brightness"
-                "decrease"
-              ];
-            };
-          };
-        };
       };
     };
   perSystem =
     { inputs', ... }:
     {
       packages.quickshell =
-        (inputs'.qml-niri.packages.quickshell.override {
+        (inputs'.quickshell.packages.default.override {
           withWayland = true;
           withPipewire = true;
           withQtSvg = true;

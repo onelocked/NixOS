@@ -117,6 +117,8 @@
           zip = getExe zip;
           gr = "cd (git rev-parse --show-toplevel)";
           ils = "${getExe mcat} ls --hyprlink --kitty --ls-opts 'height=10%,items_per_row=6'";
+          shutdown = ''hyprshutdown -t "Shutting down..." --post-cmd "shutdown -P 0"'';
+          reboot = ''hyprshutdown -t "Restarting..." --post-cmd "reboot"'';
         };
     };
 

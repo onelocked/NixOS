@@ -35,23 +35,20 @@
           {
             description = "cliamp";
             "prefix" = "mus";
-            cmd = "niri msg action spawn -- kitty --app-id=CliampMusic -c ${config.forte.lib.otter-lib.cliamp-config} -e ${pkgs.cliamp}/bin/cliamp; exit";
+            cmd = "app2unit -- kitty --app-id=CliampMusic -c ${config.forte.lib.otter-lib.cliamp-config} -e ${pkgs.cliamp}/bin/cliamp; exit";
           }
         ];
-        forte.niri.settings.window-rules = [
-          (
-            {
-              matches = [ { app-id = "^CliampMusic$"; } ];
-              open-floating = true;
-              default-column-width.fixed = 780;
-              default-window-height.fixed = 815;
-            }
-            // lib.optionalAttrs (theme == "dark") {
-              default-column-width.fixed = 780;
-              default-window-height.fixed = 1090;
-            }
-          )
-        ];
+        forte.hyprland.lua.window-rules = # lua
+          ''
+            hl.window_rule({
+              name             = "cliamp",
+              match            = { class = "^CliampMusic$" },
+              workspace        = "name:media silent",
+              float            = true,
+              size             = { ${if theme == "dark" then "780, 1090" else "780, 815"} },
+            })
+
+          '';
       };
     };
 }

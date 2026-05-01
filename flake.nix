@@ -43,15 +43,15 @@
         nix-darwin.follows = "";
       };
     };
-    lan-mouse = {
-      url = "github:feschber/lan-mouse";
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        rust-overlay.follows = "rust-overlay";
+        systems.follows = "systems";
       };
     };
-    niri = {
-      url = "github:niri-wm/niri/b82d52705e1424cf47b26dd7b096832901c31f56";
+    lan-mouse = {
+      url = "github:feschber/lan-mouse";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         rust-overlay.follows = "rust-overlay";
@@ -78,15 +78,6 @@
         nixpkgs.follows = "nixpkgs";
         flake-compat.follows = "flake-compat";
         flake-utils.follows = "flake-utils";
-      };
-    };
-    qml-niri = {
-      url = "github:imiric/qml-niri/main";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-parts.follows = "flake-parts";
-        quickshell.follows = "quickshell";
-        treefmt-nix.follows = "treefmt-nix";
       };
     };
     quickshell = {

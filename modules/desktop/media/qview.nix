@@ -100,14 +100,16 @@
       config = lib.mkIf cfg.enable {
         hj.packages = [ cfg.package ];
         hj.xdg.config.files."qView/qView.conf".text = lib.generators.toINI { } cfg.settings;
-        forte.niri.settings.window-rules = [
-          {
-            matches = [ { app-id = "com.interversehq.qView"; } ];
-            open-fullscreen = false;
-            open-floating = true;
-            max-height = 1200;
-          }
-        ];
+        forte.hyprland.lua.window-rules = # lua
+          ''
+            hl.window_rule({
+              name             = "qview",
+              match            = { class = "com.interversehq.qView" },
+              float            = true,
+              max_size             = { 2300, 1200 },
+            })
+
+          '';
       };
       options.forte.qview = {
         enable = lib.mkEnableOption "qview";

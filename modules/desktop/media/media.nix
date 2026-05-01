@@ -13,61 +13,63 @@
           };
         })
       ];
-      forte.niri.settings.window-rules = [
-        {
-          matches = [ { app-id = "jellyfin-desktop"; } ];
-          open-on-workspace = "media";
-          open-focused = true;
-          open-fullscreen = false;
-        }
-        {
-          matches = [
-            {
-              app-id = "com.moonlight_stream.Moonlight";
-              title = "Moonlight";
-            }
-          ];
-          open-on-workspace = "media";
-          open-focused = false;
-          open-fullscreen = false;
-        }
-        {
-          matches = [ { title = "onelock - Moonlight"; } ];
-          open-on-workspace = "media";
-          open-fullscreen = false;
-          open-focused = true;
-          default-column-width.proportion = 0.945;
-        }
-        {
-          matches = [ { app-id = "com.ayugram.desktop"; } ];
-          excludes = [
-            {
-              app-id = "com.ayugram.desktop";
-              title = "^Media viewer$";
-            }
-          ];
-          open-focused = false;
-          default-column-width.proportion = 0.21;
-          open-on-workspace = "social";
-        }
-        {
-          matches = [
-            {
-              app-id = "com.ayugram.desktop";
-              title = "^Media viewer$";
-            }
-          ];
-          open-on-workspace = "social";
-          open-fullscreen = true;
-          open-focused = true;
-        }
-      ];
+      forte.hyprland.lua.window-rules = # lua
+        ''
+          hl.window_rule({
+            name            = "Telegram",
+            match           = { class = "com.ayugram.desktop", title = "negative:^Media viewer$" },
+            fullscreen      = false,
+            scrolling_width = 0.21,
+            workspace       = "name:chat silent",
+            suppress_event  = "fullscreen maximize activate activatefocus",
+          })
+          hl.window_rule({
+            name             = "Telegram-media",
+            match            = { class = "com.ayugram.desktop", title = "^Media viewer$" },
+            workspace        = "name:chat silent",
+            fullscreen       = false,
+            fullscreen_state = "0 1",
+            float            = true,
+            size             = { 1900, 1100 },
+          })
+
+          hl.window_rule({
+            name             = "jellyfin-desktop",
+            match            = { class = "jellyfin-desktop" },
+            workspace        = "name:media",
+            fullscreen_state = "0 3",
+            opacity          = "1 override",
+          })
+
+
+          hl.window_rule({
+            name        = "Moonlight",
+            match       = { class = "com.moonlight_stream.Moonlight", title = "onelock - Moonlight" },
+            fullscreen  = true,
+            content     = "game",
+            workspace   = "name:media silent",
+            immediate   = true,
+            no_shadow   = true,
+            opacity     = "1 override",
+            no_auto_hdr = true,
+          })
+          hl.window_rule({
+            name             = "Moonlight-window",
+            match            = { class = "com.moonlight_stream.Moonlight", title = "negative:onelock - Moonlight" },
+            fullscreen       = false,
+            no_initial_focus = true,
+            suppress_event   = "fullscreen maximize activate activatefocus",
+            workspace        = "special:hidden silent",
+            decorate         = false,
+            opacity          = "1 override",
+          })
+        '';
       forte.otter-launcher = {
         modules = [
           {
             description = "pc";
             "prefix" = "game";
-            cmd = "niri msg action spawn -- moonlight stream onelock desktop; exit";
+            cmd = "app2unit -- moonlight stream onelock desktop; exit";
           }
         ];
       };

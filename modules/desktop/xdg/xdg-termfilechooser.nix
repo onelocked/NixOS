@@ -72,14 +72,14 @@
             };
           };
         };
-      forte.niri.settings.window-rules = [
-        {
-          matches = [ { app-id = "FileChooser"; } ];
-          default-column-width.fixed = 2263;
-          default-window-height.fixed = 1273;
-          open-focused = true;
-          open-floating = true;
-        }
-      ];
+      forte.hyprland.lua.window-rules = # lua
+        ''
+          hl.window_rule({
+            name             = "yaz-filechooser",
+            match            = { class = "FileChooser" },
+            float            = true,
+            size             = { 2263, 1273 },
+          })
+        '';
     };
 }

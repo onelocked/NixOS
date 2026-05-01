@@ -12,7 +12,6 @@
       forte.zen-browser = {
         enable = true;
         setAsDefaultBrowser = true;
-        niri-rules = true;
         policies =
           let
             mkLockedAttrs = builtins.mapAttrs (
@@ -265,101 +264,41 @@
         };
 
         hj.environment.sessionVariables = lib.mkIf cfg.setAsDefaultBrowser { BROWSER = "zen-twilight"; };
-        forte.niri = lib.mkIf cfg.niri-rules {
-          settings =
-            let
-              niri-launcher = pkgs.writeShellApplication {
-                name = "niri-launcher";
-                runtimeInputs = with pkgs; [
-                  jq
-                  uutils-coreutils-noprefix
-                  util-linux
-                ];
-                text = # bash
-                  ''
-                    APP_ID="$1"
-                    CMD="$2"
-                    WIN_ID=$(niri msg --json windows | jq -r ".[] | select(.app_id == \"$APP_ID\") | .id" | head -n1)
-                    if [ -z "$WIN_ID" ]; then
-                        setsid "$CMD" >/dev/null 2>&1 &
-                    else
-                        niri msg action focus-window --id "$WIN_ID"
-                    fi
-                  '';
-              };
-            in
-            {
-              binds = {
-                "Mod+B" = _: {
-                  props = {
-                    repeat = false;
-                  };
-                  content = {
-                    spawn = [
-                      "${niri-launcher}/bin/niri-launcher"
-                      "zen-twilight"
-                      "zen-twilight"
-                    ];
-                  };
-                };
-              };
-              window-rules = [
-                {
-                  matches = [ { app-id = "zen-twilight"; } ];
-                  excludes = [
-                    {
-                      app-id = "zen-twilight";
-                      title = "Picture-in-Picture";
-                    }
-                    {
-                      app-id = "zen-twilight$";
-                      title = "Library";
-                    }
-                  ];
-                  tiled-state = true;
-                  default-column-width.fixed = 2390;
-                  open-on-workspace = "browser";
-                }
-                {
-                  matches = [
-                    {
-                      app-id = "zen-twilight";
-                      title = "Picture-in-Picture";
-                    }
-                  ];
-                  open-floating = false;
-                  open-fullscreen = true;
-                }
-                {
-                  matches = [ { app-id = "zen-twilight"; } ];
-                  excludes = [
-                    {
-                      app-id = "zen-twilight";
-                      title = "YouTube";
-                    }
-                    {
-                      app-id = "zen-twilight";
-                      title = "TikTok";
-                    }
-                    {
-                      app-id = "zen-twilight";
-                      title = "Excalidraw";
-                    }
-                  ];
-                }
-                {
-                  matches = [
-                    {
-                      app-id = "zen-twilight";
-                      title = "Library";
-                    }
-                  ];
-                  open-floating = true;
-                  default-column-width.fixed = 1300;
-                  default-window-height.fixed = 900;
-                }
-              ];
-            };
+        forte.hyprland.lua = {
+          window-rules = # lua
+            ''
+              hl.window_rule({
+                name             = "zen-twilight",
+                match            = { class = "zen-twilight" },
+                workspace        = "name:web",
+                fullscreen_state = "0 3",
+                opacity          = "1 override",
+              })
+              hl.window_rule({
+                name       = "zen-pip",
+                match      = { class = "zen-twilight", title = "Picture-in-Picture" },
+                fullscreen = true,
+                workspace  = "name:web",
+              })
+              hl.window_rule({
+                name   = "zen-library",
+                match  = { class = "zen-twilight", title = "Library" },
+                float  = true,
+                size   = { 1300, 900 },
+                center = true,
+              })
+            '';
+          keybinds = # lua
+            ''
+              hl.bind(mainMod .. " + B", function()
+                  local win = hl.get_window("class:zen-twilight")
+                  if win then
+                      hl.dispatch(hl.dsp.focus({ window = win }))
+                  else
+                      hl.dispatch(hl.dsp.exec_raw("zen-twilight"))
+                  end
+              end)
+            '';
         };
       };
       options.forte.zen-browser = {
@@ -393,12 +332,6 @@
           type = lib.types.bool;
           default = false;
           description = "Set Zen Browser as default browser.";
-        };
-
-        niri-rules = lib.mkOption {
-          type = lib.types.bool;
-          default = false;
-          description = "Set niri keybinds for Zen Browser";
         };
 
         profiles = lib.mkOption {

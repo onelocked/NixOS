@@ -56,7 +56,7 @@
                 ┌── ${esc}[1;34m $USER@$(echo $HOSTNAME) ${esc}[0m ──┐
                 │ ${esc}[58m  ${esc}[31m  ${esc}[32m  ${esc}[33m  ${esc}[34m  ${esc}[35m  ${esc}[36m${esc}[0m │
                 │ ${esc}[33m ${esc}[1;35m system${esc}[0m     NixOS │
-                │ ${esc}[36m ${esc}[1;35m wm ${esc}[0m         $XDG_CURRENT_DESKTOP │
+                │ ${esc}[36m ${esc}[1;35m wm ${esc}[0m     $XDG_CURRENT_DESKTOP │
                 │ ${esc}[31m ${esc}[1;35m loads${esc}[0m       $(cat /proc/loadavg | cut -d ' ' -f 1) │
                 └ ${esc}[32m ${esc}[1;35m memory${esc}[0m     $(free -h | awk 'FNR == 2 {print $3}') ┘
                   ${esc}[90m${esc}[0m  '';
@@ -77,13 +77,6 @@
             inherit (config.forte.lib) resize;
           in
           [
-            {
-              description = "run commands";
-              prefix = "sh";
-              cmd = ''$(printf $TERM | sed 's/xterm-//g') -e sh -c "{}"'';
-              with_argument = true;
-              unbind_proc = true;
-            }
             {
               description = "nix packages";
               prefix = "np";
@@ -128,7 +121,7 @@
             {
               description = "color picker";
               prefix = "cp";
-              cmd = "niri msg action spawn -- ${pkgs.writeShellScript "color-picker" ''
+              cmd = "app2unit -- ${pkgs.writeShellScript "color-picker" ''
                 sleep 0.25
                 PICKED=$(${pkgs.hyprpicker}/bin/hyprpicker --radius=70 --scale=3 --autocopy --no-fancy --format=hex)
                 if [ -n "$PICKED" ]; then
@@ -209,56 +202,49 @@
           window_padding_width    20 105 20 105
         ''}
       '';
-      forte.niri.settings = {
-        binds = {
-          "Mod+SPACE" = _: {
-            props = {
-              repeat = false;
-              hotkey-overlay-title = "Launcher";
-            };
-            content = {
-              spawn-sh = [
-                "pkill otter-launcher || kitty --app-id=otter-launcher -c ${config.forte.lib.otter-lib.otter-kitty-conf} -e otter-launcher"
-              ];
-            };
-          };
-        };
-        window-rules = [
-          (
-            {
-              matches = [ { app-id = "^otter-launcher$"; } ];
-              open-floating = true;
-              default-column-width.fixed = 620;
-              default-window-height.fixed = 385;
-            }
-            // lib.optionalAttrs (theme == "dark") {
-              geometry-corner-radius = 45;
-              default-column-width.fixed = 885;
-              default-window-height.fixed = 410;
-              border.off = _: { };
-              shadow = {
-                on = _: { };
-                draw-behind-window = false;
-                softness = 20;
-                spread = 0;
-                offset = _: {
-                  props = {
-                    x = 12;
-                    y = 15;
-                  };
-                  content = { };
-                };
-                color = "#2a2a30E6";
-              };
-            }
-          )
-          {
-            matches = [ { app-id = "^color-picker$"; } ];
-            open-floating = true;
-            default-column-width.fixed = 670;
-            default-window-height.fixed = 300;
-          }
-        ];
+      forte.hyprland.lua = {
+        keybinds = # lua
+          ''
+            hl.bind(mainMod .. " + Space", function()
+              local win = hl.get_window("class:otter-launcher")
+              if win then
+                hl.dispatch(hl.dsp.window.close({ window = win }))
+              else
+                hl.dispatch(hl.dsp.exec_raw("kitty --app-id=otter-launcher -c ${config.forte.lib.otter-lib.otter-kitty-conf} -e otter-launcher"))
+              end
+            end)
+          '';
+        window-rules = # lua
+          ''
+            hl.window_rule({
+              name         = "otter-launcher",
+              match        = { class = "otter-launcher" },
+              size         = ${if theme == "dark" then "{ 885, 410 }" else "{ 620, 385 }"},
+              center       = true,
+              float        = true,
+              stay_focused = true,
+              pin          = true,
+              opacity          = "1 override",
+              nearest_neighbor = true,
+              ${lib.optionalString (theme == "dark") ''
+                rounding = 20,
+                rounding_power   = 10,
+                border_size      = 0,
+                no_shadow        = true,
+              ''}
+            })
+
+            hl.window_rule({
+              name         = "hyprpicker",
+              match        = { class = "color-picker" },
+              size         = { 670, 300 },
+              center       = true,
+              float        = true,
+              stay_focused = true,
+              pin          = true,
+              opacity          = "1 override",
+            })
+          '';
       };
     };
 
@@ -332,8 +318,14 @@
           pkgs.app2unit
         ];
         forte.lib.resize =
-          width: height: app:
-          "niri msg action set-window-width ${toString width};niri msg action set-window-height ${toString height};niri msg action center-window;kitten @ set-background-image none && kitten @ set-spacing padding=0 && kitten @ set-font-size ${config.forte.kitty.fontConfig.font_size};${app}";
+          width: height: app: # bash
+          ''
+            hyprctl --batch "dispatch hl.dsp.window.resize({ x = ${toString width}, y = ${toString height} }); dispatch hl.dsp.window.center(); dispatch hl.dsp.window.set_prop({ prop = 'rounding', value = 0 }); dispatch hl.dsp.window.set_prop({ prop = 'no_shadow', value = false }); dispatch hl.dsp.window.set_prop({ prop = 'border_size', value = 9 })" \
+            && kitten @ set-background-image none \
+            && kitten @ set-spacing padding=0 \
+            && kitten @ set-font-size ${toString config.forte.kitty.fontConfig.font_size} \
+            && ${app}
+          '';
       };
     };
 

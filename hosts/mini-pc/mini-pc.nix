@@ -7,8 +7,8 @@
       user
       desktop
       sunshine
-      niri
       opkssh
+      hyprland
 
       rtp-audio
       otter-launcher
@@ -40,7 +40,6 @@
       qt
 
       zen-browser
-      rice
     ];
   };
 }

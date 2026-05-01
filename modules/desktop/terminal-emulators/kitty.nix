@@ -192,39 +192,10 @@
     {
       config = lib.mkIf (cfg.enable) {
         hj.packages = [ cfg.package ];
-        forte.niri.settings = {
-          window-rules = [
-            {
-              matches = [ { app-id = "kitty"; } ];
-              open-focused = true;
-              open-on-workspace = "coding";
-            }
-          ];
-          binds = {
-            "Mod+T" = _: {
-              props = {
-                repeat = false;
-              };
-              content = {
-                spawn = [
-                  "kitty"
-                  "-1"
-                ];
-              };
-            };
-            "Ctrl+SPACE" = _: {
-              props = {
-                repeat = false;
-              };
-              content = {
-                spawn = [
-                  "kitten"
-                  "quick-access-terminal"
-                ];
-              };
-            };
-          };
-        };
+        forte.hyprland.lua.keybinds = # lua
+          ''
+            hl.bind(mainMod .. " + T", hl.dsp.exec_raw("kitty -1"))
+          '';
       };
       options.forte.kitty = {
         enable = lib.mkEnableOption "zen-browser";

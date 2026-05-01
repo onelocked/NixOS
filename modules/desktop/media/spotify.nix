@@ -37,13 +37,13 @@
           hidePodcasts
         ];
       };
-      forte.niri.settings.window-rules = [
-        {
-          matches = [ { app-id = "Spotify"; } ];
-          open-on-workspace = "media";
-          open-focused = false;
-          open-fullscreen = false;
-        }
-      ];
+      forte.hyprland.lua.window-rules = # lua
+        ''
+          hl.window_rule({
+            name      = "spotify",
+            match     = { class = "Spotify" },
+            workspace = "name:media silent",
+          })
+        '';
     };
 }

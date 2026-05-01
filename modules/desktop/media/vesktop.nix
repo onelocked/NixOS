@@ -316,17 +316,16 @@
           };
       };
 
-      forte.niri.settings.window-rules = [
-        {
-          matches = [
-            {
-              app-id = "vesktop";
-            }
-          ];
-          open-focused = false;
-          default-column-width.proportion = 0.79;
-          open-on-workspace = "social";
-        }
-      ];
+      forte.hyprland.lua.window-rules = # lua
+        ''
+          hl.window_rule({
+            name            = "vesktop",
+            match           = { class = "vesktop" },
+            scrolling_width = 0.79,
+            workspace       = "name:chat silent",
+            suppress_event  = "fullscreen maximize activate activatefocus",
+            fullscreen_state = "0 3",
+          })
+        '';
     };
 }

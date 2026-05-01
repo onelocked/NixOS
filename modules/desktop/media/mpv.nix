@@ -107,14 +107,16 @@
           '';
       };
       forte.xdg.desktopEntries."umpv".noDisplay = true;
-      forte.niri.settings.window-rules = [
-        {
-          matches = [ { app-id = "mpv"; } ];
-          open-focused = true;
-          open-fullscreen = false;
-          open-floating = true;
-        }
-      ];
+      forte.hyprland.lua.window-rules = # lua
+        ''
+          hl.window_rule({
+            name         = "mpv",
+            match        = { class = "mpv" },
+            center       = true,
+            float        = true,
+            opacity          = "1 override",
+          })
+        '';
     };
   m.default =
     {
@@ -136,7 +138,7 @@
           {
             description = "video";
             prefix = "mpv";
-            cmd = "niri msg action spawn -- ${cfg.mpv-wlpaste}/bin/mpv-wlpaste";
+            cmd = "app2unit -- ${cfg.mpv-wlpaste}/bin/mpv-wlpaste";
           }
         ];
       };
@@ -225,7 +227,7 @@
 
                         local sz = cached[next_val]
                         local cmd = string.format(
-                          "niri msg action set-column-width %d && niri msg action set-window-height %d && niri msg action center-window && niri msg action center-column",
+                          [[hyprctl --batch "dispatch hl.dsp.window.resize({ x = %d, y = %d }) ; dispatch hl.dsp.window.center()"]],
                           sz.w, sz.h
                         )
                         mp.command_native_async({
