@@ -22,7 +22,7 @@
             maple-mono.NF
           ]
           ++ [
-            (pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
+            (pkgs.stdenvNoCC.mkDerivation {
               name = envoy.apple-font.pname;
               inherit (envoy.apple-font) src;
               dontUnpack = true;
@@ -31,10 +31,10 @@
               nativeBuildInputs = [ pkgs.rsync ];
               installPhase = ''
                 mkdir -p $out/share/fonts/apple-nerd
-                rsync -r --exclude='NY/*Black*' --exclude='NY/*Heavy*' ${finalAttrs.src}/ $out/share/fonts/apple-nerd
+                rsync -r --exclude='NY/*Black*' --exclude='NY/*Heavy*' $src/ $out/share/fonts/apple-nerd
               '';
-            }))
-            (pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
+            })
+            (pkgs.stdenvNoCC.mkDerivation {
               name = envoy.apple-font-emoji.pname;
               inherit (envoy.apple-font-emoji) src;
               dontUnpack = true;
@@ -43,7 +43,7 @@
               installPhase = ''
                 install -D -m644 $src $out/share/fonts/truetype/AppleColorEmoji-Linux.ttf
               '';
-            }))
+            })
           ];
         fontDir.enable = true;
         fontconfig = {
