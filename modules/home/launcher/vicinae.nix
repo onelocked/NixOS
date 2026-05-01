@@ -1,9 +1,4 @@
 {
-  lib,
-  inputs,
-  ...
-}:
-{
   ff = {
     vicinae = {
       url = "github:vicinaehq/vicinae";
@@ -33,10 +28,10 @@
 
   m.vicinae =
     {
-      pkgs,
       config,
       self',
       constants,
+      inputs',
       ...
     }:
     {
@@ -158,12 +153,17 @@
           };
 
         };
-        extensions = with inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system}; [ nix ];
+        extensions = [ inputs'.vicinae-extensions.packages.nix ];
       };
     };
 
   m.default =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      config,
+      lib,
+      ...
+    }:
     let
       cfg = config.custom.services.vicinae;
 
