@@ -131,6 +131,13 @@
                   description = "video"
                   prefix = "mpv"
                   cmd = "mpv-wlpaste"
+
+                  [[modules]]
+                  description = "yazi"
+                  prefix = "y"
+                  cmd = """
+                  niri msg action set-window-width 2100;niri msg action set-window-height 1100;niri msg action center-window;yazi
+                  """
                 '';
             };
           }
