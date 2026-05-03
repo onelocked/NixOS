@@ -2,13 +2,13 @@
   perSystem =
     { pkgs, ... }:
     {
-      packages.lla = pkgs.lla.overrideAttrs (oldAttrs: {
+      packages.lla = pkgs.lla.overrideAttrs {
         doCheck = false;
         postPatch = ''
           substituteInPlace lla/src/formatter/column_config.rs \
             --replace-fail '"Permissions".to_string()' '"Perms".to_string()'
         '';
-      });
+      };
     };
   m.lla =
     {
