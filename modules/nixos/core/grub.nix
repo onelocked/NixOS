@@ -1,5 +1,8 @@
 {
-  envoy.grubTheme.github = "onelocked/grub2-theme";
+  envoy.grubTheme = {
+    github = "onelocked/grub2-theme";
+    locked = true;
+  };
   m.default =
     {
       pkgs,
