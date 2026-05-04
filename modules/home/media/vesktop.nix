@@ -300,5 +300,18 @@
             };
           };
       };
+
+      custom.programs.niri.settings.window-rules = [
+        {
+          matches = [
+            {
+              app-id = "vesktop";
+            }
+          ];
+          open-focused = false;
+          default-column-width.proportion = 0.79;
+          open-on-workspace = "social";
+        }
+      ];
     };
 }

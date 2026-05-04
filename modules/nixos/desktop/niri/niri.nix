@@ -41,6 +41,27 @@
           package = niriWrapped;
           useNautilus = false;
         };
+
+        custom.programs.niri.settings = lib.mkMerge (
+          config.custom.startup
+          |> lib.filter (startup: startup.enable)
+          |> map (startup: {
+            spawn-at-startup = [ startup.spawn ];
+            window-rules = lib.optional (startup.app-id != null) (
+              {
+                matches = [
+                  {
+                    inherit (startup) app-id;
+                  }
+                ];
+              }
+              // (lib.optionalAttrs (startup.workspace != null) {
+                open-on-workspace = toString startup.workspace;
+              })
+              // startup.niriArgs
+            );
+          })
+        );
       }
       (lib.mkIf (config.programs.niri.enable or false) {
         xdg.portal = {
@@ -82,6 +103,35 @@
     { lib, ... }:
     {
       options.custom = {
+        startup = lib.mkOption {
+          description = "Programs to run on startup";
+          default = [ ];
+          type = lib.types.listOf (
+            lib.types.submodule {
+              options = {
+                app-id = lib.mkOption {
+                  type = lib.types.nullOr lib.types.str;
+                  default = null;
+                };
+                enable = lib.mkEnableOption "Startup program" // {
+                  default = true;
+                };
+                spawn = lib.mkOption {
+                  type = lib.types.listOf lib.types.str;
+                };
+                workspace = lib.mkOption {
+                  type = lib.types.nullOr (lib.types.either lib.types.int lib.types.str);
+                  default = null;
+                };
+                niriArgs = lib.mkOption {
+                  type = lib.types.attrs;
+                  default = { };
+                };
+              };
+            }
+          );
+        };
+
         programs.niri = {
           settings = lib.mkOption {
             default = { };

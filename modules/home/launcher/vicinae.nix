@@ -336,6 +336,15 @@
       };
 
       config = lib.mkIf cfg.enable {
+        custom.startup = [
+          {
+            spawn = [
+              (lib.getExe' cfg.package "vicinae")
+              "server"
+            ];
+          }
+        ];
+
         hj = {
           packages = [
             cfg.package

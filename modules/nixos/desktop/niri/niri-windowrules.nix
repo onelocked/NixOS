@@ -3,13 +3,6 @@
     custom.programs.niri.settings = {
       window-rules = [
         {
-          matches = [ { app-id = "FileChooser"; } ];
-          default-column-width.fixed = 2263;
-          default-window-height.fixed = 1273;
-          open-focused = true;
-          open-floating = true;
-        }
-        {
           matches = [ { title = "Select what to share"; } ];
           open-floating = true;
           default-column-width.fixed = 500;
@@ -69,14 +62,7 @@
           open-fullscreen = true;
           open-focused = true;
         }
-        {
-          matches = [ { app-id = "vesktop"; } ];
-          open-on-workspace = "social";
-          open-focused = false;
-          default-column-width.proportion = 0.79;
-        }
       ];
     };
   };
-
 }

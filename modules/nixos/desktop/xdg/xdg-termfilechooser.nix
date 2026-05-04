@@ -71,5 +71,14 @@
             };
           };
         };
+      custom.programs.niri.settings.window-rules = [
+        {
+          matches = [ { app-id = "FileChooser"; } ];
+          default-column-width.fixed = 2263;
+          default-window-height.fixed = 1273;
+          open-focused = true;
+          open-floating = true;
+        }
+      ];
     };
 }
