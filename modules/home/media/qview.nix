@@ -85,5 +85,13 @@
           };
         };
       };
+      custom.programs.niri.settings.window-rules = [
+        {
+          matches = [ { app-id = "com.interversehq.qView"; } ];
+          open-fullscreen = false;
+          open-floating = true;
+          max-height = 1200;
+        }
+      ];
     };
 }

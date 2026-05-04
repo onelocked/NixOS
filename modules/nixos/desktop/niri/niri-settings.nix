@@ -36,17 +36,21 @@
           draw-border-with-background = false;
         };
 
+        window-rules = [
+          {
+            matches = [ { title = "Select what to share"; } ];
+            open-floating = true;
+            default-column-width.fixed = 500;
+            default-window-height.fixed = 290;
+            max-width = 500;
+            max-height = 290;
+          }
+        ];
+
         overview = {
           zoom = 0.35;
           workspace-shadow.off = set;
         };
-
-        layer-rules = [
-          {
-            matches = [ { namespace = "^awww-daemon$"; } ];
-            place-within-backdrop = true;
-          }
-        ];
 
         hotkey-overlay.skip-at-startup = set;
 

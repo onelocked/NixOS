@@ -37,5 +37,13 @@
           hidePodcasts
         ];
       };
+      custom.programs.niri.settings.window-rules = [
+        {
+          matches = [ { app-id = "spotify"; } ];
+          open-on-workspace = "media";
+          open-focused = false;
+          open-fullscreen = false;
+        }
+      ];
     };
 }

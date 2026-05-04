@@ -140,5 +140,12 @@
           '';
         })
       ];
+      custom.programs.niri.settings.window-rules = [
+        {
+          matches = [ { app-id = "mpv"; } ];
+          open-focused = true;
+          open-fullscreen = true;
+        }
+      ];
     };
 }
