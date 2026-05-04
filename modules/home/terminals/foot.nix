@@ -7,6 +7,7 @@
         (_: prev: {
           foot = wrappers.wrappers.foot.wrap {
             pkgs = prev;
+            env.FONTCONFIG_FILE = pkgs.makeFontsConf { fontDirectories = [ pkgs.maple-mono.NL-NF ]; };
             settings = {
               main = {
                 font = "Maple Mono NL NF:style=ExtraBold:size=13";
