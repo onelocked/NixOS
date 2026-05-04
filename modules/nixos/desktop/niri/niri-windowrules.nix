@@ -75,60 +75,6 @@
           open-focused = false;
           default-column-width.proportion = 0.79;
         }
-        {
-          matches = [ { app-id = "zen-twilight"; } ];
-          excludes = [
-            {
-              app-id = "zen-twilight";
-              title = "Picture-in-Picture";
-            }
-            {
-              app-id = "zen-twilight$";
-              title = "Library";
-            }
-          ];
-          tiled-state = true;
-          default-column-width.proportion = 0.749;
-          open-on-workspace = "browser";
-        }
-        {
-          matches = [
-            {
-              app-id = "zen-twilight";
-              title = "Picture-in-Picture";
-            }
-          ];
-          open-floating = false;
-          open-fullscreen = true;
-        }
-        {
-          matches = [ { app-id = "zen-twilight"; } ];
-          excludes = [
-            {
-              app-id = "zen-twilight";
-              title = "YouTube";
-            }
-            {
-              app-id = "zen-twilight";
-              title = "TikTok";
-            }
-            {
-              app-id = "zen-twilight";
-              title = "Excalidraw";
-            }
-          ];
-        }
-        {
-          matches = [
-            {
-              app-id = "zen-twilight";
-              title = "Library";
-            }
-          ];
-          open-floating = true;
-          default-column-width.fixed = 1300;
-          default-window-height.fixed = 900;
-        }
       ];
     };
   };
