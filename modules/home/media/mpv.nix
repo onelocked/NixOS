@@ -136,7 +136,7 @@
                 url="''${url%%\?*}"
                 ;;
             esac
-            exec mpv "$url"
+            exec mpv --force-window=immediate "$url"
           '';
         })
       ];
