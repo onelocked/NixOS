@@ -3,8 +3,6 @@
     custom.programs.yazi = {
       settings = {
         tasks = {
-          micro_workers = 10;
-          macro_workers = 10;
           bizarre_retry = 3;
           image_alloc = 536870912;
           image_bound = [
