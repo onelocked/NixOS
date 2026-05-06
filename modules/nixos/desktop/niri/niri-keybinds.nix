@@ -196,54 +196,6 @@
           };
         };
 
-        # Vicinae Launcher / Extensions
-        "Mod+Z" = _: {
-          props = {
-            repeat = false;
-          };
-          content = {
-            spawn = [
-              "vicinae"
-              "vicinae://launch/core/search-emojis"
-            ];
-          };
-        };
-        "Shift+Alt+F" = _: {
-          props = {
-            repeat = false;
-            hotkey-overlay-title = "Nix";
-          };
-          content = {
-            spawn = [
-              "vicinae"
-              "vicinae://extensions/knoopx/nix"
-            ];
-          };
-        };
-        "Mod+SPACE" = _: {
-          props = {
-            repeat = false;
-            hotkey-overlay-title = "Launcher";
-          };
-          content = {
-            spawn = [
-              "vicinae"
-              "toggle"
-            ];
-          };
-        };
-        "Mod+V" = _: {
-          props = {
-            repeat = false;
-          };
-          content = {
-            spawn = [
-              "vicinae"
-              "vicinae://launch/clipboard/history"
-            ];
-          };
-        };
-
         # Window Actions
         "Mod+G" = _: {
           props = {
