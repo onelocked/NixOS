@@ -12,7 +12,7 @@
     (lib.mkAliasOptionModule [ "ff" ] [ "flake-file" "inputs" ])
   ];
 
-  systems = [ "x86_64-linux" ];
+  systems = import inputs.systems;
 
   flake-file = {
     inputs = {
