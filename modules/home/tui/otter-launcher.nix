@@ -16,6 +16,7 @@
             extraPackages = with pkgs; [
               chafa
               pulsemixer
+              self'.packages.fsel
             ];
             flags."--config" = config.constructFiles.otter-config.path;
             constructFiles.otter-config = {
@@ -23,10 +24,9 @@
               content = # toml
                 ''
                   [general]
-                  # module to run when no prefix is matched
-                  default_module = "np"
-                  # run with an empty prompt
-                  empty_module = "mix"
+
+                  default_module = "search"
+                  empty_module = "search"
                   exec_cmd = "sh -c"
                   vi_mode = false
 
@@ -60,7 +60,7 @@
                    │ \u001B[90m\u001B[0m  """
                   list_prefix = "   └ \u001B[34m󰅂  "
                   selection_prefix = "   └ \u001B[31m󱓞  "
-                  default_module_message = "   └ \u001B[34m  \u001B[33msearch\u001B[0m nixpkgs"
+                  default_module_message = "   └ \u001B[34m  \u001B[33mapp\u001B[0m search"
 
                   place_holder = "type & search"
                   suggestion_mode = "list"
@@ -138,11 +138,34 @@
                   cmd = """
                   niri msg action set-window-width 2100;niri msg action set-window-height 1100;niri msg action center-window;yazi
                   """
+
+                  [[modules]]
+                  description = "search apps with fsel"
+                  prefix = "search"
+                  cmd = "niri msg action set-window-width 450;niri msg action set-window-height 650;niri msg action center-window;`fsel --launch-prefix='app2unit --' -vv -d -r -ss \"{}\"`"
+                  with_argument = true
+
+                  [[modules]]
+                  description = "launch apps instantly"
+                  prefix = "app"
+                  cmd = "niri msg action set-window-width 450;niri msg action set-window-height 650;niri msg action center-window;`fsel --launch-prefix='app2unit --' -vv -d -r -p \"{}\""
+                  with_argument = true
                 '';
             };
           }
         ))
       ];
+      custom.programs.niri.settings.binds = {
+        "Mod+SPACE" = _: {
+          props = {
+            repeat = false;
+            hotkey-overlay-title = "Launcher";
+          };
+          content = {
+            spawn-sh = [ "pkill otter-launcher || kitty -1 --app-id=otter-launcher -e otter-launcher" ];
+          };
+        };
+      };
     };
   envoy.otter-launcher.github = "kuokuo123/otter-launcher";
   perSystem =
@@ -162,6 +185,17 @@
           license = lib.licenses.gpl3Only;
           mainProgram = "otter-launcher";
         };
+      };
+      packages.fsel = pkgs.rustPlatform.buildRustPackage {
+        pname = "fsel";
+        version = "0-unstable-2026-04-19";
+        src = pkgs.fetchFromGitHub {
+          owner = "Mjoyufull";
+          repo = "fsel";
+          rev = "ad49c5d96bb1b1b738c5ce6f4410ecffea8adb5c";
+          hash = "sha256-pBQMSlEUICEfmzA+oSonzH0JlAcBjsVE0gT0QwsTNFE=";
+        };
+        cargoHash = "sha256-hNDiVdEOT3X6YSjggZgj1ZMpy4Ttcu3H7UKe/R1pJfY=";
       };
     };
 }
