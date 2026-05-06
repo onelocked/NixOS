@@ -20,6 +20,8 @@
                 minimizeToTray = true;
                 tray = true;
                 splashTheming = true;
+                splashBackground = "#131316";
+                splashColor = "#131316";
                 staticTitle = true;
                 hardwareAcceleration = true;
                 discordBranch = "stable";
