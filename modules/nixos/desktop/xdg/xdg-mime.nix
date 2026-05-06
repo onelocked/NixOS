@@ -10,8 +10,8 @@
         ];
         audio = [ "mpv.desktop" ];
         video = [ "mpv.desktop" ];
-        directory = [ "foot.desktop" ];
-        terminal = [ "foot.desktop" ];
+        directory = [ "kitty.desktop" ];
+        terminal = [ "kitty.desktop" ];
       };
 
       mimeMap = {
