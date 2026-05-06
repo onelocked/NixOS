@@ -123,6 +123,7 @@
               ${getExe nix-your-shell} fish | source
               ${getExe carapace} _carapace fish | source
               ${getExe atuin} init fish | source
+              source ${nix}/share/fish/vendor_completions.d/nix.fish
             '';
         };
       };
