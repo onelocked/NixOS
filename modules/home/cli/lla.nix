@@ -29,8 +29,8 @@
         la = "${_ lla} --sort-dirs-first";
         ll = "${_ lla} -S";
       };
-      hj.files = {
-        ".config/lla/config.toml" = {
+      hj.xdg.config.files = {
+        "lla/config.toml" = {
           generator = tomlFormat.generate "lla-config";
           value = {
             default_sort = "name";
@@ -104,7 +104,7 @@
           };
         };
 
-        ".config/lla/themes/abrelshud.toml" = {
+        "lla/themes/abrelshud.toml" = {
           # Add the name here as well
           generator = tomlFormat.generate "lla-theme-abrelshud";
           value = {
