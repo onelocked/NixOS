@@ -21,6 +21,12 @@
     in
     {
       system.stateVersion = stateVersion;
+      environment.systemPackages = with pkgs; [
+        nix-output-monitor
+        nix-tree
+        nix-update
+        nix-init
+      ];
       nix = {
         optimise.automatic = true;
         package = pkgs.nixVersions.latest;
