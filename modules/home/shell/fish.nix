@@ -78,9 +78,9 @@
               '';
           };
           shellAbbrs = {
-            nb = "nix build";
-            nd = "nix develop";
-            nr = "nix run";
+            nb = "nom build";
+            nd = "nom develop";
+            nr = "nom run";
             nf = "nix flake update";
             wf = "nix run ~/NixOS#write-flake";
           };
