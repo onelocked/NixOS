@@ -25,21 +25,17 @@
       constants,
       ...
     }:
-    let
-      niriWrapped = wrappers.wrappers.niri.wrap {
-        inherit pkgs;
-        package = self'.packages.niri;
-        v2-settings = true;
-        inherit (config.forte.niri) settings;
-      };
-      inherit (constants) username;
-    in
     lib.mkMerge [
       {
         programs.niri = {
           enable = true;
-          package = niriWrapped;
           useNautilus = false;
+          package = wrappers.wrappers.niri.wrap {
+            inherit pkgs;
+            package = self'.packages.niri;
+            v2-settings = true;
+            inherit (config.forte.niri) settings;
+          };
         };
 
         forte.niri.settings = lib.mkMerge (
@@ -92,7 +88,7 @@
             settings = {
               default_session = {
                 command = "${lib.getExe config.programs.uwsm.package} start niri-uwsm.desktop";
-                user = username;
+                user = constants.username;
               };
             };
           };
