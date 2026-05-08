@@ -133,16 +133,27 @@
             ];
         };
       };
-      forte.niri.settings.binds = {
-        "Mod+SPACE" = _: {
-          props = {
-            repeat = false;
-            hotkey-overlay-title = "Launcher";
-          };
-          content = {
-            spawn-sh = [ "pkill otter-launcher || kitty -1 --app-id=otter-launcher -e otter-launcher" ];
+      forte.niri.settings = {
+        binds = {
+          "Mod+SPACE" = _: {
+            props = {
+              repeat = false;
+              hotkey-overlay-title = "Launcher";
+            };
+            content = {
+              spawn-sh = [ "pkill otter-launcher || kitty -1 --app-id=otter-launcher -e otter-launcher" ];
+            };
           };
         };
+        window-rules = [
+          {
+            matches = [ { app-id = "^otter-launcher$"; } ];
+            open-floating = true;
+            opacity = 0.95;
+            default-column-width.fixed = 620;
+            default-window-height.fixed = 355;
+          }
+        ];
       };
     };
 
