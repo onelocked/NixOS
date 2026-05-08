@@ -1,194 +1,178 @@
 {
-  m.kitty =
-    {
-      pkgs,
-      config,
-      self',
-      wrappers,
-      ...
-    }:
-    {
-      nixpkgs.overlays = [
-        (_: prev: {
-          kitty = wrappers.wrappers.kitty.wrap (
-            wrapper: with config.forte.kitty; {
-              pkgs = prev;
-              package = self'.packages.kitty;
-              settings = settings // theme // fontConfig;
-              inherit
-                keybindings
-                mouseBindings
-                ;
-            }
-          );
-        })
-      ];
-      hj.packages = [ pkgs.kitty ];
-      forte.kitty = {
-        settings = {
-          wayland_enable_ime = "no";
+  m.kitty = {
+    forte.kitty = {
+      settings = {
+        wayland_enable_ime = "no";
 
-          sync_to_monitor = "yes";
-          remember_window_position = "no";
+        sync_to_monitor = "yes";
+        remember_window_position = "no";
 
-          draw_minimal_borders = "yes";
-          placement_strategy = "center";
-          update_check_interval = "24";
-          allow_hyperlinks = "yes";
+        draw_minimal_borders = "yes";
+        placement_strategy = "center";
+        update_check_interval = "24";
+        allow_hyperlinks = "yes";
 
-          scrollback_lines = "10000";
-          wheel_scroll_multiplier = "5.0";
+        scrollback_lines = "10000";
+        wheel_scroll_multiplier = "5.0";
 
-          strip_trailing_spaces = "smart";
-          hide_window_decorations = "yes";
+        strip_trailing_spaces = "smart";
+        hide_window_decorations = "yes";
 
-          enable_audio_bell = "no";
-          visual_bell_duration = "0.0";
-          repaint_delay = "10";
+        enable_audio_bell = "no";
+        visual_bell_duration = "0.0";
+        repaint_delay = "10";
 
-          confirm_os_window_close = "0";
+        confirm_os_window_close = "0";
 
-          cursor_trail = "1";
-          cursor_trail_decay = "0.1 0.2";
-          cursor_shape = "block";
-          cursor_blink_interval = "0.5";
-          cursor_stop_blinking_after = "15.0";
-          enabled_layouts = "splits,stack";
+        cursor_trail = "1";
+        cursor_trail_decay = "0.1 0.2";
+        cursor_shape = "block";
+        cursor_blink_interval = "0.5";
+        cursor_stop_blinking_after = "15.0";
+        enabled_layouts = "splits,stack";
 
-          window_padding_width = "0 0 0 0";
+        window_padding_width = "0 0 0 0";
 
-          # Better URL handling
-          detect_urls = "yes";
-          url_style = "curly";
-          # Match foot's "hide cursor when typing"
-          mouse_hide_wait = "2.0";
+        # Better URL handling
+        detect_urls = "yes";
+        url_style = "curly";
+        # Match foot's "hide cursor when typing"
+        mouse_hide_wait = "2.0";
 
-          # Match foot's hollow cursor when unfocused
-          focus_follows_mouse = "no"; # if you don't already have FFM
-          cursor_shape_unfocused = "hollow"; # kitty 0.36+
+        # Match foot's hollow cursor when unfocused
+        focus_follows_mouse = "no"; # if you don't already have FFM
+        cursor_shape_unfocused = "hollow"; # kitty 0.36+
 
-          # Tab bar - minimal dots like tmux
-          tab_bar_edge = "bottom";
-          tab_bar_style = "custom";
-          tab_bar_align = "center";
-          tab_bar_min_tabs = "2";
-          tab_separator = "";
+        # Tab bar - minimal dots like tmux
+        tab_bar_edge = "bottom";
+        tab_bar_style = "custom";
+        tab_bar_align = "center";
+        tab_bar_min_tabs = "2";
+        tab_separator = "";
 
-          tab_title_max_length = "1";
-          tab_title_template = "{fmt.fg._313244}●";
-          active_tab_title_template = "{fmt.fg._c5c0ff}{'' if layout_name == 'stack' else '●'}";
+        tab_title_max_length = "1";
+        tab_title_template = "{fmt.fg._313244}●";
+        active_tab_title_template = "{fmt.fg._c5c0ff}{'' if layout_name == 'stack' else '●'}";
 
-          active_tab_foreground = "#c5c0ff";
-          active_tab_background = "#131316";
-          active_tab_font_style = "normal";
-          inactive_tab_foreground = "#313244";
-          inactive_tab_background = "#131316";
-          inactive_tab_font_style = "normal";
+        active_tab_foreground = "#c5c0ff";
+        active_tab_background = "#131316";
+        active_tab_font_style = "normal";
+        inactive_tab_foreground = "#313244";
+        inactive_tab_background = "#131316";
+        inactive_tab_font_style = "normal";
 
-          bell_on_tab = "";
-          tab_activity_symbol = "";
+        bell_on_tab = "";
+        tab_activity_symbol = "";
 
-          # Border styling
-          window_border_width = "1.5pt";
-          active_border_color = "#b4befe"; # A nice pastel highlight
-          inactive_border_color = "#45475a"; # Subdued grey for inactive panes
+        # Border styling
+        window_border_width = "1.5pt";
+        active_border_color = "#b4befe"; # A nice pastel highlight
+        inactive_border_color = "#45475a"; # Subdued grey for inactive panes
+      };
+      keybindings = {
+        # Splits
+        "ctrl+a>p>d" = "launch --location=hsplit --cwd=current";
+        "ctrl+a>p>n" = "launch --location=vsplit --cwd=current";
+        "ctrl+n" = "launch --location=vsplit --cwd=current";
+        "alt+f" = "toggle_layout stack";
+
+        # Navigation with Alt + arrows
+        "alt+left" = "neighboring_window left";
+        "alt+right" = "neighboring_window right";
+        "alt+up" = "neighboring_window up";
+        "alt+down" = "neighboring_window down";
+
+        "ctrl+x" = "close_window";
+
+        # Resize panes
+        "ctrl+alt+left" = "resize_window narrower";
+        "ctrl+alt+right" = "resize_window wider";
+        "ctrl+alt+up" = "resize_window taller";
+        "ctrl+alt+down" = "resize_window shorter";
+        "ctrl+a>r" = "start_resizing_window";
+
+        # --- Tab Management ---
+        # Create a new tab
+        "ctrl+a>c" = "new_tab_with_cwd";
+
+        # Switch to specific tabs (1 through 9)
+        "ctrl+a>1" = "goto_tab 1";
+        "ctrl+a>2" = "goto_tab 2";
+        "ctrl+a>3" = "goto_tab 3";
+        "ctrl+a>4" = "goto_tab 4";
+        "ctrl+a>5" = "goto_tab 5";
+        "ctrl+a>6" = "goto_tab 6";
+        "ctrl+a>7" = "goto_tab 7";
+        "ctrl+a>8" = "goto_tab 8";
+        "ctrl+a>9" = "goto_tab 9";
+      };
+      mouseBindings = {
+        "right press ungrabbed" = "combine : copy_to_clipboard : clear_selection";
+        "left press ungrabbed" = "mouse_selection drag_or_normal_select";
+      };
+      fontConfig =
+        let
+          mapleFeatures = "+cv01 +cv04 +cv05 +cv06 +cv07 +cv08 +cv32 +cv34 +cv36 +cv37 +cv39 +cv40 +cv41 +cv66 +ss03 +ss04 +ss05 +ss06 +ss07 +ss08 +ss09 +ss10 +ss11 +zero";
+        in
+        {
+          text_composition_strategy = "legacy";
+          font_family = ''family="Maple Mono NF" style="ExtraBold"'';
+          bold_font = ''family="Montserrat" style="Black"'';
+          italic_font = ''family="Maple Mono NF" style="Bold Italic"'';
+          bold_italic_font = ''family="Maple Mono NF" style="ExtraBold Italic"'';
+          font_size = "15";
+          disable_ligatures = "never";
+          "font_features MapleMono-NF-Bold" = mapleFeatures;
+          "font_features MapleMono-NF-ExtraBold" = mapleFeatures;
+          "font_features MapleMono-NF-BoldItalic" = mapleFeatures;
+          "font_features MapleMono-NF-ExtraBoldItalic" = mapleFeatures;
         };
-        keybindings = {
-          # Splits
-          "ctrl+a>p>d" = "launch --location=hsplit --cwd=current";
-          "ctrl+a>p>n" = "launch --location=vsplit --cwd=current";
-          "ctrl+n" = "launch --location=vsplit --cwd=current";
-          "alt+f" = "toggle_layout stack";
+      theme = {
+        color0 = "#131316";
+        color1 = "#ffb4ab";
+        color2 = "#a6e3a1";
+        color3 = "#d4b483";
+        color4 = "#c5c0ff";
+        color5 = "#e4a8d4";
+        color6 = "#6fbac2";
+        color7 = "#c8c5d0";
+        color8 = "#6f6d78";
+        color9 = "#ffcbc2";
+        color10 = "#c1ecbd";
+        color11 = "#e5cfa8";
+        color12 = "#dcd8ff";
+        color13 = "#f0c4e4";
+        color14 = "#b5e5e9";
+        color15 = "#e5e1e6";
 
-          # Navigation with Alt + arrows
-          "alt+left" = "neighboring_window left";
-          "alt+right" = "neighboring_window right";
-          "alt+up" = "neighboring_window up";
-          "alt+down" = "neighboring_window down";
+        background = "#131316";
+        foreground = "#e5e1e6";
 
-          "ctrl+x" = "close_window";
+        cursor = "#c5c0ff";
+        cursor_text_color = "#131316";
+        cursor_trail_color = "#c5c0ff";
 
-          # Resize panes
-          "ctrl+alt+left" = "resize_window narrower";
-          "ctrl+alt+right" = "resize_window wider";
-          "ctrl+alt+up" = "resize_window taller";
-          "ctrl+alt+down" = "resize_window shorter";
-          "ctrl+a>r" = "start_resizing_window";
+        selection_background = "#c5c0ff";
+        selection_foreground = "#131316";
 
-          # --- Tab Management ---
-          # Create a new tab
-          "ctrl+a>c" = "new_tab_with_cwd";
+        active_border_color = "#c5c0ff";
+        inactive_border_color = "#47464f";
 
-          # Switch to specific tabs (1 through 9)
-          "ctrl+a>1" = "goto_tab 1";
-          "ctrl+a>2" = "goto_tab 2";
-          "ctrl+a>3" = "goto_tab 3";
-          "ctrl+a>4" = "goto_tab 4";
-          "ctrl+a>5" = "goto_tab 5";
-          "ctrl+a>6" = "goto_tab 6";
-          "ctrl+a>7" = "goto_tab 7";
-          "ctrl+a>8" = "goto_tab 8";
-          "ctrl+a>9" = "goto_tab 9";
-        };
-        mouseBindings = {
-          "right press ungrabbed" = "combine : copy_to_clipboard : clear_selection";
-          "left press ungrabbed" = "mouse_selection drag_or_normal_select";
-        };
-        fontConfig =
-          let
-            mapleFeatures = "+cv01 +cv04 +cv05 +cv06 +cv07 +cv08 +cv32 +cv34 +cv36 +cv37 +cv39 +cv40 +cv41 +cv66 +ss03 +ss04 +ss05 +ss06 +ss07 +ss08 +ss09 +ss10 +ss11 +zero";
-          in
-          {
-            text_composition_strategy = "legacy";
-            font_family = ''family="Maple Mono NF" style="ExtraBold"'';
-            bold_font = ''family="Montserrat" style="Black"'';
-            italic_font = ''family="Maple Mono NF" style="Bold Italic"'';
-            bold_italic_font = ''family="Maple Mono NF" style="ExtraBold Italic"'';
-            font_size = "15";
-            disable_ligatures = "never";
-            "font_features MapleMono-NF-Bold" = mapleFeatures;
-            "font_features MapleMono-NF-ExtraBold" = mapleFeatures;
-            "font_features MapleMono-NF-BoldItalic" = mapleFeatures;
-            "font_features MapleMono-NF-ExtraBoldItalic" = mapleFeatures;
-          };
-        theme = {
-          color0 = "#131316";
-          color1 = "#ffb4ab";
-          color2 = "#a6e3a1";
-          color3 = "#d4b483";
-          color4 = "#c5c0ff";
-          color5 = "#e4a8d4";
-          color6 = "#6fbac2";
-          color7 = "#c8c5d0";
-          color8 = "#6f6d78";
-          color9 = "#ffcbc2";
-          color10 = "#c1ecbd";
-          color11 = "#e5cfa8";
-          color12 = "#dcd8ff";
-          color13 = "#f0c4e4";
-          color14 = "#b5e5e9";
-          color15 = "#e5e1e6";
-
-          background = "#131316";
-          foreground = "#e5e1e6";
-
-          cursor = "#c5c0ff";
-          cursor_text_color = "#131316";
-          cursor_trail_color = "#c5c0ff";
-
-          selection_background = "#c5c0ff";
-          selection_foreground = "#131316";
-
-          active_border_color = "#c5c0ff";
-          inactive_border_color = "#47464f";
-
-          url_color = "#a89cc7";
-        };
+        url_color = "#a89cc7";
       };
     };
+  };
   m.default =
-    { lib, ... }:
+    {
+      wrappers,
+      lib,
+      config,
+      pkgs,
+      self',
+      ...
+    }:
     let
+      cfg = config.forte.kitty;
       inherit (lib)
         types
         mkOption
@@ -205,7 +189,34 @@
         ];
     in
     {
+      config = lib.mkIf (cfg.enable) {
+        hj.packages = [ cfg.package ];
+        nixpkgs.overlays = [
+          (_: prev: {
+            kitty = wrappers.wrappers.kitty.wrap (
+              wrapper: with config.forte.kitty; {
+                pkgs = prev;
+                package = self'.packages.kitty;
+                settings = settings // theme // fontConfig;
+                inherit
+                  keybindings
+                  mouseBindings
+                  ;
+              }
+            );
+          })
+        ];
+      };
       options.forte.kitty = {
+        enable = lib.mkOption {
+          type = lib.types.bool;
+          default = true;
+          description = "Whether to enable kitty";
+        };
+        package = lib.mkOption {
+          type = lib.types.package;
+          default = pkgs.kitty;
+        };
         settings = mkOption {
           type = types.attrsOf settingsValueType;
           default = { };
