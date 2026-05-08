@@ -547,11 +547,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1777899051,
-        "narHash": "sha256-Yrmc7F4u3laUi4EgCcwlFYTgPu9fDVXyTXL0sCLPmrA=",
+        "lastModified": 1778279446,
+        "narHash": "sha256-DDmqxT6KEikHYJBluMd//pmV6hjbSUM81aKqNNyBRFs=",
         "owner": "onelocked",
         "repo": "vimmax",
-        "rev": "1c608879816c26ff5c01651f2c9287129ada869b",
+        "rev": "022bf48dd18e7ac0994e8c0e70b29f032b6390ca",
         "type": "github"
       },
       "original": {

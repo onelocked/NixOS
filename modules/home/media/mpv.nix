@@ -12,9 +12,7 @@
           mpv = wrappers.wrappers.mpv.wrap {
             inherit (final) pkgs;
             package = prev.mpv;
-            script = {
-              mpris.path = final.pkgs.mpvScripts.mpris;
-            };
+            script.mpris.path = final.pkgs.mpvScripts.mpris;
             "mpv.conf".content = # ini
               ''
                 osc=no
