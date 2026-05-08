@@ -20,7 +20,7 @@
             canTouchEfiVariables = true;
             efiSysMountPoint = "/boot";
           };
-          timeout = 5;
+          timeout = 1;
           grub = {
             enable = true;
             device = "nodev";
