@@ -51,24 +51,25 @@
 
 
                     [overlay]
-                    overlay_cmd = "chafa -s x11 ${moduleLevel.config.hj.directory}/Pictures/avatars/image.png"
-                    overlay_trimmed_lines = 1
-                    move_overlay_right = 22
+                    overlay_cmd = "chafa -s x11 ${moduleLevel.config.hj.directory}/Pictures/avatars/aemeath.png"
+                    overlay_trimmed_lines = 0
+                    move_overlay_right = 26
                     move_overlay_down = 1
 
                     [interface]
                     move_interface_down = 1
+                    move_interface_right = 1
                     header = """
-                     ┌ \u001B[1;34m  $USER@$(echo $HOSTNAME) \u001B[0m───┐
-                     │ \u001B[90m󱎘  \u001B[31m󱎘  \u001B[32m󱎘  \u001B[33m󱎘  \u001B[34m󱎘  \u001B[35m󱎘  \u001B[36m󱎘\u001B[0m │
-                     └ \u001B[36m󱄅 \u001B[1;36m system\u001B[0m     NixOS ┘
-                     ┌ \u001B[33m \u001B[1;36m wm \u001B[0m         $XDG_CURRENT_DESKTOP ┐
-                     │ \u001B[31m \u001B[1;36m loads\u001B[0m       $(cat /proc/loadavg | cut -d ' ' -f 1) │
-                     │ \u001B[32m \u001B[1;36m memory\u001B[0m     $(free -h | awk 'FNR == 2 {print $3}') │
-                     │ \u001B[90m\u001B[0m  """
-                    list_prefix = "   └ \u001B[34m󰅂 "
-                    selection_prefix = "   └ \u001B[31m󱓞 "
-                    default_module_message = "   └ \u001B[34m  \u001B[33mapp\u001B[0m search"
+                     ┌── \u001B[1;34m $USER@$(echo $HOSTNAME) \u001B[0m ──┐
+                     │ \u001B[58m  \u001B[31m  \u001B[32m  \u001B[33m  \u001B[34m  \u001B[35m  \u001B[36m\u001B[0m │
+                     │ \u001B[33m \u001B[1;35m system\u001B[0m     NixOS │
+                     │ \u001B[36m \u001B[1;35m wm \u001B[0m         $XDG_CURRENT_DESKTOP │
+                     │ \u001B[31m \u001B[1;35m loads\u001B[0m       $(cat /proc/loadavg | cut -d ' ' -f 1) │
+                     └ \u001B[32m \u001B[1;35m memory\u001B[0m     $(free -h | awk 'FNR == 2 {print $3}') ┘
+                       \u001B[90m\u001B[0m  """
+                    list_prefix = "   \u001B[90m╰··\u001B[0m \u001B[34m󰅂 "
+                    selection_prefix = "   \u001B[1;35m╰━━\u001B[0m \u001B[1;31m❯ "
+                    default_module_message = "   \u001B[90m╰··\u001B[0m \u001B[34m  \u001B[33mapp\u001B[0m search"
 
                     place_holder = "type & search"
                     suggestion_mode = "list"
