@@ -1,37 +1,23 @@
 {
-  m.yazi =
+  m.default =
     {
       pkgs,
+      lib,
       config,
       wrappers,
       ...
     }:
+    let
+      cfg = config.forte.yazi;
+      inherit (pkgs.formats.toml { }) type;
+      default = { };
+      mkMapOption = description: lib.mkOption { inherit type description default; };
+    in
     {
-      nixpkgs.overlays = [
-        (_: prev: {
-          yazi = wrappers.wrappers.yazi.wrap {
-            pkgs = prev;
-            extraPackages = with prev; [ ouch ];
-            inherit (config.forte.yazi) plugins;
-            settings = with config.forte; {
-              inherit (yazi) keymap theme;
-              yazi = yazi.settings;
-            };
-            constructFiles.initLua = {
-              relPath = "yazi-config/init.lua";
-              content = config.forte.yazi.initLua;
-            };
-            constructFiles.oneshillFlavor = {
-              relPath = "yazi-config/flavors/oneshill.yazi/flavor.toml";
-              content = config.forte.yazi.flavorContent;
-            };
-          };
-        })
-      ];
+      config = lib.mkIf (cfg.enable) {
+        hj.packages = [ cfg.package ];
 
-      hj.packages = [ pkgs.yazi ];
-      programs.fish.functions.y = # fish
-        ''
+        programs.fish.functions.y = /* fish */ ''
           set -l tmp (mktemp -t "yazi-cwd.XXXXX")
           command yazi $argv --cwd-file="$tmp"
           if read cwd < "$tmp"; and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
@@ -39,17 +25,39 @@
           end
           rm -f -- "$tmp"
         '';
-    };
 
-  m.default =
-    { pkgs, lib, ... }:
-    let
-      inherit (pkgs.formats.toml { }) type;
-      default = { };
-      mkMapOption = description: lib.mkOption { inherit type description default; };
-    in
-    {
+        nixpkgs.overlays = [
+          (_: prev: {
+            yazi = wrappers.wrappers.yazi.wrap {
+              pkgs = prev;
+              extraPackages = with prev; [ ouch ];
+              inherit (config.forte.yazi) plugins;
+              settings = with config.forte; {
+                inherit (yazi) keymap theme;
+                yazi = yazi.settings;
+              };
+              constructFiles.initLua = {
+                relPath = "yazi-config/init.lua";
+                content = config.forte.yazi.initLua;
+              };
+              constructFiles.oneshillFlavor = {
+                relPath = "yazi-config/flavors/oneshill.yazi/flavor.toml";
+                content = config.forte.yazi.flavorContent;
+              };
+            };
+          })
+        ];
+      };
       options.forte.yazi = {
+        enable = lib.mkOption {
+          type = lib.types.bool;
+          default = true;
+          description = "Whether to enable yazi";
+        };
+        package = lib.mkOption {
+          type = lib.types.package;
+          default = pkgs.yazi;
+        };
         plugins = lib.mkOption {
           type = lib.types.attrsOf (lib.types.nullOr lib.types.path);
           default = { };

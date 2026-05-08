@@ -1,6 +1,7 @@
 {
   m.yazi = {
     forte.yazi = {
+      enable = true;
       settings = {
         tasks = {
           bizarre_retry = 3;
