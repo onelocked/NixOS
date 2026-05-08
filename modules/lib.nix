@@ -19,10 +19,22 @@
       withSystem system (
         { self', inputs', ... }:
         inputs.nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit self' inputs';
-            inherit (inputs) wrappers;
-          };
+          specialArgs =
+            let
+              constants = {
+                email = "onelock@mail.com";
+                username = "onelock";
+                homedir = "/home/onelock";
+                hostname = "NixOS";
+                locale = "en_GB.UTF-8";
+                timezone = "Europe/London";
+                stateVersion = "25.11";
+              };
+            in
+            {
+              inherit self' inputs' constants;
+              inherit (inputs) wrappers;
+            };
           modules = modules ++ [ self.modules.nixos.default ];
         }
       );
