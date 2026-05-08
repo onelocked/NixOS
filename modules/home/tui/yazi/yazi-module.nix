@@ -12,18 +12,18 @@
           yazi = wrappers.wrappers.yazi.wrap {
             pkgs = prev;
             extraPackages = with prev; [ ouch ];
-            inherit (config.custom.programs.yazi) plugins;
-            settings = with config.custom.programs; {
+            inherit (config.forte.yazi) plugins;
+            settings = with config.forte; {
               inherit (yazi) keymap theme;
               yazi = yazi.settings;
             };
             constructFiles.initLua = {
               relPath = "yazi-config/init.lua";
-              content = config.custom.programs.yazi.initLua;
+              content = config.forte.yazi.initLua;
             };
             constructFiles.oneshillFlavor = {
               relPath = "yazi-config/flavors/oneshill.yazi/flavor.toml";
-              content = config.custom.programs.yazi.flavorContent;
+              content = config.forte.yazi.flavorContent;
             };
           };
         })
@@ -49,7 +49,7 @@
       mkMapOption = description: lib.mkOption { inherit type description default; };
     in
     {
-      options.custom.programs.yazi = {
+      options.forte.yazi = {
         plugins = lib.mkOption {
           type = lib.types.attrsOf (lib.types.nullOr lib.types.path);
           default = { };

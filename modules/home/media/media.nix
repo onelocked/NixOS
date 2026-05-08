@@ -7,7 +7,7 @@
         moonlight-qt
         ayugram-desktop
       ];
-      custom.programs.niri.settings.window-rules = [
+      forte.niri.settings.window-rules = [
         {
           matches = [ { app-id = "jellyfin-desktop"; } ];
           open-on-workspace = "media";

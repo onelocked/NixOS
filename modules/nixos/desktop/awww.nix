@@ -18,7 +18,7 @@
           };
         };
       };
-      custom.programs.niri.settings = {
+      forte.niri.settings = {
         layer-rules = [
           {
             matches = [ { namespace = "^awww-daemon$"; } ];

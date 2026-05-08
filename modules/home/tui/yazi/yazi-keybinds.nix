@@ -2,7 +2,7 @@
   m.yazi =
     { pkgs, ... }:
     {
-      custom.programs.yazi = {
+      forte.yazi = {
         keymap = {
           mgr.prepend_keymap = [
             {

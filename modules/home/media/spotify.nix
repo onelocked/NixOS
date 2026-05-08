@@ -37,7 +37,7 @@
           hidePodcasts
         ];
       };
-      custom.programs.niri.settings.window-rules = [
+      forte.niri.settings.window-rules = [
         {
           matches = [ { app-id = "spotify"; } ];
           open-on-workspace = "media";

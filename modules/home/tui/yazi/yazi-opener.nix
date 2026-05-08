@@ -7,7 +7,7 @@
       ...
     }:
     {
-      custom.programs.yazi.settings = {
+      forte.yazi.settings = {
         open = {
           prepend_rules = [
             {

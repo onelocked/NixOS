@@ -1,6 +1,6 @@
 {
   m.fzf = {
-    custom.programs.fzf = {
+    forte.fzf = {
       enable = true;
       colors = {
         "bg+" = "#2a2a3a";
@@ -39,12 +39,12 @@
       ...
     }:
     let
-      cfg = config.custom.programs.fzf;
+      cfg = config.forte.fzf;
       renderedColors =
         colors: colors |> lib.mapAttrsToList (name: value: "${name}:${value}") |> lib.concatStringsSep ",";
     in
     {
-      options.custom.programs.fzf = {
+      options.forte.fzf = {
         enable = lib.mkEnableOption "fzf";
         package = lib.mkPackageOption pkgs "fzf" { };
         defaultOptions = lib.mkOption {

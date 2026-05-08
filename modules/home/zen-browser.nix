@@ -15,7 +15,7 @@
       ...
     }:
     let
-      cfg = config.custom.programs.zen-browser;
+      cfg = config.forte.zen-browser;
 
       mkLockedAttrs = builtins.mapAttrs (
         _: value: {
@@ -69,7 +69,7 @@
         + "/* End of Zen Mods */\n";
     in
     {
-      custom.programs.zen-browser = {
+      forte.zen-browser = {
         setAsDefaultBrowser = true;
         policies = {
           AutofillAddressEnabled = false;
@@ -262,7 +262,7 @@
       environment.sessionVariables = lib.mkIf cfg.setAsDefaultBrowser {
         BROWSER = "zen-twilight";
       };
-      custom.programs.niri.settings.window-rules = [
+      forte.niri.settings.window-rules = [
         {
           matches = [ { app-id = "zen-twilight"; } ];
           excludes = [
@@ -323,7 +323,7 @@
   m.default =
     { lib, ... }:
     {
-      options.custom.programs.zen-browser = {
+      options.forte.zen-browser = {
         policies = lib.mkOption {
           type = lib.types.attrs;
           default = { };

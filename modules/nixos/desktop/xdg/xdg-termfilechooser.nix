@@ -71,7 +71,7 @@
             };
           };
         };
-      custom.programs.niri.settings.window-rules = [
+      forte.niri.settings.window-rules = [
         {
           matches = [ { app-id = "FileChooser"; } ];
           default-column-width.fixed = 2263;

@@ -1,6 +1,6 @@
 {
   m.yazi = {
-    custom.programs.yazi = {
+    forte.yazi = {
       settings = {
         tasks = {
           bizarre_retry = 3;

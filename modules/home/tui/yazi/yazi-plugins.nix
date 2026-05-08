@@ -14,7 +14,7 @@
       ...
     }:
     {
-      custom.programs.yazi = {
+      forte.yazi = {
         plugins = {
           inherit (pkgs.yaziPlugins)
             starship
@@ -115,7 +115,7 @@
           ];
         };
       };
-      custom.programs.yazi.initLua = # lua
+      forte.yazi.initLua = # lua
         ''
           require("starship"):setup({
               hide_flags = false, -- Default: false

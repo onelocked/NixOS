@@ -2,10 +2,10 @@
   m.otter-launcher =
     { config, lib, ... }:
     let
-      cfg = config.wrappers.otter-launcher;
+      cfg = config.forte.otter-launcher;
     in
     {
-      wrappers.otter-launcher = {
+      forte.otter-launcher = {
         settings = {
           general = {
             callback = "";
@@ -133,7 +133,7 @@
             ];
         };
       };
-      custom.programs.niri.settings.binds = {
+      forte.niri.settings.binds = {
         "Mod+SPACE" = _: {
           props = {
             repeat = false;
@@ -185,11 +185,11 @@
       ...
     }:
     let
-      cfg = config.wrappers.otter-launcher;
+      cfg = config.forte.otter-launcher;
       toml = pkgs.formats.toml { };
     in
     {
-      options.wrappers.otter-launcher = {
+      options.forte.otter-launcher = {
         enable = lib.mkOption {
           type = lib.types.bool;
           default = true;

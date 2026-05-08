@@ -6,7 +6,7 @@
       ...
     }:
     {
-      custom.programs.niri.settings.extraConfig = lib.mkMerge [
+      forte.niri.settings.extraConfig = lib.mkMerge [
         # kdl
         ''
           workspace "browser" {

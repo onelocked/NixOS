@@ -140,7 +140,7 @@
           '';
         })
       ];
-      custom.programs.niri.settings.window-rules = [
+      forte.niri.settings.window-rules = [
         {
           matches = [ { app-id = "mpv"; } ];
           open-focused = true;

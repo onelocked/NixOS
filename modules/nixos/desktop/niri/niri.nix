@@ -30,7 +30,7 @@
         inherit pkgs;
         package = self'.packages.niri;
         v2-settings = true;
-        inherit (config.custom.programs.niri) settings;
+        inherit (config.forte.niri) settings;
       };
       inherit (constants) username;
     in
@@ -42,8 +42,8 @@
           useNautilus = false;
         };
 
-        custom.programs.niri.settings = lib.mkMerge (
-          config.custom.startup
+        forte.niri.settings = lib.mkMerge (
+          config.startup
           |> lib.filter (startup: startup.enable)
           |> map (startup: {
             spawn-at-startup = [ startup.spawn ];
@@ -102,7 +102,7 @@
   m.default =
     { lib, ... }:
     {
-      options.custom = {
+      options = {
         startup = lib.mkOption {
           description = "Programs to run on startup";
           default = [ ];
@@ -132,7 +132,7 @@
           );
         };
 
-        programs.niri = {
+        forte.niri = {
           settings = lib.mkOption {
             default = { };
             type = lib.types.submodule {

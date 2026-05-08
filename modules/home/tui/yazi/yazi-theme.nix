@@ -29,7 +29,7 @@
       };
     in
     {
-      custom.programs.yazi = {
+      forte.yazi = {
         theme.flavor = lib.genAttrs [ "dark" "light" ] (_: "oneshill");
         flavorContent = # toml
           ''

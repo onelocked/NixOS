@@ -155,7 +155,7 @@
         };
         extensions = [ inputs'.vicinae-extensions.packages.nix ];
       };
-      custom.programs.niri.settings.binds = {
+      forte.niri.settings.binds = {
         # Vicinae Launcher / Extensions
         "Mod+Z" = _: {
           props = {
@@ -385,7 +385,7 @@
       };
 
       config = lib.mkIf cfg.enable {
-        custom.startup = [
+        startup = [
           {
             spawn = [
               (lib.getExe' cfg.package "vicinae")

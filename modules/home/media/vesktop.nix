@@ -303,7 +303,7 @@
           };
       };
 
-      custom.programs.niri.settings.window-rules = [
+      forte.niri.settings.window-rules = [
         {
           matches = [
             {

@@ -10,7 +10,7 @@
       set = _: { };
     in
     {
-      custom.programs.niri.settings = {
+      forte.niri.settings = {
         extraConfig = # kdl
           ''spawn-sh-at-startup "${pkgs.libsecret}/bin/secret-tool lookup app keyring-init || echo 'init' | secret-tool store --label='keyring-init' app keyring-init" '';
         prefer-no-csd = true;

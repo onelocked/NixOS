@@ -11,7 +11,7 @@
       nixpkgs.overlays = [
         (_: prev: {
           kitty = wrappers.wrappers.kitty.wrap (
-            wrapper: with config.custom.programs.kitty; {
+            wrapper: with config.forte.kitty; {
               pkgs = prev;
               package = self'.packages.kitty;
               settings = settings // theme // fontConfig;
@@ -24,7 +24,7 @@
         })
       ];
       hj.packages = [ pkgs.kitty ];
-      custom.programs.kitty = {
+      forte.kitty = {
         settings = {
           wayland_enable_ime = "no";
 
@@ -205,7 +205,7 @@
         ];
     in
     {
-      options.custom.programs.kitty = {
+      options.forte.kitty = {
         settings = mkOption {
           type = types.attrsOf settingsValueType;
           default = { };

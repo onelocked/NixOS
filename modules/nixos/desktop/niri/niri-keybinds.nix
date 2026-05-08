@@ -24,7 +24,7 @@
       };
     in
     {
-      custom.programs.niri.settings.binds = {
+      forte.niri.settings.binds = {
         # Unbind side mouse buttons
         "MouseBack" = _: {
           props = {
