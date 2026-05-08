@@ -22,6 +22,18 @@
       sha256 = "sha256-U1oEOvBHBtJEcQWeZHRb/IDWYXraLuo0NdxWINwPUxg=";
     };
   };
+  fsel = {
+    pname = "fsel";
+    version = "ad49c5d96bb1b1b738c5ce6f4410ecffea8adb5c";
+    src = fetchFromGitHub {
+      owner = "Mjoyufull";
+      repo = "fsel";
+      rev = "ad49c5d96bb1b1b738c5ce6f4410ecffea8adb5c";
+      fetchSubmodules = false;
+      sha256 = "sha256-pBQMSlEUICEfmzA+oSonzH0JlAcBjsVE0gT0QwsTNFE=";
+    };
+    date = "2026-04-19";
+  };
   fuzzy-search = {
     pname = "fuzzy-search";
     version = "16cea088a39c7769fbd22c4810347b04dd38c6b2";

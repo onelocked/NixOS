@@ -12,6 +12,7 @@ with self.modules.nixos;
       opkssh
 
       rtp-audio
+      otter-launcher
 
       btop
       bat

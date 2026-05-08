@@ -28,6 +28,27 @@
         },
         "version": "https://github.com/samuelngs/apple-emoji-linux/releases/latest/download/AppleColorEmoji-Linux.ttf"
     },
+    "fsel": {
+        "cargoLock": null,
+        "date": "2026-04-19",
+        "extract": null,
+        "name": "fsel",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "Mjoyufull",
+            "repo": "fsel",
+            "rev": "ad49c5d96bb1b1b738c5ce6f4410ecffea8adb5c",
+            "sha256": "sha256-pBQMSlEUICEfmzA+oSonzH0JlAcBjsVE0gT0QwsTNFE=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "ad49c5d96bb1b1b738c5ce6f4410ecffea8adb5c"
+    },
     "fuzzy-search": {
         "cargoLock": null,
         "date": "2026-03-25",
