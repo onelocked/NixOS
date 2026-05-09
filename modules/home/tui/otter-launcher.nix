@@ -1,8 +1,17 @@
 {
   m.otter-launcher =
-    { config, lib, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     let
       cfg = config.forte.otter-launcher;
+      aemeath = pkgs.fetchurl {
+        url = "https://raw.githubusercontent.com/onelocked/images/refs/heads/main/aemeath.png";
+        hash = "sha256-QzUFj6f5KB8uLiZ8+YIcZl3zMGRpVLz3LFl8NoqjBjU=";
+      };
     in
     {
       forte.otter-launcher = {
@@ -23,7 +32,7 @@
           };
 
           overlay = {
-            overlay_cmd = "chafa -s x11 ${config.hj.directory}/Pictures/avatars/aemeath.png";
+            overlay_cmd = "chafa -s x11 ${aemeath}";
             overlay_trimmed_lines = 0;
             move_overlay_right = 26;
             move_overlay_down = 1;
@@ -164,7 +173,6 @@
   perSystem =
     {
       pkgs,
-      lib,
       envoy,
       ...
     }:
@@ -173,12 +181,6 @@
         otter-launcher = pkgs.rustPlatform.buildRustPackage {
           inherit (envoy.otter-launcher) pname version src;
           cargoHash = "sha256-AlzCrK6DivOfCMGXQsiMJ+7Ahtd/9qoJ0MKZrez6xyM=";
-          meta = {
-            description = "A hackable cli/tui launcher built for keyboard-centric wm users, featuring vi & emacs keybinds, ansi decoration, etc";
-            homepage = "https://github.com/kuokuo123/otter-launcher";
-            license = lib.licenses.gpl3Only;
-            mainProgram = "otter-launcher";
-          };
         };
         fsel = pkgs.rustPlatform.buildRustPackage {
           inherit (envoy.fsel) pname version src;
