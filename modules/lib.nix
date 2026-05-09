@@ -1,8 +1,8 @@
 {
   lib,
-  self,
   inputs,
   withSystem,
+  config,
   ...
 }:
 {
@@ -35,7 +35,7 @@
               inherit self' inputs' constants;
               inherit (inputs) wrappers;
             };
-          modules = modules ++ [ self.modules.nixos.default ];
+          modules = modules ++ [ config.m.default ];
         }
       );
   };
