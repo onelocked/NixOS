@@ -237,7 +237,11 @@
               };
               constructFiles.generatedConfig = {
                 relPath = "config.toml";
-                content = (cfg.settings |> toml.generate "config.toml" |> builtins.readFile) + cfg.moreCfg;
+                builder = ''
+                  mkdir -p "$(dirname "$2")"
+                  cat ${toml.generate "config.toml" cfg.settings} > "$2"
+                  printf '%s\n' "${cfg.moreCfg}" >> "$2"
+                '';
               };
               extraPackages = [
                 pkgs.pulsemixer
@@ -254,7 +258,7 @@
                     };
                     constructFiles.generatedConfig = {
                       relPath = "config.toml";
-                      content = builtins.readFile (
+                      builder = ''mkdir -p "$(dirname "$2")" && cp ${
                         toml.generate "config.toml" {
                           main_border_color = "#7d75c0";
                           apps_border_color = "#7d75c0";
@@ -291,7 +295,7 @@
                             show_line_numbers = true;
                           };
                         }
-                      );
+                      } "$2"'';
                     };
                   }
                 )
