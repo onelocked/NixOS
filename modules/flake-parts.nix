@@ -1,6 +1,7 @@
 {
   inputs,
   lib,
+  config,
   ...
 }:
 {
@@ -11,6 +12,25 @@
     inputs.flake-file.flakeModules.default
     (lib.mkAliasOptionModule [ "ff" ] [ "flake-file" "inputs" ])
   ];
+  disabledModules = [ (inputs.flake-file + "/modules/flake-parts.nix") ];
+  perSystem =
+    { pkgs, ... }:
+    {
+      apps =
+        config.flake-file.apps
+        |> lib.mapAttrs (
+          _: f:
+          let
+            pkg = f pkgs;
+          in
+          {
+            type = "app";
+            program = lib.getExe pkg;
+          }
+        );
+
+      checks.check-flake-file = config.flake-file.check-flake-file pkgs;
+    };
 
   systems = import inputs.systems;
 
