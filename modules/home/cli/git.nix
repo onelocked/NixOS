@@ -9,12 +9,23 @@
       ...
     }:
     {
+      sops.secrets.email.owner = constants.username;
+      sops.templates."git-email" = {
+        owner = constants.username;
+        content = ''
+          [user]
+            email = ${config.sops.placeholder."email"}
+        '';
+      };
+
       programs.git = {
         enable = true;
         config = {
+          include = {
+            path = config.sops.templates."git-email".path;
+          };
           user = {
             name = "onelocked";
-            inherit (constants) email;
           };
           interactive = {
             diffFilter = "delta --color-only";

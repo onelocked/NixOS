@@ -22,7 +22,6 @@
           specialArgs =
             let
               constants = {
-                email = "onelock@mail.com";
                 username = "onelock";
                 homedir = "/home/onelock";
                 hostname = "NixOS";

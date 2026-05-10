@@ -12,18 +12,8 @@
     {
       environment.systemPackages = [ pkgs.opkssh ];
       sops = {
-        secrets.client_id = {
-          owner = username;
-          key = "client_id";
-          format = "yaml";
-          sopsFile = config.sops.defaultSopsFile;
-        };
-        secrets.pocket_id_issuer = {
-          key = "pocket_id_issuer";
-          owner = username;
-          format = "yaml";
-          sopsFile = config.sops.defaultSopsFile;
-        };
+        secrets.client_id.owner = username;
+        secrets.pocket_id_issuer.owner = username;
         templates."opkssh-config.yml" = {
           content = # yaml
             ''
