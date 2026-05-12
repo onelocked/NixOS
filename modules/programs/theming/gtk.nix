@@ -1,7 +1,6 @@
-{ lib, ... }:
 {
   m.gtk =
-    { config, ... }:
+    { lib, config, ... }:
     let
       gtkCfg = config.custom.gtk;
       toIni = lib.generators.toINI {
@@ -189,7 +188,7 @@
     };
 
   m.default =
-    { pkgs, ... }:
+    { pkgs, lib, ... }:
     let
       inherit (lib) mkOption types literalExpression;
     in

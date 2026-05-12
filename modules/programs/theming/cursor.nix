@@ -1,7 +1,11 @@
-{ lib, ... }:
 {
   m.cursor =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      config,
+      lib,
+      ...
+    }:
     let
       gtkCursor = config.custom.gtk.cursor;
 
@@ -73,7 +77,7 @@
     };
 
   m.default =
-    { pkgs, ... }:
+    { pkgs, lib, ... }:
     {
       options.custom = {
         gtk = {

@@ -20,7 +20,7 @@
       inherit (constants) stateVersion username;
     in
     {
-      system.stateVersion = stateVersion;
+      system = { inherit stateVersion; };
       environment.systemPackages = with pkgs; [
         nix-output-monitor
         nix-tree

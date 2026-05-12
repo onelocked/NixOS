@@ -1,6 +1,6 @@
 topLevel@{ lib, self, ... }:
 let
-  generated = import (self + /envoy/generated.nix);
+  generated = import (self + /.envoy/generated.nix);
   injectArg =
     { pkgs, ... }:
     {

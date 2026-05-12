@@ -6,9 +6,16 @@
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports =
         with inputs.nixpkgs.lib;
-        ./modules
-        |> fileset.fileFilter (file: file.hasExt "nix" && !hasPrefix "_" file.name)
-        |> fileset.toList;
+        concatMap
+          (
+            dir:
+            dir |> fileset.fileFilter (file: file.hasExt "nix" && !hasPrefix "_" file.name) |> fileset.toList
+          )
+          [
+            ./modules
+            ./hosts
+            ./.secrets
+          ];
     };
 
   inputs = {

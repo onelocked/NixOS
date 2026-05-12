@@ -1,7 +1,11 @@
-{ lib, ... }:
 {
   m.qt =
-    { config, pkgs, ... }:
+    {
+      config,
+      pkgs,
+      lib,
+      ...
+    }:
     let
       iniFmt = (pkgs.formats.ini { }).generate;
 

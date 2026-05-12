@@ -5,30 +5,25 @@
   ...
 }:
 {
-
   imports = [
     inputs.flake-parts.flakeModules.modules
     (lib.mkAliasOptionModule [ "m" ] [ "flake" "modules" "nixos" ])
     inputs.flake-file.flakeModules.default
     (lib.mkAliasOptionModule [ "ff" ] [ "flake-file" "inputs" ])
   ];
+
   disabledModules = [ (inputs.flake-file + "/modules/flake-parts.nix") ];
+
   perSystem =
     { pkgs, ... }:
+    let
+      mkApp = f: {
+        type = "app";
+        program = lib.getExe (f pkgs);
+      };
+    in
     {
-      apps =
-        config.flake-file.apps
-        |> lib.mapAttrs (
-          _: f:
-          let
-            pkg = f pkgs;
-          in
-          {
-            type = "app";
-            program = lib.getExe pkg;
-          }
-        );
-
+      apps = config.flake-file.apps |> lib.mapAttrs (_: mkApp);
       checks.check-flake-file = config.flake-file.check-flake-file pkgs;
     };
 
@@ -54,9 +49,16 @@
         flake-parts.lib.mkFlake { inherit inputs; } {
           imports =
             with inputs.nixpkgs.lib;
-            ./modules
-            |> fileset.fileFilter (file: file.hasExt "nix" && !hasPrefix "_" file.name)
-            |> fileset.toList;
+            concatMap
+              (
+                dir:
+                dir |> fileset.fileFilter (file: file.hasExt "nix" && !hasPrefix "_" file.name) |> fileset.toList
+              )
+              [
+                ./modules
+                ./hosts
+                ./.secrets
+              ];
         }
       '';
     description = "onelock's dendritic nixos flake configuration";
