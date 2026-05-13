@@ -16,6 +16,7 @@
             ./hosts
             ./.secrets
           ];
+      _module.args.rootPath = ./.;
     };
 
   inputs = {

@@ -58,6 +58,7 @@
                 ./hosts
                 ./.secrets
               ];
+        _module.args.rootPath = ./.;
         }
       '';
     description = "onelock's dendritic nixos flake configuration";

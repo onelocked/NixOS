@@ -10,7 +10,7 @@
       inherit (constants) username homedir;
     in
     {
-      environment.systemPackages = [ pkgs.opkssh ];
+      hj.packages = [ pkgs.opkssh ];
       sops = {
         secrets.client_id.owner = username;
         secrets.pocket_id_issuer.owner = username;

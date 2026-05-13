@@ -7,14 +7,12 @@
       ...
     }:
     {
-      nixpkgs.config.rocmSupport = true;
       environment = {
         systemPackages = with pkgs; [ rocmPackages.amdsmi ];
         shellAliases.gtop = "${lib.getExe pkgs.amdgpu_top} --dark";
       };
-      hardware.amdgpu = {
-        opencl.enable = true;
-      };
+      nixpkgs.config.rocmSupport = true;
+      hardware.amdgpu.opencl.enable = true;
       nixpkgs.overlays = [ (_: _: { amdgpu_top = self'.packages.amdgpu_top; }) ];
     };
   perSystem =
