@@ -24,7 +24,6 @@
     in
     {
       apps = config.flake-file.apps |> lib.mapAttrs (_: mkApp);
-      checks.check-flake-file = config.flake-file.check-flake-file pkgs;
     };
 
   systems = import inputs.systems;
