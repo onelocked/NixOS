@@ -5,9 +5,7 @@
     let
       defaultApps = {
         text = [ "nvim.desktop" ];
-        image = [
-          "com.interversehq.qView.desktop"
-        ];
+        image = [ "com.interversehq.qView.desktop" ];
         audio = [ "mpv.desktop" ];
         video = [ "mpv.desktop" ];
         directory = [ "kitty.desktop" ];
