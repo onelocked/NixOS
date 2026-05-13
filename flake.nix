@@ -32,7 +32,10 @@
     flake-compat.url = "github:NixOS/flake-compat";
     hjem = {
       url = "github:feel-co/hjem";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        nix-darwin.follows = "";
+      };
     };
     lan-mouse = {
       url = "github:feschber/lan-mouse";

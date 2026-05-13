@@ -3,6 +3,7 @@
   ff.hjem = {
     url = "github:feel-co/hjem";
     inputs.nixpkgs.follows = "nixpkgs";
+    inputs.nix-darwin.follows = "";
   };
 
   m.default =
@@ -10,6 +11,7 @@
       lib,
       config,
       constants,
+      inputs',
       ...
     }:
     let
@@ -20,6 +22,7 @@
         inputs.hjem.nixosModules.default
         (lib.mkAliasOptionModule [ "hj" ] [ "hjem" "users" constants.username ])
       ];
+      hjem.linker = inputs'.hjem.packages.smfh;
       hj = {
         enable = true;
         user = username;
