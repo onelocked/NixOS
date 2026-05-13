@@ -6,11 +6,7 @@
   ...
 }:
 {
-  options.flake.lib = lib.mkOption {
-    type = lib.types.attrsOf lib.types.unspecified;
-    default = { };
-  };
-  config.flake.lib = {
+  config.forte.lib = {
     mkSystem =
       {
         modules,
@@ -37,5 +33,9 @@
           modules = modules ++ [ config.m.default ];
         }
       );
+  };
+  options.forte.lib = lib.mkOption {
+    type = lib.types.attrsOf lib.types.unspecified;
+    default = { };
   };
 }

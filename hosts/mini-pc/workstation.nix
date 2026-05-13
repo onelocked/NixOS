@@ -1,9 +1,7 @@
-{ self, ... }:
-with self.lib;
-with self.modules.nixos;
+{ config, ... }:
 {
-  flake.nixosConfigurations.NixOS = mkSystem {
-    modules = [
+  flake.nixosConfigurations.NixOS = config.forte.lib.mkSystem {
+    modules = with config.m; [
       hardware-mini-pc
       user
       desktop
