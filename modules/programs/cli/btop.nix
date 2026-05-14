@@ -63,12 +63,27 @@
       };
     };
   };
+
+  perSystem =
+    { pkgs, ... }:
+    {
+      packages.btop = pkgs.btop-rocm.overrideAttrs {
+        patches = [
+          (pkgs.fetchpatch2 {
+            name = "normalize_processes";
+            url = "https://raw.githubusercontent.com/NotAShelf/nyxexprs/refs/heads/main/pkgs/btop/patches/normalize_processes.patch";
+            hash = "sha256-dh3TTb0Ix983W50inTzGflQ7mpBELaKReBUmzjBixTo=";
+          })
+        ];
+      };
+    };
   m.default =
     {
       lib,
       pkgs,
       wrappers,
       config,
+      self',
       ...
     }:
     let
@@ -98,6 +113,7 @@
         package = lib.mkOption {
           default = wrappers.wrappers.btop.wrap {
             inherit pkgs;
+            package = self'.packages.btop;
             inherit (cfg) settings themes;
           };
         };
