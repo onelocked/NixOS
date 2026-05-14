@@ -41,6 +41,12 @@
             piper = "piper -- CLICOLOR_FORCE=1 ${lib.getExe pkgs.glow} -w=$w -s=dracula -- $1";
           in
           {
+            append_previewers = [
+              {
+                url = "*";
+                run = ''piper -- ${lib.getExe pkgs.hexyl} --border=none --terminal-width=$w "$1"'';
+              }
+            ];
             prepend_previewers = [
               {
                 url = "*.md";
@@ -66,6 +72,7 @@
               }
             ];
           };
+
         keymap = {
           mgr.prepend_keymap = [
             {
