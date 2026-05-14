@@ -1,3 +1,4 @@
+topLevel@{ ... }:
 {
   m.otter-launcher =
     {
@@ -67,9 +68,7 @@
 
           modules =
             let
-              resize =
-                width: height: app:
-                "niri msg action set-window-width ${toString width};niri msg action set-window-height ${toString height};niri msg action center-window;${app}";
+              inherit (topLevel.config.forte.lib) resize;
             in
             [
               {
@@ -248,6 +247,7 @@
               extraPackages = [
                 pkgs.pulsemixer
                 pkgs.chafa
+                pkgs.app2unit
               ]
               ++ lib.optional cfg.withFsel (
                 wrappers.lib.wrapPackage (

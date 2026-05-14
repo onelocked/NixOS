@@ -168,7 +168,7 @@
           pkgs.writeShellApplication {
             name = "mpv-wlpaste";
             runtimeInputs = with pkgs; [
-              wl-clipboard-rs
+              wl-clipboard
               mpv
               uutils-coreutils-noprefix
             ];
