@@ -149,7 +149,9 @@ topLevel@{ ... }:
               hotkey-overlay-title = "Launcher";
             };
             content = {
-              spawn-sh = [ "pkill otter-launcher || kitty -1 --app-id=otter-launcher -e otter-launcher" ];
+              spawn-sh = [
+                "pkill otter-launcher || kitty --app-id=otter-launcher -o font_size=15 -e otter-launcher"
+              ];
             };
           };
         };
