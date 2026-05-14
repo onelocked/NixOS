@@ -311,6 +311,12 @@
                 hash = "sha256-m8QrxeqIlInoCaj/O7yLQ4Sh1MXTqoDgJVnk29FI5mk=";
               };
 
+              patches = (previousAttrs.patches or [ ]) ++ [
+                (pkgs.fetchpatch2 {
+                  url = "https://gist.githubusercontent.com/onelocked/ced1a76332c07f5862b6369f3e9ea297/raw/e29f231ee12612c5614120beebdc397f31e7c016/shaded-block.patch";
+                  hash = "sha256-22FvruLYA/MvPMloW2Ou6D4TWPHVlss87iw+Wt4uALg=";
+                })
+              ];
               pyproject = false;
               doCheck = false;
               dontCheck = true;
