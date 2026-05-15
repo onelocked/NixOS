@@ -3,7 +3,9 @@
     { pkgs, lib, ... }:
     {
       hj = {
-        packages = [ pkgs.vesktop ];
+        packages = [
+          (pkgs.vesktop.override { withMiddleClickScroll = true; })
+        ];
         xdg.config.files =
           let
             gen = lib.generators.toJSON { };
