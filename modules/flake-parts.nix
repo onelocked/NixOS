@@ -24,7 +24,9 @@
     in
     {
       apps = config.flake-file.apps |> lib.mapAttrs (_: mkApp);
+      _module.args = { inherit (inputs) birdee; };
     };
+  m.default._module.args = { inherit (inputs) birdee; };
 
   systems = import inputs.systems;
 
@@ -35,6 +37,10 @@
         inputs.nixpkgs-lib.follows = "nixpkgs";
       };
       flake-file.url = "github:vic/flake-file";
+      birdee = {
+        url = "github:BirdeeHub/nix-wrapper-modules";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
     };
 
     do-not-edit = "";
