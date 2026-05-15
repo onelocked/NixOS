@@ -31,18 +31,24 @@
     in
     {
       config = {
+        environment.systemPackages =
+          config.custom.xdg.desktopEntries |> lib.mapAttrsToList makeFile |> map lib.hiPrio;
         hj.packages = config.custom.xdg.desktopEntries |> lib.mapAttrsToList makeFile |> map lib.hiPrio;
         custom.xdg.desktopEntries = {
           "yazi" = {
             name = "Yazi";
             noDisplay = true;
           };
+          "uuctl" = {
+            name = "uuctl";
+            noDisplay = true;
+          };
           "qt5ct" = {
-            name = "Qt5 Configuration Tool";
+            name = "Qt5 Settings";
             noDisplay = true;
           };
           "qt6ct" = {
-            name = "Qt6 Configuration Tool";
+            name = "Qt6 Settings";
             noDisplay = true;
           };
           "footclient" = {
