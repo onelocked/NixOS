@@ -185,7 +185,7 @@ topLevel@{ ... }:
         };
         fsel = pkgs.rustPlatform.buildRustPackage {
           inherit (envoy.fsel) pname version src;
-          cargoHash = "sha256-hNDiVdEOT3X6YSjggZgj1ZMpy4Ttcu3H7UKe/R1pJfY=";
+          cargoHash = "sha256-G1wfue1Q+3NMH/5NqPVKeO0NpU0WJlwWkh51r3TM5IM=";
         };
       };
     };
