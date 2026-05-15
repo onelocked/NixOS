@@ -10,10 +10,10 @@
             env.FONTCONFIG_FILE = pkgs.makeFontsConf { fontDirectories = [ pkgs.maple-mono.NL-NF ]; };
             settings = {
               main = {
-                font = "Maple Mono NL NF:style=ExtraBold:size=13";
-                font-bold = "SFMono Nerd Font:style=Heavy:size=13";
-                font-italic = "SF Mono:style=Bold Italic:size=13";
-                font-bold-italic = "SF Mono:style=Heavy Italic:size=13";
+                font = "Maple Mono NL NF:style=ExtraBold:size=12";
+                font-bold = "SFMono Nerd Font:style=Heavy:size=12";
+                font-italic = "SF Mono:style=Bold Italic:size=12";
+                font-bold-italic = "SF Mono:style=Heavy Italic:size=12";
 
                 pad = "8x3x8x0";
                 dpi-aware = "yes";
@@ -51,27 +51,24 @@
               colors-dark = {
                 background = "131316";
                 foreground = "e5e1e6";
-
-                selection-background = "ebb9d0";
-                selection-foreground = "472538";
-
-                regular0 = "47464f";
-                regular1 = "f38ba8";
-                regular2 = "a6e3a1";
-                regular3 = "c7c4dc";
-                regular4 = "ebb9d0";
-                regular5 = "c5c0ff";
-                regular6 = "c7c4dc";
-                regular7 = "e5e1e6";
-
-                bright0 = "c8c5d0";
-                bright1 = "ffb4ab";
-                bright2 = "c5c0ff";
-                bright3 = "c7c4dc";
-                bright4 = "ebb9d0";
-                bright5 = "c5c0ff";
-                bright6 = "c7c4dc";
-                bright7 = "e5e1e6";
+                selection-background = "c5c0ff";
+                selection-foreground = "131316";
+                regular0 = "131316"; # color0
+                regular1 = "ffb4ab"; # color1
+                regular2 = "a6e3a1"; # color2
+                regular3 = "d4b483"; # color3
+                regular4 = "c5c0ff"; # color4
+                regular5 = "e4a8d4"; # color5
+                regular6 = "6fbac2"; # color6
+                regular7 = "c8c5d0"; # color7
+                bright0 = "6f6d78"; # color8
+                bright1 = "ffcbc2"; # color9
+                bright2 = "c1ecbd"; # color10
+                bright3 = "e5cfa8"; # color11
+                bright4 = "dcd8ff"; # color12
+                bright5 = "f0c4e4"; # color13
+                bright6 = "b5e5e9"; # color14
+                bright7 = "e5e1e6"; # color15
               };
             };
           };
