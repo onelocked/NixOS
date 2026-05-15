@@ -7,7 +7,7 @@
 }:
 {
   config = {
-    forte.lib = {
+    forte.system = {
       mkSystem =
         {
           modules,
@@ -36,7 +36,7 @@
         );
     };
   };
-  options.forte.lib = lib.mkOption {
+  options.forte.system = lib.mkOption {
     type = lib.types.attrsOf lib.types.unspecified;
     default = { };
   };
