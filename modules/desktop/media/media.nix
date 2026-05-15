@@ -1,11 +1,17 @@
 {
   m.default =
-    { pkgs, ... }:
+    { pkgs, wrappers, ... }:
     {
       hj.packages = with pkgs; [
-        jellyfin-desktop
         moonlight-qt
         ayugram-desktop
+        (wrappers.lib.wrapPackage {
+          inherit pkgs;
+          package = pkgs.jellyfin-desktop;
+          flags = {
+            "--platform" = "xcb";
+          };
+        })
       ];
       forte.niri.settings.window-rules = [
         {

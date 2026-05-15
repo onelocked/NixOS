@@ -75,15 +75,6 @@
             name = "Vicinae";
             noDisplay = true;
           };
-          "nvim" = {
-            name = "Neovim Wrapper";
-            noDisplay = true;
-          };
-          "org.jellyfin.JellyfinDesktop" = {
-            name = "Jellyfin";
-            icon = "org.jellyfin.JellyfinDesktop";
-            exec = "${pkgs.jellyfin-desktop}/bin/jellyfin-desktop --platform xcb";
-          };
           "jellyfin-tui" = {
             name = "jellyfin-tui";
             noDisplay = true;
