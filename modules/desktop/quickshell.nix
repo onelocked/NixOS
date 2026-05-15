@@ -97,5 +97,51 @@
           };
         };
       };
+      forte.niri.settings.binds = {
+        "Shift+Alt+W" = _: {
+          props = {
+            repeat = false;
+          };
+          content = {
+            spawn = [
+              "qs"
+              "ipc"
+              "call"
+              "wallpaper"
+              "toggle"
+            ];
+          };
+        };
+
+        # Hardware Controls via Quickshell
+        "ALT+Shift+Equal" = _: {
+          props = {
+            repeat = false;
+          };
+          content = {
+            spawn = [
+              "qs"
+              "ipc"
+              "call"
+              "brightness"
+              "increase"
+            ];
+          };
+        };
+        "ALT+Shift+Minus" = _: {
+          props = {
+            repeat = false;
+          };
+          content = {
+            spawn = [
+              "qs"
+              "ipc"
+              "call"
+              "brightness"
+              "decrease"
+            ];
+          };
+        };
+      };
     };
 }
