@@ -71,7 +71,7 @@
           };
         };
 
-        custom.xdg.desktopEntries."uuctl".noDisplay = true;
+        forte.xdg.desktopEntries."uuctl".noDisplay = true;
         programs.uwsm = {
           enable = true;
           waylandCompositors = {

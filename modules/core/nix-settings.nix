@@ -20,7 +20,7 @@
       inherit (constants) stateVersion username;
     in
     {
-      custom.xdg.desktopEntries."nixos-manual".noDisplay = true;
+      forte.xdg.desktopEntries."nixos-manual".noDisplay = true;
       system = { inherit stateVersion; };
       environment.systemPackages = with pkgs; [
         nix-output-monitor

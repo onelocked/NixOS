@@ -15,7 +15,7 @@
     in
     {
       config = lib.mkIf (cfg.enable) {
-        custom.xdg.desktopEntries."yazi".noDisplay = true;
+        forte.xdg.desktopEntries."yazi".noDisplay = true;
         hj.packages = [ cfg.package ];
 
         programs.fish.functions.y = /* fish */ ''

@@ -17,7 +17,7 @@
         };
       };
 
-      custom.xdg.desktopEntries = {
+      forte.xdg.desktopEntries = {
         "nvim" = {
           name = "Neovim";
           noDisplay = true;

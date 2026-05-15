@@ -44,7 +44,7 @@
         qtwayland
       ];
 
-      custom.xdg.desktopEntries = {
+      forte.xdg.desktopEntries = {
         "qt5ct".noDisplay = true;
         "qt6ct".noDisplay = true;
       };

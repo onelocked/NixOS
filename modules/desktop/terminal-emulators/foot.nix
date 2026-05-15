@@ -75,7 +75,7 @@
         })
       ];
 
-      custom.xdg.desktopEntries = {
+      forte.xdg.desktopEntries = {
         "footclient".noDisplay = true;
         "foot-server".noDisplay = true;
       };

@@ -134,14 +134,14 @@
       };
     in
     {
-      options.custom.xdg.desktopEntries = mkOption {
+      options.forte.xdg.desktopEntries = mkOption {
         description = "Custom Desktop Entries";
         default = { };
         type = desktopEntry |> types.submodule |> types.attrsOf;
       };
       config = lib.fix (f: {
         environment.systemPackages =
-          config.custom.xdg.desktopEntries |> lib.mapAttrsToList makeFile |> map lib.hiPrio;
+          config.forte.xdg.desktopEntries |> lib.mapAttrsToList makeFile |> map lib.hiPrio;
         hj.packages = f.environment.systemPackages;
       });
     };

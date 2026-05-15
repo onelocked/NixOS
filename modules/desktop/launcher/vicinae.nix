@@ -36,7 +36,7 @@
     }:
     {
 
-      custom.xdg.desktopEntries."vicinae".noDisplay = true;
+      forte.xdg.desktopEntries."vicinae".noDisplay = true;
       custom.services.vicinae = {
         enable = true;
         package = self'.packages.vicinae;
