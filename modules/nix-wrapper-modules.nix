@@ -5,4 +5,5 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
   perSystem._module.args = { inherit (inputs) birdee; };
+  m.default._module.args = { inherit (inputs) birdee; };
 }

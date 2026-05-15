@@ -16,21 +16,9 @@
         withSystem system (
           { self', inputs', ... }:
           inputs.nixpkgs.lib.nixosSystem {
-            specialArgs =
-              let
-                constants = {
-                  username = "onelock";
-                  homedir = "/home/onelock";
-                  hostname = "NixOS";
-                  locale = "en_GB.UTF-8";
-                  timezone = "Europe/London";
-                  stateVersion = "25.11";
-                };
-              in
-              {
-                inherit self' inputs' constants;
-                inherit (inputs) birdee;
-              };
+            specialArgs = {
+              inherit self' inputs';
+            };
             modules = modules ++ [ config.m.default ];
           }
         );
