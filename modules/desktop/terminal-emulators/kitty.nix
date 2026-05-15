@@ -206,6 +206,13 @@
             );
           })
         ];
+        forte.niri.settings.window-rules = [
+          {
+            matches = [ { app-id = "kitty"; } ];
+            open-focused = true;
+            open-on-workspace = "coding";
+          }
+        ];
       };
       options.forte.kitty = {
         enable = lib.mkOption {
