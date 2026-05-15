@@ -37,7 +37,7 @@
     {
 
       forte.xdg.desktopEntries."vicinae".noDisplay = true;
-      custom.services.vicinae = {
+      forte.vicinae = {
         enable = true;
         package = self'.packages.vicinae;
         systemd = {
@@ -216,14 +216,14 @@
       ...
     }:
     let
-      cfg = config.custom.services.vicinae;
+      cfg = config.forte.vicinae;
 
       jsonFormat = pkgs.formats.json { };
       tomlFormat = pkgs.formats.toml { };
     in
     {
 
-      options.custom.services.vicinae = {
+      options.forte.vicinae = {
         enable = lib.mkEnableOption "vicinae launcher daemon";
 
         package = lib.mkOption {
