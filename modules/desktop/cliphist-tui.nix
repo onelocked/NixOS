@@ -5,7 +5,7 @@
       self',
       config,
       lib,
-      birdie,
+      birdee,
       ...
     }:
     let
@@ -15,12 +15,12 @@
       options.forte.cliphist-tui = {
         enable = lib.mkOption {
           type = lib.types.bool;
-          default = false;
-          description = "Whether to enable otter-launcher.";
+          default = !config.forte.vicinae.enable;
+          description = "Whether to enable cliphist-tui";
         };
 
         package = lib.mkOption {
-          default = birdie.lib.wrapPackage {
+          default = birdee.lib.wrapPackage {
             inherit pkgs;
             package = self'.packages.cliphist-tui;
             extraPackages = [
