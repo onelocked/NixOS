@@ -34,6 +34,7 @@
             inherit pkgs;
             package = self'.packages.niri;
             v2-settings = true;
+            disableConfigHotReload = true;
             inherit (config.forte.niri) settings;
           };
         };
@@ -58,6 +59,30 @@
             );
           })
         );
+        system.userActivationScripts = {
+          niri-reload-config = {
+            text = lib.getExe (
+              pkgs.writeShellApplication (
+                let
+                  inherit (config.programs.niri) package;
+                  inherit (package.configuration.constructFiles.generatedConfig) outPath;
+                in
+                {
+                  name = "niri-reload-config";
+                  runtimeInputs = [
+                    package
+                    pkgs.procps
+                  ];
+                  text = ''
+                    if pgrep -x "niri" > /dev/null; then
+                      niri msg action load-config-file --path "${outPath}"
+                    fi
+                  '';
+                }
+              )
+            );
+          };
+        };
       }
       (lib.mkIf (config.programs.niri.enable or false) {
         xdg.portal = {
