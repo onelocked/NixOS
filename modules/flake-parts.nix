@@ -35,10 +35,6 @@
         inputs.nixpkgs-lib.follows = "nixpkgs";
       };
       flake-file.url = "github:vic/flake-file";
-      wrappers = {
-        url = "github:BirdeeHub/nix-wrapper-modules";
-        inputs.nixpkgs.follows = "nixpkgs";
-      };
     };
 
     do-not-edit = "";
@@ -67,7 +63,6 @@
         "nixpkgs"
         "flake-parts"
         "flake-file"
-        "wrappers"
       ];
     };
   };
