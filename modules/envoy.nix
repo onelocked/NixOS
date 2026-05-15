@@ -258,7 +258,7 @@ in
                 exit 0
               fi
               regex="^($(echo "$matched" | paste -sd'|' -))$"
-              nvfetcher -c ${tomlFile} -o envoy -f "$regex"
+              nvfetcher -c ${tomlFile} -o .envoy -f "$regex"
             '';
           };
         };
