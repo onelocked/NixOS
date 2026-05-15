@@ -1,4 +1,3 @@
-{ config, ... }:
 {
   perSystem =
     { pkgs, ... }:
@@ -49,6 +48,7 @@
     {
       pkgs,
       self',
+      config,
       ...
     }:
     {

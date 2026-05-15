@@ -1,4 +1,3 @@
-topLevel@{ inputs, ... }:
 {
   m.otter-launcher =
     {
@@ -68,7 +67,7 @@ topLevel@{ inputs, ... }:
 
           modules =
             let
-              inherit (topLevel.config.forte.lib) resize;
+              inherit (config.forte.lib) resize;
             in
             [
               {
@@ -185,6 +184,10 @@ topLevel@{ inputs, ... }:
       toml = pkgs.formats.toml { };
     in
     {
+      options.forte.lib = lib.mkOption {
+        type = lib.types.attrsOf lib.types.unspecified;
+        default = { };
+      };
       options.forte.otter-launcher = {
         enable = lib.mkOption {
           type = lib.types.bool;
@@ -239,6 +242,9 @@ topLevel@{ inputs, ... }:
       };
       config = lib.mkIf (cfg.enable) {
         hj.packages = [ cfg.package ];
+        forte.lib.resize =
+          width: height: app:
+          "niri msg action set-window-width ${toString width};niri msg action set-window-height ${toString height};niri msg action center-window;${app}";
       };
     };
 

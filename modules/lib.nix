@@ -7,7 +7,6 @@
 }:
 {
   config = {
-    perSystem._module.args = { inherit (inputs) wrappers; };
     forte.lib = {
       mkSystem =
         {
@@ -35,11 +34,6 @@
             modules = modules ++ [ config.m.default ];
           }
         );
-
-      resize =
-        width: height: app:
-        "niri msg action set-window-width ${toString width};niri msg action set-window-height ${toString height};niri msg action center-window;${app}";
-
     };
   };
   options.forte.lib = lib.mkOption {
