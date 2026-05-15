@@ -235,7 +235,60 @@
                 pkgs.pulsemixer
                 pkgs.chafa
               ]
-              ++ lib.optional cfg.withFsel self'.packages.fsel;
+              ++ lib.optional cfg.withFsel (
+                birdee.lib.wrapPackage (
+                  { config, ... }:
+                  {
+                    inherit pkgs;
+                    package = self'.packages.fsel;
+                    extraPackages = [ pkgs.app2unit ];
+                    flags = {
+                      "--config" = config.constructFiles.generatedConfig.path;
+                    };
+                    constructFiles.generatedConfig = {
+                      relPath = "config.toml";
+                      builder = ''mkdir -p "$(dirname "$2")" && cp ${
+                        (pkgs.formats.toml { }).generate "config.toml" {
+                          main_border_color = "#7d75c0";
+                          apps_border_color = "#7d75c0";
+                          input_border_color = "#c8b0e8";
+
+                          main_text_color = "#cfd3e7";
+                          apps_text_color = "#8c92aa";
+                          input_text_color = "#c8b0e8";
+
+                          highlight_color = "#c5c0ff";
+                          header_title_color = "#7d75c0";
+
+                          pin_color = "#c8b0e8";
+                          pin_icon = "󰐃";
+                          cursor = "▎";
+                          disable_mouse = true;
+
+                          rounded_borders = true;
+                          title_panel_height_percent = 20;
+                          title_panel_position = "bottom";
+                          fancy_mode = true;
+
+                          app_launcher = {
+                            filter_desktop = true;
+                            filter_actions = true;
+                            list_executables_in_path = false;
+                            launch_prefix = [
+                              "app2unit"
+                              "--"
+                            ];
+                          };
+                          dmenu = {
+                            delimiter = " ";
+                            show_line_numbers = true;
+                          };
+                        }
+                      } "$2"'';
+                    };
+                  }
+                )
+              );
             }
           );
         };
@@ -249,75 +302,40 @@
     };
 
   perSystem =
-    {
-      pkgs,
-      envoy,
-      birdee,
-      ...
-    }:
+    { pkgs, envoy, ... }:
     {
       packages = {
+        fsel = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
+          inherit (envoy.fsel) pname version src;
+          cargoLock.lockFile = finalAttrs.src + "/Cargo.lock";
+        });
         otter-launcher = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
           inherit (envoy.otter-launcher) pname version src;
           cargoLock.lockFile = finalAttrs.src + "/Cargo.lock";
+          patches = [
+            (pkgs.writeText "selection.patch" # rust
+              ''
+                diff --git a/src/helper.rs b/src/helper.rs
+                index 991b6bf..248f856 100644
+                --- a/src/helper.rs
+                +++ b/src/helper.rs
+                @@ -463,6 +463,10 @@ impl Hinter for OtterHelper {
+                             // make the number of filtered items globally accessible
+                             FILTERED_HINT_COUNT.store(filtered_items.len(), Ordering::Relaxed);
+
+                +            if !line.is_empty() && selection_index == 0 && !filtered_items.is_empty() {
+                +                SELECTION_INDEX.store(1, Ordering::Relaxed);
+                +            }
+                +
+                             // Check if there are enough filtered items after the skip
+                             let agg_line = if hint_benchmark + suggestion_lines
+                                 > FILTERED_HINT_COUNT.load(Ordering::Relaxed)
+                --
+                2.53.0
+              ''
+            )
+          ];
         });
-        fsel = birdee.lib.wrapPackage (
-          { config, ... }:
-          {
-            inherit pkgs;
-            extraPackages = [ pkgs.app2unit ];
-            package = (
-              pkgs.rustPlatform.buildRustPackage (finalAttrs: {
-                inherit (envoy.fsel) pname version src;
-                cargoLock.lockFile = finalAttrs.src + "/Cargo.lock";
-              })
-            );
-            flags = {
-              "--config" = config.constructFiles.generatedConfig.path;
-            };
-            constructFiles.generatedConfig = {
-              relPath = "config.toml";
-              builder = ''mkdir -p "$(dirname "$2")" && cp ${
-                (pkgs.formats.toml { }).generate "config.toml" {
-                  main_border_color = "#7d75c0";
-                  apps_border_color = "#7d75c0";
-                  input_border_color = "#c8b0e8";
-
-                  main_text_color = "#cfd3e7";
-                  apps_text_color = "#8c92aa";
-                  input_text_color = "#c8b0e8";
-
-                  highlight_color = "#c5c0ff";
-                  header_title_color = "#7d75c0";
-
-                  pin_color = "#c8b0e8";
-                  pin_icon = "󰐃";
-                  cursor = "▎";
-                  disable_mouse = true;
-
-                  rounded_borders = true;
-                  title_panel_height_percent = 20;
-                  title_panel_position = "bottom";
-                  fancy_mode = true;
-
-                  app_launcher = {
-                    filter_desktop = true;
-                    filter_actions = true;
-                    list_executables_in_path = false;
-                    launch_prefix = [
-                      "app2unit"
-                      "--"
-                    ];
-                  };
-                  dmenu = {
-                    delimiter = " ";
-                    show_line_numbers = true;
-                  };
-                }
-              } "$2"'';
-            };
-          }
-        );
       };
     };
 }
