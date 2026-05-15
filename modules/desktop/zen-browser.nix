@@ -262,62 +262,100 @@
       environment.sessionVariables = lib.mkIf cfg.setAsDefaultBrowser {
         BROWSER = "zen-twilight";
       };
-      forte.niri.settings.window-rules = [
+      forte.niri.settings =
+        let
+          niri-launcher = pkgs.writeShellApplication {
+            name = "niri-launcher";
+            runtimeInputs = with pkgs; [
+              jq
+              uutils-coreutils-noprefix
+              util-linux
+            ];
+            text = # bash
+              ''
+                APP_ID="$1"
+                CMD="$2"
+                WIN_ID=$(niri msg --json windows | jq -r ".[] | select(.app_id == \"$APP_ID\") | .id" | head -n1)
+                if [ -z "$WIN_ID" ]; then
+                    setsid "$CMD" >/dev/null 2>&1 &
+                else
+                    niri msg action focus-window --id "$WIN_ID"
+                fi
+              '';
+          };
+        in
         {
-          matches = [ { app-id = "zen-twilight"; } ];
-          excludes = [
+          binds = {
+            "Mod+B" = _: {
+              props = {
+                repeat = false;
+              };
+              content = {
+                spawn = [
+                  "${niri-launcher}/bin/niri-launcher"
+                  "zen-twilight"
+                  "zen-twilight"
+                ];
+              };
+            };
+          };
+          window-rules = [
             {
-              app-id = "zen-twilight";
-              title = "Picture-in-Picture";
+              matches = [ { app-id = "zen-twilight"; } ];
+              excludes = [
+                {
+                  app-id = "zen-twilight";
+                  title = "Picture-in-Picture";
+                }
+                {
+                  app-id = "zen-twilight$";
+                  title = "Library";
+                }
+              ];
+              tiled-state = true;
+              default-column-width.proportion = 0.749;
+              open-on-workspace = "browser";
             }
             {
-              app-id = "zen-twilight$";
-              title = "Library";
+              matches = [
+                {
+                  app-id = "zen-twilight";
+                  title = "Picture-in-Picture";
+                }
+              ];
+              open-floating = false;
+              open-fullscreen = true;
+            }
+            {
+              matches = [ { app-id = "zen-twilight"; } ];
+              excludes = [
+                {
+                  app-id = "zen-twilight";
+                  title = "YouTube";
+                }
+                {
+                  app-id = "zen-twilight";
+                  title = "TikTok";
+                }
+                {
+                  app-id = "zen-twilight";
+                  title = "Excalidraw";
+                }
+              ];
+            }
+            {
+              matches = [
+                {
+                  app-id = "zen-twilight";
+                  title = "Library";
+                }
+              ];
+              open-floating = true;
+              default-column-width.fixed = 1300;
+              default-window-height.fixed = 900;
             }
           ];
-          tiled-state = true;
-          default-column-width.proportion = 0.749;
-          open-on-workspace = "browser";
-        }
-        {
-          matches = [
-            {
-              app-id = "zen-twilight";
-              title = "Picture-in-Picture";
-            }
-          ];
-          open-floating = false;
-          open-fullscreen = true;
-        }
-        {
-          matches = [ { app-id = "zen-twilight"; } ];
-          excludes = [
-            {
-              app-id = "zen-twilight";
-              title = "YouTube";
-            }
-            {
-              app-id = "zen-twilight";
-              title = "TikTok";
-            }
-            {
-              app-id = "zen-twilight";
-              title = "Excalidraw";
-            }
-          ];
-        }
-        {
-          matches = [
-            {
-              app-id = "zen-twilight";
-              title = "Library";
-            }
-          ];
-          open-floating = true;
-          default-column-width.fixed = 1300;
-          default-window-height.fixed = 900;
-        }
-      ];
+        };
     };
 
   m.default =
