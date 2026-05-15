@@ -22,6 +22,10 @@
           enable = true;
           functions = {
             store = ''y (string match -r "/nix/store/[^/]*" (builtin realpath (type -fP $argv[1])))'';
+            mem = ''
+              echo "   PID Command                        PSS"
+              , smem -c "pid command pss" -nkP $argv[1] | tail -n+3
+            '';
             ncp = ''echo "pkgs.$(nurl $argv[1]);" | string collect  | wl-copy'';
 
             # Run a nix run with a package
