@@ -63,8 +63,8 @@
           debounce-ms = 750;
           open-delay-ms = 250;
           highlight = {
-            active-color = "#999999ff";
-            urgent-color = "#ff9999ff";
+            active-color = "#c5c0ff";
+            urgent-color = "#ffb4ab";
             padding = 15;
             corner-radius = 20;
           };

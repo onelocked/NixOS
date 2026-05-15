@@ -27,6 +27,14 @@
           open-fullscreen = false;
         }
         {
+          matches = [ { title = "onelock - Moonlight"; } ];
+          open-on-workspace = "media";
+          open-fullscreen = false;
+          open-focused = false;
+          default-column-width.fixed = 3366;
+          default-window-height.fixed = 1410;
+        }
+        {
           matches = [ { app-id = "com.ayugram.desktop"; } ];
           excludes = [
             {

@@ -44,29 +44,6 @@
         };
 
         # Core Applications
-        "Mod+T" = _: {
-          props = {
-            repeat = false;
-          };
-          content = {
-            spawn = [
-              "kitty"
-              "-1"
-            ];
-          };
-        };
-
-        "Ctrl+SPACE" = _: {
-          props = {
-            repeat = false;
-          };
-          content = {
-            spawn = [
-              "kitten"
-              "quick-access-terminal"
-            ];
-          };
-        };
         "Mod+B" = _: {
           props = {
             repeat = false;
@@ -181,20 +158,6 @@
             ];
           };
         };
-        "ALT+Shift+A" = _: {
-          props = {
-            repeat = false;
-          };
-          content = {
-            spawn = [
-              "qs"
-              "ipc"
-              "call"
-              "plugin:assistant-panel"
-              "toggle"
-            ];
-          };
-        };
 
         # Window Actions
         "Mod+G" = _: {
@@ -241,6 +204,23 @@
           };
           content = {
             focus-column-left = set;
+          };
+        };
+
+        "Mod+Shift+WheelScrollDown" = _: {
+          props = {
+            cooldown-ms = 150;
+          };
+          content = {
+            focus-workspace-down = set;
+          };
+        };
+        "Mod+Shift+WheelScrollUp" = _: {
+          props = {
+            cooldown-ms = 150;
+          };
+          content = {
+            focus-column-up = set;
           };
         };
 

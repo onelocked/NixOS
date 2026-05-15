@@ -206,13 +206,39 @@
             );
           })
         ];
-        forte.niri.settings.window-rules = [
-          {
-            matches = [ { app-id = "kitty"; } ];
-            open-focused = true;
-            open-on-workspace = "coding";
-          }
-        ];
+        forte.niri.settings = {
+          window-rules = [
+            {
+              matches = [ { app-id = "kitty"; } ];
+              open-focused = true;
+              open-on-workspace = "coding";
+            }
+          ];
+          binds = {
+            "Mod+T" = _: {
+              props = {
+                repeat = false;
+              };
+              content = {
+                spawn = [
+                  "kitty"
+                  "-1"
+                ];
+              };
+            };
+            "Ctrl+SPACE" = _: {
+              props = {
+                repeat = false;
+              };
+              content = {
+                spawn = [
+                  "kitten"
+                  "quick-access-terminal"
+                ];
+              };
+            };
+          };
+        };
       };
       options.forte.kitty = {
         enable = lib.mkOption {
