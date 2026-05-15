@@ -1,4 +1,4 @@
-topLevel@{ ... }:
+topLevel@{ inputs, ... }:
 {
   m.otter-launcher =
     {
@@ -171,24 +171,6 @@ topLevel@{ ... }:
     otter-launcher.github = "kuokuo123/otter-launcher";
     fsel.github = "Mjoyufull/fsel";
   };
-  perSystem =
-    {
-      pkgs,
-      envoy,
-      ...
-    }:
-    {
-      packages = {
-        otter-launcher = pkgs.rustPlatform.buildRustPackage {
-          inherit (envoy.otter-launcher) pname version src;
-          cargoHash = "sha256-AlzCrK6DivOfCMGXQsiMJ+7Ahtd/9qoJ0MKZrez6xyM=";
-        };
-        fsel = pkgs.rustPlatform.buildRustPackage {
-          inherit (envoy.fsel) pname version src;
-          cargoHash = "sha256-G1wfue1Q+3NMH/5NqPVKeO0NpU0WJlwWkh51r3TM5IM=";
-        };
-      };
-    };
   m.default =
     {
       self',
@@ -249,67 +231,87 @@ topLevel@{ ... }:
               extraPackages = [
                 pkgs.pulsemixer
                 pkgs.chafa
-                pkgs.app2unit
               ]
-              ++ lib.optional cfg.withFsel (
-                wrappers.lib.wrapPackage (
-                  { config, ... }:
-                  {
-                    inherit pkgs;
-                    package = self'.packages.fsel;
-                    flags = {
-                      "--config" = config.constructFiles.generatedConfig.path;
-                    };
-                    constructFiles.generatedConfig = {
-                      relPath = "config.toml";
-                      builder = ''mkdir -p "$(dirname "$2")" && cp ${
-                        toml.generate "config.toml" {
-                          main_border_color = "#7d75c0";
-                          apps_border_color = "#7d75c0";
-                          input_border_color = "#c8b0e8";
-
-                          main_text_color = "#cfd3e7";
-                          apps_text_color = "#8c92aa";
-                          input_text_color = "#c8b0e8";
-
-                          highlight_color = "#c5c0ff";
-                          header_title_color = "#7d75c0";
-
-                          pin_color = "#c8b0e8";
-                          pin_icon = "󰐃";
-                          cursor = "▎";
-                          disable_mouse = true;
-
-                          rounded_borders = true;
-                          title_panel_height_percent = 20;
-                          title_panel_position = "bottom";
-                          fancy_mode = true;
-
-                          app_launcher = {
-                            filter_desktop = true;
-                            filter_actions = true;
-                            list_executables_in_path = false;
-                            launch_prefix = [
-                              "app2unit"
-                              "--"
-                            ];
-                          };
-                          dmenu = {
-                            delimiter = " ";
-                            show_line_numbers = true;
-                          };
-                        }
-                      } "$2"'';
-                    };
-                  }
-                )
-              );
+              ++ lib.optional cfg.withFsel self'.packages.fsel;
             }
           );
         };
       };
       config = lib.mkIf (cfg.enable) {
         hj.packages = [ cfg.package ];
+      };
+    };
+
+  perSystem =
+    {
+      pkgs,
+      envoy,
+      wrappers,
+      ...
+    }:
+    {
+      packages = {
+        otter-launcher = pkgs.rustPlatform.buildRustPackage {
+          inherit (envoy.otter-launcher) pname version src;
+          cargoHash = "sha256-AlzCrK6DivOfCMGXQsiMJ+7Ahtd/9qoJ0MKZrez6xyM=";
+        };
+        fsel = wrappers.lib.wrapPackage (
+          { config, ... }:
+          {
+            inherit pkgs;
+            extraPackages = [ pkgs.app2unit ];
+            package = (
+              pkgs.rustPlatform.buildRustPackage {
+                inherit (envoy.fsel) pname version src;
+                cargoHash = "sha256-G1wfue1Q+3NMH/5NqPVKeO0NpU0WJlwWkh51r3TM5IM=";
+              }
+            );
+            flags = {
+              "--config" = config.constructFiles.generatedConfig.path;
+            };
+            constructFiles.generatedConfig = {
+              relPath = "config.toml";
+              builder = ''mkdir -p "$(dirname "$2")" && cp ${
+                (pkgs.formats.toml { }).generate "config.toml" {
+                  main_border_color = "#7d75c0";
+                  apps_border_color = "#7d75c0";
+                  input_border_color = "#c8b0e8";
+
+                  main_text_color = "#cfd3e7";
+                  apps_text_color = "#8c92aa";
+                  input_text_color = "#c8b0e8";
+
+                  highlight_color = "#c5c0ff";
+                  header_title_color = "#7d75c0";
+
+                  pin_color = "#c8b0e8";
+                  pin_icon = "󰐃";
+                  cursor = "▎";
+                  disable_mouse = true;
+
+                  rounded_borders = true;
+                  title_panel_height_percent = 20;
+                  title_panel_position = "bottom";
+                  fancy_mode = true;
+
+                  app_launcher = {
+                    filter_desktop = true;
+                    filter_actions = true;
+                    list_executables_in_path = false;
+                    launch_prefix = [
+                      "app2unit"
+                      "--"
+                    ];
+                  };
+                  dmenu = {
+                    delimiter = " ";
+                    show_line_numbers = true;
+                  };
+                }
+              } "$2"'';
+            };
+          }
+        );
       };
     };
 }
