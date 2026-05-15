@@ -44,6 +44,11 @@
         qtwayland
       ];
 
+      custom.xdg.desktopEntries = {
+        "qt5ct".noDisplay = true;
+        "qt6ct".noDisplay = true;
+      };
+
       qt = {
         enable = true;
         platformTheme = "qt5ct";

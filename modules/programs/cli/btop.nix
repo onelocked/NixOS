@@ -1,5 +1,6 @@
 {
   m.btop = {
+    custom.xdg.desktopEntries."btop".noDisplay = true;
     forte.btop = {
       settings = {
         color_theme = "oneshill";

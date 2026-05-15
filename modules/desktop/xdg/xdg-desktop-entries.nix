@@ -1,12 +1,14 @@
 {
-  m.desktop =
+  m.default =
     {
-      config,
       lib,
+      config,
       pkgs,
       ...
     }:
     let
+      inherit (lib) mkOption types;
+
       makeFile =
         name: cfg:
         pkgs.makeDesktopItem {
@@ -28,64 +30,6 @@
           categories = lib.optionals (cfg.categories != null) cfg.categories;
           extraConfig = cfg.settings;
         };
-    in
-    {
-      config = {
-        environment.systemPackages =
-          config.custom.xdg.desktopEntries |> lib.mapAttrsToList makeFile |> map lib.hiPrio;
-        hj.packages = config.custom.xdg.desktopEntries |> lib.mapAttrsToList makeFile |> map lib.hiPrio;
-        custom.xdg.desktopEntries = {
-          "yazi" = {
-            name = "Yazi";
-            noDisplay = true;
-          };
-          "uuctl" = {
-            name = "uuctl";
-            noDisplay = true;
-          };
-          "qt5ct" = {
-            name = "Qt5 Settings";
-            noDisplay = true;
-          };
-          "qt6ct" = {
-            name = "Qt6 Settings";
-            noDisplay = true;
-          };
-          "footclient" = {
-            name = "Foot Client";
-            noDisplay = true;
-          };
-          "foot-server" = {
-            name = "Foot Server";
-            noDisplay = true;
-          };
-          "nixos-manual" = {
-            name = "NixOS Manual";
-            noDisplay = true;
-          };
-          "btop" = {
-            name = "btop++";
-            noDisplay = true;
-          };
-          "umpv" = {
-            name = "umpv Media Player";
-            noDisplay = true;
-          };
-          "vicinae" = {
-            name = "Vicinae";
-            noDisplay = true;
-          };
-          "jellyfin-tui" = {
-            name = "jellyfin-tui";
-            noDisplay = true;
-          };
-        };
-      };
-    };
-  m.default =
-    { lib, ... }:
-    let
-      inherit (lib) mkOption types;
 
       desktopEntry = {
         options = {
@@ -120,6 +64,7 @@
           };
           name = mkOption {
             description = "Specific name of the application.";
+            default = "";
             type = types.str;
           };
           genericName = mkOption {
@@ -194,5 +139,10 @@
         default = { };
         type = desktopEntry |> types.submodule |> types.attrsOf;
       };
+      config = lib.fix (f: {
+        environment.systemPackages =
+          config.custom.xdg.desktopEntries |> lib.mapAttrsToList makeFile |> map lib.hiPrio;
+        hj.packages = f.environment.systemPackages;
+      });
     };
 }

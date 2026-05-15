@@ -75,6 +75,11 @@
         })
       ];
 
+      custom.xdg.desktopEntries = {
+        "footclient".noDisplay = true;
+        "foot-server".noDisplay = true;
+      };
+
       hj = {
         packages = [ pkgs.foot ];
         systemd.services.foot-server = {

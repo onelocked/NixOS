@@ -2,6 +2,7 @@
   m.jellyfin-tui =
     { pkgs, ... }:
     {
+      custom.xdg.desktopEntries."jellyfin-tui".noDisplay = true;
       hj = {
         packages = [ pkgs.jellyfin-tui ];
         xdg.config.files."jellyfin-tui/config.yaml".text = # yaml

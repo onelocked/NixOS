@@ -70,6 +70,8 @@
             };
           };
         };
+
+        custom.xdg.desktopEntries."uuctl".noDisplay = true;
         programs.uwsm = {
           enable = true;
           waylandCompositors = {

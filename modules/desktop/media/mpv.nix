@@ -102,6 +102,7 @@
             STOP stop
           '';
       };
+      custom.xdg.desktopEntries."umpv".noDisplay = true;
       forte.niri.settings.window-rules = [
         {
           matches = [ { app-id = "mpv"; } ];
