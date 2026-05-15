@@ -82,7 +82,7 @@
     {
       lib,
       pkgs,
-      wrappers,
+      birdee,
       config,
       self',
       ...
@@ -112,7 +112,7 @@
         };
 
         package = lib.mkOption {
-          default = wrappers.wrappers.btop.wrap {
+          default = birdee.wrappers.btop.wrap {
             inherit pkgs;
             package = self'.packages.btop;
             inherit (cfg) settings themes;

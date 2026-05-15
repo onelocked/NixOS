@@ -1,11 +1,11 @@
 {
   m.default =
-    { pkgs, wrappers, ... }:
+    { pkgs, birdee, ... }:
     {
       hj.packages = with pkgs; [
         moonlight-qt
         ayugram-desktop
-        (wrappers.lib.wrapPackage {
+        (birdee.lib.wrapPackage {
           inherit pkgs;
           package = pkgs.jellyfin-desktop;
           flags = {

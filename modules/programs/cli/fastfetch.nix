@@ -3,7 +3,7 @@
     {
       pkgs,
       lib,
-      wrappers,
+      birdee,
       ...
     }:
     let
@@ -92,7 +92,7 @@
             }
           '';
 
-      fastfetch = wrappers.lib.wrapPackage {
+      fastfetch = birdee.lib.wrapPackage {
         inherit pkgs;
         package = pkgs.fastfetch;
         flags = {

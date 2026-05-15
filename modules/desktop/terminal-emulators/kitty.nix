@@ -164,7 +164,7 @@
   };
   m.default =
     {
-      wrappers,
+      birdee,
       lib,
       config,
       pkgs,
@@ -193,7 +193,7 @@
         hj.packages = [ cfg.package ];
         nixpkgs.overlays = [
           (_: prev: {
-            kitty = wrappers.wrappers.kitty.wrap (
+            kitty = birdee.wrappers.kitty.wrap (
               wrapper: with config.forte.kitty; {
                 pkgs = prev;
                 package = self'.packages.kitty;

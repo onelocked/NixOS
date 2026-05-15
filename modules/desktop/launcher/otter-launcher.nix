@@ -173,7 +173,7 @@
   m.default =
     {
       self',
-      wrappers,
+      birdee,
       pkgs,
       config,
       lib,
@@ -215,7 +215,7 @@
         };
 
         package = lib.mkOption {
-          default = wrappers.lib.wrapPackage (
+          default = birdee.lib.wrapPackage (
             { config, ... }:
             {
               inherit pkgs;
@@ -252,7 +252,7 @@
     {
       pkgs,
       envoy,
-      wrappers,
+      birdee,
       ...
     }:
     {
@@ -261,7 +261,7 @@
           inherit (envoy.otter-launcher) pname version src;
           cargoHash = "sha256-AlzCrK6DivOfCMGXQsiMJ+7Ahtd/9qoJ0MKZrez6xyM=";
         };
-        fsel = wrappers.lib.wrapPackage (
+        fsel = birdee.lib.wrapPackage (
           { config, ... }:
           {
             inherit pkgs;

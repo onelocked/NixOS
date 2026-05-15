@@ -67,7 +67,7 @@
       pkgs,
       lib,
       config,
-      wrappers,
+      birdee,
       ...
     }:
     let
@@ -93,7 +93,7 @@
 
         nixpkgs.overlays = [
           (_: prev: {
-            starship = wrappers.lib.wrapPackage (
+            starship = birdee.lib.wrapPackage (
               { config, ... }:
               {
                 pkgs = prev;

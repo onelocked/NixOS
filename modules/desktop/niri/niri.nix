@@ -20,7 +20,7 @@
       pkgs,
       config,
       lib,
-      wrappers,
+      birdee,
       self',
       constants,
       ...
@@ -30,7 +30,7 @@
         programs.niri = {
           enable = true;
           useNautilus = false;
-          package = wrappers.wrappers.niri.wrap {
+          package = birdee.wrappers.niri.wrap {
             inherit pkgs;
             package = self'.packages.niri;
             v2-settings = true;

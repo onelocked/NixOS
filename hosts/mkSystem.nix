@@ -29,7 +29,7 @@
               in
               {
                 inherit self' inputs' constants;
-                inherit (inputs) wrappers;
+                inherit (inputs) birdee;
               };
             modules = modules ++ [ config.m.default ];
           }

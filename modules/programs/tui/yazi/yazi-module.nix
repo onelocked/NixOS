@@ -4,7 +4,7 @@
       pkgs,
       lib,
       config,
-      wrappers,
+      birdee,
       ...
     }:
     let
@@ -29,7 +29,7 @@
 
         nixpkgs.overlays = [
           (_: prev: {
-            yazi = wrappers.wrappers.yazi.wrap {
+            yazi = birdee.wrappers.yazi.wrap {
               pkgs = prev;
               extraPackages = with prev; [ ouch ];
               inherit (config.forte.yazi) plugins;

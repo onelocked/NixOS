@@ -115,7 +115,7 @@
     {
       lib,
       pkgs,
-      wrappers,
+      birdee,
       config,
       ...
     }:
@@ -153,7 +153,7 @@
       config = {
         nixpkgs.overlays = [
           (final: prev: {
-            mpv = wrappers.wrappers.mpv.wrap {
+            mpv = birdee.wrappers.mpv.wrap {
               pkgs = final;
               package = prev.mpv;
               script.mpris.path = final.mpvScripts.mpris;

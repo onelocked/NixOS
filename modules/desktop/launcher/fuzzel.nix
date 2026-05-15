@@ -3,14 +3,14 @@
     {
       pkgs,
       config,
-      wrappers,
+      birdee,
       ...
     }:
     {
       hj.packages = [ pkgs.fuzzel ];
       nixpkgs.overlays = [
         (_: prev: {
-          fuzzel = wrappers.wrappers.fuzzel.wrap {
+          fuzzel = birdee.wrappers.fuzzel.wrap {
             package = prev.fuzzel;
             pkgs = prev;
             settings = {

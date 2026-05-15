@@ -1,9 +1,9 @@
 {
   m.bat =
-    { pkgs, wrappers, ... }:
+    { pkgs, birdee, ... }:
     {
       hj.packages = [
-        (wrappers.lib.wrapPackage {
+        (birdee.lib.wrapPackage {
           inherit pkgs;
           package = pkgs.bat;
           flags = {

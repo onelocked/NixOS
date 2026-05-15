@@ -39,7 +39,7 @@
       lib,
       config,
       self',
-      wrappers,
+      birdee,
       ...
     }:
     let
@@ -58,7 +58,7 @@
 
       qtPluginPath = lib.makeSearchPath pkgs.kdePackages.qtbase.qtPluginPrefix quickshellDeps; # lib/qt-6/plugins
 
-      quickshellWrapped = wrappers.lib.wrapPackage {
+      quickshellWrapped = birdee.lib.wrapPackage {
         inherit pkgs;
         package = self'.packages.quickshell;
         aliases = [ "qs" ];
