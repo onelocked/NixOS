@@ -14,6 +14,129 @@
       };
     };
   };
+  m.quickshell =
+    {
+      lib,
+      pkgs,
+      birdee,
+      self',
+      config,
+      ...
+    }:
+    let
+      cfg = config.forte.quickshell;
+      quickshellDeps =
+        with pkgs.kdePackages;
+        [ qtmultimedia ]
+        ++ (with pkgs; [
+          ddcutil
+          imagemagick
+          cava
+          python3
+          awww
+        ]);
+
+      qmlImportPath = lib.makeSearchPath pkgs.kdePackages.qtbase.qtQmlPrefix quickshellDeps; # lib/qt-6/qml
+
+      qtPluginPath = lib.makeSearchPath pkgs.kdePackages.qtbase.qtPluginPrefix quickshellDeps; # lib/qt-6/plugins
+    in
+    {
+      options.forte.quickshell = {
+        enable = lib.mkOption {
+          type = lib.types.bool;
+          default = true;
+          description = "Whether to enable quickshell";
+        };
+        package = lib.mkOption {
+          default = birdee.lib.wrapPackage {
+            inherit pkgs;
+            package = self'.packages.quickshell;
+            aliases = [ "qs" ];
+            extraPackages = quickshellDeps;
+            env = {
+              QT_QPA_PLATFORMTHEME = "gtk3";
+              QS_ICON_THEME = config.custom.gtk.iconTheme.name;
+              QS_DROP_EXPENSIVE_FONTS = "1";
+              QML_IMPORT_PATH = qmlImportPath;
+              QML2_IMPORT_PATH = qmlImportPath;
+              QT_PLUGIN_PATH = qtPluginPath;
+              FONTCONFIG_FILE = pkgs.makeFontsConf { fontDirectories = [ pkgs.lucide ]; };
+            };
+          };
+        };
+      };
+      config = lib.mkIf (cfg.enable) {
+        hj = {
+          packages = [ cfg.package ];
+          systemd.services.quickshell = {
+            description = "quickshell";
+            after = [ "graphical-session.target" ];
+            wantedBy = [ "graphical-session.target" ];
+            path = with pkgs; [
+              bash
+              coreutils
+              gnugrep
+              gnused
+              gawk
+              procps
+            ];
+            serviceConfig = {
+              Type = "dbus";
+              BusName = "org.kde.StatusNotifierWatcher";
+              ExecStart = "${cfg.package}/bin/qs --no-duplicate";
+              Restart = "on-failure";
+            };
+          };
+        };
+
+        forte.niri.settings.binds = {
+          "Shift+Alt+W" = _: {
+            props = {
+              repeat = false;
+            };
+            content = {
+              spawn = [
+                "qs"
+                "ipc"
+                "call"
+                "wallpaper"
+                "toggle"
+              ];
+            };
+          };
+
+          # Hardware Controls via Quickshell
+          "ALT+Shift+Equal" = _: {
+            props = {
+              repeat = false;
+            };
+            content = {
+              spawn = [
+                "qs"
+                "ipc"
+                "call"
+                "brightness"
+                "increase"
+              ];
+            };
+          };
+          "ALT+Shift+Minus" = _: {
+            props = {
+              repeat = false;
+            };
+            content = {
+              spawn = [
+                "qs"
+                "ipc"
+                "call"
+                "brightness"
+                "decrease"
+              ];
+            };
+          };
+        };
+      };
+    };
   perSystem =
     { inputs', ... }:
     {
@@ -32,116 +155,5 @@
           withI3 = false;
         }).overrideAttrs
           { doCheck = false; };
-    };
-  m.quickshell =
-    {
-      pkgs,
-      lib,
-      config,
-      self',
-      birdee,
-      ...
-    }:
-    let
-      quickshellDeps =
-        with pkgs.kdePackages;
-        [ qtmultimedia ]
-        ++ (with pkgs; [
-          ddcutil
-          imagemagick
-          cava
-          python3
-          awww
-        ]);
-
-      qmlImportPath = lib.makeSearchPath pkgs.kdePackages.qtbase.qtQmlPrefix quickshellDeps; # lib/qt-6/qml
-
-      qtPluginPath = lib.makeSearchPath pkgs.kdePackages.qtbase.qtPluginPrefix quickshellDeps; # lib/qt-6/plugins
-
-      quickshellWrapped = birdee.lib.wrapPackage {
-        inherit pkgs;
-        package = self'.packages.quickshell;
-        aliases = [ "qs" ];
-        extraPackages = quickshellDeps;
-        env = {
-          QT_QPA_PLATFORMTHEME = "gtk3";
-          QS_ICON_THEME = config.custom.gtk.iconTheme.name;
-          QS_DROP_EXPENSIVE_FONTS = "1";
-          QML_IMPORT_PATH = qmlImportPath;
-          QML2_IMPORT_PATH = qmlImportPath;
-          QT_PLUGIN_PATH = qtPluginPath;
-          FONTCONFIG_FILE = pkgs.makeFontsConf { fontDirectories = [ pkgs.lucide ]; };
-        };
-      };
-    in
-    {
-      hj = {
-        packages = [ quickshellWrapped ];
-        systemd.services.quickshell = {
-          description = "quickshell";
-          after = [ "graphical-session.target" ];
-          wantedBy = [ "graphical-session.target" ];
-          path = with pkgs; [
-            bash
-            coreutils
-            gnugrep
-            gnused
-            gawk
-            procps
-          ];
-          serviceConfig = {
-            Type = "dbus";
-            BusName = "org.kde.StatusNotifierWatcher";
-            ExecStart = "${quickshellWrapped}/bin/qs --no-duplicate";
-            Restart = "on-failure";
-          };
-        };
-      };
-      forte.niri.settings.binds = {
-        "Shift+Alt+W" = _: {
-          props = {
-            repeat = false;
-          };
-          content = {
-            spawn = [
-              "qs"
-              "ipc"
-              "call"
-              "wallpaper"
-              "toggle"
-            ];
-          };
-        };
-
-        # Hardware Controls via Quickshell
-        "ALT+Shift+Equal" = _: {
-          props = {
-            repeat = false;
-          };
-          content = {
-            spawn = [
-              "qs"
-              "ipc"
-              "call"
-              "brightness"
-              "increase"
-            ];
-          };
-        };
-        "ALT+Shift+Minus" = _: {
-          props = {
-            repeat = false;
-          };
-          content = {
-            spawn = [
-              "qs"
-              "ipc"
-              "call"
-              "brightness"
-              "decrease"
-            ];
-          };
-        };
-      };
     };
 }

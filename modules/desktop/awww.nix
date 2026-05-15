@@ -1,5 +1,5 @@
 {
-  m.default =
+  m.desktop =
     { pkgs, ... }:
     {
       hj = {
