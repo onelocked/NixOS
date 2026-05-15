@@ -387,7 +387,7 @@
       };
 
       config = lib.mkIf cfg.enable {
-        startup = [
+        forte.startup = [
           {
             spawn = [
               (lib.getExe' cfg.package "vicinae")

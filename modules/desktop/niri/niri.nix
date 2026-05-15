@@ -40,7 +40,7 @@
         };
 
         forte.niri.settings = lib.mkMerge (
-          config.startup
+          config.forte.startup
           |> lib.filter (startup: startup.enable)
           |> map (startup: {
             spawn-at-startup = [ startup.spawn ];
@@ -126,7 +126,7 @@
     { lib, ... }:
     {
       options = {
-        startup = lib.mkOption {
+        forte.startup = lib.mkOption {
           description = "Programs to run on startup";
           default = [ ];
           type = lib.types.listOf (

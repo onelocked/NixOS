@@ -12,7 +12,6 @@
       cfg = config.forte.cliphist-tui;
     in
     {
-
       options.forte.cliphist-tui = {
         enable = lib.mkOption {
           type = lib.types.bool;
@@ -66,7 +65,7 @@
           ];
         };
 
-        startup = [
+        forte.startup = [
           {
             spawn = [
               "wl-paste"
