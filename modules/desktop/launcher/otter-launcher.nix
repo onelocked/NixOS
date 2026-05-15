@@ -257,20 +257,20 @@
     }:
     {
       packages = {
-        otter-launcher = pkgs.rustPlatform.buildRustPackage {
+        otter-launcher = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
           inherit (envoy.otter-launcher) pname version src;
-          cargoHash = "sha256-AlzCrK6DivOfCMGXQsiMJ+7Ahtd/9qoJ0MKZrez6xyM=";
-        };
+          cargoLock.lockFile = finalAttrs.src + "/Cargo.lock";
+        });
         fsel = birdee.lib.wrapPackage (
           { config, ... }:
           {
             inherit pkgs;
             extraPackages = [ pkgs.app2unit ];
             package = (
-              pkgs.rustPlatform.buildRustPackage {
+              pkgs.rustPlatform.buildRustPackage (finalAttrs: {
                 inherit (envoy.fsel) pname version src;
-                cargoHash = "sha256-G1wfue1Q+3NMH/5NqPVKeO0NpU0WJlwWkh51r3TM5IM=";
-              }
+                cargoLock.lockFile = finalAttrs.src + "/Cargo.lock";
+              })
             );
             flags = {
               "--config" = config.constructFiles.generatedConfig.path;

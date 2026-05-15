@@ -59,9 +59,9 @@
   perSystem =
     { envoy, pkgs, ... }:
     {
-      packages.cliphist-tui = pkgs.rustPlatform.buildRustPackage {
+      packages.cliphist-tui = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
         inherit (envoy.cliphist-tui) pname version src;
-        cargoHash = "sha256-KHlEw5RZNeCYeNngPvgDFvBFMKD2OZrx8sg2QWdwjQ8=";
+        cargoLock.lockFile = finalAttrs.src + "/Cargo.lock";
         patches = [
           (pkgs.writeText "fix-hardcoded-path.patch" # rust
             ''
@@ -90,6 +90,6 @@
             ''
           )
         ];
-      };
+      });
     };
 }
