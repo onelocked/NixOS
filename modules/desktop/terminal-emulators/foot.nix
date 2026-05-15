@@ -2,7 +2,6 @@
   m.foot =
     { pkgs, birdee, ... }:
     {
-
       nixpkgs.overlays = [
         (_: prev: {
           foot = birdee.wrappers.foot.wrap {

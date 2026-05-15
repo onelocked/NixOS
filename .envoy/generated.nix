@@ -22,6 +22,18 @@
       sha256 = "sha256-U1oEOvBHBtJEcQWeZHRb/IDWYXraLuo0NdxWINwPUxg=";
     };
   };
+  cliphist-tui = {
+    pname = "cliphist-tui";
+    version = "fd4a47baaba60598603d6c760512d2169479872b";
+    src = fetchFromGitHub {
+      owner = "SHORiN-KiWATA";
+      repo = "cliphist-tui";
+      rev = "fd4a47baaba60598603d6c760512d2169479872b";
+      fetchSubmodules = false;
+      sha256 = "sha256-wjgE9aladixbGfMXVdkvxEBJHKS2BEepbwILZro7d0A=";
+    };
+    date = "2026-04-26";
+  };
   fsel = {
     pname = "fsel";
     version = "3320d306e67354d300ab64aced96a6b9e2722917";
