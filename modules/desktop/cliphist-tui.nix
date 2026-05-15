@@ -4,56 +4,79 @@
       pkgs,
       self',
       config,
+      lib,
+      birdie,
       ...
     }:
+    let
+      cfg = config.forte.cliphist-tui;
+    in
     {
-      hj.packages = [
-        self'.packages.cliphist-tui
-        pkgs.cliphist
-        pkgs.chafa
-        pkgs.ffmpegthumbnailer
-      ];
-      forte.niri.settings = {
-        # binds = {
-        #   "Mod+V" = _: {
-        #     props = {
-        #       repeat = false;
-        #     };
-        #     content = {
-        #       spawn-sh = [ "pkill cliphist-tui || kitty -1 --app-id=ClipboardHistory -e cliphist-tui" ];
-        #     };
-        #   };
-        # };
-        window-rules = [
-          {
-            matches = [ { app-id = "^ClipboardHistory$"; } ];
-            open-floating = true;
-            opacity = 0.95;
-            default-column-width.fixed = 750;
-            default-window-height.fixed = 900;
-          }
-        ];
-      };
-      forte.otter-launcher.settings = {
-        modules = [
-          {
-            description = "cliphist";
-            "prefix" = "cc";
-            cmd = config.forte.lib.resize 750 900 "cliphist-tui";
-          }
-        ];
+
+      options.forte.cliphist-tui = {
+        enable = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+          description = "Whether to enable otter-launcher.";
+        };
+
+        package = lib.mkOption {
+          default = birdie.lib.wrapPackage {
+            inherit pkgs;
+            package = self'.packages.cliphist-tui;
+            extraPackages = [
+              pkgs.cliphist
+              pkgs.chafa
+              pkgs.ffmpegthumbnailer
+            ];
+          };
+        };
       };
 
-      # startup = [
-      #   {
-      #     spawn = [
-      #       "wl-paste"
-      #       "--watch"
-      #       "cliphist"
-      #       "store"
-      #     ];
-      #   }
-      # ];
+      config = lib.mkIf (cfg.enable) {
+        hj.packages = [ cfg.package ];
+        forte.niri.settings = {
+          binds = {
+            "Mod+V" = _: {
+              props = {
+                repeat = false;
+              };
+              content = {
+                spawn-sh = [ "pkill cliphist-tui || kitty -1 --app-id=ClipboardHistory -e cliphist-tui" ];
+              };
+            };
+          };
+          window-rules = [
+            {
+              matches = [ { app-id = "^ClipboardHistory$"; } ];
+              open-floating = true;
+              opacity = 0.95;
+              default-column-width.fixed = 750;
+              default-window-height.fixed = 900;
+            }
+          ];
+        };
+        forte.otter-launcher.settings = {
+          modules = [
+            {
+              description = "cliphist";
+              "prefix" = "cc";
+              cmd = config.forte.lib.resize 750 900 "cliphist-tui";
+            }
+          ];
+        };
+
+        startup = [
+          {
+            spawn = [
+              "wl-paste"
+              "--watch"
+              "cliphist"
+              "store"
+            ];
+          }
+        ];
+      };
     };
   envoy.cliphist-tui.github = "SHORiN-KiWATA/cliphist-tui";
   perSystem =
@@ -63,7 +86,7 @@
         inherit (envoy.cliphist-tui) pname version src;
         cargoLock.lockFile = finalAttrs.src + "/Cargo.lock";
         patches = [
-          (pkgs.writeText "fix-hardcoded-path.patch" # rust
+          (pkgs.writeText "better-binds.patch" # rust
             ''
               diff --git a/src/main.rs b/src/main.rs
               index 16ec468..a651026 100644
