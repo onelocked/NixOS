@@ -32,11 +32,12 @@
 
   flake-file = {
     inputs = {
+      flake-file.url = "github:vic/flake-file";
+      systems.url = "github:nix-systems/x86_64-linux";
       flake-parts = {
         url = "github:hercules-ci/flake-parts";
         inputs.nixpkgs-lib.follows = "nixpkgs";
       };
-      flake-file.url = "github:vic/flake-file";
       birdee = {
         url = "github:BirdeeHub/nix-wrapper-modules";
         inputs.nixpkgs.follows = "nixpkgs";

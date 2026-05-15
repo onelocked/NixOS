@@ -2,7 +2,6 @@
   ff = {
     nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
     flake-compat.url = "github:NixOS/flake-compat";
-    systems.url = "github:nix-systems/x86_64-linux";
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
