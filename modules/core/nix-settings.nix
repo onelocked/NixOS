@@ -26,6 +26,7 @@
         nix-tree
         nix-update
         nix-init
+        nix-melt
       ];
       nix = {
         optimise.automatic = true;
