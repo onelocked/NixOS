@@ -2,6 +2,7 @@
   m.btop = {
     forte.xdg.desktopEntries."btop".noDisplay = true;
     forte.btop = {
+      enable = true;
       settings = {
         color_theme = "oneshill";
         vim_keys = true;
@@ -95,11 +96,7 @@
         hj.packages = [ cfg.package ];
       };
       options.forte.btop = {
-        enable = lib.mkOption {
-          type = lib.types.bool;
-          default = true;
-          description = "Whether to enable btop";
-        };
+        enable = lib.mkEnableOption "zen-browser";
 
         settings = lib.mkOption {
           type = lib.types.attrs;

@@ -3,6 +3,7 @@
     { config, ... }:
     {
       forte.mpv = {
+        enable = true;
         conf = # ini
           ''
             osc=no
@@ -124,11 +125,7 @@
     in
     {
       options.forte.mpv = {
-        enable = lib.mkOption {
-          type = lib.types.bool;
-          default = true;
-          description = "Whether to enable otter-launcher.";
-        };
+        enable = lib.mkEnableOption "zen-browser";
 
         conf = lib.mkOption {
           default = "";

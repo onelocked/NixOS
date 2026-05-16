@@ -38,7 +38,6 @@
             inherit (config.forte.niri) settings;
           };
         };
-
         forte.niri.settings = lib.mkMerge (
           config.forte.startup
           |> lib.filter (startup: startup.enable)

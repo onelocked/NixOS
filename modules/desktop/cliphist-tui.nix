@@ -13,12 +13,7 @@
     in
     {
       options.forte.cliphist-tui = {
-        enable = lib.mkOption {
-          type = lib.types.bool;
-          default = !config.forte.vicinae.enable;
-          description = "Whether to enable cliphist-tui";
-        };
-
+        enable = lib.mkEnableOption "cliphist-tui";
         package = lib.mkOption {
           default = birdee.lib.wrapPackage {
             inherit pkgs;

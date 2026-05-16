@@ -9,6 +9,7 @@
     { lib, ... }:
     {
       forte.zen-browser = {
+        enable = true;
         setAsDefaultBrowser = true;
         niri-settings = true;
         policies =

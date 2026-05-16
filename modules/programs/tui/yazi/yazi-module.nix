@@ -50,11 +50,7 @@
         ];
       };
       options.forte.yazi = {
-        enable = lib.mkOption {
-          type = lib.types.bool;
-          default = true;
-          description = "Whether to enable yazi";
-        };
+        enable = lib.mkEnableOption "yazi";
         package = lib.mkOption {
           type = lib.types.package;
           default = pkgs.yazi;

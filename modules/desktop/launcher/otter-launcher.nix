@@ -15,6 +15,7 @@
     in
     {
       forte.otter-launcher = {
+        enable = true;
         settings = {
           general = {
             callback = "";
@@ -189,11 +190,7 @@
         default = { };
       };
       options.forte.otter-launcher = {
-        enable = lib.mkOption {
-          type = lib.types.bool;
-          default = true;
-          description = "Whether to enable otter-launcher.";
-        };
+        enable = lib.mkEnableOption "otter-launcher";
 
         withFsel = lib.mkOption {
           type = lib.types.bool;

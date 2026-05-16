@@ -14,7 +14,8 @@
       };
     };
   };
-  m.quickshell =
+  m.quickshell.forte.quickshell.enable = true;
+  m.default =
     {
       lib,
       pkgs,
@@ -42,11 +43,7 @@
     in
     {
       options.forte.quickshell = {
-        enable = lib.mkOption {
-          type = lib.types.bool;
-          default = true;
-          description = "Whether to enable quickshell";
-        };
+        enable = lib.mkEnableOption "quickshell";
         package = lib.mkOption {
           default = birdee.lib.wrapPackage {
             inherit pkgs;

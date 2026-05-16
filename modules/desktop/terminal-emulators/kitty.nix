@@ -1,6 +1,7 @@
 {
   m.kitty = {
     forte.kitty = {
+      enable = true;
       settings = {
         wayland_enable_ime = "no";
 
@@ -241,11 +242,7 @@
         };
       };
       options.forte.kitty = {
-        enable = lib.mkOption {
-          type = lib.types.bool;
-          default = true;
-          description = "Whether to enable kitty";
-        };
+        enable = lib.mkEnableOption "zen-browser";
         package = lib.mkOption {
           type = lib.types.package;
           default = pkgs.kitty;
