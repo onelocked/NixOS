@@ -36,15 +36,15 @@
   };
   fsel = {
     pname = "fsel";
-    version = "3320d306e67354d300ab64aced96a6b9e2722917";
+    version = "6b6ae52e3a2c254007e8a2c332a8d5de99428ba5";
     src = fetchFromGitHub {
       owner = "Mjoyufull";
       repo = "fsel";
-      rev = "3320d306e67354d300ab64aced96a6b9e2722917";
+      rev = "6b6ae52e3a2c254007e8a2c332a8d5de99428ba5";
       fetchSubmodules = false;
-      sha256 = "sha256-g4LWJrY62VJ0qN/n+eoPt3uL7b4fLtGoDAT86I9jbco=";
+      sha256 = "sha256-7YoRc6jOuQUI0yv3qBHFhc60G/RG0LwVsKkN90UkPn4=";
     };
-    date = "2026-05-12";
+    date = "2026-05-17";
   };
   fuzzy-search = {
     pname = "fuzzy-search";
@@ -72,15 +72,15 @@
   };
   otter-launcher = {
     pname = "otter-launcher";
-    version = "ae647cef5b3c3dd52bedd7a8c881988e412a2dca";
+    version = "380ceb9d2cf9b02854fbd3be39177e5e151fae6c";
     src = fetchFromGitHub {
       owner = "kuokuo123";
       repo = "otter-launcher";
-      rev = "ae647cef5b3c3dd52bedd7a8c881988e412a2dca";
+      rev = "380ceb9d2cf9b02854fbd3be39177e5e151fae6c";
       fetchSubmodules = false;
-      sha256 = "sha256-ImJeI5xbd/w4nchFwc0tSS8v2vYWx/ttwM5uk2BWsCk=";
+      sha256 = "sha256-oQw4/UqDpE/K0lkc+zFXdWsNKps9p0rZg6ybMwVDhsM=";
     };
-    date = "2026-04-23";
+    date = "2026-05-17";
   };
   tmuxFloax = {
     pname = "tmuxFloax";
