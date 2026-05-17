@@ -258,12 +258,13 @@ in
               printf '%s\n' "$matched" | gum format --type="template" \
                 '{{ range . }}  • {{ . }}{{ "\n" }}{{ end }}' 2>/dev/null \
                 || printf '%s\n' "$matched" | sed 's/^/  • /'
-
               gum confirm "Proceed?" || exit 0
 
               regex="^($(printf '%s\n' "$matched" | paste -sd'|' -))$"
               gum spin --title "Fetching sources…" -- \
-                nvfetcher -c ${tomlFile} -o .envoy -f "$regex"
+                nvfetcher -c ${tomlFile} -o .envoy -f "$regex" \
+                  --commit-changes \
+                  --commit-summary "nvfetcher: update sources"
 
               gum log --level info "Done."
             '';
