@@ -81,13 +81,6 @@
                 commandline -f repaint
               '';
           };
-          shellAbbrs = {
-            nb = "nom build";
-            nd = "nom develop";
-            nr = "nix run";
-            nf = "nix flake update";
-            wf = "nix run ~/NixOS#write-flake";
-          };
           shellInit = # fish
             ''
               bind Z __yazi-fuzzy-zoxide

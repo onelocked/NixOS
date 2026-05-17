@@ -231,7 +231,7 @@ in
       {
         imports = [ injectArg ];
         apps.write-sources = {
-          meta.description = "Update sources. Usage: write-sources [name-regex]. Without a filter, locked sources are skipped; with an explicit filter, locked sources matching the filter are updated too.";
+          meta.description = "Update nvfetcher sources. Usage: nix run .#write-sources";
           program = pkgs.writeShellApplication {
             name = "write-sources";
             runtimeInputs = with pkgs; [
