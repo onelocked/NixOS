@@ -31,6 +31,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     flake-compat.url = "github:NixOS/flake-compat";
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+      inputs.systems.follows = "systems";
+    };
     hjem = {
       url = "github:feel-co/hjem";
       inputs = {
@@ -62,6 +66,14 @@
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nvfetcher = {
+      url = "github:berberman/nvfetcher";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-compat.follows = "flake-compat";
+        flake-utils.follows = "flake-utils";
+      };
     };
     qml-niri = {
       url = "github:imiric/qml-niri/main";

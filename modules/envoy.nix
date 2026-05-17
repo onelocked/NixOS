@@ -214,10 +214,22 @@ in
   };
 
   config = {
+    ff = {
+      nvfetcher = {
+        url = "github:berberman/nvfetcher";
+        inputs.nixpkgs.follows = "nixpkgs";
+        inputs.flake-compat.follows = "flake-compat";
+        inputs.flake-utils.follows = "flake-utils";
+      };
+      flake-utils = {
+        url = "github:numtide/flake-utils";
+        inputs.systems.follows = "systems";
+      };
+    };
     m.default = injectArg;
 
     perSystem =
-      { pkgs, ... }:
+      { pkgs, inputs', ... }:
       let
         # `topLevel.config.…` (not perSystem `config`) because sources are
         # defined at the top level, not per-system.
@@ -227,6 +239,7 @@ in
         unlockedNames = lib.attrNames (lib.filterAttrs (_: s: !s.locked) sources);
         unlockedNamesStr = lib.concatStringsSep "\n" unlockedNames;
         allNamesStr = lib.concatStringsSep "\n" (lib.attrNames sources);
+        nvfetcher = inputs'.nvfetcher.packages.default;
       in
       {
         imports = [ injectArg ];
