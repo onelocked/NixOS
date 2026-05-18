@@ -28,13 +28,7 @@
             smart-filter
             wl-clipboard
             ;
-          fuzzy-search = pkgs.yaziPlugins.mkYaziPlugin {
-            inherit (envoy.fuzzy-search) pname version;
-            src = lib.cleanSourceWith {
-              inherit (envoy.fuzzy-search) src;
-              filter = name: _: baseNameOf name == "main.lua";
-            };
-          };
+          fuzzy-search = pkgs.yaziPlugins.mkYaziPlugin { inherit (envoy.fuzzy-search) pname version src; };
         };
         settings.plugin =
           let
