@@ -45,6 +45,7 @@
       options.forte.quickshell = {
         enable = lib.mkEnableOption "quickshell";
         package = lib.mkOption {
+          type = lib.types.package;
           default = birdee.lib.wrapPackage {
             inherit pkgs;
             package = self'.packages.quickshell;

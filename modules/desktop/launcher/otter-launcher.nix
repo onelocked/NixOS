@@ -212,6 +212,7 @@
         };
 
         package = lib.mkOption {
+          type = lib.types.package;
           default = birdee.lib.wrapPackage (
             { config, ... }:
             {
