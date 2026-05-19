@@ -56,7 +56,7 @@
         ];
       };
 
-      associations =
+      defaultApplications =
         mimeMap
         |> mapAttrsToList (key: map (type: nameValuePair type defaultApps."${key}"))
         |> flatten
@@ -66,7 +66,7 @@
       xdg = {
         mime = {
           enable = true;
-          defaultApplications = associations;
+          inherit defaultApplications;
           addedAssociations = {
             "x-scheme-handler/mpv-handler" = [ "mpv-handler.desktop" ];
             "x-scheme-handler/mpv-handler-debug" = [ "mpv-handler-debug.desktop" ];
