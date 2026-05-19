@@ -96,7 +96,7 @@
 
             size = lib.mkOption {
               type = lib.types.int;
-              default = 32;
+              default = 24;
               description = "The cursor size.";
             };
           };

@@ -97,12 +97,11 @@
                 "qs"
                 "ipc"
                 "call"
-                "wallpaper"
+                "WallpaperPanel"
                 "toggle"
               ];
             };
           };
-
           # Hardware Controls via Quickshell
           "ALT+Shift+Equal" = _: {
             props = {

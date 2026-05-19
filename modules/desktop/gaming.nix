@@ -53,6 +53,13 @@
           "vm.max_map_count" = 2147483642;
         };
         hardware.steam-hardware.enable = true;
+        forte.niri.settings.window-rules = [
+          {
+            matches = [ { app-id = "^steam$"; } ];
+            excludes = [ { title = "^Steam$"; } ];
+            open-floating = true;
+          }
+        ];
       };
     };
 }
