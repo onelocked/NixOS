@@ -1,6 +1,6 @@
 {
   m.desktop =
-    { lib, ... }:
+    { lib, constants, ... }:
     with lib;
     let
       defaultApps = {
@@ -8,8 +8,8 @@
         image = [ "com.interversehq.qView.desktop" ];
         audio = [ "mpv.desktop" ];
         video = [ "mpv.desktop" ];
-        directory = [ "kitty.desktop" ];
-        terminal = [ "kitty.desktop" ];
+        directory = [ constants.terminal ];
+        terminal = [ constants.terminal ];
       };
 
       mimeMap = {

@@ -38,6 +38,7 @@
         locale = "en_GB.UTF-8";
         timezone = "Europe/London";
         stateVersion = "25.11";
+        terminal = "kitty.desktop";
       };
     in
     {

@@ -1,6 +1,6 @@
 {
   m.desktop =
-    { lib, ... }:
+    { lib, constants, ... }:
     let
       inherit (lib) mkForce;
     in
@@ -21,7 +21,7 @@
         terminal-exec = {
           enable = true;
           settings = {
-            default = [ "kitty.desktop" ];
+            default = [ constants.terminal ];
           };
         };
       };
