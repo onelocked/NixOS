@@ -7,28 +7,15 @@
       ...
     }:
     let
-      logo = pkgs.writeText "nixos-logo.txt" ''
-         _____  ___    __     ___  ___   ______    ________
-        (\"   \|"  \  |" \   |"  \/"  | /    " \  /"       )
-        |.\\   \    | ||  |   \   \  / // ____  \(:   \___/
-        |: \.   \\  | |:  |    \\  \/ /  /    ) :)\___  \
-        |.  \    \. | |.  |    /\.  \(: (____/ //  __/  \\
-        |    \    \ | /\  |\  /  \   \\        /  /" \   :)
-         \___|\____\)(__\_|_)|___/\___|\"_____/  (_______/
-
-      '';
       fastfetch-config =
         pkgs.writeText "config.jsonc" # json
           ''
             {
               "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
               "logo": {
-                "source": "${logo}",
-                "type": "file",
-                "height": 8,
-                "color": {
-                  "1": "#c5c0ff"
-                },
+                "source": "-",
+                "type": "raw",
+                "width": 20,
                 "padding": {
                   "top": 2,
                   "left": 2
@@ -99,9 +86,29 @@
           "--config" = "${fastfetch-config}";
         };
       };
+      fleet-snowfluff = pkgs.fetchurl {
+        url = "https://raw.githubusercontent.com/onelocked/images/refs/heads/main/fleet-snowfluff.gif";
+        hash = "sha256-Vz6QZrhr5c+ShiHJwxHFeyCXszWFvDjhKFm2CyQNAbo=";
+      };
     in
     {
-      environment.shellAliases.ff = lib.getExe fastfetch;
+      environment.shellAliases.ff = "kitten icat -n --place 20x20@2x1 --scale-up --align left ${fleet-snowfluff} | ${lib.getExe fastfetch}";
+      forte.otter-launcher.settings.modules = [
+        {
+          description = "fastfetch";
+          "prefix" = "ff";
+          cmd = "niri msg action set-window-width 800;niri msg action set-window-height 355;niri msg action center-window;sleep 0.2;kitten icat -n --place 20x20@2x1 --scale-up --align left ${fleet-snowfluff} | ${lib.getExe fastfetch};read -p ''";
+        }
+      ];
+      forte.niri.settings.window-rules = [
+        {
+          matches = [ { app-id = "^fastfetch$"; } ];
+          open-floating = true;
+          opacity = 0.95;
+          default-column-width.fixed = 755;
+          default-window-height.fixed = 325;
+        }
+      ];
       hj.packages = [ fastfetch ];
     };
 }
