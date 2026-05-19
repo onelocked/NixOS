@@ -32,6 +32,7 @@
       self',
       constants,
       inputs',
+      lib,
       ...
     }:
     {
@@ -157,55 +158,61 @@
         };
         extensions = [ inputs'.vicinae-extensions.packages.nix ];
       };
-      forte.niri.settings.binds = {
-        # Vicinae Launcher / Extensions
-        "Mod+Z" = _: {
-          props = {
-            repeat = false;
+      forte.niri.settings.binds = lib.mkMerge [
+        {
+          "Mod+Z" = _: {
+            props = {
+              repeat = false;
+            };
+            content = {
+              spawn = [
+                "vicinae"
+                "vicinae://launch/core/search-emojis"
+              ];
+            };
           };
-          content = {
-            spawn = [
-              "vicinae"
-              "vicinae://launch/core/search-emojis"
-            ];
+
+          "Shift+Alt+F" = _: {
+            props = {
+              repeat = false;
+              hotkey-overlay-title = "Nix";
+            };
+            content = {
+              spawn = [
+                "vicinae"
+                "vicinae://extensions/knoopx/nix"
+              ];
+            };
           };
-        };
-        "Shift+Alt+F" = _: {
-          props = {
-            repeat = false;
-            hotkey-overlay-title = "Nix";
+        }
+        (lib.mkIf (!config.forte.otter-launcher.enable) {
+          "Mod+SPACE" = _: {
+            props = {
+              repeat = false;
+              hotkey-overlay-title = "Launcher";
+            };
+            content = {
+              spawn = [
+                "vicinae"
+                "toggle"
+              ];
+            };
           };
-          content = {
-            spawn = [
-              "vicinae"
-              "vicinae://extensions/knoopx/nix"
-            ];
+        })
+        (lib.mkIf (!config.forte.cliphist-tui.enable) {
+          "Mod+V" = _: {
+            props = {
+              repeat = false;
+            };
+            content = {
+              spawn = [
+                "vicinae"
+                "vicinae://launch/clipboard/history"
+              ];
+            };
           };
-        };
-        # "Mod+SPACE" = _: {
-        #   props = {
-        #     repeat = false;
-        #     hotkey-overlay-title = "Launcher";
-        #   };
-        #   content = {
-        #     spawn = [
-        #       "vicinae"
-        #       "toggle"
-        #     ];
-        #   };
-        # };
-        "Mod+V" = _: {
-          props = {
-            repeat = false;
-          };
-          content = {
-            spawn = [
-              "vicinae"
-              "vicinae://launch/clipboard/history"
-            ];
-          };
-        };
-      };
+        })
+      ];
     };
 
   m.default =
