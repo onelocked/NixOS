@@ -11,8 +11,14 @@
     in
     {
       forte.niri.settings = {
-        extraConfig = # kdl
-          ''spawn-sh-at-startup "${pkgs.libsecret}/bin/secret-tool lookup app keyring-init || echo 'init' | secret-tool store --label='keyring-init' app keyring-init" '';
+        extraConfig = lib.mkMerge [
+          ''
+            spawn-sh-at-startup "${pkgs.libsecret}/bin/secret-tool lookup app keyring-init || echo 'init' | secret-tool store --label='keyring-init' app keyring-init"
+          ''
+          (lib.mkAfter ''
+            include optional=true "${config.hj.xdg.config.directory}/niri/config.kdl";
+          '')
+        ];
         prefer-no-csd = true;
         clipboard.disable-primary = true;
 
