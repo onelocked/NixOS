@@ -3,14 +3,18 @@
     { pkgs, self', ... }:
     {
       fonts = {
-        packages = with pkgs; [
-          unifont
-          nerd-fonts.symbols-only
-          montserrat
-          maple-mono.NF
-          self'.legacyPackages.apple-font
-          self'.legacyPackages.apple-font-emoji
-        ];
+        packages =
+          with pkgs;
+          [
+            nerd-fonts.symbols-only
+            montserrat
+            maple-mono.NF
+          ]
+          ++ (with self'.legacyPackages; [
+            apple-font
+            apple-font-emoji
+          ]);
+        enableDefaultPackages = true;
         fontDir.enable = true;
         fontconfig = {
           enable = true;
