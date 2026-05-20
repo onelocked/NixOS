@@ -13,6 +13,7 @@
               "audio.format" = "S16BE";
               "sess.payload" = 127;
               "audio.rate" = 48000;
+              "always-process" = true;
               "net.dscp" = 46;
               "stream.props" = {
                 "node.description" = "RTP Stream";
