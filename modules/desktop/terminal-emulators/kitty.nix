@@ -49,7 +49,6 @@
         tab_bar_style = "custom";
         tab_bar_align = "center";
         tab_bar_min_tabs = "2";
-        tab_separator = "";
 
         tab_title_max_length = "1";
         tab_title_template = "{fmt.fg._313244}●";
@@ -61,9 +60,6 @@
         inactive_tab_foreground = "#313244";
         inactive_tab_background = "#131316";
         inactive_tab_font_style = "normal";
-
-        bell_on_tab = "";
-        tab_activity_symbol = "";
 
         # Border styling
         window_border_width = "1.5pt";

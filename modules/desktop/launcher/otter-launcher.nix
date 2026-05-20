@@ -295,7 +295,7 @@
         hj.packages = [ cfg.package ];
         forte.lib.resize =
           width: height: app:
-          "niri msg action set-window-width ${toString width};niri msg action set-window-height ${toString height};niri msg action center-window;${app}";
+          "niri msg action set-window-width ${toString width};niri msg action set-window-height ${toString height};niri msg action center-window;kitten @ set-background-image none && kitten @ set-spacing padding=0;${app}";
       };
     };
 
