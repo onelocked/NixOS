@@ -142,26 +142,42 @@
         };
       };
       forte.niri.settings = {
-        binds = {
-          "Mod+SPACE" = _: {
-            props = {
-              repeat = false;
-              hotkey-overlay-title = "Launcher";
+        binds =
+          let
+            fleet-controller = pkgs.fetchurl {
+              url = "https://raw.githubusercontent.com/onelocked/images/refs/heads/main/fleet-controller.png";
+              hash = "sha256-pI4EzF6S7++rws35Ki3dD/Kt62XfNdmf0fuWyXCccVc=";
             };
-            content = {
-              spawn-sh = [
-                "pkill otter-launcher || kitty --app-id=otter-launcher -o font_size=15 -e otter-launcher"
-              ];
+            otter-kitty = pkgs.writeText "otter-kitty.conf" ''
+              allow_remote_control yes
+              background_image        ${fleet-controller}
+              background_image_layout scaled
+              background_image_linear yes
+              font_size               15
+              window_padding_width    20 105 20 105
+            '';
+          in
+          {
+            "Mod+SPACE" = _: {
+              props = {
+                repeat = false;
+                hotkey-overlay-title = "Launcher";
+              };
+              content = {
+                spawn-sh = [
+                  "pkill otter-launcher || kitty --app-id=otter-launcher -c ${otter-kitty} -e otter-launcher"
+                ];
+              };
             };
           };
-        };
         window-rules = [
           {
             matches = [ { app-id = "^otter-launcher$"; } ];
+            geometry-corner-radius = 45;
             open-floating = true;
             opacity = 0.95;
-            default-column-width.fixed = 620;
-            default-window-height.fixed = 355;
+            default-column-width.fixed = 885;
+            default-window-height.fixed = 410;
           }
         ];
       };
