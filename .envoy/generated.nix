@@ -6,6 +6,14 @@
   dockerTools,
 }:
 {
+  aemeath-cursor = {
+    pname = "aemeath-cursor";
+    version = "https://s3.onelock.org/download/cursors/aemeath-cursor.tar.gz";
+    src = fetchTarball {
+      url = "https://s3.onelock.org/download/cursors/aemeath-cursor.tar.gz";
+      sha256 = "sha256-ubr7Zz8m5TFLtrNL8+u1nQjVh5WYG859oOmmXxlWIxI=";
+    };
+  };
   apple-font = {
     pname = "apple-font";
     version = "https://s3.onelock.org/download/fonts/apple-nerd.tar.gz";
