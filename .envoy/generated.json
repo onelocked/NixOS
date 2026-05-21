@@ -42,6 +42,27 @@
         },
         "version": "https://github.com/samuelngs/apple-emoji-linux/releases/latest/download/AppleColorEmoji-Linux.ttf"
     },
+    "cliphist": {
+        "cargoLock": null,
+        "date": "2026-04-21",
+        "extract": null,
+        "name": "cliphist",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "sentriz",
+            "repo": "cliphist",
+            "rev": "980c85fab4a5bab04c6f14bed49b330fd18922ab",
+            "sha256": "sha256-EeBIGhbWGw6BZ54kG9BhBc5OQGy3Ag/7eyXRImovqi8=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "980c85fab4a5bab04c6f14bed49b330fd18922ab"
+    },
     "cliphist-tui": {
         "cargoLock": null,
         "date": "2026-04-26",

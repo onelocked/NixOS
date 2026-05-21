@@ -30,6 +30,18 @@
       sha256 = "sha256-U1oEOvBHBtJEcQWeZHRb/IDWYXraLuo0NdxWINwPUxg=";
     };
   };
+  cliphist = {
+    pname = "cliphist";
+    version = "980c85fab4a5bab04c6f14bed49b330fd18922ab";
+    src = fetchFromGitHub {
+      owner = "sentriz";
+      repo = "cliphist";
+      rev = "980c85fab4a5bab04c6f14bed49b330fd18922ab";
+      fetchSubmodules = false;
+      sha256 = "sha256-EeBIGhbWGw6BZ54kG9BhBc5OQGy3Ag/7eyXRImovqi8=";
+    };
+    date = "2026-04-21";
+  };
   cliphist-tui = {
     pname = "cliphist-tui";
     version = "fd4a47baaba60598603d6c760512d2169479872b";
