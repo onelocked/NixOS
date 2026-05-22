@@ -19,57 +19,11 @@
           in
           {
             # General Niri Settings
-            extraConfig =
-              lib.mkAfter # kdl
-                ''
-                  spawn-sh-at-startup "${pkgs.libsecret}/bin/secret-tool lookup app keyring-init || echo 'init' | secret-tool store --label='keyring-init' app keyring-init"
-                  include optional=true "${config.hj.xdg.config.directory}/niri/config.kdl";
-
-                  workspace "browser" {
-                    layout {
-                         center-focused-column "never"
-                          default-column-width { proportion 0.749; }
-                          preset-column-widths {
-                          proportion 0.749
-                          fixed 2871
-                      }
-                      }
-                     }
-
-                  workspace "coding" {
-                    layout {
-                         center-focused-column "never"
-                          preset-column-widths {
-                          proportion 0.5
-                          fixed 2488
-                      }
-                        default-column-width { fixed 2488; }
-
-                      }
-                     }
-
-                  workspace "social" {
-                     layout {
-                          center-focused-column "never"
-                          preset-column-widths {
-                          proportion  0.79
-                          proportion 0.21
-                      }
-                     }
-                  }
-                  workspace "media" {
-                    layout {
-                         center-focused-column "never"
-                          default-column-width { proportion 0.749;}
-                          preset-column-widths {
-                          proportion 0.749
-                      }
-                      }
-                     }
-                '';
-
             prefer-no-csd = true;
             clipboard.disable-primary = true;
+            spawn-sh-at-startup = [
+              "${pkgs.libsecret}/bin/secret-tool lookup app keyring-init || echo 'init' | secret-tool store --label='keyring-init' app keyring-init"
+            ];
 
             xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite;
 
@@ -186,7 +140,7 @@
               };
               shadow = {
                 on = set;
-                draw-behind-window = true;
+                draw-behind-window = false;
                 softness = 0;
                 spread = 0;
                 offset = _: {
@@ -343,6 +297,68 @@
               # Screenshot
               "Print".screenshot = set;
             };
+            workspacesList = [
+              {
+                name = "browser";
+                config = {
+                  # Ensure things map cleanly as sub-nodes matching Niri expectations
+                  layout = {
+                    center-focused-column = "never";
+                    default-column-width = {
+                      proportion = 0.749;
+                    };
+                    preset-column-widths = [
+                      { proportion = 0.749; }
+                      { fixed = 2871; }
+                    ];
+                  };
+                };
+              }
+              {
+                name = "coding";
+                config = {
+                  layout = {
+                    center-focused-column = "never";
+                    default-column-width = {
+                      fixed = 2488;
+                    };
+                    preset-column-widths = [
+                      { proportion = 0.5; }
+                      { fixed = 2488; }
+                    ];
+                  };
+                };
+              }
+              {
+                name = "social";
+                config = {
+                  layout = {
+                    center-focused-column = "never";
+                    preset-column-widths = [
+                      { proportion = 0.79; }
+                      { proportion = 0.21; }
+                    ];
+                  };
+                };
+              }
+              {
+                name = "media";
+                config = {
+                  layout = {
+                    center-focused-column = "never";
+                    default-column-width = {
+                      proportion = 0.749;
+                    };
+                    preset-column-widths = [
+                      { proportion = 0.749; }
+                    ];
+                  };
+                };
+              }
+            ];
+            extraConfig =
+              lib.mkAfter # kdl
+                ''include optional=true "${config.hj.xdg.config.directory}/niri/config.kdl"; '';
           };
       };
     };
@@ -550,45 +566,82 @@
                   );
               in
               {
-                inherit pkgs;
-                package = self'.packages.niri;
-                v2-settings = true;
-                disableConfigHotReload = true;
-                inherit (cfg) settings;
-                env.NIRI_CONFIG = lib.mkForce config.constructFiles.generatedConfig.path;
-                constructFiles.generatedConfig = lib.mkForce {
-                  relPath = "config.kdl";
-                  content =
-                    if config."config.kdl".content or "" != "" then
-                      config."config.kdl".content
-                    else
-                      wlib.toKdl (_: {
-                        version = 1;
-                        content = builtins.concatLists [
-                          (map (v: { spawn-at-startup = _: { props = v; }; }) config.settings.spawn-at-startup)
-                          (map (v: { spawn-sh-at-startup = _: { props = v; }; }) config.settings.spawn-sh-at-startup)
-                          (attrAsArg "output" config.settings.outputs)
-                          (attrAsArg "workspace" config.settings.workspaces)
-                          [
-                            (convertToKdl (
-                              lib.removeAttrs config.settings [
-                                "window-rules"
-                                "layer-rules"
-                                "spawn-at-startup"
-                                "spawn-sh-at-startup"
-                                "workspaces"
-                                "outputs"
-                                "extraConfig"
-                              ]
-                            ))
-                          ]
-                          config.extraSettings
-                          (map (mkRule "window-rule") config.settings.window-rules)
-                          (map (mkRule "layer-rule") config.settings.layer-rules)
-                        ];
-                      })
-                      + "\n"
-                      + config.settings.extraConfig;
+                config = {
+                  inherit pkgs;
+                  package = self'.packages.niri;
+                  v2-settings = true;
+                  disableConfigHotReload = true;
+                  inherit (cfg) settings;
+                  env.NIRI_CONFIG = lib.mkForce config.constructFiles.generatedConfig.path;
+                  constructFiles.generatedConfig = lib.mkForce {
+                    relPath = "config.kdl";
+                    content =
+                      if config."config.kdl".content or "" != "" then
+                        config."config.kdl".content
+                      else
+                        wlib.toKdl (_: {
+                          version = 1;
+                          content = builtins.concatLists [
+                            (map (v: { spawn-at-startup = _: { props = v; }; }) config.settings.spawn-at-startup)
+                            (map (v: { spawn-sh-at-startup = _: { props = v; }; }) config.settings.spawn-sh-at-startup)
+                            (attrAsArg "output" config.settings.outputs)
+                            (attrAsArg "workspace" config.settings.workspaces)
+                            (map (w: {
+                              workspace =
+                                s:
+                                let
+                                  v = w.config;
+                                  res =
+                                    if lib.isFunction v then
+                                      v s
+                                    else
+                                      {
+                                        content = v;
+                                        props = w.name;
+                                      };
+                                in
+                                res // { props = w.name; };
+                            }) config.settings.workspacesList)
+                            [
+                              (convertToKdl (
+                                lib.removeAttrs config.settings [
+                                  "window-rules"
+                                  "layer-rules"
+                                  "spawn-at-startup"
+                                  "spawn-sh-at-startup"
+                                  "workspacesList"
+                                  "workspaces"
+                                  "outputs"
+                                  "extraConfig"
+                                ]
+                              ))
+                            ]
+                            config.extraSettings
+                            (map (mkRule "window-rule") config.settings.window-rules)
+                            (map (mkRule "layer-rule") config.settings.layer-rules)
+                          ];
+                        })
+                        + "\n"
+                        + config.settings.extraConfig;
+                  };
+                };
+                options.settings.workspacesList = lib.mkOption {
+                  default = [ ];
+                  type = lib.types.listOf (
+                    lib.types.submodule {
+                      options = {
+                        name = lib.mkOption {
+                          type = lib.types.str;
+                          description = "Workspace name (determines index order)";
+                        };
+                        config = lib.mkOption {
+                          type = lib.types.anything;
+                          default = _: { };
+                          description = "Workspace config, same format as `workspaces` values";
+                        };
+                      };
+                    }
+                  );
                 };
               }
             );
@@ -643,9 +696,23 @@
                   default = [ ];
                   type = lib.types.listOf lib.types.attrs;
                 };
-                workspaces = lib.mkOption {
-                  default = { };
-                  type = lib.types.attrsOf (lib.types.nullOr lib.types.anything);
+                workspacesList = lib.mkOption {
+                  default = [ ];
+                  type = lib.types.listOf (
+                    lib.types.submodule {
+                      options = {
+                        name = lib.mkOption {
+                          type = lib.types.str;
+                          description = "Workspace name (determines index order)";
+                        };
+                        config = lib.mkOption {
+                          type = lib.types.anything;
+                          default = _: { };
+                          description = "Workspace config, same format as `workspaces` values";
+                        };
+                      };
+                    }
+                  );
                 };
                 outputs = lib.mkOption {
                   default = { };
