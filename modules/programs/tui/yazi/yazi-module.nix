@@ -31,7 +31,7 @@
           (_: prev: {
             yazi = birdee.wrappers.yazi.wrap {
               pkgs = prev;
-              extraPackages = with prev; [ ouch ];
+              runtimePkgs = with prev; [ ouch ];
               inherit (config.forte.yazi) plugins;
               settings = with config.forte; {
                 inherit (yazi) keymap theme;

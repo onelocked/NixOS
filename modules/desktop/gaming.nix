@@ -11,7 +11,7 @@
         enable = true;
         remotePlay.openFirewall = true;
         localNetworkGameTransfers.openFirewall = true;
-        extraPackages = [ config.programs.gamescope.package ];
+        runtimePkgs = [ config.programs.gamescope.package ];
         extraCompatPackages = with pkgs; [ proton-ge-bin ];
       };
 

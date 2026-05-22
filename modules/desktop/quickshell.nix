@@ -50,7 +50,7 @@
             inherit pkgs;
             package = self'.packages.quickshell;
             aliases = [ "qs" ];
-            extraPackages = quickshellDeps;
+            runtimePkgs = quickshellDeps;
             env = {
               QT_QPA_PLATFORMTHEME = "gtk3";
               QS_ICON_THEME = config.custom.gtk.iconTheme.name;

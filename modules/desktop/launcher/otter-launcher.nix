@@ -247,7 +247,7 @@
                   printf '%s\n' "${cfg.moreCfg}" >> "$2"
                 '';
               };
-              extraPackages = [
+              runtimePkgs = [
                 pkgs.pulsemixer
                 pkgs.chafa
               ]
@@ -257,7 +257,7 @@
                   {
                     inherit pkgs;
                     package = self'.packages.fsel;
-                    extraPackages = [ pkgs.app2unit ];
+                    runtimePkgs = [ pkgs.app2unit ];
                     flags = {
                       "--config" = config.constructFiles.generatedConfig.path;
                     };

@@ -88,7 +88,7 @@
     {
       packages.cliphist-tui = birdee.lib.wrapPackage {
         inherit pkgs;
-        extraPackages = [
+        runtimePkgs = [
           self'.packages.cliphist
           pkgs.chafa
           pkgs.ffmpegthumbnailer
