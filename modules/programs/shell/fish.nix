@@ -61,7 +61,7 @@
                       --ansi --no-sort --height=100% --layout=reverse --info=inline-right \
                       --scheme=path --delimiter='\t' --with-nth=1 \
                       --prompt "󰰷 Zoxide: ➜ " --pointer="▶" --separator "─" \
-                      --scrollbar "│" --border="rounded" --padding="1,2" \
+                      --scrollbar "│" --padding="1,2" \
                       --header " Rank │  Directory" \
                       --preview '
                           printf "   Tree Structure\n";
