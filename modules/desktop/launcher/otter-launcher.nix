@@ -182,16 +182,16 @@
             shadow = {
               on = _: { };
               draw-behind-window = false;
-              softness = 30;
-              spread = 1;
+              softness = 20;
+              spread = 0;
               offset = _: {
                 props = {
-                  x = 2;
-                  y = 2;
+                  x = 12;
+                  y = 15;
                 };
                 content = { };
               };
-              color = "#2a2a30FF";
+              color = "#2a2a30E6";
             };
           }
         ];
