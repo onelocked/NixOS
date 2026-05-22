@@ -68,15 +68,15 @@
   };
   fuzzy-search = {
     pname = "fuzzy-search";
-    version = "16cea088a39c7769fbd22c4810347b04dd38c6b2";
+    version = "8adfa1778e51c6b42867836304c9af74a0c41b58";
     src = fetchFromGitHub {
       owner = "onelocked";
       repo = "fuzzy-search.yazi";
-      rev = "16cea088a39c7769fbd22c4810347b04dd38c6b2";
+      rev = "8adfa1778e51c6b42867836304c9af74a0c41b58";
       fetchSubmodules = false;
-      sha256 = "sha256-3YsZQ7SOkJZfUWP2KGzp8fPpT42M+x2aThs/AYmdy0o=";
+      sha256 = "sha256-4z1FpHlzm+YFHlvZYJGWXp7AQlOwkF9d+rsP4BgTReY=";
     };
-    date = "2026-03-25";
+    date = "2026-05-22";
   };
   grubTheme = {
     pname = "grubTheme";
