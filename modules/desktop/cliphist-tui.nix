@@ -36,8 +36,8 @@
               matches = [ { app-id = "^ClipboardHistory$"; } ];
               open-floating = true;
               opacity = 0.95;
-              default-column-width.fixed = 750;
-              default-window-height.fixed = 900;
+              default-column-width.fixed = 830;
+              default-window-height.fixed = 1056;
             }
           ];
         };
