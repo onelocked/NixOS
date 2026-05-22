@@ -163,54 +163,54 @@
               empty-workspace-above-first = set;
               background-color = "transparent";
               always-center-single-column = set;
-              gaps = 15;
+              gaps = 20;
               center-focused-column = "on-overflow";
-
               preset-column-widths = [
                 { fixed = 2489; }
                 { fixed = 871; }
               ];
               default-column-width.fixed = 2489;
-
               focus-ring = {
                 off = set;
                 width = 1;
-                active-color = "#c5c0ff";
+                active-color = "#5a468c";
                 inactive-color = "#191919";
                 urgent-color = "#ffb4ab";
               };
-
               border = {
-                off = set;
-                width = 1;
-                active-color = "#c5c0ff";
-                inactive-color = "#808080";
-                urgent-color = "#ffb4ab";
+                on = set;
+                width = 5;
+                active-color = "#a898c8";
+                inactive-color = "#b4b4b4";
+                urgent-color = "#f0b8d0";
               };
-
               shadow = {
                 on = set;
                 draw-behind-window = true;
-                softness = 50;
-                spread = 5;
+                softness = 0;
+                spread = 0;
                 offset = _: {
                   props = {
-                    x = 0;
-                    y = 0;
+                    x = 10;
+                    y = 10;
                   };
                   content = { };
                 };
-                color = "#00000070"; # Updated with your new color string
+                color = "#2a2a30FF";
               };
-
               tab-indicator = {
                 active-color = "#c5c0ff";
                 inactive-color = "#413b8e";
                 urgent-color = "#ffb4ab";
               };
-
               insert-hint = {
                 color = "#c5c0ff80";
+              };
+              struts = {
+                left = -5;
+                right = -5;
+                top = 28;
+                bottom = 28;
               };
             };
 
@@ -470,13 +470,128 @@
           enable = lib.mkEnableOption "Niri, a scrollable-tiling Wayland compositor";
           package = lib.mkOption {
             type = lib.types.package;
-            default = birdee.wrappers.niri.wrap {
-              inherit pkgs;
-              package = self'.packages.niri;
-              v2-settings = true;
-              disableConfigHotReload = true;
-              inherit (config.forte.niri) settings;
-            };
+            default = birdee.wrappers.niri.wrap (
+              { wlib, config, ... }:
+              let
+                convertToKdl =
+                  let
+                    recurse =
+                      path: v:
+                      if builtins.isAttrs v then
+                        let
+                          hasAttrs = v ? _attrs;
+                          rest = lib.removeAttrs v [ "_attrs" ];
+                          processedRest = lib.mapAttrs (n: val: recurse (path ++ [ n ]) val) rest;
+                        in
+                        if hasAttrs then
+                          (_: {
+                            props = recurse (path ++ [ "_attrs" ]) v._attrs;
+                            content = processedRest;
+                          })
+                        else
+                          processedRest
+                      else if builtins.isList v && builtins.all builtins.isAttrs v then
+                        map (i: recurse (path ++ [ "[${toString i}]" ]) i) v
+                      else if v == null then
+                        (_: { })
+                      else
+                        v;
+                  in
+                  if config.v2-settings then v: v else v: recurse [ ] v;
+                mkRule =
+                  node: r:
+                  let
+                    matches = map (m: { match = _: { props = m; }; }) (r.matches or [ ]);
+                    excludes = map (m: { exclude = _: { props = m; }; }) (r.excludes or [ ]);
+                    other = lib.mapAttrsToList (n: v: { ${n} = v; }) (
+                      lib.attrsets.removeAttrs r [
+                        "matches"
+                        "excludes"
+                      ]
+                    );
+                  in
+                  {
+                    ${node} = matches ++ excludes ++ other;
+                  };
+                attrAsArg =
+                  node:
+                  lib.mapAttrsToList (
+                    n: v: {
+                      ${node} =
+                        s:
+                        if lib.isFunction v then
+                          let
+                            res = v s;
+                          in
+                          res
+                          // {
+                            props =
+                              if res ? props then
+                                if builtins.isAttrs res.props then
+                                  [
+                                    n
+                                    res.props
+                                  ]
+                                else if builtins.isList res.props then
+                                  [ n ] ++ res.props
+                                else
+                                  n
+                              else
+                                n;
+                          }
+                        else if builtins.isAttrs v then
+                          {
+                            content = v;
+                            props = n;
+                          }
+                        else
+                          { props = n; };
+                    }
+                  );
+              in
+              {
+                inherit pkgs;
+                package = self'.packages.niri;
+                v2-settings = true;
+                disableConfigHotReload = true;
+                inherit (cfg) settings;
+                env.NIRI_CONFIG = lib.mkForce config.constructFiles.generatedConfig.path;
+                constructFiles.generatedConfig = lib.mkForce {
+                  relPath = "config.kdl";
+                  content =
+                    if config."config.kdl".content or "" != "" then
+                      config."config.kdl".content
+                    else
+                      wlib.toKdl (_: {
+                        version = 1;
+                        content = builtins.concatLists [
+                          (map (v: { spawn-at-startup = _: { props = v; }; }) config.settings.spawn-at-startup)
+                          (map (v: { spawn-sh-at-startup = _: { props = v; }; }) config.settings.spawn-sh-at-startup)
+                          (attrAsArg "output" config.settings.outputs)
+                          (attrAsArg "workspace" config.settings.workspaces)
+                          [
+                            (convertToKdl (
+                              lib.removeAttrs config.settings [
+                                "window-rules"
+                                "layer-rules"
+                                "spawn-at-startup"
+                                "spawn-sh-at-startup"
+                                "workspaces"
+                                "outputs"
+                                "extraConfig"
+                              ]
+                            ))
+                          ]
+                          config.extraSettings
+                          (map (mkRule "window-rule") config.settings.window-rules)
+                          (map (mkRule "layer-rule") config.settings.layer-rules)
+                        ];
+                      })
+                      + "\n"
+                      + config.settings.extraConfig;
+                };
+              }
+            );
             defaultText = lib.literalExpression "wrapped niri";
             description = "Niri package to use.";
           };
