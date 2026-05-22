@@ -4,9 +4,9 @@
     {
       services = {
         scx = {
-          enable = true;
+          enable = false;
           package = pkgs.scx.rustscheds;
-          scheduler = lib.mkDefault "scx_bpfland"; # scheduler that prioritizes interactive workloads  https://github.com/sched-ext/scx/blob/main/scheds/rust/README.md
+          scheduler = lib.mkForce "scx_lavd"; # Gaming scheduler https://github.com/sched-ext/scx/blob/main/scheds/rust/README.md
         };
       };
     };
