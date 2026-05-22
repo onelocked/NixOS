@@ -178,6 +178,8 @@
             opacity = 0.95;
             default-column-width.fixed = 885;
             default-window-height.fixed = 410;
+            border.off = _: { };
+            shadow.off = _: { };
           }
         ];
       };

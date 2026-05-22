@@ -89,7 +89,7 @@
             window-rule = {
               clip-to-geometry = true;
               draw-border-with-background = false;
-              geometry-corner-radius = 15;
+              geometry-corner-radius = 0;
             };
 
             window-rules = [
