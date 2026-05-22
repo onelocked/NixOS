@@ -150,6 +150,7 @@
             };
             otter-kitty = pkgs.writeText "otter-kitty.conf" ''
               allow_remote_control yes
+              background_opacity 1
               background_image        ${fleet-controller}
               background_image_layout scaled
               background_image_linear yes
@@ -175,11 +176,23 @@
             matches = [ { app-id = "^otter-launcher$"; } ];
             geometry-corner-radius = 45;
             open-floating = true;
-            opacity = 0.95;
             default-column-width.fixed = 885;
             default-window-height.fixed = 410;
             border.off = _: { };
-            shadow.off = _: { };
+            shadow = {
+              on = _: { };
+              draw-behind-window = false;
+              softness = 30;
+              spread = 1;
+              offset = _: {
+                props = {
+                  x = 2;
+                  y = 2;
+                };
+                content = { };
+              };
+              color = "#2a2a30FF";
+            };
           }
         ];
       };
