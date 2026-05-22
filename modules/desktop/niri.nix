@@ -44,6 +44,8 @@
               clip-to-geometry = true;
               draw-border-with-background = false;
               geometry-corner-radius = 0;
+              open-fullscreen = false;
+              open-maximized = false;
             };
 
             window-rules = [
@@ -145,12 +147,13 @@
                 spread = 0;
                 offset = _: {
                   props = {
-                    x = 10;
-                    y = 10;
+                    x = 8;
+                    y = 9;
                   };
                   content = { };
                 };
-                color = "#2a2a30FF";
+                color = "#302453E6";
+                inactive-color = "#302453E6";
               };
               tab-indicator = {
                 active-color = "#c5c0ff";
@@ -163,8 +166,8 @@
               struts = {
                 left = -5;
                 right = -5;
-                top = 28;
-                bottom = 28;
+                top = 30;
+                bottom = 15;
               };
             };
 
@@ -489,31 +492,7 @@
             default = birdee.wrappers.niri.wrap (
               { wlib, config, ... }:
               let
-                convertToKdl =
-                  let
-                    recurse =
-                      path: v:
-                      if builtins.isAttrs v then
-                        let
-                          hasAttrs = v ? _attrs;
-                          rest = lib.removeAttrs v [ "_attrs" ];
-                          processedRest = lib.mapAttrs (n: val: recurse (path ++ [ n ]) val) rest;
-                        in
-                        if hasAttrs then
-                          (_: {
-                            props = recurse (path ++ [ "_attrs" ]) v._attrs;
-                            content = processedRest;
-                          })
-                        else
-                          processedRest
-                      else if builtins.isList v && builtins.all builtins.isAttrs v then
-                        map (i: recurse (path ++ [ "[${toString i}]" ]) i) v
-                      else if v == null then
-                        (_: { })
-                      else
-                        v;
-                  in
-                  if config.v2-settings then v: v else v: recurse [ ] v;
+                convertToKdl = v: v;
                 mkRule =
                   node: r:
                   let
@@ -576,53 +555,50 @@
                   constructFiles.generatedConfig = lib.mkForce {
                     relPath = "config.kdl";
                     content =
-                      if config."config.kdl".content or "" != "" then
-                        config."config.kdl".content
-                      else
-                        wlib.toKdl (_: {
-                          version = 1;
-                          content = builtins.concatLists [
-                            (map (v: { spawn-at-startup = _: { props = v; }; }) config.settings.spawn-at-startup)
-                            (map (v: { spawn-sh-at-startup = _: { props = v; }; }) config.settings.spawn-sh-at-startup)
-                            (attrAsArg "output" config.settings.outputs)
-                            (attrAsArg "workspace" config.settings.workspaces)
-                            (map (w: {
-                              workspace =
-                                s:
-                                let
-                                  v = w.config;
-                                  res =
-                                    if lib.isFunction v then
-                                      v s
-                                    else
-                                      {
-                                        content = v;
-                                        props = w.name;
-                                      };
-                                in
-                                res // { props = w.name; };
-                            }) config.settings.workspacesList)
-                            [
-                              (convertToKdl (
-                                lib.removeAttrs config.settings [
-                                  "window-rules"
-                                  "layer-rules"
-                                  "spawn-at-startup"
-                                  "spawn-sh-at-startup"
-                                  "workspacesList"
-                                  "workspaces"
-                                  "outputs"
-                                  "extraConfig"
-                                ]
-                              ))
-                            ]
-                            config.extraSettings
-                            (map (mkRule "window-rule") config.settings.window-rules)
-                            (map (mkRule "layer-rule") config.settings.layer-rules)
-                          ];
-                        })
-                        + "\n"
-                        + config.settings.extraConfig;
+                      wlib.toKdl (_: {
+                        version = 1;
+                        content = builtins.concatLists [
+                          (map (v: { spawn-at-startup = _: { props = v; }; }) config.settings.spawn-at-startup)
+                          (map (v: { spawn-sh-at-startup = _: { props = v; }; }) config.settings.spawn-sh-at-startup)
+                          (attrAsArg "output" config.settings.outputs)
+                          (attrAsArg "workspace" config.settings.workspaces)
+                          (map (w: {
+                            workspace =
+                              s:
+                              let
+                                v = w.config;
+                                res =
+                                  if lib.isFunction v then
+                                    v s
+                                  else
+                                    {
+                                      content = v;
+                                      props = w.name;
+                                    };
+                              in
+                              res // { props = w.name; };
+                          }) config.settings.workspacesList)
+                          [
+                            (convertToKdl (
+                              lib.removeAttrs config.settings [
+                                "window-rules"
+                                "layer-rules"
+                                "spawn-at-startup"
+                                "spawn-sh-at-startup"
+                                "workspacesList"
+                                "workspaces"
+                                "outputs"
+                                "extraConfig"
+                              ]
+                            ))
+                          ]
+                          config.extraSettings
+                          (map (mkRule "window-rule") config.settings.window-rules)
+                          (map (mkRule "layer-rule") config.settings.layer-rules)
+                        ];
+                      })
+                      + "\n"
+                      + config.settings.extraConfig;
                   };
                 };
                 options.settings.workspacesList = lib.mkOption {
