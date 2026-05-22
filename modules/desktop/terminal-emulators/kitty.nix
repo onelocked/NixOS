@@ -54,6 +54,7 @@
         tab_title_template = "{fmt.fg._313244}●";
         active_tab_title_template = "{fmt.fg._c5c0ff}{'' if layout_name == 'stack' else '●'}";
 
+        background_opacity = 0.97;
         active_tab_foreground = "#c5c0ff";
         active_tab_background = "#131316";
         active_tab_font_style = "normal";
