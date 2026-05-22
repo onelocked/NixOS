@@ -19,7 +19,8 @@
       defaultOptions = [
         "--height=50%"
         "--layout=reverse"
-        "--border=rounded"
+        "--border=double"
+        "--preview-window=sharp"
         "--padding=0,1"
         "--prompt=  "
         "--pointer= "
@@ -57,11 +58,11 @@
         };
       };
       config = lib.mkIf cfg.enable {
-        environment.systemPackages = [ cfg.package ];
-        environment.sessionVariables = {
-          FZF_DEFAULT_OPTS =
+        hj.packages = [ cfg.package ];
+        hj.environment.sessionVariables = {
+          FZF_DEFAULT_OPTS = lib.escapeShellArgs (
             cfg.defaultOptions ++ lib.optional (cfg.colors != { }) "--color=${renderedColors cfg.colors}"
-            |> lib.concatStringsSep " ";
+          );
         };
         programs.fish.interactiveShellInit = "${lib.getExe cfg.package} --fish | source";
       };
