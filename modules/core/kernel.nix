@@ -24,6 +24,6 @@
       nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.pinned ]; # Guarantees you have binary cache, but initializes another nixpkgs instance.
 
       # boot.kernelPackages = pkgs.linuxPackages_latest; # _latest, _zen, _xanmod_latest, _hardened, _rt
-      boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest;
+      boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-bore-lto;
     };
 }
