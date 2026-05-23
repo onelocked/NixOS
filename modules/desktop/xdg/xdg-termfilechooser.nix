@@ -34,6 +34,7 @@
                 command="${lib.getExe pkgs.kitty} --app-id=FileChooser -e ${lib.getExe pkgs.yazi}"
 
                 if [ "$save" = "1" ]; then
+                    export YAZI_CHOOSER_SAVE=1
                     set -- --chooser-file="$out" "$path"
                 elif [ "$directory" = "1" ]; then
                     set -- --chooser-file="$out" --cwd-file="$out"".1" "$path"
