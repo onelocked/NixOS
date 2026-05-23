@@ -308,11 +308,11 @@
                   layout = {
                     center-focused-column = "never";
                     default-column-width = {
-                      proportion = 0.749;
+                      fixed = 2390;
                     };
                     preset-column-widths = [
-                      { proportion = 0.749; }
-                      { fixed = 2871; }
+                      { fixed = 2390; }
+                      { fixed = 2735; }
                     ];
                   };
                 };

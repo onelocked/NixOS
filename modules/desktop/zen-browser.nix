@@ -268,9 +268,7 @@
             |> (mimes: lib.genAttrs mimes (_: [ "zen-twilight.desktop" ]));
         };
 
-        environment.sessionVariables = lib.mkIf cfg.setAsDefaultBrowser {
-          BROWSER = "zen-twilight";
-        };
+        environment.sessionVariables = lib.mkIf cfg.setAsDefaultBrowser { BROWSER = "zen-twilight"; };
         forte.niri = lib.mkIf cfg.niri-settings {
           settings =
             let
@@ -323,7 +321,7 @@
                     }
                   ];
                   tiled-state = true;
-                  default-column-width.proportion = 0.749;
+                  default-column-width.fixed = 2390;
                   open-on-workspace = "browser";
                 }
                 {
