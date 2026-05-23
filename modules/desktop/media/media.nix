@@ -1,6 +1,11 @@
 {
   m.default =
-    { pkgs, birdee, ... }:
+    {
+      pkgs,
+      birdee,
+      config,
+      ...
+    }:
     {
       hj.packages = with pkgs; [
         moonlight-qt
@@ -21,16 +26,21 @@
           open-fullscreen = false;
         }
         {
-          matches = [ { app-id = "com.moonlight_stream.Moonlight"; } ];
+          matches = [
+            {
+              app-id = "com.moonlight_stream.Moonlight";
+              title = "Moonlight";
+            }
+          ];
           open-on-workspace = "media";
-          open-focused = true;
+          open-focused = false;
           open-fullscreen = false;
         }
         {
           matches = [ { title = "onelock - Moonlight"; } ];
           open-on-workspace = "media";
           open-fullscreen = false;
-          open-focused = false;
+          open-focused = true;
           default-column-width.proportion = 0.945;
         }
         {
@@ -57,5 +67,16 @@
           open-focused = true;
         }
       ];
+      forte.otter-launcher.settings = {
+        modules = [
+          {
+            description = "pc";
+            "prefix" = "game";
+            cmd =
+              config.forte.lib.resize 750 900
+                "niri msg action spawn -- moonlight stream onelock desktop; exit";
+          }
+        ];
+      };
     };
 }
