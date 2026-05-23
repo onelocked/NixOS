@@ -1,5 +1,8 @@
 {
   m.btop = {
+    systemd.tmpfiles.rules = [
+      "z /sys/class/powercap/intel-rapl/intel-rapl:0/energy_uj 0444 root root - -"
+    ];
     forte.xdg.desktopEntries."btop".noDisplay = true;
     forte.btop = {
       enable = true;
