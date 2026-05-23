@@ -1,7 +1,7 @@
 {
   m.hardware-mini-pc = {
     boot = {
-      tmp.cleanOnBoot = true;
+      tmp.useTmpfs = true;
       supportedFilesystems = [
         "ntfs"
         "exfat"
