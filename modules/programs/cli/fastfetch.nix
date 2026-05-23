@@ -81,7 +81,7 @@
 
       fastfetch = birdee.lib.wrapPackage {
         inherit pkgs;
-        package = pkgs.fastfetch;
+        package = pkgs.fastfetch.minimal;
         flags = {
           "--config" = "${fastfetch-config}";
         };
