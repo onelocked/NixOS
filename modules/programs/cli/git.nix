@@ -1,13 +1,6 @@
 {
   m.git =
-    {
-      pkgs,
-      birdee,
-      constants,
-      config,
-      lib,
-      ...
-    }:
+    { constants, config, ... }:
     {
       sops.secrets.email.owner = constants.username;
       sops.templates."git-email" = {
@@ -17,7 +10,6 @@
             email = ${config.sops.placeholder."email"}
         '';
       };
-
       programs.git = {
         enable = true;
         config = {
@@ -46,105 +38,153 @@
           diff = {
             colorMoved = "default";
           };
+          pager = {
+            diff = "diffnav";
+            show = "diffnav";
+            log = "diffnav";
+          };
           init.defaultBranch = "main";
           advice.objectNameWarning = false;
           pull.rebase = true;
           safe.directory = "/tmp";
         };
       };
-
-      nixpkgs.overlays = [
-        (
-          final: prev:
-          let
-            yamlFormat = prev.formats.yaml { };
-          in
-          {
-            lazygit = birdee.lib.wrapPackage {
-              pkgs = prev;
-              package = prev.lazygit;
-              env.LG_CONFIG_FILE = yamlFormat.generate "config.yml" {
-                git = {
-                  autoFetch = false;
-                  overrideGpg = true;
-                  pagers = [
-                    {
-                      pager = ''delta --file-style "#74548c" --features space-separated --dark --diff-highlight --true-color always --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}" --line-fill-method=ansi --navigate --keep-plus-minus-markers --commit-style="#8eb893"'';
-                    }
-                    {
-                      pager = ''delta --side-by-side --file-style "#74548c" --features space-separated --dark --diff-highlight --true-color always --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}" --line-fill-method=ansi --navigate --keep-plus-minus-markers --commit-style="#8eb893"'';
-                    }
-                  ];
-                  update = {
-                    days = 365;
-                    method = "never";
-                  };
-                };
-
-                gui = {
-                  authorColors = {
-                    "*" = "#b4befe";
-                  };
-                  expandFocusedSidePanel = true;
-                  expandedSidePanelWeight = 2;
-                  filterMode = "fuzzy";
-                  showBottomLine = false;
-                  showNumstatInFilesView = true;
-                  showPanelJumps = false;
-                  showRandomTip = false;
-                  sidePanelWidth = 0.25;
-                  theme = {
-                    activeBorderColor = [
-                      "#c8c5d0"
-                      "bold"
-                    ];
-                    cherryPickedCommitBgColor = [ "#45475a" ];
-                    cherryPickedCommitFgColor = [ "#89b4fa" ];
-                    defaultFgColor = [ "#cccccc" ];
-                    inactiveBorderColor = [ "#c5c0ff" ];
-                    optionsTextColor = [ "#aeaeae" ];
-                    searchingActiveBorderColor = [ "#f9e2af" ];
-                    selectedLineBgColor = [ "#47464f" ];
-                    unstagedChangesColor = [ "#f38ba8" ];
-                  };
-                };
-
-                keybinding = {
-                  universal = {
-                    jumpToBlock = [
-                      "0"
-                      "1"
-                      "2"
-                      "3"
-                      "4"
-                    ];
-                  };
-                };
-
-                os = {
-                  editInTerminal = true;
-                  edit = ''if [ -n "$NVIM" ]; then nvim --server $NVIM --remote-send '<C-\><C-n><cmd>close<cr>' && nvim --server $NVIM --remote {{filename}}; else nvim {{filename}}; fi'';
-                  editAtLine = ''if [ -n "$NVIM" ]; then nvim --server $NVIM --remote-send '<C-\><C-n><cmd>close<cr>' && nvim --server $NVIM --remote +{{line}} {{filename}}; else nvim +{{line}} {{filename}}; fi'';
-                };
-              };
+      forte.lazygit = {
+        enable = true;
+        settings = {
+          git = {
+            autoFetch = false;
+            overrideGpg = true;
+            pagers = [
+              {
+                pager = ''delta --file-style "#74548c" --features space-separated --dark --diff-highlight --true-color always --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}" --line-fill-method=ansi --navigate --keep-plus-minus-markers --commit-style="#8eb893"'';
+              }
+              {
+                pager = ''delta --side-by-side --file-style "#74548c" --features space-separated --dark --diff-highlight --true-color always --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}" --line-fill-method=ansi --navigate --keep-plus-minus-markers --commit-style="#8eb893"'';
+              }
+            ];
+            update = {
+              days = 365;
+              method = "never";
             };
-          }
-        )
-      ];
-      hj.packages = with pkgs; [
-        lazygit
-        diffnav
-        gh-dash
-        delta
-      ];
-      programs.fish.functions.lg = # fish
-        ''
-          set -x LAZYGIT_NEW_DIR_FILE ${config.hj.xdg.config.directory}/lazygit/newdir
-          command ${lib.getExe pkgs.lazygit} $argv
-          if test -f $LAZYGIT_NEW_DIR_FILE
-            cd (cat $LAZYGIT_NEW_DIR_FILE)
-            rm -f $LAZYGIT_NEW_DIR_FILE
-          end
-        '';
+          };
+
+          gui = {
+            authorColors = {
+              "*" = "#b4befe";
+            };
+            expandFocusedSidePanel = true;
+            expandedSidePanelWeight = 2;
+            filterMode = "fuzzy";
+            showFileTree = true;
+            showBranchCommitHash = true;
+            branchLogGraph = "style";
+            showBottomLine = false;
+            showNumstatInFilesView = true;
+            showPanelJumps = false;
+            showRandomTip = false;
+            sidePanelWidth = 0.25;
+            theme = {
+              activeBorderColor = [
+                "#c8c5d0"
+                "bold"
+              ];
+              cherryPickedCommitBgColor = [ "#45475a" ];
+              cherryPickedCommitFgColor = [ "#89b4fa" ];
+              defaultFgColor = [ "#cccccc" ];
+              inactiveBorderColor = [ "#c5c0ff" ];
+              optionsTextColor = [ "#aeaeae" ];
+              searchingActiveBorderColor = [ "#f9e2af" ];
+              selectedLineBgColor = [ "#47464f" ];
+              unstagedChangesColor = [ "#f38ba8" ];
+            };
+          };
+
+          keybinding = {
+            universal = {
+              jumpToBlock = [
+                "0"
+                "1"
+                "2"
+                "3"
+                "4"
+              ];
+            };
+          };
+          promptToReturnFromSubprocess = false;
+          os = {
+            editInTerminal = true;
+            edit = ''if [ -n "$NVIM" ]; then nvim --server $NVIM --remote-send '<C-\><C-n><cmd>close<cr>' && nvim --server $NVIM --remote {{filename}}; else nvim {{filename}}; fi'';
+            editAtLine = ''if [ -n "$NVIM" ]; then nvim --server $NVIM --remote-send '<C-\><C-n><cmd>close<cr>' && nvim --server $NVIM --remote +{{line}} {{filename}}; else nvim +{{line}} {{filename}}; fi'';
+          };
+          customCommands = [
+            {
+              key = "D";
+              command = "git show {{.SelectedLocalCommit.Hash}} | diffnav";
+              context = "commits";
+              output = "terminal"; # Updated from subprocess = true;
+              description = "Open selected commit in diffnav";
+            }
+          ];
+        };
+      };
+    };
+  m.default =
+    {
+      pkgs,
+      config,
+      lib,
+      birdee,
+      ...
+    }:
+    let
+      cfg = config.forte.lazygit;
+      yamlFormat = pkgs.formats.yaml { };
+    in
+    {
+      config = lib.mkIf cfg.enable {
+
+        hj.packages = [ cfg.package ];
+
+        hj.environment.sessionVariables = {
+          GIT_PAGER = "diffnav";
+        };
+        programs.fish.functions.lg = # fish
+          ''
+            set -x LAZYGIT_NEW_DIR_FILE ${config.hj.xdg.config.directory}/lazygit/newdir
+            command ${lib.getExe cfg.package} $argv
+            if test -f $LAZYGIT_NEW_DIR_FILE
+              cd (cat $LAZYGIT_NEW_DIR_FILE)
+              rm -f $LAZYGIT_NEW_DIR_FILE
+            end
+          '';
+      };
+      options.forte.lazygit = {
+        enable = lib.mkEnableOption "lazygit";
+        settings = lib.mkOption {
+          default = { };
+          inherit (yamlFormat) type;
+          description = "Options to go into otter-launcher's toml config";
+        };
+        package = lib.mkOption {
+          type = lib.types.package;
+          default = birdee.lib.wrapPackage (
+            { config, ... }:
+            {
+              inherit pkgs;
+              package = pkgs.lazygit;
+              env.LG_CONFIG_FILE = config.constructFiles.generatedConfig.path;
+              constructFiles.generatedConfig = {
+                relPath = "config.toml";
+                builder = ''mkdir -p "$(dirname "$2")" && cp ${yamlFormat.generate "lazygit.yml" cfg.settings} "$2"'';
+              };
+              runtimePkgs = with pkgs; [
+                diffnav
+                delta
+              ];
+            }
+          );
+        };
+      };
     };
 }
