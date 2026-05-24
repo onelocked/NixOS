@@ -23,7 +23,7 @@
           splashImage = (
             pkgs.fetchurl {
               url = "https://raw.githubusercontent.com/onelocked/images/refs/heads/main/grubmeath.png";
-              hash = "sha256-/OrtuIi3y4eihIF8FoBtjy+0ykTYRGA0uHyp0PAAu/o=";
+              hash = "sha256-eELV4TgS0VqlJZ0nNT3UkljJNhx5pzSmOgvkne4aloY=";
             }
           );
           theme = pkgs.stdenv.mkDerivation {
