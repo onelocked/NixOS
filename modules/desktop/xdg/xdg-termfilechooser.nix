@@ -31,7 +31,7 @@
                 path="$4"
                 out="$5"
 
-                command="${lib.getExe pkgs.kitty} --app-id=FileChooser -e ${lib.getExe pkgs.yazi}"
+                command="${lib.getExe config.forte.kitty.package} --app-id=FileChooser -e ${lib.getExe config.forte.yazi.package}"
 
                 if [ "$save" = "1" ]; then
                     export YAZI_CHOOSER_SAVE=1

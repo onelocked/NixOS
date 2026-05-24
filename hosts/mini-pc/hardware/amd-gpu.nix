@@ -2,18 +2,17 @@
   m.hardware-mini-pc =
     {
       pkgs,
-      self',
       lib,
+      self',
       ...
     }:
     {
       environment = {
         systemPackages = with pkgs; [ rocmPackages.amdsmi ];
-        shellAliases.gtop = "${lib.getExe pkgs.amdgpu_top} --dark";
+        shellAliases.gtop = "${lib.getExe self'.packages.amdgpu_top} --dark";
       };
       nixpkgs.config.rocmSupport = true;
       hardware.amdgpu.opencl.enable = true;
-      nixpkgs.overlays = [ (_: _: { amdgpu_top = self'.packages.amdgpu_top; }) ];
     };
   perSystem =
     { pkgs, ... }:

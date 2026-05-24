@@ -77,7 +77,6 @@
       cfg = config.forte.starship;
       toml = pkgs.formats.toml { };
     in
-
     {
       options.forte.starship = {
         enable = lib.mkEnableOption "starship";
@@ -86,34 +85,30 @@
           default = { };
           description = "Options to go into otter-launcher's toml config";
         };
+        package = lib.mkOption {
+          default = birdee.lib.wrapPackage (
+            { config, ... }:
+            {
+              inherit pkgs;
+              package = pkgs.starship;
+              env.STARSHIP_CONFIG = config.constructFiles.starship.path;
+              constructFiles.starship = {
+                relPath = "starship.toml";
+                builder = ''mkdir -p "$(dirname "$2")" && cp ${toml.generate "starship.toml" cfg.settings} "$2"'';
+              };
+            }
+          );
+        };
       };
 
       config = lib.mkIf cfg.enable {
-
-        nixpkgs.overlays = [
-          (_: prev: {
-            starship = birdee.lib.wrapPackage (
-              { config, ... }:
-              {
-                pkgs = prev;
-                package = prev.starship;
-                env.STARSHIP_CONFIG = config.constructFiles.starship.path;
-                constructFiles.starship = {
-                  relPath = "starship.toml";
-                  builder = ''mkdir -p "$(dirname "$2")" && cp ${toml.generate "starship.toml" cfg.settings} "$2"'';
-                };
-              }
-            );
-          })
-        ];
-        hj.packages = [ pkgs.starship ];
+        hj.packages = [ cfg.package ];
         programs.fish.promptInit = # fish
           ''
               if test "$TERM" != "dumb"
-                ${lib.getExe pkgs.starship} init fish | source
+                ${lib.getExe cfg.package} init fish | source
                 "enable_transience"
               end
-
             # Starship transient prompt
               function starship_transient_prompt_func
                   printf " \e[38;2;232;196;216m\e[0m "

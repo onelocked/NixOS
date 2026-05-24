@@ -189,21 +189,6 @@
     {
       config = lib.mkIf (cfg.enable) {
         hj.packages = [ cfg.package ];
-        nixpkgs.overlays = [
-          (_: prev: {
-            kitty = birdee.wrappers.kitty.wrap (
-              wrapper: with config.forte.kitty; {
-                pkgs = prev;
-                package = self'.packages.kitty;
-                settings = settings // theme // fontConfig;
-                inherit
-                  keybindings
-                  mouseBindings
-                  ;
-              }
-            );
-          })
-        ];
         forte.niri.settings = {
           window-rules = [
             {
@@ -242,7 +227,17 @@
         enable = lib.mkEnableOption "zen-browser";
         package = lib.mkOption {
           type = lib.types.package;
-          default = pkgs.kitty;
+          default = birdee.wrappers.kitty.wrap (
+            wrapper: with config.forte.kitty; {
+              inherit pkgs;
+              package = self'.packages.kitty;
+              settings = settings // theme // fontConfig;
+              inherit
+                keybindings
+                mouseBindings
+                ;
+            }
+          );
         };
         settings = mkOption {
           type = types.attrsOf settingsValueType;

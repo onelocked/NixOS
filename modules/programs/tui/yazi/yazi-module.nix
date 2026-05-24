@@ -26,34 +26,28 @@
           end
           rm -f -- "$tmp"
         '';
-
-        nixpkgs.overlays = [
-          (_: prev: {
-            yazi = birdee.wrappers.yazi.wrap {
-              pkgs = prev;
-              runtimePkgs = with prev; [ ouch ];
-              inherit (config.forte.yazi) plugins;
-              settings = with config.forte; {
-                inherit (yazi) keymap theme;
-                yazi = yazi.settings;
-              };
-              constructFiles.initLua = {
-                relPath = "yazi-config/init.lua";
-                content = config.forte.yazi.initLua;
-              };
-              constructFiles.oneshillFlavor = {
-                relPath = "yazi-config/flavors/oneshill.yazi/flavor.toml";
-                content = config.forte.yazi.flavorContent;
-              };
-            };
-          })
-        ];
       };
       options.forte.yazi = {
         enable = lib.mkEnableOption "yazi";
         package = lib.mkOption {
           type = lib.types.package;
-          default = pkgs.yazi;
+          default = birdee.wrappers.yazi.wrap {
+            inherit pkgs;
+            runtimePkgs = [ pkgs.ouch ];
+            inherit (config.forte.yazi) plugins;
+            settings = with config.forte; {
+              inherit (yazi) keymap theme;
+              yazi = yazi.settings;
+            };
+            constructFiles.initLua = {
+              relPath = "yazi-config/init.lua";
+              content = config.forte.yazi.initLua;
+            };
+            constructFiles.oneshillFlavor = {
+              relPath = "yazi-config/flavors/oneshill.yazi/flavor.toml";
+              content = config.forte.yazi.flavorContent;
+            };
+          };
         };
         plugins = lib.mkOption {
           type = lib.types.attrsOf (lib.types.nullOr lib.types.path);
