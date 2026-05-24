@@ -4,6 +4,7 @@
     {
       forte.mpv = {
         enable = true;
+        with-wlpaste = true;
         conf = # ini
           ''
             osc=no
@@ -124,50 +125,16 @@
       cfg = config.forte.mpv;
     in
     {
-      options.forte.mpv = {
-        enable = lib.mkEnableOption "zen-browser";
-
-        conf = lib.mkOption {
-          default = "";
-          type = lib.types.lines;
-        };
-
-        input = lib.mkOption {
-          default = "";
-          type = lib.types.lines;
-        };
-
-        with-wlpaste = lib.mkOption {
-          type = lib.types.bool;
-          default = true;
-          description = "Whether to enable fsel support.";
-        };
-
-        package = lib.mkOption {
-          default = pkgs.mpv;
-        };
-      };
-      config = {
-        nixpkgs.overlays = [
-          (final: prev: {
-            mpv = birdee.wrappers.mpv.wrap {
-              pkgs = final;
-              package = prev.mpv;
-              script.mpris.path = final.mpvScripts.mpris;
-              "mpv.conf".content = cfg.conf;
-              "mpv.input".content = cfg.input;
-            };
-          })
-        ];
+      config = lib.mkIf cfg.enable {
         hj.packages = [
           cfg.package
         ]
-        ++ lib.optional cfg.with-wlpaste (
-          pkgs.writeShellApplication {
+        ++ lib.optionals cfg.with-wlpaste [
+          (pkgs.writeShellApplication {
             name = "mpv-wlpaste";
             runtimeInputs = with pkgs; [
+              cfg.package
               wl-clipboard
-              mpv
               uutils-coreutils-noprefix
             ];
             text = ''
@@ -182,8 +149,41 @@
               esac
               exec mpv --force-window=immediate "$url"
             '';
+          })
+        ];
+        forte.otter-launcher.settings.modules = lib.mkIf cfg.with-wlpaste [
+          {
+            description = "video";
+            prefix = "mpv";
+            cmd = "mpv-wlpaste";
           }
-        );
+        ];
+      };
+
+      options.forte.mpv = {
+        enable = lib.mkEnableOption "zen-browser";
+        with-wlpaste = lib.mkEnableOption "mpv-wl-paste";
+
+        conf = lib.mkOption {
+          default = "";
+          type = lib.types.lines;
+        };
+
+        input = lib.mkOption {
+          default = "";
+          type = lib.types.lines;
+        };
+
+        package = lib.mkOption {
+          type = lib.types.package;
+          default = birdee.wrappers.mpv.wrap {
+            inherit pkgs;
+            package = pkgs.mpv;
+            script.mpris.path = pkgs.mpvScripts.mpris;
+            "mpv.conf".content = cfg.conf;
+            "mpv.input".content = cfg.input;
+          };
+        };
       };
     };
 }

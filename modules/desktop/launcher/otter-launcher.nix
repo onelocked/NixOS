@@ -115,11 +115,6 @@
                 cmd = resize 2500 1200 "nap";
               }
               {
-                description = "video";
-                "prefix" = "mpv";
-                cmd = "mpv-wlpaste";
-              }
-              {
                 description = "yazi";
                 "prefix" = "y";
                 cmd = resize 2100 1100 "yazi";
