@@ -1,4 +1,3 @@
-{ inputs, ... }:
 {
   ff = {
     nix-cachyos-kernel = {
@@ -9,7 +8,7 @@
   };
 
   m.default =
-    { pkgs, ... }:
+    { inputs', ... }:
     {
       nix.settings = {
         substituters = [
@@ -21,9 +20,7 @@
           "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
         ];
       };
-      nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.pinned ]; # Guarantees you have binary cache, but initializes another nixpkgs instance.
-
       # boot.kernelPackages = pkgs.linuxPackages_latest; # _latest, _zen, _xanmod_latest, _hardened, _rt
-      boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-bore-lto;
+      boot.kernelPackages = inputs'.nix-cachyos-kernel.legacyPackages.linuxPackages-cachyos-bore-lto;
     };
 }
