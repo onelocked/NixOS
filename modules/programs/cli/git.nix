@@ -51,6 +51,7 @@
       };
       forte.lazygit = {
         enable = true;
+        withWorktrunk = true;
         settings = {
           git = {
             autoFetch = false;
@@ -140,27 +141,33 @@
     let
       cfg = config.forte.lazygit;
       yamlFormat = pkgs.formats.yaml { };
+      tomlFormat = pkgs.formats.toml { };
     in
     {
-      config = lib.mkIf cfg.enable {
-
-        hj.packages = [ cfg.package ];
-
-        hj.environment.sessionVariables = {
-          GIT_PAGER = "diffnav";
-        };
-        programs.fish.functions.lg = # fish
-          ''
-            set -x LAZYGIT_NEW_DIR_FILE ${config.hj.xdg.config.directory}/lazygit/newdir
-            command ${lib.getExe cfg.package} $argv
-            if test -f $LAZYGIT_NEW_DIR_FILE
-              cd (cat $LAZYGIT_NEW_DIR_FILE)
-              rm -f $LAZYGIT_NEW_DIR_FILE
-            end
-          '';
-      };
+      config = lib.mkMerge [
+        (lib.mkIf cfg.enable {
+          hj.packages = [ cfg.package ];
+          hj.environment.sessionVariables = {
+            GIT_PAGER = "diffnav";
+          };
+          programs.fish.functions.lg = # fish
+            ''
+              set -x LAZYGIT_NEW_DIR_FILE ${config.hj.xdg.config.directory}/lazygit/newdir
+              command ${lib.getExe cfg.package} $argv
+              if test -f $LAZYGIT_NEW_DIR_FILE
+                cd (cat $LAZYGIT_NEW_DIR_FILE)
+                rm -f $LAZYGIT_NEW_DIR_FILE
+              end
+            '';
+        })
+        (lib.mkIf (cfg.enable && cfg.withWorktrunk) {
+          hj.packages = [ cfg.worktrunkPackage ];
+          programs.fish.interactiveShellInit = "${lib.getExe cfg.worktrunkPackage} config shell init fish | source ";
+        })
+      ];
       options.forte.lazygit = {
         enable = lib.mkEnableOption "lazygit";
+        withWorktrunk = lib.mkEnableOption "worktrunk integration";
         settings = lib.mkOption {
           default = { };
           inherit (yamlFormat) type;
@@ -184,6 +191,25 @@
               ];
             }
           );
+        };
+        worktrunkPackage = lib.mkOption {
+          type = lib.types.package;
+          default = birdee.lib.wrapPackage {
+            inherit pkgs;
+            package = pkgs.worktrunk;
+            env.WORKTRUNK_CONFIG_PATH = tomlFormat.generate "worktrunk-config.toml" {
+              skip-shell-integration-prompt = true;
+              skip-commit-generation-prompt = true;
+              merge = {
+                squash = false;
+                commit = false;
+                rebase = true;
+                remove = false;
+                verify = true;
+                ff = true;
+              };
+            };
+          };
         };
       };
     };

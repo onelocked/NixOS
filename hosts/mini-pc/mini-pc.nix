@@ -24,7 +24,6 @@
 
       quickshell
 
-      worktrunk
       qview
       starship
       kitty
