@@ -77,20 +77,20 @@
     };
 
   m.default =
-    { self', lib, ... }:
+    { pkgs, lib, ... }:
     {
       options.custom = {
         gtk = {
           cursor = {
             package = lib.mkOption {
               type = lib.types.package;
-              default = self'.legacyPackages.aemeath-cursor;
+              default = pkgs.bibata-cursors;
               description = "Package providing the cursor theme.";
             };
 
             name = lib.mkOption {
               type = lib.types.str;
-              default = "aemeath-cursor";
+              default = "Bibata-Modern-Ice";
               description = "The cursor name within the package.";
             };
 
@@ -103,25 +103,5 @@
         };
       };
     };
-  envoy.aemeath-cursor = {
-    tarball = "https://s3.onelock.org/download/cursors/aemeath-cursor.tar.gz";
-    locked = true;
-  };
-  perSystem =
-    { pkgs, envoy, ... }:
-    {
-      legacyPackages.aemeath-cursor = pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
-        name = envoy.aemeath-cursor.pname;
-        version = "1.0";
-        inherit (envoy.aemeath-cursor) src;
 
-        dontConfigure = true;
-        dontBuild = true;
-
-        installPhase = ''
-          mkdir -p $out/share/icons/${finalAttrs.name}
-          cp -r . $out/share/icons/${finalAttrs.name}
-        '';
-      });
-    };
 }

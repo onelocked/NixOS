@@ -1,18 +1,4 @@
 {
-    "aemeath-cursor": {
-        "cargoLock": null,
-        "date": null,
-        "extract": null,
-        "name": "aemeath-cursor",
-        "passthru": null,
-        "pinned": false,
-        "src": {
-            "sha256": "sha256-ubr7Zz8m5TFLtrNL8+u1nQjVh5WYG859oOmmXxlWIxI=",
-            "type": "tarball",
-            "url": "https://s3.onelock.org/download/cursors/aemeath-cursor.tar.gz"
-        },
-        "version": "https://s3.onelock.org/download/cursors/aemeath-cursor.tar.gz"
-    },
     "apple-font": {
         "cargoLock": null,
         "date": null,
