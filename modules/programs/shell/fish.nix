@@ -1,23 +1,8 @@
 {
   m.fish =
-    {
-      pkgs,
-      config,
-      lib,
-      birdee,
-      ...
-    }:
+    { pkgs, lib, ... }:
     {
       programs = {
-        bash.interactiveShellInit =
-          lib.mkIf config.programs.fish.enable or false # bash
-            ''
-              if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
-              then
-                shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
-                exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
-              fi
-            '';
         fish = {
           enable = true;
           functions = {
@@ -112,29 +97,115 @@
               set -g fish_color_bracket       "#b8db8c"
               set -g fish_color_escape        "#f2b8a0"
             '';
-          interactiveShellInit =
-            with pkgs; # fish
-            with lib;
-            ''
-              ${getExe zoxide} init fish | source
-              ${getExe nix-your-shell} --nom fish | source
-              ${getExe carapace} _carapace fish | source
-              ${getExe atuin} init fish | source
-              source ${nix}/share/fish/vendor_completions.d/nix.fish
-            '';
         };
       };
-      hj.packages = with pkgs; [
-        zoxide
-        atuin
-      ];
-      nixpkgs.overlays = [
-        (_: prev: {
-          atuin = birdee.lib.wrapPackage (
+      environment.shellAliases =
+        with pkgs;
+        with lib;
+        {
+          ping = getExe gping;
+          cat = getExe bat;
+          zip = getExe zip;
+          gr = "cd (git rev-parse --show-toplevel)";
+          ils = "${getExe mcat} ls --hyprlink --kitty --ls-opts 'height=10%,items_per_row=6'";
+        };
+    };
+
+  m.default =
+    {
+      lib,
+      config,
+      birdee,
+      pkgs,
+      ...
+    }:
+    let
+      cfg = config.programs.fish;
+    in
+    {
+      config = lib.mkIf cfg.enable {
+        hj.packages = [
+          cfg.atuin
+          pkgs.zoxide
+        ];
+        programs.fish.interactiveShellInit = ''
+          ${lib.getExe pkgs.zoxide} init fish | source
+          ${lib.getExe pkgs.nix-your-shell} --nom fish | source
+          ${lib.getExe pkgs.carapace} _carapace fish | source
+          ${lib.getExe cfg.atuin} init fish | source
+          source ${pkgs.nix}/share/fish/vendor_completions.d/nix.fish
+        '';
+        programs.bash.interactiveShellInit = # bash
+          ''
+            if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
+            then
+              shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
+              exec ${cfg.package}/bin/fish $LOGIN_OPTION
+            fi
+          '';
+        hj.xdg.config.files =
+          let
+            # Adapted from home-manager (https://github.com/nix-community/home-manager/blob/master/modules/programs/fish.nix)
+            fishIndent =
+              name: text:
+              pkgs.runCommand name {
+                nativeBuildInputs = [ pkgs.fish ];
+                inherit text;
+                passAsFile = [ "text" ];
+              } "env HOME=$(mktemp -d) fish_indent < $textPath > $out";
+
+            inherit (lib) optional isAttrs;
+          in
+          cfg.functions
+          |> lib.mapAttrs' (
+            name: def: {
+              name = "fish/functions/${name}.fish";
+              value = {
+                source =
+                  let
+                    modifierStr = n: v: optional (v != null) ''--${n}="${toString v}"'';
+                    modifierStrs = n: v: optional (v != null) "--${n}=${toString v}";
+                    modifierBool = n: v: optional (v != null && v) "--${n}";
+
+                    mods =
+                      with def;
+                      modifierStr "description" description
+                      ++ modifierStr "wraps" wraps
+                      ++ (onEvent |> lib.toList |> lib.concatMap (modifierStr "on-event"))
+                      ++ modifierStr "on-variable" onVariable
+                      ++ modifierStr "on-job-exit" onJobExit
+                      ++ modifierStr "on-process-exit" onProcessExit
+                      ++ modifierStr "on-signal" onSignal
+                      ++ modifierBool "no-scope-shadowing" noScopeShadowing
+                      ++ modifierStr "inherit-variable" inheritVariable
+                      ++ modifierStrs "argument-names" argumentNames;
+
+                    modifiers = if isAttrs def then " ${toString mods}" else "";
+                    body = if isAttrs def then def.body else def;
+                  in
+                  fishIndent "${name}.fish" ''
+                    function ${name}${modifiers}
+                      ${body |> lib.strings.removeSuffix "\n"}
+                    end
+                  '';
+              };
+            }
+          );
+      };
+      options.programs.fish = {
+        functions = lib.mkOption {
+          default = { };
+          type = with lib.types; attrsOf (either lines functionModule);
+          description = "Set custom fish functions.";
+        };
+        atuin = lib.mkOption {
+          type = lib.types.package;
+          description = "Atuin shell history package.";
+          default = birdee.lib.wrapPackage (
             { config, ... }:
             {
-              pkgs = prev;
-              package = prev.atuin;
+              inherit pkgs;
+              package = pkgs.atuin;
               env.ATUIN_CONFIG_DIR = dirOf config.constructFiles.atuin-config.path;
               constructFiles.atuin-config = {
                 relPath = "atuin-config/config.toml";
@@ -147,77 +218,6 @@
               };
             }
           );
-        })
-      ];
-      environment.shellAliases =
-        with pkgs;
-        with lib;
-        {
-          ping = getExe gping;
-          cat = getExe bat;
-          zip = getExe zip;
-          gr = "cd (git rev-parse --show-toplevel)";
-          ils = "${getExe mcat} ls --hyprlink --kitty --ls-opts 'height=10%,items_per_row=6'";
-        };
-      hj.xdg.config.files =
-        let
-
-          # Adapted from home-manager (https://github.com/nix-community/home-manager/blob/master/modules/programs/fish.nix)
-          fishIndent =
-            name: text:
-            pkgs.runCommand name {
-              nativeBuildInputs = [ pkgs.fish ];
-              inherit text;
-              passAsFile = [ "text" ];
-            } "env HOME=$(mktemp -d) fish_indent < $textPath > $out";
-
-          inherit (lib) optional isAttrs;
-        in
-        config.programs.fish.functions
-        |> lib.mapAttrs' (
-          name: def: {
-            name = "fish/functions/${name}.fish";
-            value = {
-              source =
-                let
-                  modifierStr = n: v: optional (v != null) ''--${n}="${toString v}"'';
-                  modifierStrs = n: v: optional (v != null) "--${n}=${toString v}";
-                  modifierBool = n: v: optional (v != null && v) "--${n}";
-
-                  mods =
-                    with def;
-                    modifierStr "description" description
-                    ++ modifierStr "wraps" wraps
-                    ++ (onEvent |> lib.toList |> lib.concatMap (modifierStr "on-event"))
-                    ++ modifierStr "on-variable" onVariable
-                    ++ modifierStr "on-job-exit" onJobExit
-                    ++ modifierStr "on-process-exit" onProcessExit
-                    ++ modifierStr "on-signal" onSignal
-                    ++ modifierBool "no-scope-shadowing" noScopeShadowing
-                    ++ modifierStr "inherit-variable" inheritVariable
-                    ++ modifierStrs "argument-names" argumentNames;
-
-                  modifiers = if isAttrs def then " ${toString mods}" else "";
-                  body = if isAttrs def then def.body else def;
-                in
-                fishIndent "${name}.fish" ''
-                  function ${name}${modifiers}
-                    ${body |> lib.strings.removeSuffix "\n"}
-                  end
-                '';
-            };
-          }
-        );
-    };
-
-  m.default =
-    { lib, ... }:
-    {
-      options.programs.fish = {
-        functions = lib.mkOption {
-          default = { };
-          type = with lib.types; attrsOf (either lines functionModule);
-          description = "Set custom fish functions.";
         };
       };
     };
