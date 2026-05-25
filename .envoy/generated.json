@@ -175,6 +175,27 @@
         },
         "version": "207dfe09411f08916666acf65bf6262e5ef5e6d0"
     },
+    "no-header-prompt": {
+        "cargoLock": null,
+        "date": "2026-05-25",
+        "extract": null,
+        "name": "no-header-prompt",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "onelocked",
+            "repo": "no-header-prompt.yazi",
+            "rev": "f93cc7d25d456f405d1fefefc098303570cd919c",
+            "sha256": "sha256-xGJwPMN58EC88tvCKWZ6/qnCxpT6JLIkg5MPKCVMtxY=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "f93cc7d25d456f405d1fefefc098303570cd919c"
+    },
     "otter-launcher": {
         "cargoLock": null,
         "date": "2026-05-17",

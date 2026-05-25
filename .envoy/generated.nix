@@ -106,6 +106,18 @@
     };
     date = "2026-01-11";
   };
+  no-header-prompt = {
+    pname = "no-header-prompt";
+    version = "f93cc7d25d456f405d1fefefc098303570cd919c";
+    src = fetchFromGitHub {
+      owner = "onelocked";
+      repo = "no-header-prompt.yazi";
+      rev = "f93cc7d25d456f405d1fefefc098303570cd919c";
+      fetchSubmodules = false;
+      sha256 = "sha256-xGJwPMN58EC88tvCKWZ6/qnCxpT6JLIkg5MPKCVMtxY=";
+    };
+    date = "2026-05-25";
+  };
   otter-launcher = {
     pname = "otter-launcher";
     version = "380ceb9d2cf9b02854fbd3be39177e5e151fae6c";

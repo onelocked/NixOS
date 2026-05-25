@@ -16,6 +16,10 @@
       github = "llanosrocas/yaziline.yazi";
       locked = true;
     };
+    no-header-prompt = {
+      github = "onelocked/no-header-prompt.yazi";
+      locked = true;
+    };
   };
   m.yazi =
     {
@@ -29,7 +33,6 @@
       forte.yazi = {
         plugins = {
           inherit (pkgs.yaziPlugins)
-            starship
             full-border
             ouch
             lazygit
@@ -41,6 +44,9 @@
             ;
           fuzzy-search = pkgs.yaziPlugins.mkYaziPlugin { inherit (envoy.fuzzy-search) pname version src; };
           yaziline = pkgs.yaziPlugins.mkYaziPlugin { inherit (envoy.yaziline) pname version src; };
+          no-header-prompt = pkgs.yaziPlugins.mkYaziPlugin {
+            inherit (envoy.no-header-prompt) pname version src;
+          };
           confirm-dialog = pkgs.yaziPlugins.mkYaziPlugin {
             inherit (envoy.confirm-dialog) pname version src;
           };
@@ -85,18 +91,14 @@
       };
       forte.yazi.initLua = # lua
         ''
-          require("starship"):setup({
-              hide_flags = false, -- Default: false
-              flags_after_prompt = true, -- Default: true
-              config_file = "${config.hj.xdg.config.directory}/starship.toml", -- Default: nil
-          })
           require("full-border"):setup {
-          	type = ui.Border.ROUNDED,
+          	type = ui.Border.PLAIN,
           }
           require("git"):setup {
               -- Order of status signs showing in the linemode
             order = 1500,
           }
+          require("no-header-prompt"):setup()
           require("yaziline"):setup({
             color = "#7d75c1",
             secondary_color = "#313245",
