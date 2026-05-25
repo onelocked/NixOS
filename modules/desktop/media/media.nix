@@ -1,11 +1,6 @@
 {
   m.default =
-    {
-      pkgs,
-      birdee,
-      config,
-      ...
-    }:
+    { pkgs, birdee, ... }:
     {
       hj.packages = with pkgs; [
         moonlight-qt
@@ -66,15 +61,26 @@
           open-fullscreen = true;
           open-focused = true;
         }
+        {
+          matches = [
+            { app-id = "CliampMusic"; }
+          ];
+          open-floating = true;
+          default-column-width.fixed = 627;
+          default-window-height.fixed = 923;
+        }
       ];
       forte.otter-launcher.settings = {
         modules = [
           {
             description = "pc";
             "prefix" = "game";
-            cmd =
-              config.forte.lib.resize 750 900
-                "niri msg action spawn -- moonlight stream onelock desktop; exit";
+            cmd = "niri msg action spawn -- moonlight stream onelock desktop; exit";
+          }
+          {
+            description = "cliamp";
+            "prefix" = "mus";
+            cmd = "niri msg action spawn -- kitty --app-id=CliampMusic -e ${pkgs.cliamp}/bin/cliamp; exit";
           }
         ];
       };
