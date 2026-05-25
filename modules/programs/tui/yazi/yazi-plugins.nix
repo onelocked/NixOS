@@ -4,6 +4,10 @@
       github = "onelocked/fuzzy-search.yazi";
       locked = true;
     };
+    extra-metadata = {
+      github = "boydaihungst/file-extra-metadata.yazi";
+      locked = true;
+    };
   };
   m.yazi =
     {
@@ -29,6 +33,9 @@
             wl-clipboard
             ;
           fuzzy-search = pkgs.yaziPlugins.mkYaziPlugin { inherit (envoy.fuzzy-search) pname version src; };
+          extra-metadata = pkgs.yaziPlugins.mkYaziPlugin {
+            inherit (envoy.extra-metadata) pname version src;
+          };
 
           confirm-dialog = pkgs.yaziPlugins.mkYaziPlugin {
             pname = "confirm-dialog";
@@ -84,6 +91,12 @@
             piper = "piper -- CLICOLOR_FORCE=1 ${lib.getExe pkgs.glow} -w=$w -s=dracula -- $1";
           in
           {
+            spotters = [
+              {
+                url = "*";
+                run = "extra-metadata";
+              }
+            ];
             append_previewers = [
               {
                 url = "*";

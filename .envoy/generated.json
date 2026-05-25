@@ -70,6 +70,27 @@
         },
         "version": "fd4a47baaba60598603d6c760512d2169479872b"
     },
+    "extra-metadata": {
+        "cargoLock": null,
+        "date": "2026-04-22",
+        "extract": null,
+        "name": "extra-metadata",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "boydaihungst",
+            "repo": "file-extra-metadata.yazi",
+            "rev": "044274ca2e473f18910d03ca7392dff5ef028deb",
+            "sha256": "sha256-Yq8nv/MSxOy0xTyeIQac/Gu8j1tLL6m7glFicjJ3fIs=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "044274ca2e473f18910d03ca7392dff5ef028deb"
+    },
     "fsel": {
         "cargoLock": null,
         "date": "2026-05-17",

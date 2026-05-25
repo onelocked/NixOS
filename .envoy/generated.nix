@@ -46,6 +46,18 @@
     };
     date = "2026-04-26";
   };
+  extra-metadata = {
+    pname = "extra-metadata";
+    version = "044274ca2e473f18910d03ca7392dff5ef028deb";
+    src = fetchFromGitHub {
+      owner = "boydaihungst";
+      repo = "file-extra-metadata.yazi";
+      rev = "044274ca2e473f18910d03ca7392dff5ef028deb";
+      fetchSubmodules = false;
+      sha256 = "sha256-Yq8nv/MSxOy0xTyeIQac/Gu8j1tLL6m7glFicjJ3fIs=";
+    };
+    date = "2026-04-22";
+  };
   fsel = {
     pname = "fsel";
     version = "6b6ae52e3a2c254007e8a2c332a8d5de99428ba5";
