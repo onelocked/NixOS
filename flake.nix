@@ -2,8 +2,8 @@
   description = "onelock's dendritic nixos flake configuration";
 
   outputs =
-    inputs@{ flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
+    inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       imports =
         with inputs.nixpkgs.lib;
         concatMap
