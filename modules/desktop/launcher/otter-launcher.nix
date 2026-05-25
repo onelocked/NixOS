@@ -119,6 +119,18 @@
               prefix = "y";
               cmd = resize 2100 1100 "yazi";
             }
+            {
+              description = "color picker";
+              prefix = "cp";
+              cmd = "niri msg action spawn -- ${pkgs.writeShellScript "color-picker" ''
+                sleep 0.25
+                PICKED=$(${pkgs.hyprpicker}/bin/hyprpicker --radius=70 --scale=3 --autocopy --no-fancy --format=hex)
+                if [ -n "$PICKED" ]; then
+                  kitty --app-id=color-picker -e sh -c "${pkgs.pastel}/bin/pastel color '$PICKED'; echo; read -n 1 -s -r -p 'Press any key to close...'"
+                fi
+              ''}; exit";
+            }
+
           ]
           ++ lib.optionals cfg.withFsel [
             {
@@ -187,6 +199,12 @@
               };
               color = "#2a2a30E6";
             };
+          }
+          {
+            matches = [ { app-id = "^color-picker$"; } ];
+            open-floating = true;
+            default-column-width.fixed = 670;
+            default-window-height.fixed = 300;
           }
         ];
       };
