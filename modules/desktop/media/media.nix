@@ -61,14 +61,6 @@
           open-fullscreen = true;
           open-focused = true;
         }
-        {
-          matches = [
-            { app-id = "CliampMusic"; }
-          ];
-          open-floating = true;
-          default-column-width.fixed = 627;
-          default-window-height.fixed = 923;
-        }
       ];
       forte.otter-launcher = {
         modules = [
@@ -76,11 +68,6 @@
             description = "pc";
             "prefix" = "game";
             cmd = "niri msg action spawn -- moonlight stream onelock desktop; exit";
-          }
-          {
-            description = "cliamp";
-            "prefix" = "mus";
-            cmd = "niri msg action spawn -- kitty --app-id=CliampMusic -e ${pkgs.cliamp}/bin/cliamp; exit";
           }
         ];
       };
