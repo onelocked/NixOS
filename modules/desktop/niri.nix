@@ -113,7 +113,7 @@
 
             cursor = {
               xcursor-theme = config.custom.gtk.cursor.name;
-              xcursor-size = config.custom.gtk.cursor.size;
+              xcursor-size = lib.toInt config.custom.gtk.cursor.size;
             };
 
             gestures.hot-corners.off = set;

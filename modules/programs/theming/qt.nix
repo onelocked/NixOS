@@ -13,7 +13,7 @@
         Appearance = {
           color_scheme_path = colorSchemeFile;
           custom_palette = true;
-          icon_theme = config.custom.gtk.iconTheme.name;
+          icon_theme = config.custom.gtk.icons.name;
           standard_dialogs = "default";
           style = "Adwaita-Dark";
         };

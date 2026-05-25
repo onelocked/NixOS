@@ -53,7 +53,7 @@
             runtimePkgs = quickshellDeps;
             env = {
               QT_QPA_PLATFORMTHEME = "gtk3";
-              QS_ICON_THEME = config.custom.gtk.iconTheme.name;
+              QS_ICON_THEME = config.custom.gtk.icons.name;
               QS_DROP_EXPENSIVE_FONTS = "1";
               QML_IMPORT_PATH = qmlImportPath;
               QML2_IMPORT_PATH = qmlImportPath;

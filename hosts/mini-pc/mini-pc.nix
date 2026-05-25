@@ -29,7 +29,6 @@
       kitty
       fish
 
-      cursor
       vesktop
 
       spotify
@@ -39,7 +38,6 @@
 
       neovim
 
-      gtk
       qt
 
       zen-browser
