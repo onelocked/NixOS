@@ -52,7 +52,7 @@
             }
           ];
         };
-        forte.otter-launcher.settings = {
+        forte.otter-launcher = {
           modules = [
             {
               description = "cliphist";

@@ -65,76 +65,75 @@
               description_color = "${esc}[39m";
               hint_color = "${esc}[90m";
             };
-
-          modules =
-            let
-              inherit (config.forte.lib) resize;
-            in
-            [
-              {
-                description = "run commands";
-                prefix = "sh";
-                cmd = ''$(printf $TERM | sed 's/xterm-//g') -e sh -c "{}"'';
-                with_argument = true;
-                unbind_proc = true;
-              }
-              {
-                description = "nix packages";
-                prefix = "np";
-                cmd = "xdg-open 'https://search.nixos.org/packages?channel=unstable&query={}'";
-                with_argument = true;
-                url_encode = true;
-                unbind_proc = true;
-              }
-              {
-                description = "nix options";
-                prefix = "no";
-                cmd = "xdg-open 'https://search.nixos.org/options?channel=unstable&include_home_manager_options=0&include_modular_service_options=0&include_nixos_options=1&query={}'";
-                with_argument = true;
-                url_encode = true;
-                unbind_proc = true;
-              }
-              {
-                description = "sys mon";
-                prefix = "btop";
-                cmd = resize 2100 1200 "btop";
-              }
-              {
-                description = "systemd";
-                prefix = "isd";
-                cmd = resize 2100 1200 "isd";
-              }
-              {
-                description = "audio";
-                prefix = "mix";
-                cmd = resize 800 500 "pulsemixer";
-              }
-              {
-                description = "notepad";
-                prefix = "nap";
-                cmd = resize 2500 1200 "nap";
-              }
-              {
-                description = "yazi";
-                prefix = "y";
-                cmd = resize 2100 1100 "yazi";
-              }
-            ]
-            ++ lib.optionals cfg.withFsel [
-              {
-                description = "apps";
-                prefix = "search";
-                cmd = resize 450 650 ''`fsel --launch-prefix='app2unit --' -vv -d -r -ss "{}"`'';
-                with_argument = true;
-              }
-              {
-                description = "launch";
-                prefix = "app";
-                cmd = resize 450 650 ''`fsel --launch-prefix='app2unit --' -vv -d -r -p "{}"`'';
-                with_argument = true;
-              }
-            ];
         };
+        modules =
+          let
+            inherit (config.forte.lib) resize;
+          in
+          [
+            {
+              description = "run commands";
+              prefix = "sh";
+              cmd = ''$(printf $TERM | sed 's/xterm-//g') -e sh -c "{}"'';
+              with_argument = true;
+              unbind_proc = true;
+            }
+            {
+              description = "nix packages";
+              prefix = "np";
+              cmd = "xdg-open 'https://search.nixos.org/packages?channel=unstable&query={}'";
+              with_argument = true;
+              url_encode = true;
+              unbind_proc = true;
+            }
+            {
+              description = "nix options";
+              prefix = "no";
+              cmd = "xdg-open 'https://search.nixos.org/options?channel=unstable&include_home_manager_options=0&include_modular_service_options=0&include_nixos_options=1&query={}'";
+              with_argument = true;
+              url_encode = true;
+              unbind_proc = true;
+            }
+            {
+              description = "sys mon";
+              prefix = "btop";
+              cmd = resize 2100 1200 "btop";
+            }
+            {
+              description = "systemd";
+              prefix = "isd";
+              cmd = resize 2100 1200 "isd";
+            }
+            {
+              description = "audio";
+              prefix = "mix";
+              cmd = resize 800 500 "pulsemixer";
+            }
+            {
+              description = "notepad";
+              prefix = "nap";
+              cmd = resize 2500 1200 "nap";
+            }
+            {
+              description = "yazi";
+              prefix = "y";
+              cmd = resize 2100 1100 "yazi";
+            }
+          ]
+          ++ lib.optionals cfg.withFsel [
+            {
+              description = "apps";
+              prefix = "search";
+              cmd = resize 450 650 ''`fsel --launch-prefix='app2unit --' -vv -d -r -ss "{}"`'';
+              with_argument = true;
+            }
+            {
+              description = "launch";
+              prefix = "app";
+              cmd = resize 450 650 ''`fsel --launch-prefix='app2unit --' -vv -d -r -p "{}"`'';
+              with_argument = true;
+            }
+          ];
       };
       forte.niri.settings = {
         binds =
@@ -230,6 +229,11 @@
           description = "Options to go into otter-launcher's toml config";
         };
 
+        modules = lib.mkOption {
+          type = lib.types.listOf (lib.types.attrsOf lib.types.anything);
+          default = [ ];
+        };
+
         moreCfg = lib.mkOption {
           type = with lib.types; nullOr (either path lines);
           default = "";
@@ -251,7 +255,7 @@
                 relPath = "config.toml";
                 builder = ''
                   mkdir -p "$(dirname "$2")"
-                  cat ${toml.generate "config.toml" cfg.settings} > "$2"
+                  cat ${toml.generate "config.toml" (cfg.settings // { inherit (cfg) modules; })} > "$2"
                   printf '%s\n' "${cfg.moreCfg}" >> "$2"
                 '';
               };

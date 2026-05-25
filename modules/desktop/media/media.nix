@@ -70,7 +70,7 @@
           default-window-height.fixed = 923;
         }
       ];
-      forte.otter-launcher.settings = {
+      forte.otter-launcher = {
         modules = [
           {
             description = "pc";

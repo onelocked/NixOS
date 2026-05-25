@@ -151,7 +151,7 @@
             '';
           })
         ];
-        forte.otter-launcher.settings.modules = lib.mkIf cfg.with-wlpaste [
+        forte.otter-launcher.modules = lib.mkIf cfg.with-wlpaste [
           {
             description = "video";
             prefix = "mpv";

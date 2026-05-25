@@ -93,7 +93,7 @@
     in
     {
       environment.shellAliases.ff = "kitten icat -n --place 20x20@2x1 --scale-up --align left ${fleet-snowfluff} | ${lib.getExe fastfetch}";
-      forte.otter-launcher.settings.modules = [
+      forte.otter-launcher.modules = [
         {
           description = "fastfetch";
           "prefix" = "ff";
