@@ -73,14 +73,14 @@
             [
               {
                 description = "run commands";
-                "prefix" = "sh";
+                prefix = "sh";
                 cmd = ''$(printf $TERM | sed 's/xterm-//g') -e sh -c "{}"'';
                 with_argument = true;
                 unbind_proc = true;
               }
               {
                 description = "nix packages";
-                "prefix" = "np";
+                prefix = "np";
                 cmd = "xdg-open 'https://search.nixos.org/packages?channel=unstable&query={}'";
                 with_argument = true;
                 url_encode = true;
@@ -88,7 +88,7 @@
               }
               {
                 description = "nix options";
-                "prefix" = "no";
+                prefix = "no";
                 cmd = "xdg-open 'https://search.nixos.org/options?channel=unstable&include_home_manager_options=0&include_modular_service_options=0&include_nixos_options=1&query={}'";
                 with_argument = true;
                 url_encode = true;
@@ -96,40 +96,40 @@
               }
               {
                 description = "sys mon";
-                "prefix" = "btop";
+                prefix = "btop";
                 cmd = resize 2100 1200 "btop";
               }
               {
                 description = "systemd";
-                "prefix" = "isd";
+                prefix = "isd";
                 cmd = resize 2100 1200 "isd";
               }
               {
                 description = "audio";
-                "prefix" = "mix";
+                prefix = "mix";
                 cmd = resize 800 500 "pulsemixer";
               }
               {
                 description = "notepad";
-                "prefix" = "nap";
+                prefix = "nap";
                 cmd = resize 2500 1200 "nap";
               }
               {
                 description = "yazi";
-                "prefix" = "y";
+                prefix = "y";
                 cmd = resize 2100 1100 "yazi";
               }
             ]
             ++ lib.optionals cfg.withFsel [
               {
                 description = "apps";
-                "prefix" = "search";
+                prefix = "search";
                 cmd = resize 450 650 ''`fsel --launch-prefix='app2unit --' -vv -d -r -ss "{}"`'';
                 with_argument = true;
               }
               {
                 description = "launch";
-                "prefix" = "app";
+                prefix = "app";
                 cmd = resize 450 650 ''`fsel --launch-prefix='app2unit --' -vv -d -r -p "{}"`'';
                 with_argument = true;
               }
