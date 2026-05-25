@@ -4,6 +4,7 @@
       pkgs,
       lib,
       birdee,
+      config,
       ...
     }:
     let
@@ -79,36 +80,20 @@
             }
           '';
 
-      fastfetch = birdee.lib.wrapPackage {
+    in
+    {
+      forte.lib.fastfetch.package = birdee.lib.wrapPackage {
         inherit pkgs;
         package = pkgs.fastfetch.minimal;
         flags = {
           "--config" = "${fastfetch-config}";
         };
       };
-      fleet-snowfluff = pkgs.fetchurl {
-        url = "https://raw.githubusercontent.com/onelocked/images/refs/heads/main/fleet-snowfluff.gif";
-        hash = "sha256-Vz6QZrhr5c+ShiHJwxHFeyCXszWFvDjhKFm2CyQNAbo=";
-      };
-    in
-    {
-      environment.shellAliases.ff = "kitten icat -n --place 20x20@2x1 --scale-up --align left ${fleet-snowfluff} | ${lib.getExe fastfetch}";
-      forte.otter-launcher.modules = [
-        {
-          description = "fastfetch";
-          "prefix" = "ff";
-          cmd = "niri msg action set-window-width 800;niri msg action set-window-height 355;niri msg action center-window;sleep 0.2;kitten icat -n --place 20x20@2x1 --scale-up --align left ${fleet-snowfluff} | ${lib.getExe fastfetch};read -p ''";
-        }
-      ];
-      forte.niri.settings.window-rules = [
-        {
-          matches = [ { app-id = "^fastfetch$"; } ];
-          open-floating = true;
-          opacity = 0.95;
-          default-column-width.fixed = 755;
-          default-window-height.fixed = 325;
-        }
-      ];
-      hj.packages = [ fastfetch ];
+      environment.shellAliases.ff = "kitten icat -n --place 20x20@2x1 --scale-up --align left ${
+        (pkgs.fetchurl {
+          url = "https://raw.githubusercontent.com/onelocked/images/refs/heads/main/fleet-snowfluff.gif";
+          hash = "sha256-Vz6QZrhr5c+ShiHJwxHFeyCXszWFvDjhKFm2CyQNAbo=";
+        })
+      } | ${lib.getExe config.forte.lib.fastfetch.package}";
     };
 }

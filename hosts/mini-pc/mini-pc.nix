@@ -41,6 +41,7 @@
       qt
 
       zen-browser
+      rice
     ];
   };
 }
