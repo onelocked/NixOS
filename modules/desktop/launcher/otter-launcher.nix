@@ -210,10 +210,6 @@
       toml = pkgs.formats.toml { };
     in
     {
-      options.forte.lib = lib.mkOption {
-        type = lib.types.attrsOf lib.types.unspecified;
-        default = { };
-      };
       options.forte.otter-launcher = {
         enable = lib.mkEnableOption "otter-launcher";
 

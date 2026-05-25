@@ -46,6 +46,18 @@
     };
     date = "2026-04-26";
   };
+  confirm-dialog = {
+    pname = "confirm-dialog";
+    version = "0231323227dc97b1a4f070f4b8bf8c37d538a6df";
+    src = fetchFromGitHub {
+      owner = "onelocked";
+      repo = "confirm-dialog.yazi";
+      rev = "0231323227dc97b1a4f070f4b8bf8c37d538a6df";
+      fetchSubmodules = false;
+      sha256 = "sha256-3KxK0cTjm9z+ilXhBFbvWyZmWVfiaJKKIpbVcEABjYE=";
+    };
+    date = "2026-05-25";
+  };
   extra-metadata = {
     pname = "extra-metadata";
     version = "044274ca2e473f18910d03ca7392dff5ef028deb";

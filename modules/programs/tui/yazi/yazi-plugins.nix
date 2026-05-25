@@ -4,6 +4,10 @@
       github = "onelocked/fuzzy-search.yazi";
       locked = true;
     };
+    confirm-dialog = {
+      github = "onelocked/confirm-dialog.yazi";
+      locked = true;
+    };
     extra-metadata = {
       github = "boydaihungst/file-extra-metadata.yazi";
       locked = true;
@@ -33,153 +37,45 @@
             wl-clipboard
             ;
           fuzzy-search = pkgs.yaziPlugins.mkYaziPlugin { inherit (envoy.fuzzy-search) pname version src; };
+          confirm-dialog = pkgs.yaziPlugins.mkYaziPlugin {
+            inherit (envoy.confirm-dialog) pname version src;
+          };
           extra-metadata = pkgs.yaziPlugins.mkYaziPlugin {
             inherit (envoy.extra-metadata) pname version src;
           };
 
-          confirm-dialog = pkgs.yaziPlugins.mkYaziPlugin {
-            pname = "confirm-dialog";
-            version = "1.0";
-            src = pkgs.writeTextFile {
-              name = "confirm-dialog-src";
-              destination = "/main.lua";
-              text = # lua
-                ''
-                  local get_hovered = ya.sync(function()
-                      local h = cx.active.current.hovered
-                      if not h then return nil end
-                      return {
-                          url     = tostring(h.url),
-                          is_dir  = h.cha.is_dir,
-                          exists  = h.cha.len ~= nil,
-                      }
-                  end)
-
-                  local function entry()
-                      if not os.getenv("YAZI_CHOOSER_SAVE") then
-                          return ya.emit("open", { hovered = true })
-                      end
-
-                      local h = get_hovered()
-                      if not h then return end
-
-                      if h.is_dir then
-                          return ya.emit("enter", {})
-                      end
-
-                      if h.exists then
-                          local yes = ya.confirm({
-                              pos   = { "center", w = 62, h = 10 },
-                              title = "Overwrite file?",
-                              body  = ui.Text(
-                                  h.url .. "\n\nThis file already exists and will be overwritten."
-                              ):wrap(ui.Wrap.YES),
-                          })
-                          if not yes then return end
-                      end
-
-                      ya.emit("open", { hovered = true })
-                  end
-
-                  return { entry = entry }
-                '';
-            };
-          };
         };
         settings.plugin =
           let
             piper = "piper -- CLICOLOR_FORCE=1 ${lib.getExe pkgs.glow} -w=$w -s=dracula -- $1";
+            mk = url: run: { inherit url run; };
+            mkFetcher = group: url: run: { inherit group url run; };
           in
           {
-            spotters = [
-              {
-                url = "*";
-                run = "extra-metadata";
-              }
+            spotters = [ (mk "*" "extra-metadata") ];
+            prepend_previewers = [ (mk "*.md" piper) ];
+            prepend_preloaders = [ (mk "*.md" piper) ];
+            prepend_fetchers = [
+              (mkFetcher "simple-tag" "*" "simple-tag")
+              (mkFetcher "simple-tag" "*/" "simple-tag")
+              (mkFetcher "git" "*" "git")
+              (mkFetcher "git" "*/" "git")
             ];
             append_previewers = [
-              {
-                url = "*";
-                run = ''piper -- ${lib.getExe pkgs.hexyl} --border=none --terminal-width=$w "$1"'';
-              }
-            ];
-            prepend_previewers = [
-              {
-                url = "*.md";
-                run = piper;
-              }
-            ];
-            prepend_preloaders = [
-              {
-                url = "*.md";
-                run = piper;
-              }
-            ];
-            prepend_fetchers = [
-              {
-                group = "git";
-                url = "*";
-                run = "git";
-              }
-              {
-                group = "git";
-                url = "*/";
-                run = "git";
-              }
+              (mk "*" ''piper -- ${lib.getExe pkgs.hexyl} --border=none --terminal-width=$w "$1"'')
             ];
           };
 
         keymap = {
-          mgr.prepend_keymap = [
-            {
-              on = [ "<Enter>" ];
-              run = "plugin confirm-dialog";
-              desc = "Safe open in chooser mode";
-            }
-            {
-              on = [ "z" ];
-              run = "plugin fuzzy-search -- fd --TL=3";
-              desc = "Fuzzy Find Files";
-            }
-            {
-              on = [ "<S-s>" ];
-              run = "plugin fuzzy-search -- rg --TL=3";
-              desc = "Ripgrep Search";
-            }
-            {
-              on = [ "<S-z>" ];
-              run = "plugin fuzzy-search -- zoxide --TL=3";
-              desc = "Zoxide Search";
-            }
-            {
-              on = [
-                "c"
-                "m"
-              ];
-              run = "plugin chmod";
-              desc = "chmod on files";
-            }
-            {
-              on = [
-                "C"
-              ];
-              run = "plugin ouch";
-              desc = "Compress files with ouch";
-            }
-            {
-              on = [
-                "f"
-              ];
-              run = "plugin smart-filter";
-              desc = "Smart filter";
-            }
-            {
-              on = [
-                "<C-y>"
-              ];
-              run = "plugin wl-clipboard";
-              desc = "copy to clipboard";
-            }
+          mgr.prepend_keymap = with config.forte.lib; [
+            (mkKeymap [ "<Enter>" ] "plugin confirm-dialog" "Safe open in chooser mode")
+            (mkKeymap [ "z" ] "plugin fuzzy-search -- fd --TL=3" "Fuzzy Find Files")
+            (mkKeymap [ "<S-s>" ] "plugin fuzzy-search -- rg --TL=3" "Ripgrep Search")
+            (mkKeymap [ "<S-z>" ] "plugin fuzzy-search -- zoxide --TL=3" "Zoxide Search")
+            (mkKeymap [ "c" "m" ] "plugin chmod" "chmod on files")
+            (mkKeymap [ "C" ] "plugin ouch" "Compress files with ouch")
+            (mkKeymap [ "f" ] "plugin smart-filter" "Smart filter")
+            (mkKeymap [ "<C-y>" ] "plugin wl-clipboard" "copy to clipboard")
           ];
         };
       };

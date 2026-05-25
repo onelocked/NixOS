@@ -26,7 +26,13 @@
       apps = config.flake-file.apps |> lib.mapAttrs (_: mkApp);
       _module.args = { inherit (inputs) birdee; };
     };
-  m.default._module.args = { inherit (inputs) birdee; };
+  m.default = {
+    config._module.args = { inherit (inputs) birdee; };
+    options.forte.lib = lib.mkOption {
+      type = lib.types.attrsOf lib.types.unspecified;
+      default = { };
+    };
+  };
 
   systems = import inputs.systems;
 

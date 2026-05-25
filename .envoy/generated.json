@@ -70,6 +70,27 @@
         },
         "version": "fd4a47baaba60598603d6c760512d2169479872b"
     },
+    "confirm-dialog": {
+        "cargoLock": null,
+        "date": "2026-05-25",
+        "extract": null,
+        "name": "confirm-dialog",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "onelocked",
+            "repo": "confirm-dialog.yazi",
+            "rev": "0231323227dc97b1a4f070f4b8bf8c37d538a6df",
+            "sha256": "sha256-3KxK0cTjm9z+ilXhBFbvWyZmWVfiaJKKIpbVcEABjYE=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "0231323227dc97b1a4f070f4b8bf8c37d538a6df"
+    },
     "extra-metadata": {
         "cargoLock": null,
         "date": "2026-04-22",
