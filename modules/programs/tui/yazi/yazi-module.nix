@@ -34,18 +34,20 @@
           default = birdee.wrappers.yazi.wrap {
             inherit pkgs;
             runtimePkgs = [ pkgs.ouch ];
-            inherit (config.forte.yazi) plugins;
-            settings = with config.forte; {
-              inherit (yazi) keymap theme;
-              yazi = yazi.settings;
+            inherit (cfg) plugins;
+            settings = {
+              inherit (cfg) keymap theme;
+              yazi = cfg.settings;
             };
-            constructFiles.initLua = {
-              relPath = "yazi-config/init.lua";
-              content = config.forte.yazi.initLua;
-            };
-            constructFiles.oneshillFlavor = {
-              relPath = "yazi-config/flavors/oneshill.yazi/flavor.toml";
-              content = config.forte.yazi.flavorContent;
+            constructFiles = {
+              initLua = {
+                relPath = "yazi-config/init.lua";
+                content = config.forte.yazi.initLua;
+              };
+              flavor = {
+                relPath = "yazi-config/flavors/oneshill.yazi/flavor.toml";
+                content = config.forte.yazi.flavorContent;
+              };
             };
           };
         };
@@ -53,12 +55,6 @@
           type = lib.types.attrsOf (lib.types.nullOr lib.types.path);
           default = { };
           description = "Yazi plugins";
-        };
-
-        flavors = lib.mkOption {
-          type = lib.types.attrsOf (lib.types.nullOr lib.types.path);
-          default = { };
-          description = "Yazi flavors";
         };
 
         flavorContent = lib.mkOption {
