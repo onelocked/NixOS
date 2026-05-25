@@ -12,6 +12,10 @@
       github = "boydaihungst/file-extra-metadata.yazi";
       locked = true;
     };
+    yaziline = {
+      github = "llanosrocas/yaziline.yazi";
+      locked = true;
+    };
   };
   m.yazi =
     {
@@ -27,7 +31,6 @@
           inherit (pkgs.yaziPlugins)
             starship
             full-border
-            no-status
             ouch
             lazygit
             git
@@ -37,6 +40,7 @@
             wl-clipboard
             ;
           fuzzy-search = pkgs.yaziPlugins.mkYaziPlugin { inherit (envoy.fuzzy-search) pname version src; };
+          yaziline = pkgs.yaziPlugins.mkYaziPlugin { inherit (envoy.yaziline) pname version src; };
           confirm-dialog = pkgs.yaziPlugins.mkYaziPlugin {
             inherit (envoy.confirm-dialog) pname version src;
           };
@@ -86,7 +90,6 @@
               flags_after_prompt = true, -- Default: true
               config_file = "${config.hj.xdg.config.directory}/starship.toml", -- Default: nil
           })
-          require("no-status"):setup()
           require("full-border"):setup {
           	type = ui.Border.ROUNDED,
           }
@@ -94,6 +97,23 @@
               -- Order of status signs showing in the linemode
             order = 1500,
           }
+          require("yaziline"):setup({
+            color = "#7d75c1",
+            secondary_color = "#313245",
+            default_files_color = "darkgray", -- color of the file counter when it's inactive
+            selected_files_color = "white",
+            yanked_files_color = "#8fd4b5",
+            cut_files_color = "#ff7a6b",
+
+            separator_style = "liney", -- "angly" | "curvy" | "liney" | "empty"
+
+            select_symbol = "",
+            yank_symbol = "󰆐",
+
+            filename_max_length = 24, -- truncate when filename > 24
+            filename_truncate_length = 6, -- leave 6 chars on both sides
+            filename_truncate_separator = "..."
+          })
         '';
     };
 }

@@ -217,6 +217,27 @@
         },
         "version": "133f526793d90d2caa323c47687dd5544a2c704b"
     },
+    "yaziline": {
+        "cargoLock": null,
+        "date": "2026-05-09",
+        "extract": null,
+        "name": "yaziline",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "llanosrocas",
+            "repo": "yaziline.yazi",
+            "rev": "25161c18e61339b6a79f29f8948e3c360e3f9ace",
+            "sha256": "sha256-gF21K8Sn9VFh6nKcM5dhTiAH1sOE9D/Gmc8i3J8m+S4=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "25161c18e61339b6a79f29f8948e3c360e3f9ace"
+    },
     "zen-theme-store": {
         "cargoLock": null,
         "date": "2026-03-11",

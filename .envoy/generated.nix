@@ -130,6 +130,18 @@
     };
     date = "2026-02-24";
   };
+  yaziline = {
+    pname = "yaziline";
+    version = "25161c18e61339b6a79f29f8948e3c360e3f9ace";
+    src = fetchFromGitHub {
+      owner = "llanosrocas";
+      repo = "yaziline.yazi";
+      rev = "25161c18e61339b6a79f29f8948e3c360e3f9ace";
+      fetchSubmodules = false;
+      sha256 = "sha256-gF21K8Sn9VFh6nKcM5dhTiAH1sOE9D/Gmc8i3J8m+S4=";
+    };
+    date = "2026-05-09";
+  };
   zen-theme-store = {
     pname = "zen-theme-store";
     version = "7173dba5d060417fd65764b706856ae609496e31";
