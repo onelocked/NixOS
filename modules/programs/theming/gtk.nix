@@ -33,133 +33,121 @@
       };
 
       gtk3-4-common.gtk-application-prefer-dark-theme = 1;
-
-      default_cursor_path = with cfg.cursor; "${package}/share/icons/${name}/cursors/left_ptr";
-
-      default_index_theme_package = pkgs.writeTextFile {
-        name = "index.theme";
-        destination = "/share/icons/default/index.theme";
-        # Set name in icons theme, for compatibility with AwesomeWM etc. See:
-        # https://github.com/nix-community/home-manager/issues/2081
-        # https://wiki.archlinux.org/title/Cursor_themes#XDG_specification
-        text = ''
-          [Icon Theme]
-          Name=Default
-          Comment=Default Cursor Theme
-          Inherits=${cfg.cursor.name}
-        '';
-      };
     in
     {
-      config = lib.mkIf (cfg.enable) {
-        hj.packages = [
-          cfg.theme.package
-          cfg.cursor.package
-          default_index_theme_package
-        ];
-
-        hj.environment.sessionVariables = {
-          XCURSOR_SIZE = cfg.cursor.size;
-          XCURSOR_THEME = cfg.cursor.name;
-        };
-
-        hj.xdg.data.files = {
-          "icons/${cfg.cursor.name}".source = "${cfg.cursor.package}/share/icons/${cfg.cursor.name}";
-
-          "icons/default/index.theme".source =
-            "${default_index_theme_package}/share/icons/default/index.theme";
-        };
-
-        hj.xdg.config.files = {
-          "xsettingsd/xsettingsd.conf".text = ''
-            Net/ThemeName "${cfg.theme.name}"
-            Net/IconThemeName "${cfg.icons.name}"
-            Gtk/CursorThemeName "${cfg.cursor.name}"
-          ''
-          + (with gtk2-3-common; ''
-            Net/EnableEventSounds ${toString gtk-enable-event-sounds}
-            EnableInputFeedbackSounds ${toString gtk-enable-input-feedback-sounds}
-            Xft/Antialias ${toString gtk-xft-antialias}
-            Xft/Hinting ${toString gtk-xft-hinting}
-            Xft/HintStyle "${gtk-xft-hintstyle}"
-            Xft/RGBA "${gtk-xft-rgba}"
-          '');
-
-          "gtk-4.0/settings.ini".source = ini "gtkrc-2.0" {
-            sections."Settings" = gtk-common // gtk3-4-common;
-          };
-
-          "gtk-3.0/settings.ini".source = ini "gtkrc-2.0" {
-            sections."Settings" = gtk-common // gtk2-3-common // gtk3-4-common;
-          };
-
+      config = lib.mkIf cfg.enable (
+        {
+          "${cfg.cursor.name}".source = "${cfg.cursor.package}/share/icons/${cfg.cursor.name}";
+          "default/index.theme".text = ''
+            [Icon Theme]
+            Name=Default
+            Comment=Default Cursor Theme
+            Inherits=${cfg.cursor.name}
+          '';
         }
-        // (
-          [
-            "4.0"
-            "3.0"
-            "2.0"
-          ]
-          |> map (version: lib.nameValuePair "gtk-${version}/gtk.css" { text = cfg.theme.css; })
-          |> builtins.listToAttrs
-        );
+        |> (cursorFiles: {
+          hj.packages = with cfg; [
+            theme.package
+            cursor.package
+            icons.package
+          ];
 
-        hj.files = {
-          ".gtkrc-2.0".source = ini "gtkrc-2.0" {
-            globalSection = gtk-common // gtk2-3-common;
+          hj.environment.sessionVariables = {
+            XCURSOR_SIZE = cfg.cursor.size;
+            XCURSOR_THEME = cfg.cursor.name;
           };
 
-          ".icons/default/index.theme".source =
-            "${default_index_theme_package}/share/icons/default/index.theme";
-
-          ".icons/${cfg.cursor.name}".source = "${cfg.cursor.package}/share/icons/${cfg.cursor.name}";
-
-          ".Xresources".text = ''
-            Xcursor.theme = ${cfg.cursor.name};
-            Xcursor.size = ${cfg.cursor.size};
-          '';
-
-          ".xprofile".text = /* bash */ ''
-            if [ -e "$HOME/.profile" ]; then
-              . "$HOME/.profile"
-            fi
-
-            # If there are any running services from a previous session.
-            # Need to run this in xprofile because the NixOS xsession
-            # script starts up graphical-session.target.
-            systemctl --user stop graphical-session.target graphical-session-pre.target
-
-            ${lib.getExe pkgs.xsetroot} -xcf ${default_cursor_path} ${cfg.cursor.size}
-
-            export HM_XPROFILE_SOURCED=1
-          '';
-        };
-
-        programs.dconf = {
-          enable = true;
-
-          profiles.user.databases = [
+          hj.xdg.config.files = {
+            "xsettingsd/xsettingsd.conf".text =
+              let
+                formatValue = v: if builtins.isString v then ''"${v}"'' else toString v;
+              in
+              {
+                "Net/ThemeName" = cfg.theme.name;
+                "Net/IconThemeName" = cfg.icons.name;
+                "Gtk/CursorThemeName" = cfg.cursor.name;
+                "Net/EnableEventSounds" = gtk2-3-common.gtk-enable-event-sounds;
+                "EnableInputFeedbackSounds" = gtk2-3-common.gtk-enable-input-feedback-sounds;
+                "Xft/Antialias" = gtk2-3-common.gtk-xft-antialias;
+                "Xft/Hinting" = gtk2-3-common.gtk-xft-hinting;
+                "Xft/HintStyle" = gtk2-3-common.gtk-xft-hintstyle;
+                "Xft/RGBA" = gtk2-3-common.gtk-xft-rgba;
+              }
+              |> lib.mapAttrsToList (k: v: "${k} ${formatValue v}")
+              |> builtins.concatStringsSep "\n"
+              |> (s: s + "\n");
+          }
+          // (
             {
-              settings = {
-                # disable dconf first use warning
-                "ca/desrt/dconf-editor" = {
-                  show-warning = false;
-                };
-                # gtk related settings
-                "org/gnome/desktop/interface" = {
-                  gtk-theme = cfg.theme.name;
-                  icon-theme = cfg.icons.name;
-                  cursor-theme = cfg.cursor.name;
-                  cursor-size = cfg.cursor.size;
-                  color-scheme = "prefer-dark"; # set dark theme for gtk 4
-                  # disable middle click paste
-                  gtk-enable-primary-paste = false;
-                };
-              };
+              "4.0" = gtk-common // gtk3-4-common;
+              "3.0" = gtk-common // gtk2-3-common // gtk3-4-common;
+              "2.0" = gtk-common // gtk2-3-common;
             }
-          ];
-        };
-      };
+            |> lib.mapAttrsToList (
+              version: settings: [
+                (lib.nameValuePair (if version == "2.0" then "gtk-2.0/gtkrc" else "gtk-${version}/settings.ini") {
+                  source = ini "gtkrc-${version}" (
+                    if version == "2.0" then { globalSection = settings; } else { sections."Settings" = settings; }
+                  );
+                })
+
+                (lib.nameValuePair "gtk-${version}/gtk.css" { text = cfg.theme.css; })
+              ]
+            )
+            |> lib.flatten
+            |> builtins.listToAttrs
+          );
+
+          hj.xdg.data.files = lib.mapAttrs' (k: v: lib.nameValuePair "icons/${k}" v) cursorFiles;
+
+          hj.files = (lib.mapAttrs' (k: v: lib.nameValuePair ".icons/${k}" v) cursorFiles) // {
+            ".Xresources".text = ''
+              Xcursor.theme = ${cfg.cursor.name};
+              Xcursor.size = ${cfg.cursor.size};
+            '';
+
+            ".xprofile".text = /* bash */ ''
+              if [ -e "$HOME/.profile" ]; then
+                . "$HOME/.profile"
+              fi
+
+              # If there are any running services from a previous session.
+              # Need to run this in xprofile because the NixOS xsession
+              # script starts up graphical-session.target.
+              systemctl --user stop graphical-session.target graphical-session-pre.target
+
+              ${lib.getExe pkgs.xsetroot} -xcf ${cfg.cursor.package}/share/icons/${cfg.cursor.name}/cursors/left_ptr ${cfg.cursor.size}
+
+              export HM_XPROFILE_SOURCED=1
+            '';
+          };
+
+          programs.dconf = {
+            enable = true;
+
+            profiles.user.databases = [
+              {
+                settings = {
+                  # disable dconf first use warning
+                  "ca/desrt/dconf-editor" = {
+                    show-warning = false;
+                  };
+                  # gtk related settings
+                  "org/gnome/desktop/interface" = {
+                    gtk-theme = cfg.theme.name;
+                    icon-theme = cfg.icons.name;
+                    cursor-theme = cfg.cursor.name;
+                    cursor-size = cfg.cursor.size;
+                    color-scheme = "prefer-dark"; # set dark theme for gtk 4
+                    # disable middle click paste
+                    gtk-enable-primary-paste = false;
+                  };
+                };
+              }
+            ];
+          };
+        })
+      );
 
       options.custom.gtk = {
         enable = lib.mkEnableOption { } // {
