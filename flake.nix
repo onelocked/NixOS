@@ -26,6 +26,7 @@
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
     flake-file.url = "github:vic/flake-file";
+    base16.url = "github:SenchoPens/base16.nix";
     birdee = {
       url = "github:BirdeeHub/nix-wrapper-modules";
       inputs.nixpkgs.follows = "nixpkgs";
