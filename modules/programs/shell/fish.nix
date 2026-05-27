@@ -1,6 +1,11 @@
 {
   m.fish =
-    { pkgs, lib, ... }:
+    {
+      pkgs,
+      lib,
+      scheme,
+      ...
+    }:
     {
       programs = {
         fish = {
@@ -66,36 +71,38 @@
                 commandline -f repaint
               '';
           };
-          shellInit = # fish
+          shellInit =
+            with scheme.withHashtag; # fish
             ''
               bind Z __yazi-fuzzy-zoxide
               bind -M insert Z __yazi-fuzzy-zoxide
 
               set -g fish_greeting # Disable greeting
 
-              set -g fish_color_normal        "#cfd3e7"
-              set -g fish_color_command       "#b8db8c"
-              set -g fish_color_keyword       "#c8b0e8"
-              set -g fish_color_string        "#c5c0ff"
-              set -g fish_color_operator      "#8fd4b5"
-              set -g fish_color_comment       "#454545"
-              set -g fish_color_error         "#f4a8b8"
-              set -g fish_color_param         "#a8c8f0"
-              set -g fish_color_quote         "#b8db8c"
-              set -g fish_color_redirection   "#7cb8d4"
-              set -g fish_color_end           "#e8c4d8"
-              set -g fish_color_autosuggestion "#787878"
-              set -g fish_color_search_match  --bold --underline "#f6d88a"
-              set -g fish_color_selection      "#a8c8f0"
+              set -g fish_color_normal             "${base05}"
+              set -g fish_color_comment            "${base03}"
+              set -g fish_color_autosuggestion     "${base04}"
+              set -g fish_color_selection          "${base02}"
+              set -g fish_color_cursor             "${base00}"
+              set -g fish_color_cursor_foreground  "${base05}"
+              set -g fish_color_search_match       --bold --underline "${base0A}"
 
-              set -g fish_color_cursor          "#1e1e2e"
-              set -g fish_color_cursor_foreground "#cfd3e7"
 
-              set -g fish_color_directory     "#f6d88a"
-              set -g fish_color_commandpath   "#7d75c0"
+              set -g fish_color_command            "${base0B}"
+              set -g fish_color_keyword            "${base0E}"
+              set -g fish_color_string             "${base0F}"
+              set -g fish_color_operator           "${base15}"
+              set -g fish_color_escape             "${base09}"
+              set -g fish_color_quote              "${base0B}"
+              set -g fish_color_param              "${base16}"
+              set -g fish_color_error              "${base08}"
 
-              set -g fish_color_bracket       "#b8db8c"
-              set -g fish_color_escape        "#f2b8a0"
+
+              set -g fish_color_redirection        "${base0C}"
+              set -g fish_color_end                "${base17}"
+              set -g fish_color_directory          "${base0A}"
+              set -g fish_color_commandpath        "${base0D}"
+              set -g fish_color_bracket            "${base0B}"
             '';
         };
       };
