@@ -146,7 +146,10 @@
     {
       config = lib.mkMerge [
         (lib.mkIf cfg.enable {
-          hj.packages = [ cfg.package ];
+          hj.packages = [
+            cfg.package
+            pkgs.gh
+          ];
           hj.environment.sessionVariables = {
             GIT_PAGER = "diffnav";
           };

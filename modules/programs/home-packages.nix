@@ -7,7 +7,6 @@
         lsof
         fzf
         fd
-        gh
         jq
         tldr
         wget
