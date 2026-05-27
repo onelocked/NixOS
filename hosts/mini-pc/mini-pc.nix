@@ -24,7 +24,6 @@
 
       quickshell
 
-      qview
       starship
       kitty
       fish
