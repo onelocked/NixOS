@@ -25,6 +25,7 @@
     {
       apps = config.flake-file.apps |> lib.mapAttrs (_: mkApp);
       _module.args = { inherit (inputs) birdee; };
+      formatter = pkgs.nixfmt-rs;
     };
   m.default = {
     config._module.args = { inherit (inputs) birdee; };
