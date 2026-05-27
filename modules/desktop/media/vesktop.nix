@@ -1,6 +1,11 @@
 {
   m.vesktop =
-    { pkgs, lib, ... }:
+    {
+      pkgs,
+      lib,
+      scheme,
+      ...
+    }:
     {
       hj = {
         packages = [
@@ -22,8 +27,8 @@
                 minimizeToTray = true;
                 tray = true;
                 splashTheming = true;
-                splashBackground = "#131316";
-                splashColor = "#131316";
+                splashBackground = "${scheme.withHashtag.base00}";
+                splashColor = "${scheme.withHashtag.base00}";
                 staticTitle = true;
                 hardwareAcceleration = true;
                 discordBranch = "stable";

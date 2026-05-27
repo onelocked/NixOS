@@ -18,7 +18,7 @@
       author = "onelock";
 
       # Backgrounds
-      base00 = "#1a1520"; # Default background
+      base00 = "#131316"; # Default background
       base01 = "#221c2c"; # Lighter background
       base02 = "#2e2438"; # Selection background
       base03 = "#3d3050"; # Comments, invisibles

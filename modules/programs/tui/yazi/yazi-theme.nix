@@ -1,31 +1,31 @@
 {
   m.yazi =
-    { lib, ... }:
+    { lib, scheme, ... }:
     let
-      c = {
-        fg = "#e5e1e6";
-        bg = "#131316";
-        primary = "#c5c0ff";
-        onPrimary = "#2a2277";
-        alt = "#c7c4dc";
-        altFg = "#c8c5d0";
-        altBg = "#47464f";
-        pink = "#ebb9d0";
-        pinkFg = "#472538";
-        red = "#ffb4ab";
-        redBg = "#93000a";
-        redFg = "#ffdad6";
-        marker = "#603b4f";
-        copiedFg = "#ffd8e9";
-        sepBlue = "#413b8e";
-        selectFg = "#302e42";
-        devDir = "#96ca6b";
-        nixDir = "#7ebae4";
-        imageFt = "#94e2d5";
-        mediaFt = "#f9e2af";
-        archiveFt = "#f5c2e7";
-        docFt = "#a6e3a1";
-        white = "#FFFFFF";
+      c = with scheme.withHashtag; {
+        fg = base07; # #f0f2fa
+        bg = base00; # #131316
+        primary = base0F; # #c5c0ff
+        onPrimary = base0D; # #7d75c0
+        alt = base06; # #e4e8f5
+        altFg = base05; # #cfd3e7
+        altBg = base03; # #3d3050
+        pink = base0E; # #c8b0e8
+        pinkFg = base02; # #2e2438
+        red = base08; # #f4a8b8
+        redBg = base10; # #130f18
+        redFg = base06; # #e4e8f5
+        marker = base02; # #2e2438
+        copiedFg = base17; # #e8c4d8
+        sepBlue = base0D; # #7d75c0
+        selectFg = base01; # #221c2c
+        devDir = base0B; # #b8db8c
+        nixDir = base16; # #a8c8f0
+        imageFt = base15; # #8fd4b5
+        mediaFt = base0A; # #f6d88a
+        archiveFt = base17; # #e8c4d8
+        docFt = base14; # #c8e09c
+        white = base07; # #f0f2fa
       };
     in
     {

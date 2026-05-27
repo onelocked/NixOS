@@ -1,73 +1,76 @@
 {
-  m.btop = {
-    systemd.tmpfiles.rules = [
-      "z /sys/class/powercap/intel-rapl/intel-rapl:0/energy_uj 0444 root root - -"
-    ];
-    forte.xdg.desktopEntries."btop".noDisplay = true;
-    forte.btop = {
-      enable = true;
-      settings = {
-        color_theme = "oneshill";
-        vim_keys = true;
-        rounded_corners = true;
-        proc_tree = false;
-        show_gpu_info = "on";
-        show_uptime = true;
-        show_coretemp = true;
-        theme_background = false;
-        cpu_single_graph = true;
-        show_disks = true;
-        show_swap = true;
-        swap_disk = false;
-        use_fstab = false;
-        only_physical = false;
-        shown_boxes = "cpu mem net proc gpu0";
-        gpu_mirror_graph = false;
-      };
-      themes = {
-        oneshill = # bash
-          ''
-            theme[main_bg]="#131316"
-            theme[main_fg]="#e5e1e6"
-            theme[title]="#c5c0ff"
-            theme[hi_fg]="#ebb9d0"
-            theme[selected_bg]="#353438"
-            theme[selected_fg]="#e5e1e6"
-            theme[inactive_fg]="#c8c5d0"
-            theme[proc_misc]="#c7c4dc"
-            theme[cpu_box]="#928f99"
-            theme[mem_box]="#928f99"
-            theme[net_box]="#928f99"
-            theme[proc_box]="#928f99"
-            theme[div_line]="#47464f"
-            theme[temp_start]="#c5c0ff"
-            theme[temp_mid]="#c7c4dc"
-            theme[temp_end]="#ebb9d0"
-            theme[cpu_start]="#c5c0ff"
-            theme[cpu_mid]="#c7c4dc"
-            theme[cpu_end]="#ebb9d0"
-            theme[free_start]="#c5c0ff"
-            theme[free_mid]="#c7c4dc"
-            theme[free_end]="#ebb9d0"
-            theme[cached_start]="#c5c0ff"
-            theme[cached_mid]="#c7c4dc"
-            theme[cached_end]="#ebb9d0"
-            theme[available_start]="#c5c0ff"
-            theme[available_mid]="#c7c4dc"
-            theme[available_end]="#ebb9d0"
-            theme[used_start]="#c5c0ff"
-            theme[used_mid]="#c7c4dc"
-            theme[used_end]="#ebb9d0"
-            theme[download_start]="#c5c0ff"
-            theme[download_mid]="#c7c4dc"
-            theme[download_end]="#ebb9d0"
-            theme[upload_start]="#c5c0ff"
-            theme[upload_mid]="#c7c4dc"
-            theme[upload_end]="#ebb9d0"
-          '';
+  m.btop =
+    { scheme, ... }:
+    {
+      systemd.tmpfiles.rules = [
+        "z /sys/class/powercap/intel-rapl/intel-rapl:0/energy_uj 0444 root root - -"
+      ];
+      forte.xdg.desktopEntries."btop".noDisplay = true;
+      forte.btop = {
+        enable = true;
+        settings = {
+          color_theme = "oneshill";
+          vim_keys = true;
+          rounded_corners = true;
+          proc_tree = false;
+          show_gpu_info = "on";
+          show_uptime = true;
+          show_coretemp = true;
+          theme_background = false;
+          cpu_single_graph = true;
+          show_disks = true;
+          show_swap = true;
+          swap_disk = false;
+          use_fstab = false;
+          only_physical = false;
+          shown_boxes = "cpu mem net proc gpu0";
+          gpu_mirror_graph = false;
+        };
+        themes = {
+          oneshill =
+            with scheme.withHashtag; # bash
+            ''
+              theme[main_bg]="${base00}"         # #131316
+              theme[main_fg]="${base07}"         # #f0f2fa
+              theme[title]="${base0F}"           # #c5c0ff
+              theme[hi_fg]="${base0E}"           # #c8b0e8
+              theme[selected_bg]="${base02}"     # #2e2438
+              theme[selected_fg]="${base07}"     # #f0f2fa
+              theme[inactive_fg]="${base05}"     # #cfd3e7
+              theme[proc_misc]="${base06}"       # #e4e8f5
+              theme[cpu_box]="${base04}"         # #8c92aa
+              theme[mem_box]="${base04}"         # #8c92aa
+              theme[net_box]="${base04}"         # #8c92aa
+              theme[proc_box]="${base04}"        # #8c92aa
+              theme[div_line]="${base03}"        # #3d3050
+              theme[temp_start]="${base0F}"      # #c5c0ff
+              theme[temp_mid]="${base06}"        # #e4e8f5
+              theme[temp_end]="${base0E}"        # #c8b0e8
+              theme[cpu_start]="${base0F}"       # #c5c0ff
+              theme[cpu_mid]="${base06}"         # #e4e8f5
+              theme[cpu_end]="${base0E}"         # #c8b0e8
+              theme[free_start]="${base0F}"      # #c5c0ff
+              theme[free_mid]="${base06}"        # #e4e8f5
+              theme[free_end]="${base0E}"        # #c8b0e8
+              theme[cached_start]="${base0F}"    # #c5c0ff
+              theme[cached_mid]="${base06}"      # #e4e8f5
+              theme[cached_end]="${base0E}"      # #c8b0e8
+              theme[available_start]="${base0F}" # #c5c0ff
+              theme[available_mid]="${base06}"   # #e4e8f5
+              theme[available_end]="${base0E}"   # #c8b0e8
+              theme[used_start]="${base0F}"      # #c5c0ff
+              theme[used_mid]="${base06}"        # #e4e8f5
+              theme[used_end]="${base0E}"        # #c8b0e8
+              theme[download_start]="${base0F}"  # #c5c0ff
+              theme[download_mid]="${base06}"    # #e4e8f5
+              theme[download_end]="${base0E}"    # #c8b0e8
+              theme[upload_start]="${base0F}"    # #c5c0ff
+              theme[upload_mid]="${base06}"      # #e4e8f5
+              theme[upload_end]="${base0E}"      # #c8b0e8
+            '';
+        };
       };
     };
-  };
 
   perSystem =
     { pkgs, ... }:

@@ -4,6 +4,7 @@
       config,
       pkgs,
       lib,
+      scheme,
       ...
     }:
     let
@@ -27,7 +28,9 @@
 
       qtctFile.source = iniFmt "qtct.conf" qtctConf;
 
-      palette = "#e5e1e6, #131316, #ffffff, #cacaca, #9f9f9f, #b8b8b8, #e5e1e6, #ffffff, #e5e1e6, #131316, #131316, #000000, #413b8e, #e3dfff, #c7c4dc, #c5c0ff, #47464f, #131316, #47464f, #e5e1e6, #e5e1e6, #c5c0ff";
+      palette =
+        with scheme.withHashtag;
+        "${base07}, ${base00}, #ffffff, #cacaca, #9f9f9f, #b8b8b8, ${base07}, #ffffff, ${base07}, ${base00}, ${base00}, #000000, ${base0D}, ${base06}, ${base05}, ${base0F}, ${base03}, ${base00}, ${base03}, ${base07}, ${base07}, ${base0F}";
       colorSchemeFile = iniFmt "colors.conf" {
         ColorScheme =
           [

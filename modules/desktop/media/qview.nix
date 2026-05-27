@@ -1,6 +1,11 @@
 {
   m.qview =
-    { pkgs, lib, ... }:
+    {
+      pkgs,
+      scheme,
+      lib,
+      ...
+    }:
     {
       hj = {
         packages = [ pkgs.qview ];
@@ -16,7 +21,7 @@
             afterdelete = 2;
             allowmimecontentdetection = false;
             askdelete = true;
-            bgcolor = "#131316";
+            bgcolor = "${scheme.withHashtag.base00}";
             bgcolorenabled = true;
             colorspaceconversion = 1;
             cropmode = 1;
