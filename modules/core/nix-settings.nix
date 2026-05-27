@@ -78,8 +78,8 @@
         nd = "nom develop";
         nr = "nix run";
         nf = "nix run .#flake-update";
-        wf = "nix run .#write-flake";
-        ws = "nix run .#write-sources";
+        wf = "nix run .#write-flake . --offline";
+        ws = "nix run .#write-sources . --offline";
       };
     };
   perSystem =
