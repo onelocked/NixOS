@@ -148,18 +148,20 @@
           ];
       };
       forte.lib.otter-lib.otter-kitty-conf = pkgs.writeText "otter-kitty.conf" ''
-        allow_remote_control yes
-        background_opacity 1
-        background_image        ${
-          (pkgs.fetchurl {
-            url = "https://raw.githubusercontent.com/onelocked/images/refs/heads/main/fleet-controller.png";
-            hash = "sha256-pI4EzF6S7++rws35Ki3dD/Kt62XfNdmf0fuWyXCccVc=";
-          })
-        }
-        background_image_layout scaled
-        background_image_linear yes
         font_size               15
-        window_padding_width    20 105 20 105
+        ${pkgs.lib.optionalString (config.forte.theme.variable == "dark") ''
+          allow_remote_control yes
+          background_opacity 1
+          background_image        ${
+            (pkgs.fetchurl {
+              url = "https://raw.githubusercontent.com/onelocked/images/refs/heads/main/fleet-controller.png";
+              hash = "sha256-pI4EzF6S7++rws35Ki3dD/Kt62XfNdmf0fuWyXCccVc=";
+            })
+          }
+          background_image_layout scaled
+          background_image_linear yes
+          window_padding_width    20 105 20 105
+        ''}
       '';
       forte.niri.settings = {
         binds = {

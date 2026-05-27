@@ -1,6 +1,12 @@
 {
   m.git =
-    { constants, config, ... }:
+    {
+      constants,
+      config,
+      scheme,
+      ...
+    }:
+    with scheme.withHashtag;
     {
       sops.secrets.email.owner = constants.username;
       sops.templates."git-email" = {
@@ -28,7 +34,7 @@
           };
           delta = {
             navigate = true;
-            dark = true;
+            light = true;
             line-numbers = true;
             hyperlinks = true;
           };
@@ -58,10 +64,10 @@
             overrideGpg = true;
             pagers = [
               {
-                pager = ''delta --file-style "#74548c" --features space-separated --dark --diff-highlight --true-color always --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}" --line-fill-method=ansi --navigate --keep-plus-minus-markers --commit-style="#8eb893"'';
+                pager = ''delta --file-style "${base0E}" --features space-separated --light --diff-highlight --true-color always --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}" --line-fill-method=ansi --navigate --keep-plus-minus-markers --commit-style="${base0B}"'';
               }
               {
-                pager = ''delta --side-by-side --file-style "#74548c" --features space-separated --dark --diff-highlight --true-color always --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}" --line-fill-method=ansi --navigate --keep-plus-minus-markers --commit-style="#8eb893"'';
+                pager = ''delta --side-by-side --file-style "${base0E}" --features space-separated --light --diff-highlight --true-color always --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}" --line-fill-method=ansi --navigate --keep-plus-minus-markers --commit-style="${base0B}"'';
               }
             ];
             update = {
@@ -72,7 +78,7 @@
 
           gui = {
             authorColors = {
-              "*" = "#b4befe";
+              "*" = base0D;
             };
             expandFocusedSidePanel = true;
             expandedSidePanelWeight = 2;
@@ -87,17 +93,17 @@
             sidePanelWidth = 0.25;
             theme = {
               activeBorderColor = [
-                "#c8c5d0"
+                base0D
                 "bold"
               ];
-              cherryPickedCommitBgColor = [ "#45475a" ];
-              cherryPickedCommitFgColor = [ "#89b4fa" ];
-              defaultFgColor = [ "#cccccc" ];
-              inactiveBorderColor = [ "#c5c0ff" ];
-              optionsTextColor = [ "#aeaeae" ];
-              searchingActiveBorderColor = [ "#f9e2af" ];
-              selectedLineBgColor = [ "#47464f" ];
-              unstagedChangesColor = [ "#f38ba8" ];
+              cherryPickedCommitBgColor = [ base02 ];
+              cherryPickedCommitFgColor = [ base0D ];
+              defaultFgColor = [ base05 ];
+              inactiveBorderColor = [ base06 ];
+              optionsTextColor = [ base04 ];
+              searchingActiveBorderColor = [ base0A ];
+              selectedLineBgColor = [ base02 ];
+              unstagedChangesColor = [ base08 ];
             };
           };
 

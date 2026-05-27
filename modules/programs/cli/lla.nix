@@ -16,6 +16,7 @@
       config,
       lib,
       self',
+      scheme,
       ...
     }:
     let
@@ -107,23 +108,23 @@
         "lla/themes/abrelshud.toml" = {
           # Add the name here as well
           generator = tomlFormat.generate "lla-theme-abrelshud";
-          value = {
+          value = with scheme.withHashtag; {
             name = "catppuccin_mocha_custom";
 
             colors = {
-              file = "#cfd3e7";
-              directory = "#c5c0ff";
-              symlink = "#c8b0e8";
-              executable = "#b8db8c";
-              size = "#8c92aa";
-              date = "#8c92aa";
-              user = "#e8c4d8";
-              group = "#7cb8d4";
-              permission_dir = "#c5c0ff";
-              permission_read = "#b8db8c";
-              permission_write = "#f6d88a";
-              permission_exec = "#f4a8b8";
-              permission_none = "#a2a2a2";
+              file = base0D; # lavender
+              directory = base0D; # lavender
+              symlink = base0E; # mauve
+              executable = base0B; # green
+              size = base04; # dark foreground (muted)
+              date = base04; # dark foreground (muted)
+              user = base0E; # mauve (dusty rose → closest is mauve)
+              group = base0C; # cyan
+              permission_dir = base0D; # lavender
+              permission_read = base0B; # green
+              permission_write = base0A; # yellow
+              permission_exec = base08; # red/pink
+              permission_none = base03; # comments/invisibles (neutral gray)
             };
 
             special_files = {
@@ -132,53 +133,50 @@
                   h = 0;
                   s = 0;
                   l = 0.15;
-                };
-                "target" = "#8c92aa";
-                "dist" = "#8c92aa";
-                ".git" = "#c5c0ff";
-                "build" = "#8c92aa";
-                ".cache" = "#a2a2a2";
-                "*-env" = "#b8db8c";
-                "venv" = "#b8db8c";
-                ".env" = "#f6d88a";
-                "*.d" = "#a8c8f0";
-                "*_cache" = "#a2a2a2";
-                "*-cache" = "#a2a2a2";
+                }; # keep as-is (HSL)
+                "target" = base04; # muted
+                "dist" = base04; # muted
+                ".git" = base0D; # lavender
+                "build" = base04; # muted
+                ".cache" = base03; # neutral gray
+                "*-env" = base0B; # green
+                "venv" = base0B; # green
+                ".env" = base0A; # yellow
+                "*.d" = base0C; # cyan
+                "*_cache" = base03; # neutral gray
+                "*-cache" = base03; # neutral gray
               };
-
               dotfiles = {
-                ".gitignore" = "#7cb8d4";
-                ".env" = "#f6d88a";
-                ".dockerignore" = "#7cb8d4";
-                ".editorconfig" = "#8c92aa";
-                ".prettierrc" = "#d4b0d8";
-                ".eslintrc" = "#d4b0d8";
-                ".babelrc" = "#d4b0d8";
+                ".gitignore" = base0C; # cyan
+                ".env" = base0A; # yellow
+                ".dockerignore" = base0C; # cyan
+                ".editorconfig" = base04; # muted
+                ".prettierrc" = base0E; # mauve
+                ".eslintrc" = base0E; # mauve
+                ".babelrc" = base0E; # mauve
               };
-
               exact_match = {
-                "Dockerfile" = "#7cb8d4";
-                "docker-compose.yml" = "#7cb8d4";
-                "Makefile" = "#f4a8b8";
-                "CMakeLists.txt" = "#f4a8b8";
-                "README.md" = "#c5c0ff";
-                "LICENSE" = "#8c92aa";
-                "package.json" = "#f6d88a";
-                "Cargo.toml" = "#f2b8a0";
-                "go.mod" = "#7cb8d4";
-                "flake.nix" = "#c5c0ff";
-                "flake.lock" = "#a2a2a2";
-                "shell.nix" = "#a8c8f0";
-                "default.nix" = "#a8c8f0";
+                "Dockerfile" = base0C; # cyan
+                "docker-compose.yml" = base0C; # cyan
+                "Makefile" = base08; # red/pink
+                "CMakeLists.txt" = base08; # red/pink
+                "README.md" = base0D; # lavender
+                "LICENSE" = base04; # muted
+                "package.json" = base0A; # yellow
+                "Cargo.toml" = base09; # orange
+                "go.mod" = base0C; # cyan
+                "flake.nix" = base0D; # lavender
+                "flake.lock" = base03; # neutral gray
+                "shell.nix" = base0C; # cyan
+                "default.nix" = base0C; # cyan
               };
-
               patterns = {
-                "*rc" = "#d4b0d8";
-                "*.min.*" = "#a2a2a2";
-                "*.test.*" = "#b8db8c";
-                "*.spec.*" = "#b8db8c";
-                "*.lock" = "#a2a2a2";
-                "*.config.*" = "#7cb8d4";
+                "*rc" = base0E; # mauve
+                "*.min.*" = base03; # neutral gray
+                "*.test.*" = base0B; # green
+                "*.spec.*" = base0B; # green
+                "*.lock" = base03; # neutral gray
+                "*.config.*" = base0C; # cyan
               };
             };
 
@@ -354,45 +352,45 @@
               };
 
               colors = {
-                rust = "#f2b8a0";
-                python = "#f6d88a";
-                javascript = "#f6d88a";
-                typescript = "#a8c8f0";
-                java = "#f4a8b8";
-                csharp = "#c5c0ff";
-                cpp = "#f4a8b8";
-                go = "#7cb8d4";
-                ruby = "#ff7a6b";
-                php = "#d4b0d8";
-                swift = "#f2b8a0";
-                kotlin = "#c8b0e8";
-                nix = "#7cb8d4";
-                markup = "#c8b0e8";
-                style = "#b8db8c";
-                web_config = "#a8c8f0";
-                shell = "#b8db8c";
-                script = "#8fd4b5";
-                doc = "#cfd3e7";
-                image = "#f2b8a0";
-                video = "#ff7a6b";
-                audio = "#d4a8c0";
-                data = "#a8c8f0";
-                archive = "#d4b0d8";
-                rs = "#f2b8a0";
-                py = "#f6d88a";
-                js = "#f6d88a";
-                ts = "#a8c8f0";
-                jsx = "#f6d88a";
-                tsx = "#a8c8f0";
-                vue = "#b8db8c";
-                css = "#b8db8c";
-                scss = "#b8db8c";
-                html = "#c8b0e8";
-                md = "#c5c0ff";
-                json = "#a8c8f0";
-                yaml = "#a8c8f0";
-                toml = "#f2b8a0";
-                sql = "#7cb8d4";
+                rust = base09; # orange
+                python = base0A; # yellow
+                javascript = base0A; # yellow
+                typescript = base0C; # cyan
+                java = base08; # red/pink
+                csharp = base0D; # lavender
+                cpp = base08; # red/pink
+                go = base0C; # cyan
+                ruby = base12; # bright red
+                php = base0E; # mauve
+                swift = base09; # orange
+                kotlin = base0D; # blue/indigo
+                nix = base0C; # cyan
+                markup = base0E; # mauve
+                style = base0B; # green
+                web_config = base0C; # cyan
+                shell = base0B; # green
+                script = base14; # bright green
+                doc = base03; # light gray/comments
+                image = base09; # orange
+                video = base12; # bright red
+                audio = base0E; # mauve
+                data = base0C; # cyan
+                archive = base0E; # mauve
+                rs = base09; # orange
+                py = base0A; # yellow
+                js = base0A; # yellow
+                ts = base0C; # cyan
+                jsx = base0A; # yellow
+                tsx = base0C; # cyan
+                vue = base0B; # green
+                css = base0B; # green
+                scss = base0B; # green
+                html = base0E; # mauve
+                md = base0D; # lavender
+                json = base0C; # cyan
+                yaml = base0C; # cyan
+                toml = base09; # orange
+                sql = base0C; # cyan
               };
             };
           };

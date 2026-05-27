@@ -1,13 +1,18 @@
 {
   m.bat =
-    { pkgs, birdee, ... }:
+    {
+      pkgs,
+      birdee,
+      config,
+      ...
+    }:
     {
       hj.packages = [
         (birdee.lib.wrapPackage {
           inherit pkgs;
           package = pkgs.bat;
           flags = {
-            "--theme" = "TwoDark";
+            "--theme" = if config.forte.theme.variant == "dark" then "TwoDark" else "base16";
             "--style" = "plain";
           };
         })

@@ -36,7 +36,7 @@
           cache_dir = "";
           image_delay = 0;
           max_width = 1920;
-          max_height = 1404;
+          max_height = 1344;
           image_quality = 60;
           sixel_fraction = 15;
         };

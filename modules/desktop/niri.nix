@@ -139,8 +139,8 @@
               border = {
                 on = set;
                 width = 5;
-                active-color = "#a898c8";
-                inactive-color = "#b4b4b4";
+                active-color = "#111111";
+                inactive-color = "#444444";
                 urgent-color = "#f0b8d0";
               };
               shadow = {
@@ -150,13 +150,13 @@
                 spread = 0;
                 offset = _: {
                   props = {
-                    x = 8;
-                    y = 9;
+                    x = -10;
+                    y = 10;
                   };
                   content = { };
                 };
-                color = "#302453E6";
-                inactive-color = "#302453E6";
+                color = "#222222E6";
+                inactive-color = "#222223E6";
               };
               tab-indicator = {
                 active-color = "#c5c0ff";

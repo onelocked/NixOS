@@ -56,7 +56,6 @@
           tab_title_template = "{fmt.fg._313244}●";
           active_tab_title_template = "{fmt.fg._c5c0ff}{'' if layout_name == 'stack' else '●'}";
 
-          background_opacity = 0.97;
           active_tab_font_style = "normal";
           inactive_tab_font_style = "normal";
 
@@ -123,42 +122,46 @@
           };
         theme = with scheme.withHashtag; {
           # Normal colors (0–7)
-          color0 = base00; # #131316 - black (background)
-          color1 = base08; # #f4a8b8 - red
-          color2 = base0B; # #b8db8c - green
-          color3 = base0A; # #f6d88a - yellow
-          color4 = base0D; # #7d75c0 - blue
-          color5 = base0E; # #c8b0e8 - mauve
-          color6 = base0C; # #7cb8d4 - cyan
-          color7 = base05; # #cfd3e7 - white
+          color0 = base00;
+          color1 = base08;
+          color2 = base0B;
+          color3 = base0A;
+          color4 = base0D;
+          color5 = base0E;
+          color6 = base0C;
+          color7 = base05;
 
-          # Bright colors (8–15)
-          color8 = base03; # #3d3050 - bright black
-          color9 = base12; # #ff7a6b - bright red
-          color10 = base14; # #c8e09c - bright green
-          color11 = base13; # #f6d88a - bright yellow
-          color12 = base16; # #a8c8f0 - bright blue
-          color13 = base17; # #e8c4d8 - bright magenta
-          color14 = base15; # #8fd4b5 - bright cyan
-          color15 = base07; # #f0f2fa - bright white
+          # Bright colors
+          color8 = base03;
+          color9 = base12; # Bright Red
+          color10 = base14; # Bright Green
+          color11 = base09; # ADJUSTED: Avoids red-on-red warnings
+          color12 = base0D; # ADJUSTED: Keeps blues from turning purple
+          color13 = base17; # Bright Magenta
+          color14 = base15; # Bright Cyan
+          color15 = base07;
 
-          # UI — lavender as the primary interactive accent
-          background = base00; # #131316
-          foreground = base05; # #cfd3e7
-          cursor = base0F; # #c5c0ff - lavender
-          cursor_text_color = base00; # #131316
-          cursor_trail_color = base0E; # #c8b0e8 - mauve
-          selection_background = base0D; # #7d75c0 - blue
-          selection_foreground = base07; # #f0f2fa -
-          active_border_color = base0F; # #c5c0ff -
-          inactive_border_color = base03; # #3d3050
-          url_color = base0E; # #c8b0e8 - mauve
+          # UI — lavender/blue as the primary interactive accent
+          background = base00;
+          foreground = base05;
+          cursor = base0D;
+          cursor_text_color = base00;
+          cursor_trail_color = base0E;
+
+          # Selection
+          selection_background = base0D;
+          selection_foreground = base02; # FIXED: Prevents dark-on-dark blindness
+
+          # Borders
+          active_border_color = base0D;
+          inactive_border_color = base03;
+          url_color = base0E;
 
           # Tabs
-          active_tab_foreground = base0F; # #c5c0ff - lavender
-          active_tab_background = base01; # #221c2c - slightly lifted, not flat black
-          inactive_tab_foreground = base04; # #8c92aa - muted but readable
-          inactive_tab_background = base00; # #131316
+          active_tab_foreground = base0D;
+          active_tab_background = base02; # TWEAKED: Uses your cleanest light grey
+          inactive_tab_foreground = base04;
+          inactive_tab_background = base00;
         };
       };
     };

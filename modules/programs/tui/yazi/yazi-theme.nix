@@ -3,33 +3,33 @@
     { lib, scheme, ... }:
     let
       c = with scheme.withHashtag; {
-        fg = base07; # #f0f2fa
-        bg = base00; # #131316
-        primary = base0F; # #c5c0ff
-        onPrimary = base0D; # #7d75c0
-        alt = base06; # #e4e8f5
-        altFg = base05; # #cfd3e7
-        altBg = base03; # #3d3050
-        pink = base0E; # #c8b0e8
-        pinkFg = base02; # #2e2438
-        red = base08; # #f4a8b8
-        redBg = base10; # #130f18
-        redFg = base06; # #e4e8f5
-        marker = base02; # #2e2438
-        copiedFg = base17; # #e8c4d8
-        sepBlue = base0D; # #7d75c0
-        selectFg = base01; # #221c2c
-        devDir = base0B; # #b8db8c
-        nixDir = base16; # #a8c8f0
-        imageFt = base15; # #8fd4b5
-        mediaFt = base0A; # #f6d88a
-        archiveFt = base17; # #e8c4d8
-        docFt = base14; # #c8e09c
-        white = base07; # #f0f2fa
+        fg = base05; # Default foreground
+        bg = base00; # Default background
+        primary = base0D; # Navy — main UI accent
+        onPrimary = base07; # Near-black — readable on navy
+        alt = base06; # Light foreground
+        altFg = base05; # Default foreground
+        altBg = base03; # Comments/muted — subtle bg
+        pink = base0E; # Mauve/violet
+        pinkFg = base17; # Selection bg — light enough on mauve
+        red = base08; # Red
+        redBg = base10; # Darker background
+        redFg = base06; # Light foreground on red bg
+        marker = base0F; # Selection background
+        copiedFg = base17; # Bright magenta
+        sepBlue = base0D; # Navy — consistent with primary
+        selectFg = base01; # Borders/lighter bg
+        devDir = base0B; # Green
+        nixDir = base16; # Bright violet
+        imageFt = base15; # Petrol blue
+        mediaFt = base0A; # Yellow/olive
+        archiveFt = base0F; # Warm brown — fitting for archives
+        docFt = base14; # Bright green
+        white = base07; # Lightest foreground
       };
     in
     {
-      forte.yazi = {
+      forte.yazi = with scheme.withHashtag; {
         theme.flavor = lib.genAttrs [ "dark" "light" ] (_: "oneshill");
         flavorContent = # toml
           ''
@@ -145,38 +145,38 @@
 
             [icon]
             globs = []
-            dirs  = [
-            	{ name = ".config", text = "", fg = "#c5c0ff" },
-            	{ name = ".git", text = "", fg = "#c5c0ff" },
-            	{ name = ".github", text = "", fg = "#c5c0ff" },
-            	{ name = ".npm", text = "", fg = "#c5c0ff" },
-            	{ name = "Desktop", text = "", fg = "#c5c0ff" },
-            	{ name = "Development", text = "", fg = "#96ca6b" },
-            	{ name = "Documents", text = "", fg = "#c5c0ff" },
-            	{ name = "Downloads", text = "", fg = "#c5c0ff" },
-            	{ name = "NixOS", text = "", fg = "#7ebae4" },
-            	{ name = "Library", text = "", fg = "#c5c0ff" },
-            	{ name = "Movies", text = "", fg = "#c5c0ff" },
-            	{ name = "Music", text = "", fg = "#c5c0ff" },
-            	{ name = "Pictures", text = "", fg = "#c5c0ff" },
-            	{ name = "Public", text = "", fg = "#c5c0ff" },
-            	{ name = "Videos", text = "", fg = "#c5c0ff" },
+              dirs  = [
+                { name = ".config", text = "", fg = "${base0D}" },
+                { name = ".git", text = "", fg = "${base0D}" },
+                { name = ".github", text = "", fg = "${base0D}" },
+                { name = ".npm", text = "", fg = "${base0D}" },
+                { name = "Desktop", text = "", fg = "${base0D}" },
+                { name = "Development", text = "", fg = "${base0B}" }, # Mapped to Green
+                { name = "Documents", text = "", fg = "${base0D}" },
+                { name = "Downloads", text = "", fg = "${base0D}" },
+                { name = "NixOS", text = "", fg = "${base0C}" }, # Mapped to Cyan
+                { name = "Library", text = "", fg = "${base0D}" },
+                { name = "Movies", text = "", fg = "${base0D}" },
+                { name = "Music", text = "", fg = "${base0D}" },
+                { name = "Pictures", text = "", fg = "${base0D}" },
+                { name = "Public", text = "", fg = "${base0D}" },
+                { name = "Videos", text = "", fg = "${base0D}" },
             ]
-            conds = [
-            	# Special files
-            	{ if = "orphan", text = "", fg = "#c5c0ff" },
-            	{ if = "link", text = "", fg = "#e5e1e6" },
-            	{ if = "block", text = "", fg = "#c5c0ff" },
-            	{ if = "char", text = "", fg = "#c5c0ff" },
-            	{ if = "fifo", text = "", fg = "#c5c0ff" },
-            	{ if = "sock", text = "", fg = "#c5c0ff" },
-            	{ if = "sticky", text = "", fg = "#c5c0ff" },
-            	{ if = "dummy", text = "", fg = "#c5c0ff" },
+              conds = [
+                # Special files
+                { if = "orphan", text = "", fg = "${base08}" }, # Mapped to Red
+                { if = "link", text = "", fg = "${base03}" }, # Mapped to Muted Grey
+                { if = "block", text = "", fg = "${base0D}" },
+                { if = "char", text = "", fg = "${base0D}" },
+                { if = "fifo", text = "", fg = "${base0D}" },
+                { if = "sock", text = "", fg = "${base0D}" },
+                { if = "sticky", text = "", fg = "${base0D}" },
+                { if = "dummy", text = "", fg = "${base0D}" },
 
-            	# Fallback
-            	{ if = "dir", text = "", fg = "#c5c0ff" },
-            	{ if = "exec", text = "", fg = "#ffb4ab" },
-            	{ if = "!dir", text = "", fg = "#FFFFFF" },
+                # Fallback
+                { if = "dir", text = "", fg = "${base0D}" },
+                { if = "exec", text = "", fg = "${base08}" }, # Mapped to Red
+                { if = "!dir", text = "", fg = "${base05}" }, # Mapped to Default Fg
             ]
           '';
       };

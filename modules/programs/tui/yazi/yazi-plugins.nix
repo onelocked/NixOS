@@ -27,6 +27,7 @@
       lib,
       config,
       envoy,
+      scheme,
       ...
     }:
     {
@@ -89,7 +90,8 @@
           ];
         };
       };
-      forte.yazi.initLua = # lua
+      forte.yazi.initLua =
+        with scheme.withHashtag; # lua
         ''
           require("full-border"):setup {
           	type = ui.Border.PLAIN,
@@ -100,12 +102,12 @@
           }
           require("no-header-prompt"):setup()
           require("yaziline"):setup({
-            color = "#7d75c1",
-            secondary_color = "#313245",
-            default_files_color = "darkgray", -- color of the file counter when it's inactive
-            selected_files_color = "white",
-            yanked_files_color = "#8fd4b5",
-            cut_files_color = "#ff7a6b",
+            color = "${base0D}",               -- blue (active/primary)
+            secondary_color = "${base02}",     -- selection background
+            default_files_color = "${base04}", -- dark foreground (inactive)
+            selected_files_color = "${base05}",-- default foreground
+            yanked_files_color = "${base0B}",  -- green
+            cut_files_color = "${base08}",     -- red
 
             separator_style = "liney", -- "angly" | "curvy" | "liney" | "empty"
 
