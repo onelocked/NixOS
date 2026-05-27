@@ -21,6 +21,6 @@
 <div align="center">
 
 ## Screenshots
-![Screenshot](https://raw.githubusercontent.com/onelocked/images/refs/heads/main/showcase.png)
+![Screenshot](https://raw.githubusercontent.com/onelocked/images/refs/heads/main/showcase1.png)
 
 </div>
