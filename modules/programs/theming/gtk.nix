@@ -84,15 +84,17 @@
               "2.0" = gtk-common // gtk2-3-common;
             }
             |> lib.mapAttrsToList (
-              version: settings: [
+              version: settings:
+              [
                 (lib.nameValuePair (if version == "2.0" then "gtk-2.0/gtkrc" else "gtk-${version}/settings.ini") {
                   source = ini "gtkrc-${version}" (
                     if version == "2.0" then { globalSection = settings; } else { sections."Settings" = settings; }
                   );
                 })
-
-                (lib.nameValuePair "gtk-${version}/gtk.css" { text = cfg.theme.css; })
               ]
+              ++ lib.optional (cfg.theme.css != "") (
+                lib.nameValuePair "gtk-${version}/gtk.css" { text = cfg.theme.css; }
+              )
             )
             |> lib.flatten
             |> builtins.listToAttrs
@@ -229,6 +231,25 @@
             default = self'.legacyPackages.apple-font;
           };
         };
+      };
+    };
+  perSystem =
+    { pkgs, ... }:
+    {
+      legacyPackages = {
+        ClassicPlatinumStreamlined = pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
+          name = "ClassicPlatinumStreamlined";
+          src = fetchTarball {
+            url = "https://s3.onelock.org/download/ClassicPlatinumStreamlined.tar.gz";
+            sha256 = "0ygs7zwndc1cadjvs6lvl3pvcl5agk9an61sc4g5s6iz9nnin0dr";
+          };
+          dontBuild = true;
+          dontConfigure = true;
+          installPhase = ''
+            mkdir -p $out/share/themes/
+            cp -r . $out/share/themes/${finalAttrs.name}/
+          '';
+        });
       };
     };
 }
