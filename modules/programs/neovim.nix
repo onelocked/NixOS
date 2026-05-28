@@ -7,13 +7,16 @@
       systems.follows = "systems";
     };
   };
-  m.neovim = {
-    forte.neovim = {
-      enable = true;
-      defaultEditor = true;
-      desktopEntry = true;
+  m.neovim =
+    { inputs', config, ... }:
+    {
+      forte.neovim = {
+        enable = true;
+        defaultEditor = true;
+        desktopEntry = true;
+        package = inputs'.vimmax.packages.default.override { theme = "${config.forte.theme.variant}"; };
+      };
     };
-  };
   m.default =
     {
       lib,
