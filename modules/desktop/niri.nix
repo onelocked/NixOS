@@ -4,10 +4,14 @@
       pkgs,
       lib,
       config,
+      scheme,
       ...
     }:
+    let
+      theme = config.forte.theme.variant;
+    in
     {
-      forte.niri = {
+      forte.niri = with scheme.withHashtag; {
         enable = true;
         withUWSM = true;
         withGreetd = true;
@@ -78,8 +82,8 @@
               debounce-ms = 750;
               open-delay-ms = 250;
               highlight = {
-                active-color = "#c5c0ff";
-                urgent-color = "#ffb4ab";
+                active-color = base0F;
+                urgent-color = base08;
                 padding = 15;
                 corner-radius = 20;
               };
@@ -131,18 +135,39 @@
               default-column-width.fixed = 2489;
               focus-ring = {
                 off = set;
-                width = 1;
-                active-color = "#5a468c";
-                inactive-color = "#191919";
-                urgent-color = "#ffb4ab";
               };
               border = {
                 on = set;
                 width = 5;
-                active-color = "#111111";
-                inactive-color = "#444444";
                 urgent-color = "#f0b8d0";
-              };
+              }
+              // (
+                if theme == "dark" then
+                  {
+                    active-color = "#a898c8";
+                    inactive-color = "#b4b4b4";
+                  }
+                else
+                  {
+                    active-gradient = _: {
+                      props = {
+                        from = "#111111";
+                        to = "#e0e0e0";
+                        angle = -180;
+                        "in" = "srgb-linear";
+                      };
+                    };
+                    inactive-gradient = _: {
+                      props = {
+                        from = "#2a2a2a";
+                        to = "#707070";
+                        angle = -180;
+                        "in" = "srgb-linear";
+                      };
+                    };
+                  }
+              );
+
               shadow = {
                 on = set;
                 draw-behind-window = false;
@@ -159,12 +184,12 @@
                 inactive-color = "#222223E6";
               };
               tab-indicator = {
-                active-color = "#c5c0ff";
-                inactive-color = "#413b8e";
-                urgent-color = "#ffb4ab";
+                active-color = base0F;
+                inactive-color = base0C;
+                urgent-color = base08;
               };
               insert-hint = {
-                color = "#c5c0ff80";
+                color = "${base0F}80";
               };
               struts = {
                 left = -5;
