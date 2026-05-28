@@ -160,7 +160,7 @@
           name = lib.mkOption {
             description = "GTK Theme";
             type = lib.types.str;
-            default = "adw-gtk3-dark";
+            default = "ClassicPlatinumStreamlined";
           };
 
           css = lib.mkOption {
@@ -172,7 +172,7 @@
           package = lib.mkOption {
             description = "GTK Theme package";
             type = lib.types.nullOr lib.types.package;
-            default = pkgs.adw-gtk3;
+            default = self'.legacyPackages.ClassicPlatinumStreamlined;
           };
         };
 
