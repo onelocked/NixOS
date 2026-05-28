@@ -155,6 +155,8 @@
           hj.packages = [
             cfg.package
             pkgs.gh
+            pkgs.diffnav
+            pkgs.delta
           ];
           hj.environment.sessionVariables = {
             GIT_PAGER = "diffnav";
@@ -194,10 +196,6 @@
                 relPath = "config.toml";
                 builder = ''mkdir -p "$(dirname "$2")" && cp ${yamlFormat.generate "lazygit.yml" cfg.settings} "$2"'';
               };
-              runtimePkgs = with pkgs; [
-                diffnav
-                delta
-              ];
             }
           );
         };
