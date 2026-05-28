@@ -8,9 +8,14 @@
     }:
     let
       cfg = config.forte.otter-launcher;
+      theme = config.forte.theme.variant;
       aemeath = pkgs.fetchurl {
         url = "https://raw.githubusercontent.com/onelocked/images/refs/heads/main/aemeath.png";
         hash = "sha256-QzUFj6f5KB8uLiZ8+YIcZl3zMGRpVLz3LFl8NoqjBjU=";
+      };
+      nix-logo = pkgs.fetchurl {
+        url = "https://raw.githubusercontent.com/onelocked/images/refs/heads/main/nix-snowflake-dark.png";
+        hash = "sha256-YLjkjECbUJJzyUs9igIG6aIWJX2c9BR/wmsjRE0YXug=";
       };
     in
     {
@@ -33,7 +38,7 @@
           };
 
           overlay = {
-            overlay_cmd = "chafa -s x11 ${aemeath}";
+            overlay_cmd = "chafa -s x11 ${if theme == "dark" then aemeath else nix-logo}";
             overlay_trimmed_lines = 0;
             move_overlay_right = 26;
             move_overlay_down = 1;
@@ -142,16 +147,16 @@
             {
               description = "launch";
               prefix = "app";
-              cmd = resize 450 650 ''`fsel --launch-prefix='app2unit --' -vv -d -r -p "{}"`'';
+              cmd = resize 0 0 ''`fsel --launch-prefix='app2unit --' -vv -d -r -p "{}"`'';
               with_argument = true;
             }
           ];
       };
       forte.lib.otter-lib.otter-kitty-conf = pkgs.writeText "otter-kitty.conf" ''
         font_size               15
-        ${pkgs.lib.optionalString (config.forte.theme.variable == "dark") ''
-          allow_remote_control yes
-          background_opacity 1
+        background_opacity 1
+        allow_remote_control yes
+        ${lib.optionalString (theme == "dark") ''
           background_image        ${
             (pkgs.fetchurl {
               url = "https://raw.githubusercontent.com/onelocked/images/refs/heads/main/fleet-controller.png";
@@ -178,28 +183,34 @@
           };
         };
         window-rules = [
-          {
-            matches = [ { app-id = "^otter-launcher$"; } ];
-            geometry-corner-radius = 45;
-            open-floating = true;
-            default-column-width.fixed = 885;
-            default-window-height.fixed = 410;
-            border.off = _: { };
-            shadow = {
-              on = _: { };
-              draw-behind-window = false;
-              softness = 20;
-              spread = 0;
-              offset = _: {
-                props = {
-                  x = 12;
-                  y = 15;
+          (
+            {
+              matches = [ { app-id = "^otter-launcher$"; } ];
+              open-floating = true;
+              default-column-width.fixed = 620;
+              default-window-height.fixed = 355;
+            }
+            // lib.optionalAttrs (theme == "dark") {
+              geometry-corner-radius = 45;
+              default-column-width.fixed = 885;
+              default-window-height.fixed = 410;
+              border.off = _: { };
+              shadow = {
+                on = _: { };
+                draw-behind-window = false;
+                softness = 20;
+                spread = 0;
+                offset = _: {
+                  props = {
+                    x = 12;
+                    y = 15;
+                  };
+                  content = { };
                 };
-                content = { };
+                color = "#2a2a30E6";
               };
-              color = "#2a2a30E6";
-            };
-          }
+            }
+          )
           {
             matches = [ { app-id = "^color-picker$"; } ];
             open-floating = true;
@@ -339,7 +350,7 @@
         hj.packages = [ cfg.package ];
         forte.lib.resize =
           width: height: app:
-          "niri msg action set-window-width ${toString width};niri msg action set-window-height ${toString height};niri msg action center-window;kitten @ set-background-image none && kitten @ set-spacing padding=0;${app}";
+          "niri msg action set-window-width ${toString width};niri msg action set-window-height ${toString height};niri msg action center-window;kitten @ set-background-image none && kitten @ set-spacing padding=0 && kitten @ set-font-size ${config.forte.kitty.fontConfig.font_size};${app}";
       };
     };
 
