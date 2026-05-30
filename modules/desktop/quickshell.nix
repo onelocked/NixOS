@@ -42,24 +42,33 @@
       qtPluginPath = lib.makeSearchPath pkgs.kdePackages.qtbase.qtPluginPrefix quickshellDeps; # lib/qt-6/plugins
     in
     {
-      options.forte.quickshell = {
-        enable = lib.mkEnableOption "quickshell";
-        package = lib.mkOption {
-          type = lib.types.package;
-          default = birdee.lib.wrapPackage {
-            inherit pkgs;
-            package = self'.packages.quickshell;
-            aliases = [ "qs" ];
-            runtimePkgs = quickshellDeps;
-            env = {
-              QT_QPA_PLATFORMTHEME = "gtk3";
-              QS_ICON_THEME = config.custom.gtk.icons.name;
-              QS_DROP_EXPENSIVE_FONTS = "1";
-              QML_IMPORT_PATH = qmlImportPath;
-              QML2_IMPORT_PATH = qmlImportPath;
-              QT_PLUGIN_PATH = qtPluginPath;
-              FONTCONFIG_FILE = pkgs.makeFontsConf { fontDirectories = [ pkgs.lucide ]; };
+      options = {
+        forte.quickshell = {
+          enable = lib.mkEnableOption "quickshell";
+          package = lib.mkOption {
+            type = lib.types.package;
+            default = birdee.lib.wrapPackage {
+              inherit pkgs;
+              package = self'.packages.quickshell;
+              aliases = [ "qs" ];
+              runtimePkgs = quickshellDeps;
+              env = {
+                QT_QPA_PLATFORMTHEME = "gtk3";
+                QS_ICON_THEME = config.custom.gtk.icons.name;
+                QS_DROP_EXPENSIVE_FONTS = "1";
+                QML_IMPORT_PATH = qmlImportPath;
+                QML2_IMPORT_PATH = qmlImportPath;
+                QT_PLUGIN_PATH = qtPluginPath;
+                FONTCONFIG_FILE = pkgs.makeFontsConf { fontDirectories = [ pkgs.lucide ]; };
+              };
             };
+          };
+        };
+        forte.awww = {
+          enable = lib.mkEnableOption "awww";
+          package = lib.mkOption {
+            type = lib.types.package;
+            default = pkgs.awww;
           };
         };
       };
@@ -85,8 +94,28 @@
               Restart = "on-failure";
             };
           };
+          systemd.services.awww = {
+            description = "awww wallpaper daemon";
+            wantedBy = [ "graphical-session.target" ];
+            partOf = [ "graphical-session.target" ];
+            after = [ "graphical-session.target" ];
+            serviceConfig = {
+              Type = "simple";
+              ExecStart = "${lib.getExe' pkgs.awww "awww-daemon"}";
+              Restart = "on-failure";
+              RestartSec = 1;
+              TimeoutStopSec = 10;
+            };
+          };
         };
-
+        forte.niri.settings = {
+          layer-rules = [
+            {
+              matches = [ { namespace = "^awww-daemon$"; } ];
+              place-within-backdrop = true;
+            }
+          ];
+        };
         forte.niri.settings.binds = {
           "Shift+Alt+W" = _: {
             props = {

@@ -16,7 +16,7 @@
           "spinner" = base15;
           "header" = base16;
           "border" = base01;
-          "gutter" = base00;
+          "gutter" = base01;
         };
         defaultOptions = [
           "--height=50%"
