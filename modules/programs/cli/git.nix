@@ -77,6 +77,7 @@
           };
 
           gui = {
+            border = "single";
             authorColors = {
               "*" = base0D;
             };
