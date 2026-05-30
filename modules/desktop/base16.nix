@@ -18,9 +18,9 @@
           author = "onelock";
 
           # Background & UI Chrome
-          base00 = "#bebebf";
+          base00 = "#d8d8d8";
           base01 = "#aaaaaa";
-          base02 = "#d8d8d9";
+          base02 = "#bebebf";
           base03 = "#8c8c8c";
 
           # Foregrounds
