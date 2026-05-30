@@ -1,34 +1,45 @@
 {
   m.fastfetch =
-    { scheme, ... }:
+    {
+      scheme,
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     {
       forte.fastfetch =
         let
           esc = (builtins.fromJSON ''{ "value": "\u001b" }'').value;
+          tux = pkgs.fetchurl {
+            url = "https://raw.githubusercontent.com/onelocked/images/refs/heads/main/tux.png";
+            hash = "sha256-XbAnJefiU9FD2aOm3rit8Et0lfI7Itt5rqsFxm3AZk4=";
+          };
         in
-        with scheme.withHashtag;
         {
           enable = true;
           settings = {
             "$schema" = "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json";
             logo = {
-              source = "-";
-              type = "raw";
+              source = tux;
+              type = "kitty-direct";
+              height = 9;
               width = 20;
               padding = {
-                top = 2;
+                top = 1;
                 left = 2;
               };
+            }
+            // lib.optionalAttrs (config.forte.theme.variant == "dark") {
+              source = "-";
             };
             display = {
               separator = " ┈➤ ";
             };
-            modules = [
+            modules = with scheme.withHashtag; [
               {
                 type = "title";
                 keyWidth = 10;
-                # Mapped to: Lavender (Username) @ Dark FG (At symbol) @ Blue (Hostname)
-                # RGB Conversions: #183871 (24;56;113), #555555 (85;85;85), #10587a (16;88;122)
                 format = "         ${esc}[38;2;92;36;136m{1}${esc}[38;2;140;140;140m@${esc}[38;2;0;89;89m{2}${esc}[0m";
               }
               {
@@ -38,33 +49,33 @@
               {
                 type = "os";
                 key = " ";
-                keyColor = "${base0C}"; # Mapped to Cyan (Deep Teal)
+                keyColor = "${base0C}";
               }
               {
                 type = "cpu";
                 key = " ";
-                keyColor = "${base0E}"; # Mapped to Mauve (Rich Violet)
+                keyColor = "${base0E}";
               }
               {
                 type = "gpu";
                 key = "󰢮 ";
-                keyColor = "${base08}"; # Mapped to Red (Dark Red)
+                keyColor = "${base08}";
               }
               {
                 type = "memory";
                 key = " ";
-                keyColor = "${base0B}"; # Mapped to Green (Forest Green)
+                keyColor = "${base0B}";
                 format = "{1} / {2}";
               }
               {
                 type = "wm";
                 key = " ";
-                keyColor = "${base0D}"; # Mapped to Blue for Niri
+                keyColor = "${base0D}";
               }
               {
                 type = "terminal";
                 key = " ";
-                keyColor = "${base0A}"; # Mapped to Yellow for Kitty/Foot
+                keyColor = "${base0A}";
               }
               {
                 type = "custom";
@@ -72,8 +83,6 @@
               }
               {
                 type = "custom";
-                # Mapped sequentially: Red, Green, Yellow, Blue, Mauve, Cyan, Default Foreground, Comments/Muted
-                # Base Variables used: base08, base0B, base0A, base0D, base0E, base0C, base05, base03
                 format = "   ${esc}[38;2;158;28;28m  ${esc}[38;2;36;102;40m  ${esc}[38;2;107;97;0m  ${esc}[38;2;16;88;122m  ${esc}[38;2;92;36;136m  ${esc}[38;2;0;89;89m  ${esc}[38;2;37;37;37m  ${esc}[38;2;140;140;140m ";
               }
             ];
@@ -91,15 +100,21 @@
     let
       cfg = config.forte.fastfetch;
       json = pkgs.formats.json { };
+      theme = config.forte.theme.variant;
     in
     {
       config = lib.mkIf cfg.enable {
-        environment.shellAliases.ff = "kitten icat -n --place 20x20@2x1 --scale-up --align left ${
-          (pkgs.fetchurl {
-            url = "https://raw.githubusercontent.com/onelocked/images/refs/heads/main/fleet-snowfluff.gif";
-            hash = "sha256-Vz6QZrhr5c+ShiHJwxHFeyCXszWFvDjhKFm2CyQNAbo=";
-          })
-        } | ${lib.getExe cfg.package}";
+        hj.packages = [ cfg.package ];
+        environment.shellAliases.ff =
+          if theme == "dark" then
+            "kitten icat -n --place 20x20@2x1 --scale-up --align left ${
+              (pkgs.fetchurl {
+                url = "https://raw.githubusercontent.com/onelocked/images/refs/heads/main/fleet-snowfluff.gif";
+                hash = "sha256-Vz6QZrhr5c+ShiHJwxHFeyCXszWFvDjhKFm2CyQNAbo=";
+              })
+            } | ${lib.getExe cfg.package}"
+          else
+            "${lib.getExe cfg.package}";
       };
 
       options.forte.fastfetch = {
