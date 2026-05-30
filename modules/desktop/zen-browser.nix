@@ -12,7 +12,7 @@
       forte.zen-browser = {
         enable = true;
         setAsDefaultBrowser = true;
-        niri-settings = true;
+        niri-rules = true;
         policies =
           let
             mkLockedAttrs = builtins.mapAttrs (
@@ -175,12 +175,10 @@
 
       config = lib.mkIf (cfg.enable) {
         hj.packages = [ cfg.package ];
-        hj.files = lib.mkIf (profilesCfg != { }) (
+        hj.xdg.config.files = lib.mkIf (profilesCfg != { }) (
           let
             profileValues = lib.attrValues profilesCfg;
-
             defaultPath = (lib.findFirst (p: p.isDefault) (lib.head profileValues) profileValues).path;
-
             profileSections =
               profilesCfg
               |> lib.attrNames
@@ -196,31 +194,21 @@
                 )
               )
               |> builtins.listToAttrs;
-
-            profilesIni = lib.generators.toINI { } (
-              {
-                General.StartWithLastProfile = 1;
-                Install.Default = defaultPath;
-              }
-              // profileSections
-            );
-
             userJsFiles =
               profilesCfg
               |> lib.mapAttrs' (
                 name: profile:
-                lib.nameValuePair ".config/zen/${profile.path}/user.js" {
+                lib.nameValuePair "zen/${profile.path}/user.js" {
                   text = mkUserJs profile.settings + "\n";
                 }
               );
-
             modFiles =
               profilesCfg
-              |> lib.mapAttrsToList (
+              |> lib.concatMapAttrs (
                 _: profile:
                 let
                   mods = map mkModData (lib.attrValues profile.mods);
-                  base = ".config/zen/${profile.path}/chrome";
+                  base = "zen/${profile.path}/chrome";
                   perMod = lib.concatMap (
                     m:
                     [
@@ -240,14 +228,21 @@
                   };
                 in
                 lib.listToAttrs perMod // aggregate
-              )
-              |> lib.foldl' (a: b: a // b) { };
+              );
           in
-          {
-            ".config/zen/profiles.ini".text = profilesIni;
-          }
-          // userJsFiles
-          // modFiles
+          lib.mergeAttrsList [
+            {
+              "zen/profiles.ini".text = lib.generators.toINI { } (
+                {
+                  General.StartWithLastProfile = 1;
+                  Install.Default = defaultPath;
+                }
+                // profileSections
+              );
+            }
+            userJsFiles
+            modFiles
+          ]
         );
 
         xdg.mime = lib.mkIf cfg.setAsDefaultBrowser {
@@ -269,8 +264,8 @@
             |> (mimes: lib.genAttrs mimes (_: [ "zen-twilight.desktop" ]));
         };
 
-        environment.sessionVariables = lib.mkIf cfg.setAsDefaultBrowser { BROWSER = "zen-twilight"; };
-        forte.niri = lib.mkIf cfg.niri-settings {
+        hj.environment.sessionVariables = lib.mkIf cfg.setAsDefaultBrowser { BROWSER = "zen-twilight"; };
+        forte.niri = lib.mkIf cfg.niri-rules {
           settings =
             let
               niri-launcher = pkgs.writeShellApplication {
@@ -400,7 +395,7 @@
           description = "Set Zen Browser as default browser.";
         };
 
-        niri-settings = lib.mkOption {
+        niri-rules = lib.mkOption {
           type = lib.types.bool;
           default = false;
           description = "Set niri keybinds for Zen Browser";
