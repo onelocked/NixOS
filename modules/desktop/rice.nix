@@ -9,6 +9,7 @@
     let
       cfg = config.forte;
       niri = "niri msg action";
+      theme = config.forte.theme.variant;
     in
     {
       forte.otter-launcher.modules = [
@@ -128,7 +129,7 @@
             setup_window_no_float "$cliamp_id" "780" "1090" "60" "223"
 
             otter_id=$(wait_for_window "app-id" "otter-launcher")
-            setup_window_no_float "$otter_id" "885" "410" "932" "913"
+            setup_window_no_float "$otter_id" ${if theme == "dark" then "885 410" else "620 355"} "932" "913"
 
             yazi_id=$(wait_for_window "app-id" "rice-yazi")
             setup_window "$yazi_id" "1259" "749" "327" "94"
