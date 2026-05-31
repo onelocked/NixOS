@@ -57,7 +57,7 @@
           # Backgrounds
           base00 = "#131316";
           base01 = "#221c2c";
-          base02 = "#2e2438";
+          base02 = "#313245";
           base03 = "#3d3050";
 
           # Foregrounds

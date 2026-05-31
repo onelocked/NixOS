@@ -133,15 +133,14 @@
 
           # Bright colors
           color8 = base03;
-          color9 = base12; # Bright Red
-          color10 = base14; # Bright Green
-          color11 = base09; # ADJUSTED: Avoids red-on-red warnings
-          color12 = base0D; # ADJUSTED: Keeps blues from turning purple
-          color13 = base17; # Bright Magenta
-          color14 = base15; # Bright Cyan
+          color9 = base12;
+          color10 = base14;
+          color11 = base09;
+          color12 = base0D;
+          color13 = base17;
+          color14 = base15;
           color15 = base07;
 
-          # UI — lavender/blue as the primary interactive accent
           background = base00;
           foreground = base05;
           cursor = base0D;
@@ -150,7 +149,7 @@
 
           # Selection
           selection_background = base0D;
-          selection_foreground = base02; # FIXED: Prevents dark-on-dark blindness
+          selection_foreground = base02;
 
           # Borders
           active_border_color = base0D;
@@ -159,7 +158,7 @@
 
           # Tabs
           active_tab_foreground = base0D;
-          active_tab_background = base02; # TWEAKED: Uses your cleanest light grey
+          active_tab_background = base02;
           inactive_tab_foreground = base04;
           inactive_tab_background = base00;
         };
