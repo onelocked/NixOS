@@ -30,7 +30,7 @@
           };
           defaultFonts = {
             serif = [ "SF Pro Display" ];
-            sansSerif = [ "SF Pro Text" ];
+            sansSerif = [ "New York" ];
             monospace = [ "LigaSFMono Nerd Font" ];
             emoji = [ "Apple Color Emoji" ];
           };

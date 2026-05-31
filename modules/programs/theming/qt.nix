@@ -14,7 +14,7 @@
         Appearance = {
           color_scheme_path = colorSchemeFile;
           custom_palette = true;
-          icon_theme = config.custom.gtk.icons.name;
+          icon_theme = config.forte.gtk.icons.name;
           standard_dialogs = "default";
           style = "Adwaita-Dark";
         };
@@ -24,7 +24,7 @@
         };
       };
 
-      font = ''"${config.custom.gtk.font.name},12,-1,5,400,0,0,0,0,0,0,0,0,0,0,1"'';
+      font = ''"${config.forte.gtk.font.serif},12,-1,5,400,0,0,0,0,0,0,0,0,0,0,1"'';
 
       qtctFile.source = iniFmt "qtct.conf" qtctConf;
 

@@ -20,7 +20,7 @@
                 letter-spacing = 0;
                 font = "Liga SFMono:weight=500:style=Bold:width=expanded:size=15";
                 namespace = "fuzzel";
-                icon-theme = "${config.custom.gtk.icons.name}";
+                icon-theme = "${config.forte.gtk.icons.name}";
                 terminal = "${pkgs.foot}/bin/foot -e";
               };
               colors = {

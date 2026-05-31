@@ -8,7 +8,7 @@
       ...
     }:
     {
-      custom.gtk = lib.mkIf (config.forte.theme.variant == "dark") {
+      forte.gtk = lib.mkIf (config.forte.theme.variant == "dark") {
         theme = {
           name = "adw-gtk3-dark";
           package = pkgs.adw-gtk3;
