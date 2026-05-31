@@ -23,7 +23,7 @@
           in
           {
             # General Niri Settings
-            prefer-no-csd = true;
+            prefer-no-csd = if (theme == "dark") then true else false;
             clipboard.disable-primary = true;
             spawn-sh-at-startup = [
               "${pkgs.libsecret}/bin/secret-tool lookup app keyring-init || echo 'init' | secret-tool store --label='keyring-init' app keyring-init"

@@ -1,6 +1,6 @@
 {
   m.kitty =
-    { scheme, ... }:
+    { scheme, config, ... }:
     {
       forte.kitty = {
         enable = true;
@@ -19,7 +19,7 @@
           wheel_scroll_multiplier = "5.0";
 
           strip_trailing_spaces = "smart";
-          hide_window_decorations = "yes";
+          hide_window_decorations = if (config.forte.theme.variant == "dark") then "yes" else "no";
 
           enable_audio_bell = "no";
           visual_bell_duration = "0.0";
