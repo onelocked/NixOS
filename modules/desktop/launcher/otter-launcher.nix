@@ -147,7 +147,7 @@
             {
               description = "launch";
               prefix = "app";
-              cmd = resize 0 0 ''`fsel --launch-prefix='app2unit --' -vv -d -r -p "{}"`'';
+              cmd = ''fsel --launch-prefix='app2unit --' -vv -d -r -p "{}"'';
               with_argument = true;
             }
           ];
@@ -347,7 +347,10 @@
         };
       };
       config = lib.mkIf (cfg.enable) {
-        hj.packages = [ cfg.package ];
+        hj.packages = [
+          cfg.package
+          pkgs.app2unit
+        ];
         forte.lib.resize =
           width: height: app:
           "niri msg action set-window-width ${toString width};niri msg action set-window-height ${toString height};niri msg action center-window;kitten @ set-background-image none && kitten @ set-spacing padding=0 && kitten @ set-font-size ${config.forte.kitty.fontConfig.font_size};${app}";
