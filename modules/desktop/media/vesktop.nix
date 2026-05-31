@@ -4,6 +4,7 @@
       pkgs,
       lib,
       scheme,
+      config,
       ...
     }:
     {
@@ -41,7 +42,12 @@
                 autoUpdateNotification = false;
                 useQuickCss = true;
                 themeLinks = [
-                  "https://codeberg.org/onelock/system-24-with-custom-pallete/raw/branch/main/system24.theme.css"
+                  (
+                    if config.forte.theme.variant == "dark" then
+                      "https://codeberg.org/onelock/system-24-with-custom-pallete/raw/branch/main/system24.theme-dark.css"
+                    else
+                      "https://codeberg.org/onelock/system-24-with-custom-pallete/raw/branch/main/system24.theme-light.css"
+                  )
                 ];
                 eagerPatches = false;
                 enabledThemes = [ ];
