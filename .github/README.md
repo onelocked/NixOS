@@ -21,6 +21,9 @@
 <div align="center">
 
 ## Screenshots
-![Screenshot](https://raw.githubusercontent.com/onelocked/images/refs/heads/main/showcase1.png)
+### Light theme
+![Screenshot](https://raw.githubusercontent.com/onelocked/images/refs/heads/main/showcase/showcase2.png)
+### Dark theme
+![Screenshot](https://raw.githubusercontent.com/onelocked/images/refs/heads/main/showcase/showcase1.png)
 
 </div>
