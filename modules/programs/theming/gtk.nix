@@ -115,20 +115,20 @@
           name = lib.mkOption {
             description = "Cursor theme";
             type = lib.types.str;
-            default = "Bibata-Modern-Ice";
+            default = "macOS-White";
           };
 
           size = lib.mkOption {
             description = "Cursor size";
             type = lib.types.int;
-            default = 24;
+            default = 32;
             apply = toString;
           };
 
           package = lib.mkOption {
             description = "Cursor theme package";
             type = lib.types.nullOr lib.types.package;
-            default = pkgs.bibata-cursors;
+            default = pkgs.apple-cursor;
           };
         };
 

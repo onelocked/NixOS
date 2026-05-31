@@ -9,6 +9,11 @@
     }:
     {
       forte.gtk = lib.mkIf (config.forte.theme.variant == "dark") {
+        cursor = {
+          name = "Bibata-Modern-Ice";
+          size = 24;
+          package = pkgs.bibata-cursors;
+        };
         icons = {
           name = "Papirus-Dark";
           package = pkgs.papirus-icon-theme;

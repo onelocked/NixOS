@@ -69,6 +69,7 @@
               "spotify"
               "steam"
               "steam-unwrapped"
+              "apple_cursor"
             ];
         };
       };
