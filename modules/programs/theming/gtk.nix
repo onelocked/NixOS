@@ -21,6 +21,16 @@
           XCURSOR_SIZE = cfg.cursor.size;
           XCURSOR_THEME = cfg.cursor.name;
         };
+
+        hj.xdg.config.files = lib.optionalAttrs (cfg.theme.css != "") (
+          [
+            "4.0"
+            "3.0"
+          ]
+          |> map (version: lib.nameValuePair "gtk-${version}/gtk.css" { text = cfg.theme.css; })
+          |> builtins.listToAttrs
+        );
+
         programs.dconf = {
           enable = true;
           profiles.user.databases = [
@@ -91,13 +101,13 @@
           name = lib.mkOption {
             description = "GTK Icon theme";
             type = lib.types.str;
-            default = "Papirus-Dark";
+            default = "RetroismIcons";
           };
 
           package = lib.mkOption {
             description = "GTK Icon theme package";
             type = lib.types.nullOr lib.types.package;
-            default = pkgs.papirus-icon-theme;
+            default = self'.legacyPackages.RetroismIcons;
           };
         };
 
@@ -168,6 +178,21 @@
           installPhase = ''
             mkdir -p $out/share/themes/
             cp -r . $out/share/themes/${finalAttrs.name}/
+          '';
+        });
+
+        RetroismIcons = pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
+          name = "RetroismIcons";
+          src = fetchTarball {
+            url = "https://s3.onelock.org/download/RetroismIcons.tar.gz";
+            sha256 = "1sn5fyw0pfjbi1nm5c1f3dwvzp8359i0ij3k0fqj32n5yf09zbxg";
+          };
+          dontBuild = true;
+          dontConfigure = true;
+          dontFixup = true;
+          installPhase = ''
+            mkdir -p $out/share/icons/${finalAttrs.name}
+            cp -r . $out/share/icons/${finalAttrs.name}
           '';
         });
       };

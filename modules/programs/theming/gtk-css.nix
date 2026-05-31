@@ -9,6 +9,10 @@
     }:
     {
       forte.gtk = lib.mkIf (config.forte.theme.variant == "dark") {
+        icons = {
+          name = "Papirus-Dark";
+          package = pkgs.papirus-icon-theme;
+        };
         theme = {
           name = "adw-gtk3-dark";
           package = pkgs.adw-gtk3;
