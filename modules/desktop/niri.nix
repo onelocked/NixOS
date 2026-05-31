@@ -116,8 +116,8 @@
             };
 
             cursor = {
-              xcursor-theme = config.forte.gtk.cursor.name;
-              xcursor-size = lib.toInt config.forte.gtk.cursor.size;
+              xcursor-theme = config.forte.cursor.name;
+              xcursor-size = lib.toInt config.forte.cursor.size;
             };
 
             gestures.hot-corners.off = set;

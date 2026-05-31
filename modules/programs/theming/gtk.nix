@@ -9,18 +9,14 @@
     }:
     let
       cfg = config.forte.gtk;
+      cursor = config.forte.cursor;
     in
     {
       config = lib.mkIf cfg.enable {
         hj.packages = with cfg; [
           theme.package
-          cursor.package
           icons.package
         ];
-        hj.environment.sessionVariables = {
-          XCURSOR_SIZE = cfg.cursor.size;
-          XCURSOR_THEME = cfg.cursor.name;
-        };
 
         hj.xdg.config.files = lib.optionalAttrs (cfg.theme.css != "") (
           [
@@ -111,27 +107,6 @@
           };
         };
 
-        cursor = {
-          name = lib.mkOption {
-            description = "Cursor theme";
-            type = lib.types.str;
-            default = "macOS-White";
-          };
-
-          size = lib.mkOption {
-            description = "Cursor size";
-            type = lib.types.int;
-            default = 32;
-            apply = toString;
-          };
-
-          package = lib.mkOption {
-            description = "Cursor theme package";
-            type = lib.types.nullOr lib.types.package;
-            default = pkgs.apple-cursor;
-          };
-        };
-
         font = {
           serif = lib.mkOption {
             description = "Font name";
@@ -163,6 +138,7 @@
         };
       };
     };
+
   perSystem =
     { pkgs, ... }:
     {
