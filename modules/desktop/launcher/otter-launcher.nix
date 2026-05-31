@@ -188,7 +188,7 @@
               matches = [ { app-id = "^otter-launcher$"; } ];
               open-floating = true;
               default-column-width.fixed = 620;
-              default-window-height.fixed = 355;
+              default-window-height.fixed = 385;
             }
             // lib.optionalAttrs (theme == "dark") {
               geometry-corner-radius = 45;
