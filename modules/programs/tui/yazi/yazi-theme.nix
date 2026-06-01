@@ -1,54 +1,27 @@
 {
   m.yazi =
     { lib, scheme, ... }:
-    let
-      c = with scheme.withHashtag; {
-        fg = base05; # Default foreground
-        bg = base00; # Default background
-        primary = base0D; # Navy — main UI accent
-        onPrimary = base07; # Near-black — readable on navy
-        alt = base06; # Light foreground
-        altFg = base05; # Default foreground
-        altBg = base03; # Comments/muted — subtle bg
-        pink = base0E; # Mauve/violet
-        pinkFg = base17; # Selection bg — light enough on mauve
-        red = base08; # Red
-        redBg = base10; # Darker background
-        redFg = base06; # Light foreground on red bg
-        marker = base0F; # Selection background
-        copiedFg = base17; # Bright magenta
-        sepBlue = base0D; # Navy — consistent with primary
-        selectFg = base01; # Borders/lighter bg
-        devDir = base0B; # Green
-        nixDir = base16; # Bright violet
-        imageFt = base15; # Petrol blue
-        mediaFt = base0A; # Yellow/olive
-        archiveFt = base0F; # Warm brown — fitting for archives
-        docFt = base14; # Bright green
-        white = base07; # Lightest foreground
-      };
-    in
     {
       forte.yazi = with scheme.withHashtag; {
         theme.flavor = lib.genAttrs [ "dark" "light" ] (_: "oneshill");
         flavorContent = # toml
           ''
             [mgr]
-            cwd = { fg = "${c.fg}" }
+            cwd = { fg = "${base05}" }
 
-            find_keyword = { fg = "${c.red}", bold = true, italic = true, underline = true }
-            find_position = { fg = "${c.red}", bold = true, italic = true }
+            find_keyword = { fg = "${base08}", bold = true, italic = true, underline = true }
+            find_position = { fg = "${base08}", bold = true, italic = true }
 
-            marker_copied = { fg = "${c.marker}", bg = "${c.marker}" }
-            marker_cut = { fg = "${c.marker}", bg = "${c.marker}" }
-            marker_marked = { fg = "${c.red}", bg = "${c.red}" }
-            marker_selected = { fg = "${c.pink}", bg = "${c.pink}" }
+            marker_copied = { fg = "${base0F}", bg = "${base0F}" }
+            marker_cut = { fg = "${base0F}", bg = "${base0F}" }
+            marker_marked = { fg = "${base08}", bg = "${base08}" }
+            marker_selected = { fg = "${base0E}", bg = "${base0E}" }
 
-            count_copied = { fg = "${c.copiedFg}", bg = "${c.marker}" }
-            count_cut = { fg = "${c.copiedFg}", bg = "${c.marker}" }
-            count_selected = { fg = "${c.onPrimary}", bg = "${c.pink}" }
+            count_copied = { fg = "${base17}", bg = "${base0F}" }
+            count_cut = { fg = "${base17}", bg = "${base0F}" }
+            count_selected = { fg = "${base07}", bg = "${base0E}" }
 
-            border_style  = { fg = "${c.primary}" }
+            border_style  = { fg = "${base0D}" }
 
 
             [indicator]
@@ -56,91 +29,91 @@
 
 
             [status]
-            overall = { fg = "${c.primary}" }
+            overall = { fg = "${base0D}" }
             sep_left  = { open = "", close = "" }
             sep_right = { open = "", close = "" }
 
             progress_label = { bold = true }
-            progress_normal = { fg = "${c.primary}", bg = "${c.bg}" }
-            progress_error = { fg = "${c.red}", bg = "${c.bg}" }
+            progress_normal = { fg = "${base0D}", bg = "${base00}" }
+            progress_error = { fg = "${base08}", bg = "${base00}" }
 
-            perm_type = { fg = "${c.alt}" }
-            perm_write = { fg = "${c.pink}" }
-            perm_exec = { fg = "${c.red}" }
-            perm_read = { fg = "${c.marker}" }
-            perm_sep = { fg = "${c.sepBlue}" }
+            perm_type = { fg = "${base06}" }
+            perm_write = { fg = "${base0E}" }
+            perm_exec = { fg = "${base08}" }
+            perm_read = { fg = "${base0F}" }
+            perm_sep = { fg = "${base0D}" }
 
 
             [mode]
 
-            normal_main = { bg = "${c.primary}", fg = "${c.onPrimary}", bold = true }
-            normal_alt  = { bg = "${c.altBg}", fg = "${c.altFg}" }
+            normal_main = { bg = "${base0D}", fg = "${base07}", bold = true }
+            normal_alt  = { bg = "${base03}", fg = "${base05}" }
 
-            select_main = { bg = "${c.alt}", fg = "${c.selectFg}", bold = true }
-            select_alt  = { bg = "${c.altBg}", fg = "${c.altFg}" }
+            select_main = { bg = "${base06}", fg = "${base01}", bold = true }
+            select_alt  = { bg = "${base03}", fg = "${base05}" }
 
-            unset_main = { bg = "${c.pink}", fg = "${c.pinkFg}", bold = true }
-            unset_alt  = { bg = "${c.altBg}", fg = "${c.altFg}" }
+            unset_main = { bg = "${base0E}", fg = "${base17}", bold = true }
+            unset_alt  = { bg = "${base03}", fg = "${base05}" }
 
 
             [input]
-            border = { fg = "${c.primary}" }
+            border = { fg = "${base0D}" }
             title = {}
-            value = { fg = "${c.fg}" }
+            value = { fg = "${base05}" }
             selected = { reversed = true }
 
             [tabs]
-            active = { fg = "${c.bg}", bold = true, bg = "${c.primary}" }
-            inactive = { fg = "${c.alt}", bg = "${c.bg}" }
+            active = { fg = "${base00}", bold = true, bg = "${base0D}" }
+            inactive = { fg = "${base06}", bg = "${base00}" }
             sep_inner = { open = "", close = "" }
 
             [cmp]
-            border = { fg = "${c.primary}", bg = "${c.onPrimary}" }
+            border = { fg = "${base0D}", bg = "${base07}" }
 
             [tasks]
-            border = { fg = "${c.primary}" }
+            border = { fg = "${base0D}" }
             title = {}
-            hovered = { fg = "${c.marker}", underline = true }
+            hovered = { fg = "${base0F}", underline = true }
 
 
             [which]
             cols = 3
-            mask = { bg = "${c.bg}" }
-            cand = { fg = "${c.primary}" }
-            rest = { fg = "${c.onPrimary}" }
-            desc = { fg = "${c.fg}" }
+            mask = { bg = "${base00}" }
+            cand = { fg = "${base0D}" }
+            rest = { fg = "${base07}" }
+            desc = { fg = "${base05}" }
             separator = " ▶ "
-            separator_style = { fg = "${c.fg}" }
+            separator_style = { fg = "${base05}" }
 
             [spot]
-            border   = { fg = "${c.primary}" }
-            title    = { fg = "${c.primary}" }
-            tbl_col  = { fg = "${c.fg}" }
-            tbl_cell = { fg = "${c.fg}", bg = "${c.bg}" }
+            border   = { fg = "${base0D}" }
+            title    = { fg = "${base0D}" }
+            tbl_col  = { fg = "${base05}" }
+            tbl_cell = { fg = "${base05}", bg = "${base00}" }
 
 
             [help]
-            on = { fg = "${c.fg}" }
-            run = { fg = "${c.fg}" }
+            on = { fg = "${base05}" }
+            run = { fg = "${base05}" }
             hovered = { reversed = true, bold = true }
-            footer = { fg = "${c.selectFg}", bg = "${c.alt}" }
+            footer = { fg = "${base01}", bg = "${base06}" }
 
             [notify]
-            title_info = { fg = "${c.pink}" }
-            title_warn = { fg = "${c.primary}" }
-            title_error = { fg = "${c.red}" }
+            title_info = { fg = "${base0E}" }
+            title_warn = { fg = "${base0D}" }
+            title_error = { fg = "${base08}" }
 
             [filetype]
 
             rules = [
-                { mime = "image/*", fg = "${c.imageFt}" },
-                { mime = "{audio,video}/*", fg = "${c.mediaFt}" },
-                { mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "${c.archiveFt}" },
-                { mime = "application/{pdf,doc,rtf}", fg = "${c.docFt}" },
-                { mime = "*", is = "orphan", fg = "${c.redFg}", bg = "${c.redBg}" },
-                { mime = "application/*exec*", fg = "${c.red}" },
-                { url = "*", fg = "${c.fg}" },
-                { url = "*/", fg = "${c.primary}" },
+                { mime = "image/*", fg = "${base15}" },
+                { mime = "{audio,video}/*", fg = "${base0A}" },
+                { mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "${base0F}" },
+                { mime = "application/{pdf,doc,rtf}", fg = "${base14}" },
+                { mime = "*", is = "orphan", fg = "${base06}", bg = "${base10}" },
+                { mime = "application/*exec*", fg = "${base08}" },
+                { url = "*", fg = "${base05}" },
+                { url = "*/", fg = "${base0D}" },
             ]
 
             [icon]

@@ -58,7 +58,7 @@
           base00 = "#131316";
           base01 = "#221c2c";
           base02 = "#313245";
-          base03 = "#3d3050";
+          base03 = "#4D415F";
 
           # Foregrounds
           base04 = "#8c92aa";
