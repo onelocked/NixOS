@@ -68,6 +68,10 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-core = {
+      url = "github:manic-systems/nixos-core";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nvfetcher = {
       url = "github:berberman/nvfetcher";
       inputs = {

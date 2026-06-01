@@ -271,6 +271,26 @@
         "type": "github"
       }
     },
+    "nixos-core": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1780223676,
+        "narHash": "sha256-7x7KzH5p+VDBvvzpCjkRcVhNm6fIty7WYgI7sPq1SCw=",
+        "owner": "manic-systems",
+        "repo": "nixos-core",
+        "rev": "20b5f8916a3fde2f02bccd2e1f2795ab511aab5b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "manic-systems",
+        "repo": "nixos-core",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1779436535,
@@ -421,6 +441,7 @@
         "niri": "niri",
         "nix-cachyos-kernel": "nix-cachyos-kernel",
         "nix-index-database": "nix-index-database",
+        "nixos-core": "nixos-core",
         "nixpkgs": "nixpkgs_2",
         "nvfetcher": "nvfetcher",
         "qml-niri": "qml-niri",
