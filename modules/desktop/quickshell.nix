@@ -26,7 +26,7 @@
     }:
     let
       cfg = config.forte.quickshell;
-      quickshellDeps =
+      runtimePkgs =
         with pkgs.kdePackages;
         [ qtmultimedia ]
         ++ (with pkgs; [
@@ -37,9 +37,9 @@
           awww
         ]);
 
-      qmlImportPath = lib.makeSearchPath pkgs.kdePackages.qtbase.qtQmlPrefix quickshellDeps; # lib/qt-6/qml
+      qmlImportPath = lib.makeSearchPath pkgs.kdePackages.qtbase.qtQmlPrefix runtimePkgs; # lib/qt-6/qml
 
-      qtPluginPath = lib.makeSearchPath pkgs.kdePackages.qtbase.qtPluginPrefix quickshellDeps; # lib/qt-6/plugins
+      qtPluginPath = lib.makeSearchPath pkgs.kdePackages.qtbase.qtPluginPrefix runtimePkgs; # lib/qt-6/plugins
     in
     {
       options = {
@@ -49,9 +49,9 @@
             type = lib.types.package;
             default = birdee.lib.wrapPackage {
               inherit pkgs;
+              inherit runtimePkgs;
               package = self'.packages.quickshell;
               aliases = [ "qs" ];
-              runtimePkgs = quickshellDeps;
               env = {
                 QT_QPA_PLATFORMTHEME = "gtk3";
                 QS_ICON_THEME = config.forte.gtk.icons.name;
@@ -62,13 +62,6 @@
                 FONTCONFIG_FILE = pkgs.makeFontsConf { fontDirectories = [ pkgs.lucide ]; };
               };
             };
-          };
-        };
-        forte.awww = {
-          enable = lib.mkEnableOption "awww";
-          package = lib.mkOption {
-            type = lib.types.package;
-            default = pkgs.awww;
           };
         };
       };
