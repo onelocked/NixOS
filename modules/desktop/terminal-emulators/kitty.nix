@@ -170,7 +170,6 @@
       lib,
       config,
       pkgs,
-      self',
       ...
     }:
     let
@@ -234,7 +233,7 @@
           default = birdee.wrappers.kitty.wrap (
             wrapper: with config.forte.kitty; {
               inherit pkgs;
-              package = self'.packages.kitty;
+              package = pkgs.kitty;
               settings = settings // theme // fontConfig;
               inherit
                 keybindings
@@ -300,66 +299,5 @@
           '';
         };
       };
-    };
-
-  perSystem =
-    { pkgs, ... }:
-    let
-      kitty =
-        let
-          go_1_26_2 = pkgs.go_1_26.overrideAttrs (
-            finalAttrs: previousAttrs: {
-              version = "1.26.2";
-              src = pkgs.fetchurl {
-                url = "https://go.dev/dl/go${finalAttrs.version}.src.tar.gz";
-                hash = "sha256-LpHrtpR6lulDb7KzkmqIAu/mOm03Xf/sT4Kqnb1v1Ds=";
-              };
-              doCheck = false;
-              doInstallCheck = false;
-            }
-          );
-
-          buildGo126Module = pkgs.buildGo126Module.override { go = go_1_26_2; };
-        in
-        (pkgs.kitty.override {
-          buildGo126Module = buildGo126Module;
-          go_1_26 = go_1_26_2;
-        }).overrideAttrs
-          (
-            finalAttrs: previousAttrs: {
-              pname = "kitty";
-              version = "f42a5f89c3a17ef914b4e29168b70dc2fe59fb37";
-
-              src = pkgs.fetchFromGitHub {
-                owner = "kovidgoyal";
-                repo = "kitty";
-                rev = finalAttrs.version;
-                hash = "sha256-m8QrxeqIlInoCaj/O7yLQ4Sh1MXTqoDgJVnk29FI5mk=";
-              };
-
-              patches = (previousAttrs.patches or [ ]) ++ [
-                (pkgs.fetchpatch2 {
-                  url = "https://gist.githubusercontent.com/onelocked/ced1a76332c07f5862b6369f3e9ea297/raw/e29f231ee12612c5614120beebdc397f31e7c016/shaded-block.patch";
-                  hash = "sha256-22FvruLYA/MvPMloW2Ou6D4TWPHVlss87iw+Wt4uALg=";
-                })
-              ];
-              pyproject = false;
-              doCheck = false;
-              dontCheck = true;
-              checkPhase = "true";
-              installCheckPhase = "true";
-
-              goModules =
-                (buildGo126Module {
-                  pname = "kitty-go-modules";
-                  src = finalAttrs.src;
-                  version = finalAttrs.version;
-                  vendorHash = "sha256-jkWijMZrDapttSOrOjKuXLzZI+Lp6BhS1jWbMHJbniI=";
-                }).goModules;
-            }
-          );
-    in
-    {
-      packages = { inherit kitty; };
     };
 }
