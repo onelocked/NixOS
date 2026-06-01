@@ -2,7 +2,6 @@
   m.desktop =
     {
       lib,
-      pkgs,
       config,
       self',
       ...

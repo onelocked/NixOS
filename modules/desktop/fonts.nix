@@ -29,8 +29,8 @@
             lcdfilter = "light";
           };
           defaultFonts = {
-            serif = [ "SF Pro Display" ];
-            sansSerif = [ "New York" ];
+            serif = [ "SF Compact Rounded" ];
+            sansSerif = [ "SF Pro Text" ];
             monospace = [ "LigaSFMono Nerd Font" ];
             emoji = [ "Apple Color Emoji" ];
           };
