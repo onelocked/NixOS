@@ -431,6 +431,7 @@
         "systems": "systems",
         "treefmt-nix": "treefmt-nix",
         "vimmax": "vimmax",
+        "yazi": "yazi",
         "zen-browser": "zen-browser"
       }
     },
@@ -556,6 +557,32 @@
       "original": {
         "owner": "onelocked",
         "repo": "vimmax",
+        "type": "github"
+      }
+    },
+    "yazi": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-overlay": [
+          "rust-overlay"
+        ]
+      },
+      "locked": {
+        "lastModified": 1780290961,
+        "narHash": "sha256-XPSfzLmyGeGMU5o1gaRp8XVVFFLxri93TXpzTr38Ti8=",
+        "owner": "sxyazi",
+        "repo": "yazi",
+        "rev": "8e80798984864799cd72b3625b21edc33b1ba1e5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "sxyazi",
+        "repo": "yazi",
         "type": "github"
       }
     },

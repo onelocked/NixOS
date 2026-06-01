@@ -5,6 +5,7 @@
       lib,
       config,
       birdee,
+      inputs',
       ...
     }:
     let
@@ -36,6 +37,7 @@
           default = birdee.wrappers.yazi.wrap {
             inherit pkgs;
             runtimePkgs = [ pkgs.ouch ];
+            package = inputs'.yazi.packages.default;
             inherit (cfg) plugins;
             settings = {
               inherit (cfg) keymap theme;
@@ -193,4 +195,12 @@
         };
       };
     };
+  ff = {
+    yazi = {
+      url = "github:/sxyazi/yazi";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.rust-overlay.follows = "rust-overlay";
+      inputs.flake-utils.follows = "flake-utils";
+    };
+  };
 }

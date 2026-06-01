@@ -117,6 +117,14 @@
         systems.follows = "systems";
       };
     };
+    yazi = {
+      url = "github:/sxyazi/yazi";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+        rust-overlay.follows = "rust-overlay";
+      };
+    };
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
       inputs = {
