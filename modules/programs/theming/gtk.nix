@@ -2,6 +2,7 @@
   m.desktop =
     {
       lib,
+      pkgs,
       config,
       self',
       ...
@@ -9,6 +10,45 @@
     let
       cfg = config.forte.gtk;
       cursor = config.forte.cursor;
+
+      dconfSettings =
+        with cfg;
+        let
+          mkFont = name: "${name} ${font.size}";
+        in
+        {
+          "ca/desrt/dconf-editor".show-warning = false;
+          "org/gnome/desktop/thumbnailers".disable-all = true;
+          "org/gnome/desktop/screen-time-limits" = {
+            history-enabled = false;
+          };
+          "org/gnome/desktop/media-handling" = {
+            automount = false;
+            automount-open = false;
+            autorun-never = true;
+          };
+          "org/gnome/desktop/interface" = {
+            gtk-theme = theme.name;
+            icon-theme = icons.name;
+            cursor-theme = cursor.name;
+            cursor-size = cursor.size;
+            color-scheme = "prefer-dark";
+            font-name = mkFont font.serif;
+            document-font-name = mkFont font.sansSerif;
+            monospace-font-name = mkFont font.mono;
+            font-antialiasing = "rgba";
+            font-hinting = "full";
+            text-scaling-factor = 1.0;
+            gtk-enable-primary-paste = false;
+            overlay-scrolling = false;
+          };
+        };
+      managedKeysJson =
+        dconfSettings
+        |> lib.mapAttrsToList (dir: lib.mapAttrsToList (key: _: "/${dir}/${key}"))
+        |> lib.flatten
+        |> builtins.toJSON
+        |> pkgs.writeText "dconf-keys.json";
     in
     {
       config = lib.mkIf cfg.enable {
@@ -30,40 +70,37 @@
           enable = true;
           profiles.user.databases = [
             {
-              settings = {
-                "ca/desrt/dconf-editor".show-warning = false;
-                "org/gnome/desktop/thumbnailers".disable-all = true;
-                "org/gnome/desktop/screen-time-limits" = {
-                  history-enabled = false;
-                };
-                "org/gnome/desktop/media-handling" = {
-                  automount = false;
-                  automount-open = false;
-                  autorun-never = true;
-                };
-                "org/gnome/desktop/interface" =
-                  with cfg;
-                  let
-                    mkFont = name: "${name} ${font.size}";
-                  in
-                  {
-                    gtk-theme = theme.name;
-                    icon-theme = icons.name;
-                    cursor-theme = cursor.name;
-                    cursor-size = cursor.size;
-                    color-scheme = "prefer-dark";
-                    font-name = mkFont font.serif;
-                    document-font-name = mkFont font.sansSerif;
-                    monospace-font-name = mkFont font.mono;
-                    font-antialiasing = "rgba";
-                    font-hinting = "full";
-                    text-scaling-factor = 1.0;
-                    gtk-enable-primary-paste = false;
-                    overlay-scrolling = false;
-                  };
-              };
+              settings = dconfSettings;
+              lockAll = true;
             }
           ];
+        };
+
+        hj.systemd.services.forte-dconf-cleanup = {
+          description = "Cleanup unmanaged dconf keys";
+          wantedBy = [ "graphical-session.target" ];
+          partOf = [ "graphical-session.target" ];
+          serviceConfig.Type = "oneshot";
+          script = # bash
+            ''
+              STATE_DIR="${config.hj.xdg.state.directory}/hjem-dconf"
+              mkdir -p "$STATE_DIR"
+
+              OLD_STATE="$STATE_DIR/keys.json"
+              NEW_STATE="${managedKeysJson}"
+
+              if [[ -f "$OLD_STATE" ]]; then
+                ${lib.getExe pkgs.jq} -r -n \
+                  --slurpfile old "$OLD_STATE" \
+                  --slurpfile new "$NEW_STATE" \
+                  '($old[] - $new[])[]' | while read -r key; do
+                    echo "Resetting unmanaged dconf key: $key"
+                    ${lib.getExe pkgs.dconf} reset "$key"
+                done
+              fi
+
+              cp "$NEW_STATE" "$OLD_STATE"
+            '';
         };
       };
 
