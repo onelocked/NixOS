@@ -11,6 +11,7 @@
       forte.fastfetch =
         let
           esc = (builtins.fromJSON ''{ "value": "\u001b" }'').value;
+          theme = config.forte.theme.variant;
           tux = pkgs.fetchurl {
             url = "https://raw.githubusercontent.com/onelocked/images/refs/heads/main/tux.png";
             hash = "sha256-XbAnJefiU9FD2aOm3rit8Et0lfI7Itt5rqsFxm3AZk4=";
@@ -29,7 +30,7 @@
                 left = 2;
               };
             }
-            // lib.optionalAttrs (config.forte.theme.variant == "dark") {
+            // lib.optionalAttrs (theme == "dark") {
               source = "-";
               type = "raw";
             };
@@ -41,7 +42,7 @@
                 type = "title";
                 keyWidth = 10;
                 format =
-                  if config.forte.theme.variant == "dark" then
+                  if theme == "dark" then
                     "         ${esc}[38;2;197;192;255m{1}${esc}[38;2;168;200;240m@${esc}[38;2;200;176;232m{2}${esc}[0m"
                   else
                     "         ${esc}[38;2;92;36;136m{1}${esc}[38;2;140;140;140m@${esc}[38;2;0;89;89m{2}${esc}[0m";
@@ -88,7 +89,7 @@
               {
                 type = "custom";
                 format =
-                  if config.forte.theme.variant == "dark" then
+                  if theme == "dark" then
                     "   ${esc}[31m  ${esc}[32m  ${esc}[33m  ${esc}[34m  ${esc}[35m  ${esc}[36m  ${esc}[37m  ${esc}[90m "
                   else
                     "   ${esc}[38;2;158;28;28m  ${esc}[38;2;36;102;40m  ${esc}[38;2;107;97;0m  ${esc}[38;2;16;88;122m  ${esc}[38;2;92;36;136m  ${esc}[38;2;0;89;89m  ${esc}[38;2;37;37;37m  ${esc}[38;2;140;140;140m ";
