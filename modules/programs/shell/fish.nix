@@ -4,12 +4,14 @@
       pkgs,
       lib,
       scheme,
+      config,
       ...
     }:
     {
       programs = {
         fish = {
           enable = true;
+          extraCompletionPackages = config.hj.packages;
           functions = {
             store = ''y (string match -r "/nix/store/[^/]*" (builtin realpath (type -fP $argv[1])))'';
             mem = ''
@@ -138,9 +140,7 @@
         programs.fish.interactiveShellInit = ''
           ${lib.getExe pkgs.zoxide} init fish | source
           ${lib.getExe pkgs.nix-your-shell} --nom fish | source
-          ${lib.getExe pkgs.carapace} _carapace fish | source
           ${lib.getExe cfg.atuin} init fish | source
-          source ${pkgs.nix}/share/fish/vendor_completions.d/nix.fish
         '';
         programs.bash.interactiveShellInit = # bash
           ''
