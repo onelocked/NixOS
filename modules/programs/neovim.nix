@@ -9,12 +9,15 @@
   };
   m.neovim =
     { inputs', config, ... }:
+    let
+      theme = config.forte.theme.variant;
+    in
     {
       forte.neovim = {
         enable = true;
         defaultEditor = true;
         desktopEntry = true;
-        package = inputs'.vimmax.packages.default.override { theme = "${config.forte.theme.variant}"; };
+        package = inputs'.vimmax.packages.default.override { inherit theme; };
       };
     };
   m.default =

@@ -16,14 +16,14 @@
         secrets.pocket_id_issuer.owner = username;
         templates."opkssh-config.yml" = {
           content = # yaml
-            ''
+            with config.sops.placeholder; ''
               ---
               default_provider: PocketID
 
               providers:
                 - alias: PocketID
-                  issuer: ${config.sops.placeholder.pocket_id_issuer}
-                  client_id: ${config.sops.placeholder.client_id}
+                  issuer: ${pocket_id_issuer}
+                  client_id: ${client_id}
                   scopes: openid email profile
                   access_type: offline
                   use_pkce: true

@@ -92,51 +92,39 @@
   };
   fuzzy-search = {
     pname = "fuzzy-search";
-    version = "8adfa1778e51c6b42867836304c9af74a0c41b58";
+    version = "7be2437b45be1da9b3be0ed2f244709c9b9be242";
     src = fetchFromGitHub {
       owner = "onelocked";
       repo = "fuzzy-search.yazi";
-      rev = "8adfa1778e51c6b42867836304c9af74a0c41b58";
+      rev = "7be2437b45be1da9b3be0ed2f244709c9b9be242";
       fetchSubmodules = false;
-      sha256 = "sha256-4z1FpHlzm+YFHlvZYJGWXp7AQlOwkF9d+rsP4BgTReY=";
+      sha256 = "sha256-vW6o5vbYXr++cFAcyvl7E2tYHQMV5lGK2rEOG5iiRPg=";
     };
-    date = "2026-05-22";
-  };
-  grubTheme = {
-    pname = "grubTheme";
-    version = "207dfe09411f08916666acf65bf6262e5ef5e6d0";
-    src = fetchFromGitHub {
-      owner = "onelocked";
-      repo = "grub2-theme";
-      rev = "207dfe09411f08916666acf65bf6262e5ef5e6d0";
-      fetchSubmodules = false;
-      sha256 = "sha256-ChnML4zm4EnVX/WmZW5RWHnK/tqjXSeR4BK8XfN0xxA=";
-    };
-    date = "2026-01-11";
+    date = "2026-05-25";
   };
   no-header-prompt = {
     pname = "no-header-prompt";
-    version = "f93cc7d25d456f405d1fefefc098303570cd919c";
+    version = "dd34339092b7cdc1f8213017f939e55e0b47a008";
     src = fetchFromGitHub {
       owner = "onelocked";
       repo = "no-header-prompt.yazi";
-      rev = "f93cc7d25d456f405d1fefefc098303570cd919c";
+      rev = "dd34339092b7cdc1f8213017f939e55e0b47a008";
       fetchSubmodules = false;
-      sha256 = "sha256-xGJwPMN58EC88tvCKWZ6/qnCxpT6JLIkg5MPKCVMtxY=";
+      sha256 = "sha256-dHJNk3o9vMGUnO/KAl7R6UdEq1giyp2DNXzxmAKBZP0=";
     };
     date = "2026-05-25";
   };
   otter-launcher = {
     pname = "otter-launcher";
-    version = "380ceb9d2cf9b02854fbd3be39177e5e151fae6c";
+    version = "4700e2f9e45e29eaed1fd5d0b51ccb35859a7cc1";
     src = fetchFromGitHub {
       owner = "kuokuo123";
       repo = "otter-launcher";
-      rev = "380ceb9d2cf9b02854fbd3be39177e5e151fae6c";
+      rev = "4700e2f9e45e29eaed1fd5d0b51ccb35859a7cc1";
       fetchSubmodules = false;
-      sha256 = "sha256-oQw4/UqDpE/K0lkc+zFXdWsNKps9p0rZg6ybMwVDhsM=";
+      sha256 = "sha256-Ye0COc1J5YnP+90fOdsQqPw9Ni4Lu0y63HwG0duSpeI=";
     };
-    date = "2026-05-17";
+    date = "2026-06-02";
   };
   tmuxFloax = {
     pname = "tmuxFloax";

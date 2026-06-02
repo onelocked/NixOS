@@ -39,7 +39,7 @@
       };
       forte.niri.settings.window-rules = [
         {
-          matches = [ { app-id = "spotify"; } ];
+          matches = [ { app-id = "Spotify"; } ];
           open-on-workspace = "media";
           open-focused = false;
           open-fullscreen = false;
