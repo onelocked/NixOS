@@ -3,6 +3,10 @@
     { lib, pkgs, ... }:
     {
       services = {
+        system76-scheduler = {
+          enable = true;
+          useStockConfig = true;
+        };
         scx = {
           enable = false;
           package = pkgs.scx.rustscheds;
