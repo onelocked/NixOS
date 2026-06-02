@@ -4,11 +4,12 @@
       config,
       lib,
       pkgs,
+      scheme,
       ...
     }:
     let
-      cfg = config.forte.otter-launcher;
       theme = config.forte.theme.variant;
+      fsel = config.forte.fsel;
       aemeath = pkgs.fetchurl {
         url = "https://raw.githubusercontent.com/onelocked/images/refs/heads/main/aemeath.png";
         hash = "sha256-QzUFj6f5KB8uLiZ8+YIcZl3zMGRpVLz3LFl8NoqjBjU=";
@@ -27,8 +28,8 @@
             cheatsheet_entry = "?";
             cheatsheet_viewer = "less -R; clear";
             clear_screen_after_execution = true;
-            default_module = if cfg.withFsel then "app" else "np";
-            empty_module = if cfg.withFsel then "search" else "mix";
+            default_module = if fsel.enable then "app" else "np";
+            empty_module = if fsel.enable then "search" else "mix";
             delay_startup = 0;
             esc_to_abort = true;
             exec_cmd = "sh -c";
@@ -137,7 +138,7 @@
             }
 
           ]
-          ++ lib.optionals cfg.withFsel [
+          ++ lib.optionals fsel.enable [
             {
               description = "apps";
               prefix = "search";
@@ -152,6 +153,46 @@
             }
           ];
       };
+      forte.fsel = {
+        enable = true;
+        settings = with scheme.withHashtag; {
+          main_border_color = base0F;
+          apps_border_color = base0F;
+          input_border_color = base0E;
+
+          main_text_color = base05;
+          apps_text_color = base04;
+          input_text_color = base0E;
+
+          highlight_color = base0D;
+          header_title_color = base0F;
+
+          pin_color = base0E;
+          pin_icon = "󰐃";
+          cursor = "▎";
+          disable_mouse = true;
+
+          rounded_borders = true;
+          title_panel_height_percent = 20;
+          title_panel_position = "bottom";
+          fancy_mode = true;
+
+          app_launcher = {
+            filter_desktop = true;
+            filter_actions = true;
+            list_executables_in_path = false;
+            launch_prefix = [
+              "app2unit"
+              "--"
+            ];
+          };
+          dmenu = {
+            delimiter = " ";
+            show_line_numbers = true;
+          };
+        };
+      };
+
       forte.lib.otter-lib.otter-kitty-conf = pkgs.writeText "otter-kitty.conf" ''
         font_size               15
         background_opacity 1
@@ -221,10 +262,7 @@
       };
     };
 
-  envoy = {
-    otter-launcher.github = "kuokuo123/otter-launcher";
-    fsel.github = "Mjoyufull/fsel";
-  };
+  envoy.otter-launcher.github = "kuokuo123/otter-launcher";
   m.default =
     {
       self',
@@ -236,17 +274,12 @@
     }:
     let
       cfg = config.forte.otter-launcher;
+      fsel = config.forte.fsel;
       toml = pkgs.formats.toml { };
     in
     {
       options.forte.otter-launcher = {
         enable = lib.mkEnableOption "otter-launcher";
-
-        withFsel = lib.mkOption {
-          type = lib.types.bool;
-          default = true;
-          description = "Whether to enable fsel support.";
-        };
 
         settings = lib.mkOption {
           inherit (toml) type;
@@ -288,60 +321,7 @@
                 pkgs.pulsemixer
                 pkgs.chafa
               ]
-              ++ lib.optional cfg.withFsel (
-                birdee.lib.wrapPackage (
-                  { config, ... }:
-                  {
-                    inherit pkgs;
-                    package = self'.packages.fsel;
-                    runtimePkgs = [ pkgs.app2unit ];
-                    flags = {
-                      "--config" = config.constructFiles.generatedConfig.path;
-                    };
-                    constructFiles.generatedConfig = {
-                      relPath = "config.toml";
-                      builder = ''mkdir -p "$(dirname "$2")" && cp ${
-                        (pkgs.formats.toml { }).generate "config.toml" {
-                          main_border_color = "#7d75c0";
-                          apps_border_color = "#7d75c0";
-                          input_border_color = "#c8b0e8";
-
-                          main_text_color = "#cfd3e7";
-                          apps_text_color = "#8c92aa";
-                          input_text_color = "#c8b0e8";
-
-                          highlight_color = "#c5c0ff";
-                          header_title_color = "#7d75c0";
-
-                          pin_color = "#c8b0e8";
-                          pin_icon = "󰐃";
-                          cursor = "▎";
-                          disable_mouse = true;
-
-                          rounded_borders = true;
-                          title_panel_height_percent = 20;
-                          title_panel_position = "bottom";
-                          fancy_mode = true;
-
-                          app_launcher = {
-                            filter_desktop = true;
-                            filter_actions = true;
-                            list_executables_in_path = false;
-                            launch_prefix = [
-                              "app2unit"
-                              "--"
-                            ];
-                          };
-                          dmenu = {
-                            delimiter = " ";
-                            show_line_numbers = true;
-                          };
-                        }
-                      } "$2"'';
-                    };
-                  }
-                )
-              );
+              ++ lib.optional fsel.enable (fsel.package);
             }
           );
         };
@@ -361,10 +341,6 @@
     { pkgs, envoy, ... }:
     {
       packages = {
-        fsel = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
-          inherit (envoy.fsel) pname version src;
-          cargoLock.lockFile = finalAttrs.src + "/Cargo.lock";
-        });
         otter-launcher = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
           inherit (envoy.otter-launcher) pname version src;
           cargoLock.lockFile = finalAttrs.src + "/Cargo.lock";
