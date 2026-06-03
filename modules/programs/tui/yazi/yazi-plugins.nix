@@ -20,6 +20,10 @@
       github = "onelocked/no-header-prompt.yazi";
       locked = true;
     };
+    yazi-plugins = {
+      github = "AminurAlam/yazi-plugins";
+      locked = true;
+    };
   };
   m.yazi =
     {
@@ -55,6 +59,40 @@
             inherit (envoy.extra-metadata) pname version src;
           };
 
+          spot = pkgs.yaziPlugins.mkYaziPlugin {
+            pname = "spot";
+            version = "1.0";
+            src = lib.cleanSourceWith {
+              src = envoy.yazi-plugins.src + "/spot.yazi";
+              filter = name: _type: baseNameOf name == "main.lua";
+            };
+          };
+          spot-image = pkgs.yaziPlugins.mkYaziPlugin {
+            pname = "spot-image";
+            version = "1.0";
+            src = lib.cleanSourceWith {
+              src = envoy.yazi-plugins.src + "/spot-image.yazi";
+              filter = name: _type: baseNameOf name == "main.lua";
+            };
+          };
+
+          spot-video = pkgs.yaziPlugins.mkYaziPlugin {
+            pname = "spot-image";
+            version = "1.0";
+            src = lib.cleanSourceWith {
+              src = envoy.yazi-plugins.src + "/spot-video.yazi";
+              filter = name: _type: baseNameOf name == "main.lua";
+            };
+          };
+
+          spot-audio = pkgs.yaziPlugins.mkYaziPlugin {
+            pname = "spot-image";
+            version = "1.0";
+            src = lib.cleanSourceWith {
+              src = envoy.yazi-plugins.src + "/spot-audio.yazi";
+              filter = name: _type: baseNameOf name == "main.lua";
+            };
+          };
         };
         settings.plugin =
           let
@@ -63,9 +101,42 @@
             mkFetcher = group: url: run: { inherit group url run; };
           in
           {
-            spotters = [ (mk "*" "extra-metadata") ];
+            # spotters = [ (mk "*" "extra-metadata") ];
+            prepend_spotters = [
+              {
+                mime = "audio/*";
+                run = "spot";
+              }
+              {
+                mime = "image/*";
+                run = "spot-image";
+              }
+              {
+                url = "video/*";
+                run = "spot-video";
+              }
+              {
+                mime = "audio/mpegurl";
+                run = "code";
+              }
+              {
+                url = "audio/*";
+                run = "spot-audio";
+              }
+              {
+                url = "*/";
+                run = "spot";
+              }
+              {
+                url = "*";
+                run = "spot";
+              }
+            ];
+
             prepend_previewers = [ (mk "*.md" piper) ];
+
             prepend_preloaders = [ (mk "*.md" piper) ];
+
             prepend_fetchers = [
               (mkFetcher "simple-tag" "*" "simple-tag")
               (mkFetcher "simple-tag" "*/" "simple-tag")
@@ -118,6 +189,29 @@
             filename_truncate_length = 6, -- leave 6 chars on both sides
             filename_truncate_separator = "..."
           })
+          require('spot'):setup {
+            metadata_section = {
+              enable = true,
+              hash_cmd = 'xxhsum', -- other hashing commands may be slower
+              hash_filesize_limit = 150, -- in MB, set 0 to disable
+              relative_time = true, -- 2026-01-01 or n days ago
+              time_format = '%Y-%m-%d %H:%M', -- https://www.man7.org/linux/man-pages/man3/strftime.3.html
+              show_compression = true, ---@type boolean
+            },
+            plugins_section = {
+              enable = false,
+            },
+            style = {
+              section = 'green',
+              key = 'reset',
+              value = 'blue',
+              selected = 'blue',
+              colorize_metadata = true,
+              height = 20,
+              width = 60,
+              key_length = 15,
+            },
+          }
         '';
     };
 }

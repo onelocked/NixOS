@@ -138,6 +138,18 @@
     };
     date = "2026-02-24";
   };
+  yazi-plugins = {
+    pname = "yazi-plugins";
+    version = "6206bae4c7887915db1cdf3b353a044578763195";
+    src = fetchFromGitHub {
+      owner = "AminurAlam";
+      repo = "yazi-plugins";
+      rev = "6206bae4c7887915db1cdf3b353a044578763195";
+      fetchSubmodules = false;
+      sha256 = "sha256-xTYYLbrqb1cZeQzaWPzldBfpx3r5s2XyeRTYBA8jbq4=";
+    };
+    date = "2026-06-02";
+  };
   yaziline = {
     pname = "yaziline";
     version = "25161c18e61339b6a79f29f8948e3c360e3f9ace";

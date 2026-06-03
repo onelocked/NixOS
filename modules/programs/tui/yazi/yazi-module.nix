@@ -36,7 +36,12 @@
           type = lib.types.package;
           default = birdee.wrappers.yazi.wrap {
             inherit pkgs;
-            runtimePkgs = [ pkgs.ouch ];
+            runtimePkgs = [
+              pkgs.ouch
+              pkgs.exiv2
+              pkgs.ffmpeg
+              pkgs.xxhash
+            ];
             package = inputs'.yazi.packages.default;
             inherit (cfg) plugins;
             settings = {
