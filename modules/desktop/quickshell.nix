@@ -85,6 +85,9 @@
               BusName = "org.kde.StatusNotifierWatcher";
               ExecStart = "${cfg.package}/bin/qs --no-duplicate";
               Restart = "on-failure";
+
+              MemoryHigh = "512M";
+              MemoryMax = "768M";
             };
           };
           systemd.services.awww = {
