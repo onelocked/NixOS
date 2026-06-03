@@ -58,39 +58,33 @@
           '';
         };
       };
-      config = lib.mkIf (cfg.enable) (
-        lib.mkMerge [
-          {
-            hj.systemd.services.lan-mouse = {
-              description = "Lan Mouse Daemon";
-              wantedBy = [ "graphical-session.target" ];
-              partOf = [ "graphical-session.target" ];
-              after = [
-                "graphical-session.target"
-                "network-online.target"
-              ];
-              wants = [ "network-online.target" ];
-              environment = {
-                RUST_BACKTRACE = "0";
-                RUST_LOG = "error";
-              };
-              serviceConfig = {
-                Type = "simple";
-                ExecStart = "${lib.getExe cfg.package} daemon";
-                Restart = "on-failure";
-                RestartSec = 1;
-                TimeoutStopSec = 10;
-              };
-            };
-          }
-          {
-            hj.xdg.config.files."lan-mouse/config.toml" = lib.mkIf (cfg.settings != { }) {
-              source = tomlFormat.generate "config.toml" cfg.settings;
-            };
-          }
-          (lib.mkIf cfg.openFirewall { networking.firewall.allowedUDPPorts = [ 4242 ]; })
-        ]
-      );
+      config = lib.mkIf cfg.enable {
+        hj.systemd.services.lan-mouse = {
+          description = "Lan Mouse Daemon";
+          wantedBy = [ "graphical-session.target" ];
+          partOf = [ "graphical-session.target" ];
+          after = [
+            "graphical-session.target"
+            "network-online.target"
+          ];
+          wants = [ "network-online.target" ];
+          environment = {
+            RUST_BACKTRACE = "0";
+            RUST_LOG = "error";
+          };
+          serviceConfig = {
+            Type = "simple";
+            ExecStart = "${lib.getExe cfg.package} daemon";
+            Restart = "on-failure";
+            RestartSec = 1;
+            TimeoutStopSec = 10;
+          };
+        };
+        hj.xdg.config.files."lan-mouse/config.toml" = lib.mkIf (cfg.settings != { }) {
+          source = tomlFormat.generate "config.toml" cfg.settings;
+        };
+        networking.firewall.allowedUDPPorts = lib.mkIf cfg.openFirewall [ 4242 ];
+      };
     };
   perSystem =
     { inputs', ... }:

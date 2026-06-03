@@ -407,8 +407,9 @@
       cfg = config.forte.niri;
     in
     {
-      config = lib.mkIf cfg.enable (
-        lib.mkMerge [
+      config =
+        lib.mkIf cfg.enable
+        <| lib.mkMerge [
           {
             hj.packages = [ cfg.package ];
             xdg.portal = {
@@ -510,8 +511,7 @@
               })
             );
           })
-        ]
-      );
+        ];
       options = {
         forte.niri = {
           enable = lib.mkEnableOption "Niri, a scrollable-tiling Wayland compositor";

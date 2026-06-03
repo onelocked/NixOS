@@ -31,8 +31,9 @@
       cfg = config.forte.neovim;
     in
     {
-      config = lib.mkIf cfg.enable (
-        lib.mkMerge [
+      config =
+        lib.mkIf cfg.enable
+        <| lib.mkMerge [
           {
             hj.packages = [ cfg.package ];
           }
@@ -77,8 +78,7 @@
               };
             };
           })
-        ]
-      );
+        ];
       options.forte.neovim = {
         enable = lib.mkEnableOption "neovim";
         defaultEditor = lib.mkEnableOption "defaultEditor";
