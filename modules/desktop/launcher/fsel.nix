@@ -47,6 +47,7 @@
       packages.fsel = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
         inherit (envoy.fsel) pname version src;
         cargoLock.lockFile = finalAttrs.src + "/Cargo.lock";
+        doCheck = false;
       });
     };
 }

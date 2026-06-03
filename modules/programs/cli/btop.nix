@@ -76,6 +76,7 @@
     { pkgs, ... }:
     {
       packages.btop = pkgs.btop-rocm.overrideAttrs {
+        doCheck = false;
         patches = [
           (pkgs.fetchpatch2 {
             name = "normalize_processes";

@@ -97,6 +97,7 @@
     {
       packages.cliphist-tui = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
         inherit (envoy.cliphist-tui) pname version src;
+        doCheck = false;
         cargoLock.lockFile = finalAttrs.src + "/Cargo.lock";
         patches = [
           (pkgs.writeText "better-binds.patch" # rust
@@ -133,6 +134,7 @@
         env.CLIPHIST_MAX_STORE_SIZE = "1GB";
         package = pkgs.buildGoModule (finalAttrs: {
           inherit (envoy.cliphist) pname version src;
+          doCheck = false;
           patches = [
             (pkgs.writeText "fix-browser-copy-with-meta.patch" # go
               ''

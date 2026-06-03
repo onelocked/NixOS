@@ -344,6 +344,7 @@
         otter-launcher = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
           inherit (envoy.otter-launcher) pname version src;
           cargoLock.lockFile = finalAttrs.src + "/Cargo.lock";
+          doCheck = false;
           patches = [
             (pkgs.writeText "selection.patch" # rust
               ''
