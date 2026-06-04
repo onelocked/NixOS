@@ -19,8 +19,6 @@
         forte.xdg.desktopEntries."yazi".noDisplay = true;
         hj.packages = [ cfg.package ];
 
-        forte.lib.mkKeymap = on: run: desc: { inherit on run desc; };
-
         programs.fish.functions.y = /* fish */ ''
           set -l tmp (mktemp -t "yazi-cwd.XXXXX")
           command yazi $argv --cwd-file="$tmp"
