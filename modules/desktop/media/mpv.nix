@@ -7,6 +7,7 @@
         with-wlpaste = true;
         conf = # ini
           ''
+            osd-duration=500
             osc=no
             video-sync=display-resample
             interpolation=yes
@@ -17,26 +18,28 @@
             sub-auto=fuzzy
             sub-font="Apple Color Emoji"
             gpu-context=auto
-            hwdec=auto
+            hwdec=auto-copy
             profile=gpu-hq
             vo=gpu-next
             gpu-api=auto
+            deband=yes
             wayland-edge-pixels-pointer=0
             wayland-edge-pixels-touch=0
             screenshot-format=webp
             screenshot-webp-lossless=yes
             screenshot-directory=${config.hj.directory}/Pictures/Screenshots/mpv
             screenshot-sw=yes
-            input-default-bindings=no
+            input-default-bindings=yes
             ytdl-format=bestvideo[height<=2160]+bestaudio/best[height<=2160]
+            autofit=x1355
           '';
         input = # bash
           ''
             MBTN_LEFT cycle pause
             WHEEL_DOWN add volume -1
             WHEEL_UP add volume 1
+            S screenshot video
 
-            r cycle-values video-rotate 0 270 180 90
             h no-osd seek -5 exact
             LEFT no-osd seek -5 exact
             l no-osd seek 5 exact
@@ -95,7 +98,6 @@
             v cycle video
             a cycle audio
             c add panscan 0.1
-            C add panscan -0.1
             PLAY cycle pause
             PAUSE cycle pause
             PLAYPAUSE cycle pause
@@ -109,7 +111,8 @@
         {
           matches = [ { app-id = "mpv"; } ];
           open-focused = true;
-          open-fullscreen = true;
+          open-fullscreen = false;
+          open-floating = true;
         }
       ];
     };
@@ -128,9 +131,119 @@
       config = lib.mkIf cfg.enable {
         hj.packages = [
           cfg.package
-        ]
-        ++ lib.optionals cfg.with-wlpaste [
-          (pkgs.writeShellApplication {
+        ];
+        forte.otter-launcher.modules = lib.mkIf cfg.with-wlpaste [
+          {
+            description = "video";
+            prefix = "mpv";
+            cmd = "niri msg action spawn -- ${cfg.mpv-wlpaste}/bin/mpv-wlpaste";
+          }
+        ];
+      };
+
+      options.forte.mpv = {
+        enable = lib.mkEnableOption "mpv";
+        with-wlpaste = lib.mkEnableOption "mpv-wl-paste";
+        conf = lib.mkOption {
+          default = "";
+          type = lib.types.lines;
+        };
+
+        input = lib.mkOption {
+          default = "";
+          type = lib.types.lines;
+        };
+
+        package = lib.mkOption {
+          type = lib.types.package;
+          default = birdee.wrappers.mpv.wrap {
+            inherit pkgs;
+            package = pkgs.mpv;
+            script = {
+              mpris.path = pkgs.mpvScripts.mpris;
+              sponsorblock.path = pkgs.mpvScripts.sponsorblock;
+              dynamic-crop.path = pkgs.mpvScripts.dynamic-crop;
+              modernz = {
+                path = pkgs.mpvScripts.modernz;
+                opts.download_path = "${config.hj.directory}/Videos/mpv";
+                opts.osc_on_start = "no";
+                opts.osc_on_seek = "no";
+                opts.showonpause = "no";
+              };
+              rotate-resize = {
+                opts = {
+                  keybinds = "r";
+                };
+                path = pkgs.writeTextFile {
+                  name = "rotate-resize";
+                  destination = "/main.lua";
+                  text = # lua
+                    ''
+                      local opt = require 'mp.options'
+                      local script_opts = { keybinds = "r" }
+                      opt.read_options(script_opts, "rotate-resize")
+                      mp.msg.info("rotate-resize loaded")
+
+                      local max_height = 1355
+                      local rotations = {0, 270, 180, 90}
+                      local cached = {}   -- keyed by rotation value -> { w, h }
+                      local rot_idx = 1   -- current index into rotations
+
+                      local function precalculate(w, h)
+                        cached = {}
+                        for _, rot in ipairs(rotations) do
+                          local tw = (rot == 90 or rot == 270) and h or w
+                          local th = (rot == 90 or rot == 270) and w or h
+                          local scale = max_height / th
+                          cached[rot] = { w = math.floor(tw * scale), h = math.floor(th * scale) }
+                        end
+                        mp.msg.info(string.format("rotate-resize: cached sizes for %dx%d", w, h))
+                      end
+
+                      -- fires when video params become available (before file-loaded)
+                      mp.register_event("video-reconfig", function()
+                        local w = mp.get_property_number("video-params/w")
+                        local h = mp.get_property_number("video-params/h")
+                        if w and h then precalculate(w, h) end
+                      end)
+
+                      -- mpv resets video-rotate on each new file, so mirror that here
+                      mp.register_event("file-loaded", function()
+                        rot_idx = 1
+                      end)
+
+                      mp.add_key_binding(script_opts.keybinds, "rotate-resize", function()
+                        if not next(cached) then
+                          mp.msg.warn("rotate-resize: dimensions not yet available")
+                          return
+                        end
+
+                        rot_idx = (rot_idx % #rotations) + 1
+                        local next_val = rotations[rot_idx]
+
+                        mp.set_property("video-rotate", next_val)
+
+                        local sz = cached[next_val]
+                        local cmd = string.format(
+                          "niri msg action set-column-width %d && niri msg action set-window-height %d && niri msg action center-window && niri msg action center-column",
+                          sz.w, sz.h
+                        )
+                        mp.command_native_async({
+                          name = "subprocess",
+                          args = {"sh", "-c", cmd}
+                        }, function() end)
+                      end)
+                    '';
+                };
+              };
+            };
+            "mpv.conf".content = cfg.conf;
+            "mpv.input".content = cfg.input;
+          };
+        };
+        mpv-wlpaste = lib.mkOption {
+          type = lib.types.package;
+          default = pkgs.writeShellApplication {
             name = "mpv-wlpaste";
             runtimeInputs = with pkgs; [
               cfg.package
@@ -147,42 +260,10 @@
                   url="''${url%%\?*}"
                   ;;
               esac
-              exec mpv --force-window=immediate "$url"
+              exec mpv "$url"
             '';
-          })
-        ];
-        forte.otter-launcher.modules = lib.mkIf cfg.with-wlpaste [
-          {
-            description = "video";
-            prefix = "mpv";
-            cmd = "mpv-wlpaste";
-          }
-        ];
-      };
-
-      options.forte.mpv = {
-        enable = lib.mkEnableOption "zen-browser";
-        with-wlpaste = lib.mkEnableOption "mpv-wl-paste";
-
-        conf = lib.mkOption {
-          default = "";
-          type = lib.types.lines;
-        };
-
-        input = lib.mkOption {
-          default = "";
-          type = lib.types.lines;
-        };
-
-        package = lib.mkOption {
-          type = lib.types.package;
-          default = birdee.wrappers.mpv.wrap {
-            inherit pkgs;
-            package = pkgs.mpv;
-            script.mpris.path = pkgs.mpvScripts.mpris;
-            "mpv.conf".content = cfg.conf;
-            "mpv.input".content = cfg.input;
           };
+
         };
       };
     };

@@ -75,7 +75,6 @@
 
             debug = {
               honor-xdg-activation-with-invalid-serial = set;
-              strict-new-window-focus-policy = set;
             };
 
             recent-windows = {
