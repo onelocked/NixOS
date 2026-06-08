@@ -42,10 +42,15 @@
       };
     in
     {
-      environment.systemPackages = with pkgs.qt6Packages; [
-        qt6ct
-        qtwayland
-      ];
+      environment = {
+        systemPackages = with pkgs.qt6Packages; [
+          qt6ct
+          qtwayland
+        ];
+        sessionVariables = {
+          QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+        };
+      };
 
       forte.xdg.desktopEntries = {
         "qt5ct".noDisplay = true;
