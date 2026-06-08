@@ -7,6 +7,9 @@
         with-wlpaste = true;
         conf = # ini
           ''
+            # ==========================================
+            #               BASE PROFILE
+            # ==========================================
             osd-duration=500
             osc=no
             video-sync=display-resample
@@ -32,6 +35,17 @@
             input-default-bindings=yes
             ytdl-format=bestvideo[height<=2160]+bestaudio/best[height<=2160]
             autofit=x1355
+
+            # ==========================================
+            #              IMAGE PROFILE
+            # ==========================================
+            [image-profile]
+            profile-desc="settings for images"
+            profile-cond=p["current-tracks/video/image"]
+            profile-restore=copy
+            image-display-duration=inf
+            loop-file=inf
+            autofit=x1200
           '';
         input = # bash
           ''
@@ -114,7 +128,7 @@
             match        = { class = "mpv" },
             center       = true,
             float        = true,
-            opacity          = "1 override",
+            opacity      = "1 override",
           })
         '';
     };
