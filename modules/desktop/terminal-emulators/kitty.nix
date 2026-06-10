@@ -36,17 +36,14 @@
 
           window_padding_width = "0 0 0 0";
 
-          # Better URL handling
           detect_urls = "yes";
           url_style = "curly";
-          # Match foot's "hide cursor when typing"
           mouse_hide_wait = "2.0";
 
-          # Match foot's hollow cursor when unfocused
-          focus_follows_mouse = "no"; # if you don't already have FFM
-          cursor_shape_unfocused = "hollow"; # kitty 0.36+
+          focus_follows_mouse = "no";
+          cursor_shape_unfocused = "hollow";
 
-          # Tab bar - minimal dots like tmux
+          # Tab bar
           tab_bar_edge = "bottom";
           tab_bar_style = "custom";
           tab_bar_align = "center";
@@ -59,7 +56,6 @@
           active_tab_font_style = "normal";
           inactive_tab_font_style = "normal";
 
-          # Border styling
           window_border_width = "1.5pt";
         };
         keybindings = {

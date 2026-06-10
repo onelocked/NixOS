@@ -77,7 +77,18 @@
                     if ra != rb then ra < rb else a < b
                   )
                   |> map (name: ''require("${requireName name}")'')
-                  |> (lines: lines ++ [ ''require("dynamic")'' ])
+                  |> (
+                    lines:
+                    lines
+                    ++ [
+                      #lua
+                      ''
+                        if is_file_exists("${config.hj.xdg.config.directory}/hypr/dynamic.lua") then
+                            require("dynamic")
+                        end
+                      ''
+                    ]
+                  )
                   |> lib.concatLines;
               })
               (
