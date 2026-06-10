@@ -98,6 +98,8 @@
             services.graphical-desktop.enable = true;
             services.speechd.enable = lib.mkForce false;
 
+            programs.xwayland.enable = true;
+
             systemd.user.extraConfig = ''DefaultEnvironment="PATH=/run/wrappers/bin:/etc/profiles/per-user/%u/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin:$PATH" '';
             xdg.portal = {
               wlr.enable = false;
