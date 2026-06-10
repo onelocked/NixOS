@@ -106,7 +106,7 @@
             {
               description = "audio";
               prefix = "mix";
-              cmd = resize 800 500 "pulsemixer";
+              cmd = resize 800 500 "wiremix";
             }
             {
               description = "notepad";
@@ -304,7 +304,7 @@
                 '';
               };
               runtimePkgs = [
-                pkgs.pulsemixer
+                pkgs.wiremix
                 pkgs.chafa
               ]
               ++ lib.optional fsel.enable (fsel.package);
