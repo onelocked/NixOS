@@ -10,7 +10,7 @@
     {
       imports = [ inputs.base16.nixosModule ];
       scheme = cfg.${cfg.variant};
-      forte.theme.variant = "light";
+      forte.theme.variant = "dark";
       forte.theme = {
         light = {
           slug = "retroism";

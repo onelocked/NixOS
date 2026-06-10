@@ -8,6 +8,7 @@
           wayland_enable_ime = "no";
 
           sync_to_monitor = "yes";
+          background_opacity = "0.85";
           remember_window_position = "no";
 
           draw_minimal_borders = "yes";
@@ -188,10 +189,20 @@
     {
       config = lib.mkIf (cfg.enable) {
         hj.packages = [ cfg.package ];
-        forte.hyprland.lua.keybinds = # lua
-          ''
-            hl.bind(mainMod .. " + T", hl.dsp.exec_raw("kitty -1"))
-          '';
+        forte.hyprland.lua = {
+          window-rules = # lua
+            ''
+              hl.window_rule({
+                name             = "kitty",
+                match            = { class = "kitty" },
+                opacity          = "1 override 0.9 override",
+              })
+            '';
+          keybinds = # lua
+            ''
+              hl.bind(mainMod .. " + T", hl.dsp.exec_raw("kitty -1"))
+            '';
+        };
       };
       options.forte.kitty = {
         enable = lib.mkEnableOption "zen-browser";

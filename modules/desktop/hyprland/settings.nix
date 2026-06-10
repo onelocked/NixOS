@@ -159,7 +159,7 @@
             scrolling = {
               direction = "right",
               fullscreen_on_one_column = false,
-              column_width = 0.7,
+              column_width = 0.711,
               wrap_swapcol = false,
               wrap_focus = false,
             },

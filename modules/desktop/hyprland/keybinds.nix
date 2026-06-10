@@ -8,7 +8,7 @@
 
           -- scrolling dynamic column width based on workspace
           local workspace_widths = {
-            ["web"] = { 0.709, 0.93 },
+            ["web"] = { 0.711, 0.93 },
             ["dev"] = { 0.5, 0.7 },
           }
           local default_widths = { 0.3, 0.5, 0.71 }

@@ -188,7 +188,7 @@
 
       forte.lib.otter-lib.otter-kitty-conf = pkgs.writeText "otter-kitty.conf" ''
         font_size               15
-        background_opacity 1
+        background_opacity 0.7
         allow_remote_control yes
         ${lib.optionalString (theme == "dark") ''
           background_image        ${

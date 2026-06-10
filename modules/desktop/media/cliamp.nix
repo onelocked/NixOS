@@ -14,7 +14,7 @@
       config = lib.mkIf cfg.enable {
         forte.lib.otter-lib.cliamp-config = pkgs.writeText "otter-kitty.conf" ''
             allow_remote_control yes
-            background_opacity 1
+            background_opacity 0.7
           ${
             lib.optionalString (theme == "dark") ''
               background_image        ${
