@@ -241,8 +241,10 @@
     { inputs', ... }:
     {
       packages = {
-        hyprland = inputs'.hyprland.packages.hyprland;
-        xdg-desktop-portal-hyprland = inputs'.hyprland.packages.xdg-desktop-portal-hyprland;
+        hyprland = inputs'.hyprland.packages.hyprland.overrideAttrs { doCheck = false; };
+        xdg-desktop-portal-hyprland = inputs'.hyprland.packages.xdg-desktop-portal-hyprland.overrideAttrs {
+          doCheck = false;
+        };
       };
     };
 }

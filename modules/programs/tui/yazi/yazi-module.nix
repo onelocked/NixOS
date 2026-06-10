@@ -1,11 +1,18 @@
 {
+  perSystem =
+    { inputs', ... }:
+    {
+      packages.yazi = inputs'.yazi.packages.default.overrideAttrs {
+        doCheck = false;
+      };
+    };
   m.default =
     {
       pkgs,
       lib,
       config,
       birdee,
-      inputs',
+      self',
       ...
     }:
     let
@@ -40,7 +47,7 @@
               pkgs.ffmpeg
               pkgs.xxhash
             ];
-            package = inputs'.yazi.packages.default;
+            package = self'.packages.yazi;
             inherit (cfg) plugins;
             settings = {
               inherit (cfg) keymap theme;
