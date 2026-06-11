@@ -152,6 +152,7 @@
             };
           })
           (lib.mkIf (cfg.withUWSM) {
+            forte.xdg.desktopEntries."uuctl".noDisplay = true;
             programs.uwsm.enable = true;
           })
         ];
