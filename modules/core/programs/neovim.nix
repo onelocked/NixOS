@@ -80,7 +80,7 @@
         desktopEntry = lib.mkEnableOption "desktopEntry";
         package = lib.mkOption {
           type = lib.types.package;
-          default = inputs'.vimmax.packages.default.override { inherit theme; };
+          default = inputs'.vimmax.packages.default.extend { vimmax.theme = theme; };
           defaultText = "default package for neovim";
         };
       };

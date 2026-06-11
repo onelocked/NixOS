@@ -37,7 +37,7 @@
           hl.bind("SUPER + Q", hl.dsp.window.close())
 
           -- screenshot
-          hl.bind("Print", hl.dsp.exec_raw("${pkgs.slurp}/bin/slurp | ${pkgs.grim}/bin/grim -g - - | ${pkgs.wl-clipboard}/bin/wl-copy"))
+          hl.bind("Print", hl.dsp.exec_raw("${pkgs.wayfreeze}/bin/wayfreeze --after-freeze-cmd '${pkgs.grim}/bin/grim -g \"$(${pkgs.slurp}/bin/slurp)\" - | wl-copy; killall wayfreeze'"))
 
           -- fullscreen keybind
           hl.bind("SUPER + M", hl.dsp.window.fullscreen())
