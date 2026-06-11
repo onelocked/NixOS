@@ -122,7 +122,7 @@
               description = "color picker";
               prefix = "cp";
               cmd = "app2unit -- ${pkgs.writeShellScript "color-picker" ''
-                sleep 0.25
+                sleep 0.3
                 PICKED=$(${pkgs.hyprpicker}/bin/hyprpicker --radius=70 --scale=3 --autocopy --no-fancy --format=hex)
                 if [ -n "$PICKED" ]; then
                   kitty --app-id=color-picker -e sh -c "${pkgs.pastel}/bin/pastel color '$PICKED'; echo; read -n 1 -s -r -p 'Press any key to close...'"
@@ -146,6 +146,7 @@
             }
           ];
       };
+
       forte.fsel = {
         enable = true;
         settings = with scheme.withHashtag; {
@@ -188,7 +189,7 @@
 
       forte.lib.otter-lib.otter-kitty-conf = pkgs.writeText "otter-kitty.conf" ''
         font_size               15
-        background_opacity 0.7
+        background_opacity ${if theme == "dark" then "1" else "0.7"}
         allow_remote_control yes
         ${lib.optionalString (theme == "dark") ''
           background_image        ${
@@ -202,6 +203,7 @@
           window_padding_width    20 105 20 105
         ''}
       '';
+
       forte.hyprland.lua = {
         keybinds = # lua
           ''
