@@ -43,15 +43,16 @@
 
 
           hl.window_rule({
-            name        = "Moonlight",
-            match       = { class = "com.moonlight_stream.Moonlight", title = "onelock - Moonlight" },
-            fullscreen  = true,
-            content     = "game",
-            workspace   = "name:media silent",
-            immediate   = true,
-            no_shadow   = true,
-            opacity     = "1 override",
-            no_auto_hdr = true,
+            name            = "Moonlight",
+            match           = { class = "com.moonlight_stream.Moonlight", title = "onelock - Moonlight" },
+            fullscreen      = false,
+            scrolling_width = 0.95,
+            content         = "game",
+            workspace       = "name:media silent",
+            immediate       = true,
+            no_shadow       = false,
+            opacity         = "1 override",
+            no_auto_hdr     = true,
           })
           hl.window_rule({
             name             = "Moonlight-window",

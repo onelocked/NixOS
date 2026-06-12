@@ -24,7 +24,7 @@
           hl.config({
             general = {
               gaps_in           = 10,
-              gaps_out          = 50,
+              gaps_out = { top = 60, bottom = 30, left = 30, right = 30 },
               no_focus_fallback = true,
 
               border_size       = 9,
@@ -113,12 +113,11 @@
               kb_rules            = "",
               repeat_rate         = 40,
               repeat_delay        = 370,
-              float_switch_override_focus = 0, -- NOTE:	If enabled (1 or 2), focus will change to the window under the cursor when changing from tiled-to-floating and vice versa. If 2, focus will also follow mouse on float-to-float switches.
+              float_switch_override_focus = 0,
 
-              focus_on_close      = 0,
+              focus_on_close      = 2,
 
-              follow_mouse        = 1,    -- temporary workaround switch to 2 after fix https://github.com/hyprwm/Hyprland/discussions/14285
-              follow_mouse_shrink = 2000, -- remove this after fixed above
+              follow_mouse        = 2,
               mouse_refocus       = false,
 
               sensitivity         = 0, -- -1.0 - 1.0, 0 means no modification.
@@ -192,6 +191,40 @@
                 return false
              end
           end
+
+          local original_gaps = { top = 60, bottom = 30, left = 30, right = 30 }
+          local original_fit_method = nil
+
+          hl.define_submap("hyprview", function()
+            hl.bind("SUPER + left", hl.dsp.focus({ direction = "left" }))
+            hl.bind("SUPER + right", hl.dsp.focus({ direction = "right" }))
+            hl.bind("SUPER + up", hl.dsp.focus({ direction = "up" }))
+            hl.bind("SUPER + down", hl.dsp.focus({ direction = "down" }))
+
+            hl.bind("SUPER + up", hl.dsp.focus({ workspace = "e-1" }))
+            hl.bind("SUPER + down", hl.dsp.focus({ workspace = "e+1" }))
+
+            hl.bind("SUPER + G", function()
+              hl.dispatch(hl.dsp.exec_raw("qs ipc call overview toggle"))
+              hl.config({
+                general   = { gaps_out = original_gaps },
+                scrolling = { focus_fit_method = original_fit_method },
+              })
+              hl.dispatch(hl.dsp.submap("reset"))
+            end, { repeating = false })
+          end)
+
+          hl.bind("SUPER + G", function()
+            -- Save current value before overriding
+            original_fit_method = hl.get_config("scrolling.focus_fit_method")
+
+            hl.dispatch(hl.dsp.exec_raw("qs ipc call overview toggle"))
+            hl.config({
+              general   = { gaps_out = { top = 180, bottom = 180, left = 260, right = 260 } },
+              scrolling = { focus_fit_method = 0 },
+            })
+            hl.dispatch(hl.dsp.submap("hyprview"))
+          end, { repeating = false })
         '';
     };
 }
