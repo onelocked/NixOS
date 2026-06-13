@@ -23,6 +23,7 @@
               chmod
               smart-filter
               wl-clipboard
+              toggle-pane
               ;
           }
           // lib.genAttrs [ "fuzzy-search" "yaziline" "no-header-prompt" "confirm-dialog" "extra-metadata" ] (
@@ -55,6 +56,7 @@
             in
             [
               (mkKeymap [ "<Enter>" ] "plugin confirm-dialog" "Safe open in chooser mode")
+              (mkKeymap [ "t" "s" ] "plugin toggle-pane min-parent" "Show or hide the parent pane")
               (mkKeymap [ "z" ] "plugin fuzzy-search -- fd --TL=3" "Fuzzy Find Files")
               (mkKeymap [ "<S-s>" ] "plugin fuzzy-search -- rg --TL=3" "Ripgrep Search")
               (mkKeymap [ "<S-z>" ] "plugin fuzzy-search -- zoxide --TL=3" "Zoxide Search")
