@@ -813,9 +813,11 @@
         "spicetify-nix": "spicetify-nix",
         "sunshine": "sunshine",
         "systems": "systems",
+        "theme-store": "theme-store",
         "treefmt-nix": "treefmt-nix",
         "vimmax": "vimmax",
         "yazi": "yazi",
+        "yazi-plugins": "yazi-plugins",
         "zen-browser": "zen-browser"
       }
     },
@@ -911,6 +913,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "x86_64-linux",
+        "type": "github"
+      }
+    },
+    "theme-store": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1773250467,
+        "narHash": "sha256-Vq0AboLzase+tTZ1Erf2cKpF55cm3eHNuXmmQuOknvw=",
+        "owner": "zen-browser",
+        "repo": "theme-store",
+        "rev": "7173dba5d060417fd65764b706856ae609496e31",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zen-browser",
+        "repo": "theme-store",
         "type": "github"
       }
     },
@@ -1025,6 +1043,22 @@
       "original": {
         "owner": "sxyazi",
         "repo": "yazi",
+        "type": "github"
+      }
+    },
+    "yazi-plugins": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1780412700,
+        "narHash": "sha256-xTYYLbrqb1cZeQzaWPzldBfpx3r5s2XyeRTYBA8jbq4=",
+        "owner": "AminurAlam",
+        "repo": "yazi-plugins",
+        "rev": "6206bae4c7887915db1cdf3b353a044578763195",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AminurAlam",
+        "repo": "yazi-plugins",
         "type": "github"
       }
     },

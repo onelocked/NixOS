@@ -335,9 +335,9 @@
     { pkgs, envoy, ... }:
     {
       packages = {
-        otter-launcher = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
+        otter-launcher = pkgs.rustPlatform.buildRustPackage {
           inherit (envoy.otter-launcher) pname version src;
-          cargoLock.lockFile = finalAttrs.src + "/Cargo.lock";
+          cargoHash = "sha256-GORp/ok5RNgwAePhtZeLlvhsQZRELIRYwFRROiUjQ1o=";
           doCheck = false;
           patches = [
             (pkgs.writeText "selection.patch" # rust
@@ -362,7 +362,7 @@
               ''
             )
           ];
-        });
+        };
       };
     };
 }

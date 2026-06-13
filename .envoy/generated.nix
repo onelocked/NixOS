@@ -32,27 +32,27 @@
   };
   cliphist = {
     pname = "cliphist";
-    version = "980c85fab4a5bab04c6f14bed49b330fd18922ab";
+    version = "25cc3e4affb6d24398cbcb2f42d8e8cf9cf62823";
     src = fetchFromGitHub {
       owner = "sentriz";
       repo = "cliphist";
-      rev = "980c85fab4a5bab04c6f14bed49b330fd18922ab";
+      rev = "25cc3e4affb6d24398cbcb2f42d8e8cf9cf62823";
       fetchSubmodules = false;
-      sha256 = "sha256-EeBIGhbWGw6BZ54kG9BhBc5OQGy3Ag/7eyXRImovqi8=";
+      sha256 = "sha256-1hXxezGSQJ4x1V/iwMZGmB7ONTldpNQ21dbvR1+qkCE=";
     };
-    date = "2026-04-21";
+    date = "2026-06-08";
   };
   cliphist-tui = {
     pname = "cliphist-tui";
-    version = "fd4a47baaba60598603d6c760512d2169479872b";
+    version = "d9b43bfc88ab50fd49e2dd9237d21343b208357b";
     src = fetchFromGitHub {
       owner = "SHORiN-KiWATA";
       repo = "cliphist-tui";
-      rev = "fd4a47baaba60598603d6c760512d2169479872b";
+      rev = "d9b43bfc88ab50fd49e2dd9237d21343b208357b";
       fetchSubmodules = false;
-      sha256 = "sha256-wjgE9aladixbGfMXVdkvxEBJHKS2BEepbwILZro7d0A=";
+      sha256 = "sha256-TtKy57evRwwS2j0CyB4tsiJZD4fkn0OoYuUkbHWiDS8=";
     };
-    date = "2026-04-26";
+    date = "2026-06-10";
   };
   confirm-dialog = {
     pname = "confirm-dialog";
@@ -116,15 +116,15 @@
   };
   otter-launcher = {
     pname = "otter-launcher";
-    version = "4700e2f9e45e29eaed1fd5d0b51ccb35859a7cc1";
+    version = "764a38d1de308da3268222692652a0a85bb71eee";
     src = fetchFromGitHub {
       owner = "kuokuo123";
       repo = "otter-launcher";
-      rev = "4700e2f9e45e29eaed1fd5d0b51ccb35859a7cc1";
+      rev = "764a38d1de308da3268222692652a0a85bb71eee";
       fetchSubmodules = false;
-      sha256 = "sha256-Ye0COc1J5YnP+90fOdsQqPw9Ni4Lu0y63HwG0duSpeI=";
+      sha256 = "sha256-vlNT2248Oxg3++bk8ZkozsU4wDbxOkh6dl3GeoBmmXE=";
     };
-    date = "2026-06-02";
+    date = "2026-06-09";
   };
   tmuxFloax = {
     pname = "tmuxFloax";
@@ -138,18 +138,6 @@
     };
     date = "2026-02-24";
   };
-  yazi-plugins = {
-    pname = "yazi-plugins";
-    version = "6206bae4c7887915db1cdf3b353a044578763195";
-    src = fetchFromGitHub {
-      owner = "AminurAlam";
-      repo = "yazi-plugins";
-      rev = "6206bae4c7887915db1cdf3b353a044578763195";
-      fetchSubmodules = false;
-      sha256 = "sha256-xTYYLbrqb1cZeQzaWPzldBfpx3r5s2XyeRTYBA8jbq4=";
-    };
-    date = "2026-06-02";
-  };
   yaziline = {
     pname = "yaziline";
     version = "25161c18e61339b6a79f29f8948e3c360e3f9ace";
@@ -161,17 +149,5 @@
       sha256 = "sha256-gF21K8Sn9VFh6nKcM5dhTiAH1sOE9D/Gmc8i3J8m+S4=";
     };
     date = "2026-05-09";
-  };
-  zen-theme-store = {
-    pname = "zen-theme-store";
-    version = "7173dba5d060417fd65764b706856ae609496e31";
-    src = fetchFromGitHub {
-      owner = "zen-browser";
-      repo = "theme-store";
-      rev = "7173dba5d060417fd65764b706856ae609496e31";
-      fetchSubmodules = false;
-      sha256 = "sha256-Vq0AboLzase+tTZ1Erf2cKpF55cm3eHNuXmmQuOknvw=";
-    };
-    date = "2026-03-11";
   };
 }

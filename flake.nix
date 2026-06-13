@@ -104,6 +104,10 @@
       flake = false;
     };
     systems.url = "github:nix-systems/x86_64-linux";
+    theme-store = {
+      url = "github:zen-browser/theme-store";
+      flake = false;
+    };
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -123,6 +127,10 @@
         flake-utils.follows = "flake-utils";
         rust-overlay.follows = "rust-overlay";
       };
+    };
+    yazi-plugins = {
+      url = "github:AminurAlam/yazi-plugins";
+      flake = false;
     };
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";

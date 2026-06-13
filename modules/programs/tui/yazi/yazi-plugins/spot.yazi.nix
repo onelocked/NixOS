@@ -1,9 +1,9 @@
+{ inputs, ... }:
 {
   m.yazi =
     {
       pkgs,
       lib,
-      envoy,
       ...
     }:
     {
@@ -16,12 +16,13 @@
                 pname = name;
                 version = "1.0";
                 src = lib.cleanSourceWith {
-                  src = envoy.yazi-plugins.src + "/${name}.yazi";
-                  filter = name: _type: baseNameOf name == "main.lua";
+                  src = "${inputs.yazi-plugins}/${name}.yazi";
+                  filter = path: _type: baseNameOf path == "main.lua";
                 };
               };
           in
           lib.genAttrs [ "spot" "spot-image" "spot-video" "spot-audio" ] mkSpotPlugin;
+
         settings.plugins = {
           prepend_spotters =
             let
@@ -38,16 +39,17 @@
               (byUrl "*" "spot")
             ];
         };
+
         initLua = # lua
           ''
             require('spot'):setup {
               metadata_section = {
                 enable = true,
-                hash_cmd = 'xxhsum', -- other hashing commands may be slower
-                hash_filesize_limit = 150, -- in MB, set 0 to disable
-                relative_time = true, -- 2026-01-01 or n days ago
-                time_format = '%Y-%m-%d %H:%M', -- https://www.man7.org/linux/man-pages/man3/strftime.3.html
-                show_compression = true, ---@type boolean
+                hash_cmd = 'xxhsum',
+                hash_filesize_limit = 150,
+                relative_time = true,
+                time_format = '%Y-%m-%d %H:%M',
+                show_compression = true,
               },
               plugins_section = {
                 enable = false,
@@ -66,10 +68,9 @@
           '';
       };
     };
-  envoy = {
-    yazi-plugins = {
-      github = "AminurAlam/yazi-plugins";
-      locked = true;
-    };
+
+  ff.yazi-plugins = {
+    url = "github:AminurAlam/yazi-plugins";
+    flake = false;
   };
 }

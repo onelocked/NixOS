@@ -109,7 +109,7 @@
       packages.cliphist-tui = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
         inherit (envoy.cliphist-tui) pname version src;
         doCheck = false;
-        cargoLock.lockFile = finalAttrs.src + "/Cargo.lock";
+        cargoHash = "sha256-KHlEw5RZNeCYeNngPvgDFvBFMKD2OZrx8sg2QWdwjQ8=";
         patches = [
           (pkgs.writeText "better-binds.patch" # rust
             ''

@@ -1,10 +1,16 @@
+{ inputs, ... }:
 {
-  ff.zen-browser = {
-    url = "github:0xc000022070/zen-browser-flake";
-    inputs.nixpkgs.follows = "nixpkgs";
-    inputs.home-manager.follows = "";
+  ff = {
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "";
+    };
+    theme-store = {
+      url = "github:zen-browser/theme-store";
+      flake = false;
+    };
   };
-  envoy.zen-theme-store.github = "zen-browser/theme-store";
 
   m.zen-browser =
     { lib, ... }:
@@ -120,7 +126,6 @@
       config,
       lib,
       pkgs,
-      envoy,
       ...
     }:
     let
@@ -141,7 +146,7 @@
       mkModData =
         uuid:
         let
-          themePath = "${envoy.zen-theme-store.src}/themes/${uuid}";
+          themePath = "${inputs.theme-store}/themes/${uuid}";
         in
         {
           inherit uuid themePath;

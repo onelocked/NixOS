@@ -44,7 +44,7 @@
     },
     "cliphist": {
         "cargoLock": null,
-        "date": "2026-04-21",
+        "date": "2026-06-08",
         "extract": null,
         "name": "cliphist",
         "passthru": null,
@@ -56,16 +56,16 @@
             "name": null,
             "owner": "sentriz",
             "repo": "cliphist",
-            "rev": "980c85fab4a5bab04c6f14bed49b330fd18922ab",
-            "sha256": "sha256-EeBIGhbWGw6BZ54kG9BhBc5OQGy3Ag/7eyXRImovqi8=",
+            "rev": "25cc3e4affb6d24398cbcb2f42d8e8cf9cf62823",
+            "sha256": "sha256-1hXxezGSQJ4x1V/iwMZGmB7ONTldpNQ21dbvR1+qkCE=",
             "sparseCheckout": [],
             "type": "github"
         },
-        "version": "980c85fab4a5bab04c6f14bed49b330fd18922ab"
+        "version": "25cc3e4affb6d24398cbcb2f42d8e8cf9cf62823"
     },
     "cliphist-tui": {
         "cargoLock": null,
-        "date": "2026-04-26",
+        "date": "2026-06-10",
         "extract": null,
         "name": "cliphist-tui",
         "passthru": null,
@@ -77,12 +77,12 @@
             "name": null,
             "owner": "SHORiN-KiWATA",
             "repo": "cliphist-tui",
-            "rev": "fd4a47baaba60598603d6c760512d2169479872b",
-            "sha256": "sha256-wjgE9aladixbGfMXVdkvxEBJHKS2BEepbwILZro7d0A=",
+            "rev": "d9b43bfc88ab50fd49e2dd9237d21343b208357b",
+            "sha256": "sha256-TtKy57evRwwS2j0CyB4tsiJZD4fkn0OoYuUkbHWiDS8=",
             "sparseCheckout": [],
             "type": "github"
         },
-        "version": "fd4a47baaba60598603d6c760512d2169479872b"
+        "version": "d9b43bfc88ab50fd49e2dd9237d21343b208357b"
     },
     "confirm-dialog": {
         "cargoLock": null,
@@ -191,7 +191,7 @@
     },
     "otter-launcher": {
         "cargoLock": null,
-        "date": "2026-06-02",
+        "date": "2026-06-09",
         "extract": null,
         "name": "otter-launcher",
         "passthru": null,
@@ -203,12 +203,12 @@
             "name": null,
             "owner": "kuokuo123",
             "repo": "otter-launcher",
-            "rev": "4700e2f9e45e29eaed1fd5d0b51ccb35859a7cc1",
-            "sha256": "sha256-Ye0COc1J5YnP+90fOdsQqPw9Ni4Lu0y63HwG0duSpeI=",
+            "rev": "764a38d1de308da3268222692652a0a85bb71eee",
+            "sha256": "sha256-vlNT2248Oxg3++bk8ZkozsU4wDbxOkh6dl3GeoBmmXE=",
             "sparseCheckout": [],
             "type": "github"
         },
-        "version": "4700e2f9e45e29eaed1fd5d0b51ccb35859a7cc1"
+        "version": "764a38d1de308da3268222692652a0a85bb71eee"
     },
     "tmuxFloax": {
         "cargoLock": null,
@@ -231,27 +231,6 @@
         },
         "version": "133f526793d90d2caa323c47687dd5544a2c704b"
     },
-    "yazi-plugins": {
-        "cargoLock": null,
-        "date": "2026-06-02",
-        "extract": null,
-        "name": "yazi-plugins",
-        "passthru": null,
-        "pinned": false,
-        "src": {
-            "deepClone": false,
-            "fetchSubmodules": false,
-            "leaveDotGit": false,
-            "name": null,
-            "owner": "AminurAlam",
-            "repo": "yazi-plugins",
-            "rev": "6206bae4c7887915db1cdf3b353a044578763195",
-            "sha256": "sha256-xTYYLbrqb1cZeQzaWPzldBfpx3r5s2XyeRTYBA8jbq4=",
-            "sparseCheckout": [],
-            "type": "github"
-        },
-        "version": "6206bae4c7887915db1cdf3b353a044578763195"
-    },
     "yaziline": {
         "cargoLock": null,
         "date": "2026-05-09",
@@ -272,26 +251,5 @@
             "type": "github"
         },
         "version": "25161c18e61339b6a79f29f8948e3c360e3f9ace"
-    },
-    "zen-theme-store": {
-        "cargoLock": null,
-        "date": "2026-03-11",
-        "extract": null,
-        "name": "zen-theme-store",
-        "passthru": null,
-        "pinned": false,
-        "src": {
-            "deepClone": false,
-            "fetchSubmodules": false,
-            "leaveDotGit": false,
-            "name": null,
-            "owner": "zen-browser",
-            "repo": "theme-store",
-            "rev": "7173dba5d060417fd65764b706856ae609496e31",
-            "sha256": "sha256-Vq0AboLzase+tTZ1Erf2cKpF55cm3eHNuXmmQuOknvw=",
-            "sparseCheckout": [],
-            "type": "github"
-        },
-        "version": "7173dba5d060417fd65764b706856ae609496e31"
     }
 }
