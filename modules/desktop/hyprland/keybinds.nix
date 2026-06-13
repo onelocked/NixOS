@@ -44,6 +44,18 @@
           -- fullscreen keybind
           hl.bind(mainMod .. " + M", hl.dsp.window.fullscreen())
 
+          -- cycle between floating and tiled
+          hl.bind("ALT + TAB", function()
+              local window = hl.get_active_window()
+              if not window then return end
+
+              if window.floating then
+                  hl.dispatch(hl.dsp.window.cycle_next({ next = true, tiled = true, floating = false }))
+              else
+                  hl.dispatch(hl.dsp.window.cycle_next({ next = true, tiled = false, floating = true }))
+              end
+          end)
+
           -- toggle floating
           hl.bind(mainMod .. " + SHIFT + W", function()
             local win = hl.get_active_window()
@@ -140,15 +152,15 @@
           end)
 
           hl.bind("ALT + TAB", function()
-            local workspace = hl.get_active_workspace()
-            if not workspace then return end
+              local workspace = hl.get_active_workspace()
+              if not workspace then return end
 
-            overview_origin_window = hl.get_active_window()
-            overview_origin_layout = workspace.tiled_layout
+              overview_origin_window = hl.get_active_window()
+              overview_origin_layout = workspace.tiled_layout
 
-            hl.workspace_rule({ workspace = "name:" .. workspace.name, layout = "lua:grid" })
-            hl.dispatch(hl.dsp.submap("overview"))
-          end)
+              hl.workspace_rule({ workspace = "name:" .. workspace.name, layout = "lua:grid" })
+              hl.dispatch(hl.dsp.submap("overview"))
+          end, { long_press = true })
 
 
           -- Move focus with mainMod + arrow keys
