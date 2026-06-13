@@ -5,7 +5,8 @@
     let
       defaultApps = {
         text = [ "nvim.desktop" ];
-        image = [ "mpv.desktop" ];
+        image = [ "mpvi.desktop" ];
+        svg = [ "com.interversehq.qView.desktop" ];
         audio = [ "mpv.desktop" ];
         video = [ "mpv.desktop" ];
         directory = [ constants.terminal ];
@@ -24,10 +25,12 @@
           "image/jpeg"
           "image/jpg"
           "image/png"
-          "image/svg+xml"
           "image/tiff"
           "image/vnd.microsoft.icon"
           "image/webp"
+        ];
+        svg = [
+          "image/svg+xml"
         ];
         audio = [
           "audio/aac"
