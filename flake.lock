@@ -811,6 +811,7 @@
         "rust-overlay": "rust-overlay",
         "sops-nix": "sops-nix",
         "spicetify-nix": "spicetify-nix",
+        "sunshine": "sunshine",
         "systems": "systems",
         "treefmt-nix": "treefmt-nix",
         "vimmax": "vimmax",
@@ -878,6 +879,23 @@
       "original": {
         "owner": "Gerg-L",
         "repo": "spicetify-nix",
+        "type": "github"
+      }
+    },
+    "sunshine": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1780670869,
+        "narHash": "sha256-vNjd59YIP2eH6wfcjcaNW0ec+xjIe0/ZsjKHycGt/5Y=",
+        "owner": "Qubasa",
+        "repo": "nixpkgs",
+        "rev": "391d69d880514742b8612cbcd6480b5a8c3c08b5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Qubasa",
+        "ref": "update_sunshine",
+        "repo": "nixpkgs",
         "type": "github"
       }
     },

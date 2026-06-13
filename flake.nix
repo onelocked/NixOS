@@ -99,6 +99,10 @@
         systems.follows = "systems";
       };
     };
+    sunshine = {
+      url = "github:Qubasa/nixpkgs/update_sunshine";
+      flake = false;
+    };
     systems.url = "github:nix-systems/x86_64-linux";
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";

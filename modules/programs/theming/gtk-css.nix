@@ -5,14 +5,16 @@
       pkgs,
       config,
       lib,
+      envoy,
+      self',
       ...
     }:
     {
       forte = lib.mkIf (config.forte.theme.variant == "dark") {
         cursor = {
-          name = "Bibata-Modern-Ice";
+          name = envoy.aemeath-cursor.pname;
           size = 24;
-          package = pkgs.bibata-cursors;
+          package = self'.legacyPackages.aemeath-cursor;
         };
         gtk = {
           icons = {

@@ -32,6 +32,7 @@
         optimise.automatic = true;
         package = pkgs.nixVersions.latest;
         settings = {
+          allow-import-from-derivation = false;
           trusted-users = [ username ];
           # Binary Cache
           substituters = [
