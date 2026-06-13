@@ -1,5 +1,5 @@
 {
-  m.default = {
+  exo.core = {
     security = {
       sudo.enable = false;
       sudo-rs = {

@@ -1,5 +1,5 @@
 {
-  m.default =
+  exo.core =
     { constants, ... }:
     let
       inherit (constants) timezone locale;

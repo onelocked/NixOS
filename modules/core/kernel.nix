@@ -7,7 +7,7 @@
     };
   };
 
-  m.default =
+  exo.core =
     { inputs', ... }:
     {
       nix.settings = {

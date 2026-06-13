@@ -5,7 +5,7 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  m.default =
+  exo.core =
     { pkgs, config, ... }:
     {
       imports = [ inputs.sops-nix.nixosModules.sops ];

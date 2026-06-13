@@ -1,5 +1,5 @@
 {
-  m.desktop = {
+  exo.mods.desktop = {
     services.blueman.enable = false;
     hardware.bluetooth = {
       enable = false;

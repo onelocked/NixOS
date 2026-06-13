@@ -1,5 +1,5 @@
 {
-  m.kitty =
+  exo.mods.desktop =
     { scheme, config, ... }:
     {
       forte.kitty = {
@@ -161,7 +161,7 @@
         };
       };
     };
-  m.default =
+  exo.skeleton =
     {
       birdee,
       lib,

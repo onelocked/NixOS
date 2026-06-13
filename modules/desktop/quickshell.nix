@@ -5,8 +5,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  m.quickshell.forte.quickshell.enable = true;
-  m.default =
+  exo.mods.desktop = {
+    forte.quickshell.enable = true;
+  };
+  exo.skeleton =
     {
       lib,
       pkgs,

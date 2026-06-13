@@ -1,5 +1,5 @@
 {
-  m.desktop =
+  exo.mods.desktop =
     { lib, constants, ... }:
     with lib;
     let

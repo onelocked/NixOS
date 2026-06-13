@@ -1,5 +1,5 @@
 {
-  m.hyprland = {
+  exo.mods.desktop = {
     forte.hyprland.lua.animations = # lua
       ''
         -- Bezier curves

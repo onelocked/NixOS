@@ -1,21 +1,27 @@
 {
-  m.gaming =
+  exo.mods.desktop =
     {
       config,
       lib,
       pkgs,
       ...
     }:
+    let
+      cfg = config.forte.gaming;
+    in
     {
-      programs.steam = {
-        enable = true;
-        remotePlay.openFirewall = true;
-        localNetworkGameTransfers.openFirewall = true;
-        runtimePkgs = [ config.programs.gamescope.package ];
-        extraCompatPackages = with pkgs; [ proton-ge-bin ];
+
+      options.forte.gaming = {
+        enable = lib.mkEnableOption "Gaming";
       };
 
-      config = lib.mkIf config.programs.steam.enable {
+      config = lib.mkIf cfg.enable {
+        programs.steam = {
+          enable = true;
+          remotePlay.openFirewall = true;
+          localNetworkGameTransfers.openFirewall = true;
+          extraCompatPackages = with pkgs; [ proton-ge-bin ];
+        };
         programs.gamescope = {
           enable = true;
           args = [

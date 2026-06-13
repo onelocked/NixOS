@@ -1,5 +1,5 @@
 {
-  m.default =
+  exo.mods.desktop =
     {
       pkgs,
       config,

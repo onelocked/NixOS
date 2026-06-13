@@ -1,5 +1,5 @@
 {
-  m.default =
+  exo.core =
     { lib, pkgs, ... }:
     {
       services = {

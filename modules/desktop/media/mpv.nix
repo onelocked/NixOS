@@ -1,5 +1,5 @@
 {
-  m.mpv =
+  exo.mods.desktop =
     { config, ... }:
     {
       forte.mpv = {
@@ -50,7 +50,7 @@
           '';
       };
     };
-  m.default =
+  exo.skeleton =
     {
       lib,
       pkgs,

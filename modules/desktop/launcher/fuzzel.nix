@@ -1,5 +1,5 @@
 {
-  m.fuzzel =
+  exo.mods.desktop =
     {
       pkgs,
       config,
@@ -7,7 +7,7 @@
     }:
     {
       forte.fuzzel = {
-        enable = true;
+        enable = !config.forte.otter-launcher.enable;
         settings = {
           main = {
             dpi-aware = "yes";
@@ -34,7 +34,7 @@
         };
       };
     };
-  m.default =
+  exo.skeleton =
     {
       lib,
       birdee,

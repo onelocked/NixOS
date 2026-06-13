@@ -1,5 +1,5 @@
 {
-  m.hyprland =
+  exo.mods.desktop =
     { pkgs, ... }:
     {
       forte.hyprland.lua.keybinds = # lua

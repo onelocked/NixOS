@@ -1,5 +1,5 @@
 {
-  m.desktop =
+  exo.mods.desktop =
     { lib, constants, ... }:
     let
       inherit (lib) mkForce;

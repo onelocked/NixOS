@@ -1,14 +1,12 @@
 {
-  m.default =
-    { lib, constants, ... }:
+  exo.core =
+    { lib, ... }:
     let
-      inherit (constants) hostname;
       inherit (lib) mkDefault;
     in
     {
 
       networking = {
-        hostName = hostname;
         useDHCP = mkDefault true;
         networkmanager.enable = true;
         firewall.enable = true;

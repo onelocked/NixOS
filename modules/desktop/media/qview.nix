@@ -1,5 +1,5 @@
 {
-  m.desktop =
+  exo.mods.desktop =
     { scheme, ... }:
     {
       forte.qview = {
@@ -86,7 +86,7 @@
         };
       };
     };
-  m.default =
+  exo.skeleton =
     {
       lib,
       pkgs,

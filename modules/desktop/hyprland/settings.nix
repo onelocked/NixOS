@@ -1,5 +1,5 @@
 {
-  m.hyprland =
+  exo.mods.desktop =
     { pkgs, config, ... }:
     let
       theme = config.forte.theme.variant;

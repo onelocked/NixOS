@@ -1,0 +1,36 @@
+{
+  exo.core =
+    {
+      pkgs,
+      birdee,
+      config,
+      ...
+    }:
+    {
+      hj.packages = [
+        (birdee.lib.wrapPackage {
+          inherit pkgs;
+          package = pkgs.bat;
+          flags = {
+            "--theme" = if config.forte.theme.variant == "dark" then "TwoDark" else "base16";
+            "--style" = "plain";
+          };
+        })
+        (pkgs.bat-extras.batman.overrideAttrs (o: {
+          postInstall =
+            (o.postInstall or "")
+            # bash
+            + ''
+              mkdir -p $out/share/bash-completion/completions
+              echo 'complete -F _comp_cmd_man batman' > $out/share/bash-completion/completions/batman
+
+              mkdir -p $out/share/fish/vendor_completions.d
+              echo 'complete batman --wraps man' > $out/share/fish/vendor_completions.d/batman.fish
+            '';
+        }))
+      ];
+      environment.shellAliases = {
+        man = "batman --paging=auto";
+      };
+    };
+}

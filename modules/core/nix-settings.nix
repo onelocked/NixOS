@@ -8,7 +8,7 @@
     };
   };
 
-  m.default =
+  exo.core =
     {
       pkgs,
       lib,

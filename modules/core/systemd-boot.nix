@@ -1,5 +1,5 @@
 {
-  m.default = {
+  exo.core = {
     boot.loader = {
       efi = {
         canTouchEfiVariables = true;

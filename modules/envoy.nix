@@ -226,7 +226,7 @@ in
         inputs.systems.follows = "systems";
       };
     };
-    m.default = injectArg;
+    exo.skeleton = injectArg;
 
     perSystem =
       { pkgs, inputs', ... }:

@@ -5,7 +5,7 @@
     inputs.systems.follows = "systems";
   };
 
-  m.hyprland = {
+  exo.mods.desktop = {
     forte.hyprland = {
       enable = true;
       withUWSM = true;
@@ -14,7 +14,7 @@
     };
   };
 
-  m.default =
+  exo.skeleton =
     {
       lib,
       config,

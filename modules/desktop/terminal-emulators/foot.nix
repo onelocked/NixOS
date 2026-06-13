@@ -1,7 +1,6 @@
 {
-  m.foot = {
+  exo.mods.desktop = {
     forte.foot = {
-      enable = true;
       settings = {
         main = {
           font = "Maple Mono NL NF:style=ExtraBold:size=12";
@@ -67,7 +66,7 @@
       };
     };
   };
-  m.default =
+  exo.skeleton =
     {
       lib,
       pkgs,

@@ -6,7 +6,7 @@
     inputs.systems.follows = "systems";
   };
 
-  m.spotify =
+  exo.mods.desktop =
     { inputs', scheme, ... }:
     let
       spicePkgs = inputs'.spicetify-nix.legacyPackages;

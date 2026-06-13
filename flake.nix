@@ -3,21 +3,25 @@
 
   outputs =
     inputs:
-    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
-      imports =
-        with inputs.nixpkgs.lib;
-        concatMap
-          (
-            dir:
-            dir |> fileset.fileFilter (file: file.hasExt "nix" && !hasPrefix "_" file.name) |> fileset.toList
-          )
-          [
-            ./modules
-            ./hosts
-            ./.secrets
-          ];
-      _module.args.rootPath = ./.;
-    };
+    let
+      evaluation = inputs.flake-parts.lib.evalFlakeModule { inherit inputs; } {
+        imports =
+          with inputs.nixpkgs.lib;
+          concatMap
+            (
+              dir:
+              dir |> fileset.fileFilter (file: file.hasExt "nix" && !hasPrefix "_" file.name) |> fileset.toList
+            )
+            [
+              ./modules
+              ./hosts
+              ./.secrets
+            ];
+
+        _module.args.rootPath = ./.;
+      };
+    in
+    { inherit evaluation; } // evaluation.config.processedFlake;
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";

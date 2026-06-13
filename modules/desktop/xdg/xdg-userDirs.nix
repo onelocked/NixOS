@@ -1,11 +1,11 @@
 {
-  m.desktop = {
+  exo.mods.desktop = {
     forte.xdg.userDirs = {
       enable = true;
       createDirectories = true;
     };
   };
-  m.default =
+  exo.skeleton =
     {
       config,
       lib,

@@ -1,5 +1,5 @@
 {
-  m.default = {
+  exo.core = {
     services = {
       devmon.enable = false;
       gvfs.enable = false;

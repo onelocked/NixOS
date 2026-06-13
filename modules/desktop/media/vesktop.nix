@@ -1,5 +1,5 @@
 {
-  m.vesktop =
+  exo.mods.desktop =
     {
       pkgs,
       lib,

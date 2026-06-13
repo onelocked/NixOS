@@ -12,7 +12,7 @@
     };
   };
 
-  m.zen-browser =
+  exo.mods.desktop =
     { lib, ... }:
     {
       forte.zen-browser = {
@@ -120,7 +120,7 @@
       };
     };
 
-  m.default =
+  exo.skeleton =
     {
       inputs',
       config,

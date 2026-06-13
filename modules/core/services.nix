@@ -1,5 +1,5 @@
 {
-  m.default =
+  exo.core =
     { lib, ... }:
     let
       inherit (lib) mkForce;

@@ -1,5 +1,5 @@
 {
-  m.hardware-mini-pc =
+  exo.hardware.mini-pc =
     {
       config,
       lib,

@@ -5,7 +5,7 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  m.default =
+  exo.core =
     { lib, ... }:
     {
       imports = [ inputs.nix-index-database.nixosModules.default ];
