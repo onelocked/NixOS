@@ -4,8 +4,6 @@
     {
       forte.hyprland.lua.keybinds = # lua
         ''
-          local mainMod = "SUPER"
-
           -- scrolling dynamic column width based on workspace
           local workspace_widths = {
             ["web"] = { 0.711, 0.93 },
@@ -36,13 +34,13 @@
           -- ║   K E Y B I N D S   ║
           -- ╚═════════════════════╝
           -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
-          hl.bind(mainMod .. " + Q", hl.dsp.window.close())
+          hl.bind("SUPER + Q", hl.dsp.window.close())
 
           -- screenshot
           hl.bind("Print", hl.dsp.exec_raw("${pkgs.slurp}/bin/slurp | ${pkgs.grim}/bin/grim -g - - | ${pkgs.wl-clipboard}/bin/wl-copy"))
 
           -- fullscreen keybind
-          hl.bind(mainMod .. " + M", hl.dsp.window.fullscreen())
+          hl.bind("SUPER + M", hl.dsp.window.fullscreen())
 
           -- cycle between floating and tiled
           hl.bind("ALT + TAB", function()
@@ -57,7 +55,7 @@
           end)
 
           -- toggle floating
-          hl.bind(mainMod .. " + SHIFT + W", function()
+          hl.bind("SUPER + SHIFT + W", function()
             local win = hl.get_active_window()
             if not win then return end
 
@@ -163,31 +161,31 @@
           end, { long_press = true })
 
 
-          -- Move focus with mainMod + arrow keys
-          hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
-          hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
-          hl.bind(mainMod .. " + up", hl.dsp.focus({ direction = "up" }))
-          hl.bind(mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
+          -- Move focus with SUPER + arrow keys
+          hl.bind("SUPER + left", hl.dsp.focus({ direction = "left" }))
+          hl.bind("SUPER + right", hl.dsp.focus({ direction = "right" }))
+          hl.bind("SUPER + up", hl.dsp.focus({ direction = "up" }))
+          hl.bind("SUPER + down", hl.dsp.focus({ direction = "down" }))
 
-          -- Switch workspaces with mainMod + [0-9]
-          -- Move active window to a workspace with mainMod + SHIFT + [0-9]
+          -- Switch workspaces with SUPER + [0-9]
+          -- Move active window to a workspace with SUPER + SHIFT + [0-9]
           for i = 1, 10 do
             local key = i % 10 -- 10 maps to key 0
-            hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
-            hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+            hl.bind("SUPER + " .. key, hl.dsp.focus({ workspace = i }))
+            hl.bind("SUPER + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
           end
 
           -- special workspace (scratchpad)
-          hl.bind(mainMod .. " + S", hl.dsp.workspace.toggle_special("magic"))
-          hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
+          hl.bind("SUPER + S", hl.dsp.workspace.toggle_special("magic"))
+          hl.bind("SUPER + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
 
-          -- focus through existing windows with mainMod + scroll
-          hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ direction = "right" }))
-          hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ direction = "left" }))
+          -- focus through existing windows with SUPER + scroll
+          hl.bind("SUPER + mouse_down", hl.dsp.focus({ direction = "right" }))
+          hl.bind("SUPER + mouse_up", hl.dsp.focus({ direction = "left" }))
 
-          -- Move/resize windows with mainMod + LMB/RMB and dragging
-          hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
-          hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+          -- Move/resize windows with SUPER + LMB/RMB and dragging
+          hl.bind("SUPER + mouse:272", hl.dsp.window.drag(), { mouse = true })
+          hl.bind("SUPER + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
           -- quickshell keybinds
           hl.bind("ALT + SHIFT + equal", hl.dsp.exec_raw("qs ipc call brightness increase"),
@@ -222,11 +220,11 @@
             hl.bind(key, scrolling_only(fn))
           end
 
-          scrolling_binds(mainMod .. "+ CTRL + left", hl.dsp.layout("swapcol l"))
-          scrolling_binds(mainMod .. "+ CTRL + right", hl.dsp.layout("swapcol r"))
-          scrolling_binds(mainMod .. " + bracketright", hl.dsp.layout("consume_or_expel next"))
-          scrolling_binds(mainMod .. " + bracketleft", hl.dsp.layout("consume_or_expel prev"))
-          scrolling_binds(mainMod .. " +F", hl.dsp.layout("fit active"))
+          scrolling_binds("SUPER + CTRL + left", hl.dsp.layout("swapcol l"))
+          scrolling_binds("SUPER + CTRL + right", hl.dsp.layout("swapcol r"))
+          scrolling_binds("SUPER + bracketright", hl.dsp.layout("consume_or_expel next"))
+          scrolling_binds("SUPER + bracketleft", hl.dsp.layout("consume_or_expel prev"))
+          scrolling_binds("SUPER + F", hl.dsp.layout("fit active"))
 
           scrolling_binds("SUPER" .. " + R", function()
             -- Find out what workspace we are currently on
@@ -242,7 +240,7 @@
             hl.dispatch(hl.dsp.layout("colresize " .. current_array[cycle_idx]))
           end)
 
-          scrolling_binds(mainMod .. " + C", function()
+          scrolling_binds("SUPER + C", function()
             local prev = hl.get_config("scrolling.focus_fit_method")
 
             hl.config({ scrolling = { focus_fit_method = 0 } })
@@ -269,8 +267,8 @@
             hl.bind(key, dwindle_only(fn))
           end
 
-          dwindle_binds(mainMod .. "+ C", hl.dsp.layout("togglesplit"))
-          dwindle_binds(mainMod .. "+ F", hl.dsp.layout("swapsplit"))
+          dwindle_binds("SUPER + C", hl.dsp.layout("togglesplit"))
+          dwindle_binds("SUPER + F", hl.dsp.layout("swapsplit"))
 
 
           local resize_border_rule = hl.window_rule({

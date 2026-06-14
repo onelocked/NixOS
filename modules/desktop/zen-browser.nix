@@ -295,7 +295,7 @@
             '';
           keybinds = # lua
             ''
-              hl.bind(mainMod .. " + B", function()
+              hl.bind("SUPER + B", function()
                   local win = hl.get_window("class:zen-twilight")
                   if win then
                       hl.dispatch(hl.dsp.focus({ window = win }))

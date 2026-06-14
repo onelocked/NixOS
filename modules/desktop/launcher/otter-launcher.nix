@@ -207,7 +207,7 @@
       forte.hyprland.lua = {
         keybinds = # lua
           ''
-            hl.bind(mainMod .. " + Space", function()
+            hl.bind("SUPER + Space", function()
               local win = hl.get_window("class:otter-launcher")
               if win then
                 hl.dispatch(hl.dsp.window.close({ window = win }))

@@ -200,7 +200,7 @@
             '';
           keybinds = # lua
             ''
-              hl.bind(mainMod .. " + T", hl.dsp.exec_raw("kitty -1"))
+              hl.bind("SUPER + T", hl.dsp.exec_raw("kitty -1"))
             '';
         };
       };

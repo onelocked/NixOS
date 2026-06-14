@@ -47,7 +47,7 @@
             '';
           keybinds = # lua
             ''
-              hl.bind(mainMod .. " + V", function()
+              hl.bind("SUPER + V", function()
                   local win = hl.get_window("class:ClipboardHistory")
                   if win then
                       hl.dispatch(hl.dsp.window.close({ window = win }))
