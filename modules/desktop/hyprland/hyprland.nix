@@ -52,13 +52,15 @@
             environment.sessionVariables = {
               AQ_NO_MODIFIERS = 1;
             };
-            forte.hyprland.lua.settings = lib.optionalString (cfg.plugins != [ ]) ''
-              hl.on("hyprland.start", function ()
-                ${lib.concatMapStrings (entry: ''
-                  hl.exec_cmd("hyprctl plugin load ${pluginPath entry}")
-                '') cfg.plugins}
-              end)
-            '';
+            forte.hyprland.lua.settings =
+              lib.optionalString (cfg.plugins != [ ]) # lua
+                ''
+                  hl.on("hyprland.start", function ()
+                    ${lib.concatMapStrings (entry: ''
+                      hl.exec_raw("hyprctl plugin load ${pluginPath entry}")
+                    '') cfg.plugins}
+                  end)
+                '';
             hj.xdg.config.files = lib.mkMerge [
               (lib.mkIf (autoLoadFiles != { }) {
                 "hypr/hyprland.lua".text =
@@ -100,12 +102,20 @@
                   )
                 )
               )
+              {
+                # Needed for lua stub file
+                "hypr/.luarc.json".text = # json
+                  ''
+                    {
+                      "workspace": {
+                        "library": [
+                          "${cfg.package}/share/hypr/stubs"
+                        ]
+                      }
+                    }
+                  '';
+              }
             ];
-            environment = {
-              # Allows lua stub file to be accessed from /run/current-system/sw/share/hypr
-              pathsToLink = [ "/share/hypr" ];
-            };
-
             services.graphical-desktop.enable = true;
             services.speechd.enable = lib.mkForce false;
 

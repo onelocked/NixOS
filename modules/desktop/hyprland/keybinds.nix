@@ -30,9 +30,11 @@
           if current_ws then apply_workspace_widths(current_ws.name or current_ws.id) end
 
 
-          -- ╔═════════════════════╗
-          -- ║   K E Y B I N D S   ║
-          -- ╚═════════════════════╝
+          -- █                █       ▀             █
+          -- █ ▄▀ ▄▀▀▀▄ █   █ █▀▀▀▄  ▀█   █▀▀▀▄ ▄▀▀▀█ ▄▀▀▀▀
+          -- ██   █▀▀▀▀ █   █ █   █   █   █   █ █   █  ▀▀▀▄
+          -- █ ▀▄ ▀▄▄▄▄ ▀▄▄▄█ █▄▄▄▀  ▄█▄  █   █ ▀▄▄▄█ ▄▄▄▄▀
+          --             ▄▄▄▀
           -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
           hl.bind("SUPER + Q", hl.dsp.window.close())
 
@@ -203,9 +205,11 @@
 
 
 
-          -- ╔════════════════════════════════════════╗
-          -- ║   S C R O L L I N G  K E Y B I N D S   ║
-          -- ╚════════════════════════════════════════╝
+          --                          ▀█    ▀█     ▀                      █       ▀             █
+          -- ▄▀▀▀▀ ▄▀▀▀▄ █▄▀▀▀ ▄▀▀▀▄   █     █    ▀█   █▀▀▀▄ ▄▀▀▀█        █▀▀▀▄  ▀█   █▀▀▀▄ ▄▀▀▀█ ▄▀▀▀▀
+          --  ▀▀▀▄ █     █     █   █   █     █     █   █   █ █   █        █   █   █   █   █ █   █  ▀▀▀▄
+          -- ▄▄▄▄▀ ▀▄▄▄▀ █     ▀▄▄▄▀   ▀▄▄   ▀▄▄  ▄█▄  █   █ ▀▄▄▄█        █▄▄▄▀  ▄█▄  █   █ ▀▄▄▄█ ▄▄▄▄▀
+          --                                                  ▄▄▄▀
           local function scrolling_only(fn)
             return function()
               local workspace = hl.get_active_workspace()
@@ -250,9 +254,11 @@
 
 
 
-          -- ╔══════════════════════════════════════╗
-          -- ║    D W I N D L E  K E Y B I N D S    ║
-          -- ╚══════════════════════════════════════╝
+          --     █         ▀             █  ▀█                █       ▀             █
+          -- ▄▀▀▀█ █   █  ▀█   █▀▀▀▄ ▄▀▀▀█   █   ▄▀▀▀▄        █▀▀▀▄  ▀█   █▀▀▀▄ ▄▀▀▀█ ▄▀▀▀▀
+          -- █   █ █ █ █   █   █   █ █   █   █   █▀▀▀▀        █   █   █   █   █ █   █  ▀▀▀▄
+          -- ▀▄▄▄█ ▀▄█▄▀  ▄█▄  █   █ ▀▄▄▄█   ▀▄▄ ▀▄▄▄▄        █▄▄▄▀  ▄█▄  █   █ ▀▄▄▄█ ▄▄▄▄▀
+
           local function dwindle_only(fn)
             return function()
               local workspace = hl.get_active_workspace()
