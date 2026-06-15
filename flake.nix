@@ -1,27 +1,22 @@
 {
-  description = "onelock's dendritic nixos flake configuration";
+  description = "nixos flake-parts configuration";
 
   outputs =
     inputs:
-    let
-      evaluation = inputs.flake-parts.lib.evalFlakeModule { inherit inputs; } {
-        imports =
-          with inputs.nixpkgs.lib;
-          concatMap
-            (
-              dir:
-              dir |> fileset.fileFilter (file: file.hasExt "nix" && !hasPrefix "_" file.name) |> fileset.toList
-            )
-            [
-              ./modules
-              ./hosts
-              ./.secrets
-            ];
-
-        _module.args.rootPath = ./.;
-      };
-    in
-    { inherit evaluation; } // evaluation.config.processedFlake;
+    inputs.flake-parts.lib.evalFlakeModule { inherit inputs; } {
+      imports =
+        with inputs.nixpkgs.lib;
+        [
+          ./modules
+          ./hosts
+          ./.secrets
+        ]
+        |> map (fileset.fileFilter (file: file.hasExt "nix" && !hasPrefix "_" file.name))
+        |> fileset.unions
+        |> fileset.toList;
+      _module.args.rootPath = ./.;
+    }
+    |> (eval: { inherit eval; } // eval.config.processedFlake);
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
