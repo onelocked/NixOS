@@ -229,8 +229,8 @@
               opacity          = "1 override",
               nearest_neighbor = true,
               ${lib.optionalString (theme == "dark") ''
-                rounding = 20,
-                rounding_power   = 10,
+                rounding = 52,
+                rounding_power   = 1.28,
                 border_size      = 0,
                 no_shadow        = true,
               ''}

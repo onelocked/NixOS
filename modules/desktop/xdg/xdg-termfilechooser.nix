@@ -78,7 +78,8 @@
             name             = "yaz-filechooser",
             match            = { class = "FileChooser" },
             float            = true,
-            size             = { 2263, 1273 },
+            size             = { 1600, 1000 },
+            opacity          = "1 override",
           })
         '';
     };

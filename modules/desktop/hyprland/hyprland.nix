@@ -262,10 +262,94 @@
       };
     };
   perSystem =
-    { inputs', ... }:
+    { inputs', pkgs, ... }:
     {
       packages = {
-        hyprland = inputs'.hyprland.packages.hyprland.overrideAttrs { doCheck = false; };
+        hyprland = inputs'.hyprland.packages.hyprland.overrideAttrs (oldAttrs: {
+          doCheck = false;
+          patches = (oldAttrs.patches or [ ]) ++ [
+            (pkgs.writeText "border-rounding.patch" # cpp
+              ''
+                diff --git a/src/config/lua/bindings/LuaBindingsInternal.hpp b/src/config/lua/bindings/LuaBindingsInternal.hpp
+                index 934c188c..6f861b38 100644
+                --- a/src/config/lua/bindings/LuaBindingsInternal.hpp
+                +++ b/src/config/lua/bindings/LuaBindingsInternal.hpp
+                @@ -65,9 +65,9 @@ namespace Config::Lua::Bindings::Internal {
+                         {"content", []() -> ILuaConfigValue* { return new CLuaConfigString(STRVAL_EMPTY); }, WE::WINDOW_RULE_EFFECT_CONTENT},
+                         {"no_close_for", []() -> ILuaConfigValue* { return new CLuaConfigInt(0); }, WE::WINDOW_RULE_EFFECT_NOCLOSEFOR},
+                         {"scrolling_width", []() -> ILuaConfigValue* { return new CLuaConfigFloat(0.F); }, WE::WINDOW_RULE_EFFECT_SCROLLING_WIDTH},
+                -        {"rounding", []() -> ILuaConfigValue* { return new CLuaConfigInt(0, 0, 20); }, WE::WINDOW_RULE_EFFECT_ROUNDING},
+                +        {"rounding", []() -> ILuaConfigValue* { return new CLuaConfigInt(0, 0, 60); }, WE::WINDOW_RULE_EFFECT_ROUNDING},
+                         {"border_size", []() -> ILuaConfigValue* { return new CLuaConfigInt(0); }, WE::WINDOW_RULE_EFFECT_BORDER_SIZE},
+                -        {"rounding_power", []() -> ILuaConfigValue* { return new CLuaConfigFloat(2.F, 1.F, 10.F); }, WE::WINDOW_RULE_EFFECT_ROUNDING_POWER},
+                +        {"rounding_power", []() -> ILuaConfigValue* { return new CLuaConfigFloat(2.F, 1.F, 20.F); }, WE::WINDOW_RULE_EFFECT_ROUNDING_POWER},
+                         {"scroll_mouse", []() -> ILuaConfigValue* { return new CLuaConfigFloat(1.F, 0.01F, 10.F); }, WE::WINDOW_RULE_EFFECT_SCROLL_MOUSE},
+                         {"scroll_touchpad", []() -> ILuaConfigValue* { return new CLuaConfigFloat(1.F, 0.01F, 10.F); }, WE::WINDOW_RULE_EFFECT_SCROLL_TOUCHPAD},
+                         {"animation", []() -> ILuaConfigValue* { return new CLuaConfigString(STRVAL_EMPTY); }, WE::WINDOW_RULE_EFFECT_ANIMATION},
+                diff --git a/src/config/values/ConfigValues.cpp b/src/config/values/ConfigValues.cpp
+                index 505ce700..53cc2b87 100644
+                --- a/src/config/values/ConfigValues.cpp
+                +++ b/src/config/values/ConfigValues.cpp
+                @@ -198,9 +198,9 @@ std::vector<SP<IValue>> Values::getConfigValues() {
+                          */
+
+                         MS<Int>("decoration:rounding", "rounded corners' radius (in layout px)", 0,
+                -                {.min = 0, .max = 20, .refresh = Supplementary::REFRESH_WINDOW_STATES | Supplementary::REFRESH_BLUR_FB}),
+                +                {.min = 0, .max = 60, .refresh = Supplementary::REFRESH_WINDOW_STATES | Supplementary::REFRESH_BLUR_FB}),
+                         MS<Float>("decoration:rounding_power", "rounding power of corners (2 is a circle)", 2,
+                -                  {.min = 2, .max = 10, .refresh = Supplementary::REFRESH_WINDOW_STATES | Supplementary::REFRESH_BLUR_FB}),
+                +                  {.min = 2, .max = 20, .refresh = Supplementary::REFRESH_WINDOW_STATES | Supplementary::REFRESH_BLUR_FB}),
+                         MS<Float>("decoration:active_opacity", "opacity of active windows.", 1, {.min = 0, .max = 1, .refresh = Supplementary::REFRESH_WINDOW_STATES}),
+                         MS<Float>("decoration:inactive_opacity", "opacity of inactive windows.", 1, {.min = 0, .max = 1, .refresh = Supplementary::REFRESH_WINDOW_STATES}),
+                         MS<Float>("decoration:fullscreen_opacity", "opacity of fullscreen windows.", 1, {.min = 0, .max = 1, .refresh = Supplementary::REFRESH_WINDOW_STATES}),
+                @@ -447,10 +447,10 @@ std::vector<SP<IValue>> Values::getConfigValues() {
+                         MS<Bool>("group:groupbar:render_titles", "whether to render titles in the group bar decoration", true),
+                         MS<Bool>("group:groupbar:scrolling", "whether scrolling in the groupbar changes group active window", true),
+                         MS<Bool>("group:groupbar:middle_click_close", "whether middle clicking the groupbar closes the clicked window", true),
+                -        MS<Int>("group:groupbar:rounding", "how much to round the groupbar", 1, {.min = 0, .max = 20}),
+                -        MS<Float>("group:groupbar:rounding_power", "rounding power of groupbar corners (2 is a circle)", 2, {.min = 2, .max = 10}),
+                -        MS<Int>("group:groupbar:gradient_rounding", "how much to round the groupbar gradient", 2, {.min = 0, .max = 20}),
+                -        MS<Float>("group:groupbar:gradient_rounding_power", "rounding power of groupbar gradient corners (2 is a circle)", 2, {.min = 2, .max = 10}),
+                +        MS<Int>("group:groupbar:rounding", "how much to round the groupbar", 1, {.min = 0, .max = 60}),
+                +        MS<Float>("group:groupbar:rounding_power", "rounding power of groupbar corners (2 is a circle)", 2, {.min = 2, .max = 20}),
+                +        MS<Int>("group:groupbar:gradient_rounding", "how much to round the groupbar gradient", 2, {.min = 0, .max = 60}),
+                +        MS<Float>("group:groupbar:gradient_rounding_power", "rounding power of groupbar gradient corners (2 is a circle)", 2, {.min = 2, .max = 20}),
+                         MS<Bool>("group:groupbar:round_only_edges", "if yes, will only round at the groupbar edges", true),
+                         MS<Bool>("group:groupbar:gradient_round_only_edges", "if yes, will only round at the groupbar gradient edges", true),
+                         MS<Color>("group:groupbar:text_color", "color for window titles in the groupbar", 0xffffffff),
+                diff --git a/src/desktop/rule/windowRule/WindowRule.cpp b/src/desktop/rule/windowRule/WindowRule.cpp
+                index 05353431..d024b924 100644
+                --- a/src/desktop/rule/windowRule/WindowRule.cpp
+                +++ b/src/desktop/rule/windowRule/WindowRule.cpp
+                @@ -321,7 +321,7 @@ static std::expected<WindowRuleEffectValue, std::string> parseWindowRuleEffect(C
+                             auto parsed = parseFloat(EFFECT_NAME, raw);
+                             if (!parsed)
+                                 return std::unexpected(parsed.error());
+                -            return std::clamp(*parsed, 1.F, 10.F);
+                +            return std::clamp(*parsed, 1.F, 20.F);
+                         }
+                         case WINDOW_RULE_EFFECT_SCROLL_MOUSE:
+                         case WINDOW_RULE_EFFECT_SCROLL_TOUCHPAD: {
+                diff --git a/src/desktop/view/Window.cpp b/src/desktop/view/Window.cpp
+                index 072787c2..8a8a179c 100644
+                --- a/src/desktop/view/Window.cpp
+                +++ b/src/desktop/view/Window.cpp
+                @@ -1068,7 +1068,7 @@ float CWindow::rounding() {
+                 float CWindow::roundingPower() {
+                     static auto PROUNDINGPOWER = CConfigValue<Config::FLOAT>("decoration:rounding_power");
+
+                -    return m_ruleApplicator->roundingPower().valueOr(std::clamp(*PROUNDINGPOWER, 1.F, 10.F));
+                +    return m_ruleApplicator->roundingPower().valueOr(std::clamp(*PROUNDINGPOWER, 1.F, 20.F));
+                 }
+
+                 void CWindow::updateWindowData() {
+                --
+                2.54.0
+
+              ''
+            )
+          ];
+        });
         xdg-desktop-portal-hyprland = inputs'.hyprland.packages.xdg-desktop-portal-hyprland.overrideAttrs {
           doCheck = false;
         };
