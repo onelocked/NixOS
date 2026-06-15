@@ -4,9 +4,9 @@
       constants,
       config,
       scheme,
+      pkgs,
       ...
     }:
-    with scheme.withHashtag;
     {
       sops.secrets.email.owner = constants.username;
       sops.templates."git-email" = {
@@ -31,6 +31,11 @@
           core = {
             editor = "$EDITOR";
             pager = "delta";
+            excludesfile = "${pkgs.writeText "gitignore-global" ''
+              .envrc
+              .direnv
+              result*
+            ''}";
           };
           delta = {
             navigate = true;
@@ -58,7 +63,7 @@
       forte.lazygit = {
         enable = true;
         withWorktrunk = true;
-        settings = {
+        settings = with scheme.withHashtag; {
           git = {
             autoFetch = false;
             overrideGpg = true;
