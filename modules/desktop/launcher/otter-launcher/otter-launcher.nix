@@ -343,22 +343,43 @@
             (pkgs.writeText "selection.patch" # rust
               ''
                 diff --git a/src/helper.rs b/src/helper.rs
-                index 991b6bf..248f856 100644
+                index 30132f9..2316d2b 100644
                 --- a/src/helper.rs
                 +++ b/src/helper.rs
-                @@ -463,6 +463,10 @@ impl Hinter for OtterHelper {
+                @@ -471,6 +471,30 @@ impl Hinter for OtterHelper {
                              // make the number of filtered items globally accessible
                              FILTERED_HINT_COUNT.store(filtered_items.len(), Ordering::Relaxed);
 
-                +            if !line.is_empty() && selection_index == 0 && !filtered_items.is_empty() {
-                +                SELECTION_INDEX.store(1, Ordering::Relaxed);
+                +            // handle auto-selection: preselect top result if no space (arg mode) and nothing selected
+                +            let selection_index = SELECTION_INDEX.load(Ordering::Relaxed);
+                +            let default_module = DEFAULT_MODULE.get_or_init(|| String::new());
+                +
+                +            if !line.is_empty() {
+                +                if line.contains(' ') {
+                +                    if selection_index == 1 {
+                +                        SELECTION_INDEX.store(0, Ordering::Relaxed);
+                +                    }
+                +                } else if selection_index == 0 && !filtered_items.is_empty() {
+                +                    if default_module.is_empty()
+                +                        || remove_ascii(filtered_items[0])
+                +                            .split_whitespace()
+                +                            .next()
+                +                            .unwrap_or("")
+                +                            != remove_ascii(default_module)
+                +                    {
+                +                        SELECTION_INDEX.store(1, Ordering::Relaxed);
+                +                    }
+                +                } else if selection_index > filtered_items.len() {
+                +                    SELECTION_INDEX.store(0, Ordering::Relaxed);
+                +                }
                 +            }
                 +
                              // Check if there are enough filtered items after the skip
                              let agg_line = if hint_benchmark + suggestion_lines
                                  > FILTERED_HINT_COUNT.load(Ordering::Relaxed)
                 --
-                2.53.0
+                2.54.0
+
               ''
             )
           ];

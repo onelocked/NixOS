@@ -278,6 +278,7 @@
                 workspace        = "name:web",
                 fullscreen_state = "0 3",
                 opacity          = "1 override",
+                no_initial_focus = true,
               })
               hl.window_rule({
                 name       = "zen-pip",
