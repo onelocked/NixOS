@@ -203,7 +203,13 @@
           hl.bind("mouse:276", hl.dsp.no_op())
           hl.bind("mouse:275", hl.dsp.no_op())
 
-
+          -- zoom
+          local function toggle_zoom()
+            local current = hl.get_config("cursor.zoom_factor")
+            local new_zoom = (current == 1) and 3.5 or 1
+            hl.config({ cursor = { zoom_factor = new_zoom } })
+          end
+          hl.bind("SUPER + Z", toggle_zoom)
 
           --                          ▀█    ▀█     ▀                      █       ▀             █
           -- ▄▀▀▀▀ ▄▀▀▀▄ █▄▀▀▀ ▄▀▀▀▄   █     █    ▀█   █▀▀▀▄ ▄▀▀▀█        █▀▀▀▄  ▀█   █▀▀▀▄ ▄▀▀▀█ ▄▀▀▀▀

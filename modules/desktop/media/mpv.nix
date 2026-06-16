@@ -11,7 +11,7 @@
             osc=no
             video-sync=display-resample
             interpolation=yes
-            volume=50
+            volume=80
             ao=pipewire
             audio-buffer=0.1
             audio-file-auto=fuzzy
