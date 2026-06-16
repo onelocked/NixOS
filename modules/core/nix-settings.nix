@@ -21,7 +21,10 @@
     {
       forte.xdg.desktopEntries."nixos-manual".noDisplay = true;
       system = { inherit stateVersion; };
-      environment.systemPackages = [ pkgs.nix-output-monitor ];
+      environment.systemPackages = [
+        pkgs.nix-output-monitor
+        pkgs.cifs-utils
+      ];
       nix = {
         optimise.automatic = true;
         package = pkgs.nixVersions.latest;
