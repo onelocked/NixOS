@@ -13,6 +13,14 @@
       defaultEditor = true;
       desktopEntry = true;
     };
+    forte.persist = {
+      home.directories = [
+        ".local/share/nvim" # data directory
+        ".local/state/nvim" # persistent session info
+        ".supermaven"
+        ".local/share/supermaven"
+      ];
+    };
   };
   exo.skeleton =
     {

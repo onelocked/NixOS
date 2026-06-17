@@ -30,6 +30,10 @@
       url = "github:BirdeeHub/nix-wrapper-modules";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     flake-compat.url = "github:NixOS/flake-compat";
     flake-utils = {
       url = "github:numtide/flake-utils";
@@ -79,6 +83,7 @@
         flake-utils.follows = "flake-utils";
       };
     };
+    preservation.url = "github:nix-community/preservation";
     quickshell = {
       url = "github:quickshell-mirror/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";

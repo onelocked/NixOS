@@ -118,6 +118,9 @@
           };
         };
       };
+      forte.persist.home.directories = [
+        ".config/zen"
+      ];
     };
 
   exo.skeleton =

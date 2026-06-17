@@ -12,5 +12,6 @@
           };
         };
       };
+      forte.persist.home.directories = [ ".local/share/direnv" ];
     };
 }

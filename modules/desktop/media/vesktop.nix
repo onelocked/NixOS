@@ -327,5 +327,8 @@
             fullscreen_state = "0 3",
           })
         '';
+      forte.persist.home.directories = [
+        ".config/vesktop"
+      ];
     };
 }

@@ -9,6 +9,11 @@
     {
       imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
+      boot = {
+        tmp.useTmpfs = true;
+        tmp.tmpfsSize = "75%";
+      };
+
       boot.initrd.availableKernelModules = [
         "nvme"
         "xhci_pci"

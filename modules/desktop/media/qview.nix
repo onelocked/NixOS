@@ -3,7 +3,7 @@
     { scheme, ... }:
     {
       forte.qview = {
-        enable = true;
+        enable = false;
         settings = {
           General = {
             configversion = "7.1";

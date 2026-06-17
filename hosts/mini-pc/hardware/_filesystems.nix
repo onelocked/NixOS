@@ -1,8 +1,6 @@
 {
   exo.hardware.mini-pc = {
     boot = {
-      tmp.useTmpfs = true;
-      tmp.tmpfsSize = "75%";
       supportedFilesystems = [
         "ntfs"
         "exfat"

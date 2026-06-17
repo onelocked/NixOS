@@ -9,6 +9,9 @@
         autoStart = false;
         openFirewall = true;
       };
+      forte.persist.home.directories = [
+        ".config/sunshine"
+      ];
     };
   ff.sunshine = {
     url = "github:Qubasa/nixpkgs/update_sunshine";
