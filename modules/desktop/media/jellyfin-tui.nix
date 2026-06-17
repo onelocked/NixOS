@@ -11,6 +11,9 @@
     in
     {
       config = lib.mkIf cfg.enable {
+        forte.persist.home.directories = [
+          ".local/share/jellyfin-tui"
+        ];
         forte.xdg.desktopEntries."jellyfin-tui".noDisplay = true;
         hj = {
           packages = [ pkgs.jellyfin-tui ];

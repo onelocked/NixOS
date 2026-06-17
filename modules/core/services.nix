@@ -13,6 +13,11 @@
         dbus.implementation = mkForce "broker";
         flatpak.enable = mkForce false;
       };
-      programs.seahorse.enable = mkForce false;
+      programs.seahorse.enable = true;
+      forte.persist = {
+        home.directories = [
+          ".local/share/keyrings"
+        ];
+      };
     };
 }

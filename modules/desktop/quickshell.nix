@@ -97,6 +97,11 @@
             };
           };
         };
+        forte.persist.home.directories = [
+          ".config/quickshell"
+          ".config/oneshill"
+          ".cache/oneshill"
+        ];
       };
     };
   perSystem =

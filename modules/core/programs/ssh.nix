@@ -1,5 +1,13 @@
 {
   exo.core = {
+    forte.persist = {
+      home = {
+        directories = [
+          ".ssh"
+          ".local/share/.gnupg"
+        ];
+      };
+    };
     hj.files.".ssh/config".text = # bash
       ''
         Host Raspberry

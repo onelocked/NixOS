@@ -47,7 +47,6 @@
               float            = true,
               size             = { ${if theme == "dark" then "780, 1090" else "780, 815"} },
             })
-
           '';
       };
     };

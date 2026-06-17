@@ -80,7 +80,7 @@
                 ./hosts
                 ./.secrets
               ]
-              |> map (dir: fileset.fileFilter (file: file.hasExt "nix" && !hasPrefix "_" file.name) dir)
+              |> map (fileset.fileFilter (file: file.hasExt "nix" && !hasPrefix "_" file.name))
               |> fileset.unions
               |> fileset.toList;
             _module.args.rootPath = ./.;

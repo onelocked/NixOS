@@ -49,6 +49,19 @@
               cfg.package
               pkgs.hyprshutdown
             ];
+            hj.systemd.services.hyprpolkitagent = {
+              description = "Hyprpolkitagent - Polkit authentication agent";
+              wantedBy = [ "graphical-session.target" ];
+              wants = [ "graphical-session.target" ];
+              after = [ "graphical-session.target" ];
+              serviceConfig = {
+                Type = "simple";
+                ExecStart = "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent";
+                Restart = "on-failure";
+                RestartSec = 1;
+                TimeoutStopSec = 10;
+              };
+            };
             environment.sessionVariables = {
               AQ_NO_MODIFIERS = 1;
             };
@@ -139,6 +152,7 @@
             };
           }
           (lib.mkIf cfg.withGreetd {
+            security.pam.services.greetd.enableGnomeKeyring = true;
             services = {
               displayManager.enable = lib.mkForce false;
               greetd = {

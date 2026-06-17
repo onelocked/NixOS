@@ -60,7 +60,7 @@
             fullscreen       = false,
             no_initial_focus = true,
             suppress_event   = "fullscreen maximize activate activatefocus",
-            workspace        = "special:hidden silent",
+            workspace       = "name:media silent",
             decorate         = false,
             opacity          = "1 override",
           })
@@ -74,5 +74,9 @@
           }
         ];
       };
+
+      forte.persist.home.directories = [
+        ".local/share/jellyfin-desktop"
+      ];
     };
 }

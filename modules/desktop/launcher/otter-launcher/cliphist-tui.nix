@@ -68,7 +68,7 @@
           ];
         };
 
-        systemd.user.services = {
+        hj.systemd.services = {
           cliphist-text = {
             description = "Clipboard history service (Text)";
             after = [ "graphical-session.target" ];
@@ -93,7 +93,9 @@
             };
           };
         };
-
+        forte.persist.home.directories = [
+          ".cache/cliphist"
+        ];
       };
     };
   envoy.cliphist-tui.github = "SHORiN-KiWATA/cliphist-tui";

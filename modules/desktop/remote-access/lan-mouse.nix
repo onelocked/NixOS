@@ -20,6 +20,7 @@
         };
       };
     };
+    forte.persist.home.directories = [ ".config/lan-mouse" ];
   };
   exo.skeleton =
     {

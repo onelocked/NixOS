@@ -135,6 +135,13 @@
     in
     {
       config = lib.mkIf cfg.enable {
+        forte.persist = {
+          home.directories = [
+            ".local/share/atuin"
+            ".local/share/fish"
+            ".local/share/zoxide"
+          ];
+        };
         hj.packages = [
           cfg.atuin
           pkgs.zoxide

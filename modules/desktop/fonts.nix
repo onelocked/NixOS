@@ -12,7 +12,7 @@
           ]
           ++ (with self'.legacyPackages; [
             apple-font
-            apple-font-emoji
+            # apple-font-emoji
           ]);
         enableDefaultPackages = true;
         fontDir.enable = true;
