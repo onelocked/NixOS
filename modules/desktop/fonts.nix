@@ -12,7 +12,7 @@
           ]
           ++ (with self'.legacyPackages; [
             apple-font
-            # apple-font-emoji
+            apple-font-emoji
           ]);
         enableDefaultPackages = true;
         fontDir.enable = true;
@@ -43,7 +43,7 @@
       locked = true;
     };
     apple-font-emoji = {
-      url = "https://github.com/samuelngs/apple-emoji-linux/releases/latest/download/AppleColorEmoji-Linux.ttf";
+      url = "https://github.com/samuelngs/apple-emoji-ttf/releases/download/macos-26-20260613-f1fc560b/AppleColorEmoji-Linux.ttf";
       locked = true;
     };
   };
