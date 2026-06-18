@@ -81,7 +81,10 @@
             };
           };
 
+          disableStartupPopups = true;
+
           gui = {
+            showCommandLog = false;
             border = "single";
             authorColors = {
               "*" = base0D;
@@ -167,6 +170,7 @@
           hj.environment.sessionVariables = {
             GIT_PAGER = "diffnav";
           };
+          forte.persist.home.directories = [ ".local/state/lazygit" ];
           programs.fish.functions.lg = # fish
             ''
               set -x LAZYGIT_NEW_DIR_FILE ${config.hj.xdg.config.directory}/lazygit/newdir
