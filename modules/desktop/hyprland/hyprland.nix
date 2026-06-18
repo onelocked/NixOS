@@ -11,6 +11,7 @@
       withUWSM = true;
       withGreetd = true;
       withTermFileChooser = true;
+      withHyprpolkit = true;
     };
   };
 
@@ -49,19 +50,7 @@
               cfg.package
               pkgs.hyprshutdown
             ];
-            hj.systemd.services.hyprpolkitagent = {
-              description = "Hyprpolkitagent - Polkit authentication agent";
-              wantedBy = [ "graphical-session.target" ];
-              wants = [ "graphical-session.target" ];
-              after = [ "graphical-session.target" ];
-              serviceConfig = {
-                Type = "simple";
-                ExecStart = "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent";
-                Restart = "on-failure";
-                RestartSec = 1;
-                TimeoutStopSec = 10;
-              };
-            };
+            forte.persist.home.directories = [ ".config/hypr" ];
             environment.sessionVariables = {
               AQ_NO_MODIFIERS = 1;
             };
@@ -179,6 +168,21 @@
             forte.xdg.desktopEntries."uuctl".noDisplay = true;
             programs.uwsm.enable = true;
           })
+          (lib.mkIf cfg.withHyprpolkit {
+            hj.systemd.services.hyprpolkitagent = {
+              description = "Hyprpolkitagent - Polkit authentication agent";
+              wantedBy = [ "graphical-session.target" ];
+              wants = [ "graphical-session.target" ];
+              after = [ "graphical-session.target" ];
+              serviceConfig = {
+                Type = "simple";
+                ExecStart = "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent";
+                Restart = "on-failure";
+                RestartSec = 1;
+                TimeoutStopSec = 10;
+              };
+            };
+          })
         ];
       options.forte.hyprland = {
         enable = lib.mkEnableOption ''
@@ -271,6 +275,11 @@
         withTermFileChooser = lib.mkEnableOption null // {
           description = ''
             Whether to enable xdg-termfilechooser settings for Hyprland.
+          '';
+        };
+        withHyprpolkit = lib.mkEnableOption null // {
+          description = ''
+            Whether to enable hyprpolkit daemon
           '';
         };
       };
