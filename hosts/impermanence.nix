@@ -1,8 +1,13 @@
-{ lib, inputs, ... }:
+{ inputs, ... }:
 {
   ff.preservation.url = "github:nix-community/preservation";
   exo.core =
-    { config, constants, ... }:
+    {
+      config,
+      constants,
+      lib,
+      ...
+    }:
     let
       cfg = config.forte.persist;
       assertNoHomeDirs =

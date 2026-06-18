@@ -51,9 +51,6 @@
               pkgs.hyprshutdown
             ];
             forte.persist.home.directories = [ ".config/hypr" ];
-            environment.sessionVariables = {
-              AQ_NO_MODIFIERS = 1;
-            };
             forte.hyprland.lua.settings =
               lib.optionalString (cfg.plugins != [ ]) # lua
                 ''
