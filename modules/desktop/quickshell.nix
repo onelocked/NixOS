@@ -97,8 +97,10 @@
             };
           };
         };
+        systemd.tmpfiles.rules = [
+          "L+ ${config.hj.xdg.config.directory}/quickshell - onelock users - ${config.hj.directory}/Development/quickshell/oneshill"
+        ];
         forte.persist.home.directories = [
-          ".config/quickshell"
           ".config/oneshill"
           ".cache/oneshill"
         ];
