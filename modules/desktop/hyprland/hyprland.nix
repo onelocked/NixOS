@@ -136,6 +136,20 @@
               capabilities = "cap_sys_nice+ep";
               source = lib.getExe cfg.package;
             };
+            hj.systemd.services.unlock-keyring = {
+              description = "Unlock GNOME Keyring on startup";
+              wantedBy = [ "graphical-session.target" ];
+              requires = [ "graphical-session.target" ];
+              after = [ "graphical-session.target" ];
+              serviceConfig = {
+                Type = "oneshot";
+                ExecStart = "${pkgs.writeShellScript "unlock-keyring" # bash
+                  ''
+                    ${pkgs.libsecret}/bin/secret-tool lookup app keyring-init || echo 'init' | ${pkgs.libsecret}/bin/secret-tool store --label='keyring-init' app keyring-init
+                  ''
+                }";
+              };
+            };
           }
           (lib.mkIf cfg.withGreetd {
             security.pam.services.greetd.enableGnomeKeyring = true;

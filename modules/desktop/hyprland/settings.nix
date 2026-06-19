@@ -173,11 +173,6 @@
             },
           })
 
-          -- autostart
-          hl.on("hyprland.start", function ()
-            hl.exec_cmd("${pkgs.libsecret}/bin/secret-tool lookup app keyring-init || echo 'init' | secret-tool store --label='keyring-init' app keyring-init")
-          end)
-
 
           -- lib
           function is_file_exists(name)
