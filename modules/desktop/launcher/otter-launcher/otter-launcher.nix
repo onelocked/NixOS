@@ -74,7 +74,7 @@
         };
         modules =
           let
-            inherit (config.forte.lib) resize;
+            inherit (config.forte.otter-launcher) resize;
           in
           [
             {
@@ -147,6 +147,7 @@
           ];
       };
 
+      forte.cliamp.enable = true;
       forte.fsel = {
         enable = true;
         settings = with scheme.withHashtag; {
@@ -186,68 +187,6 @@
           };
         };
       };
-
-      forte.lib.otter-lib.otter-kitty-conf = pkgs.writeText "otter-kitty.conf" ''
-        font_size               15
-        background_opacity ${if theme == "dark" then "1" else "0.7"}
-        allow_remote_control yes
-        ${lib.optionalString (theme == "dark") ''
-          background_image        ${
-            (pkgs.fetchurl {
-              url = "https://raw.githubusercontent.com/onelocked/images/refs/heads/main/fleet-controller.png";
-              hash = "sha256-pI4EzF6S7++rws35Ki3dD/Kt62XfNdmf0fuWyXCccVc=";
-            })
-          }
-          background_image_layout scaled
-          background_image_linear yes
-          window_padding_width    20 105 20 105
-        ''}
-      '';
-
-      forte.hyprland.lua = {
-        keybinds = # lua
-          ''
-            hl.bind("SUPER + Space", function()
-              local win = hl.get_window("class:otter-launcher")
-              if win then
-                hl.dispatch(hl.dsp.window.close({ window = win }))
-              else
-                hl.dispatch(hl.dsp.exec_raw("kitty --app-id=otter-launcher -c ${config.forte.lib.otter-lib.otter-kitty-conf} -e otter-launcher"))
-              end
-            end)
-          '';
-        window-rules = # lua
-          ''
-            hl.window_rule({
-              name         = "otter-launcher",
-              match        = { class = "otter-launcher" },
-              size         = ${if theme == "dark" then "{ 885, 410 }" else "{ 620, 385 }"},
-              center       = true,
-              float        = true,
-              stay_focused = true,
-              pin          = true,
-              opacity          = "1 override",
-              nearest_neighbor = true,
-              ${lib.optionalString (theme == "dark") ''
-                rounding = 52,
-                rounding_power   = 1.28,
-                border_size      = 0,
-                no_shadow        = true,
-              ''}
-            })
-
-            hl.window_rule({
-              name         = "hyprpicker",
-              match        = { class = "color-picker" },
-              size         = { 670, 300 },
-              center       = true,
-              float        = true,
-              stay_focused = true,
-              pin          = true,
-              opacity          = "1 override",
-            })
-          '';
-      };
     };
 
   envoy.otter-launcher.github = "kuokuo123/otter-launcher";
@@ -264,8 +203,60 @@
       cfg = config.forte.otter-launcher;
       fsel = config.forte.fsel;
       toml = pkgs.formats.toml { };
+      theme = config.forte.theme.variant;
     in
     {
+      config = lib.mkIf (cfg.enable) {
+        hj.packages = [
+          cfg.package
+          pkgs.app2unit
+        ];
+        forte.hyprland.lua = {
+          keybinds = # lua
+            ''
+              hl.bind("SUPER + Space", function()
+                local win = hl.get_window("class:otter-launcher")
+                if win then
+                  hl.dispatch(hl.dsp.window.close({ window = win }))
+                else
+                  hl.dispatch(hl.dsp.exec_raw("kitty --app-id=otter-launcher -c ${cfg.otter-kitty-conf} -e otter-launcher"))
+                end
+              end)
+            '';
+          window-rules = # lua
+            ''
+              hl.window_rule({
+                name         = "otter-launcher",
+                match        = { class = "otter-launcher" },
+                size         = ${if theme == "dark" then "{ 885, 410 }" else "{ 620, 385 }"},
+                center       = true,
+                float        = true,
+                stay_focused = true,
+                pin          = true,
+                opacity          = "1 override",
+                nearest_neighbor = true,
+                ${lib.optionalString (theme == "dark") ''
+                  rounding = 52,
+                  rounding_power   = 1.28,
+                  border_size      = 0,
+                  no_shadow        = true,
+                ''}
+              })
+
+              hl.window_rule({
+                name         = "hyprpicker",
+                match        = { class = "color-picker" },
+                size         = { 670, 300 },
+                center       = true,
+                float        = true,
+                stay_focused = true,
+                pin          = true,
+                opacity          = "1 override",
+              })
+            '';
+        };
+      };
+
       options.forte.otter-launcher = {
         enable = lib.mkEnableOption "otter-launcher";
 
@@ -278,6 +269,41 @@
         modules = lib.mkOption {
           type = lib.types.listOf (lib.types.attrsOf lib.types.anything);
           default = [ ];
+        };
+
+        resize = lib.mkOption {
+          type = lib.types.anything;
+          default =
+            width: height: app: # bash
+            ''
+              hyprctl --batch "dispatch hl.dsp.window.resize({ x = ${toString width}, y = ${toString height} }); dispatch hl.dsp.window.center(); dispatch hl.dsp.window.set_prop({ prop = 'rounding', value = 0 }); dispatch hl.dsp.window.set_prop({ prop = 'no_shadow', value = false }); dispatch hl.dsp.window.set_prop({ prop = 'border_size', value = 9 })" \
+              && kitten @ set-background-image none \
+              && kitten @ set-spacing padding=0 \
+              && kitten @ set-font-size ${toString config.forte.kitty.fontConfig.font_size} \
+              && ${app}
+            '';
+        };
+
+        otter-kitty-conf = lib.mkOption {
+          type = lib.types.package;
+          default =
+            pkgs.writeText "otter-kitty.conf" # bash
+              ''
+                font_size               15
+                background_opacity ${if theme == "dark" then "1" else "0.7"}
+                allow_remote_control yes
+                ${lib.optionalString (theme == "dark") ''
+                  background_image        ${
+                    (pkgs.fetchurl {
+                      url = "https://raw.githubusercontent.com/onelocked/images/refs/heads/main/fleet-controller.png";
+                      hash = "sha256-pI4EzF6S7++rws35Ki3dD/Kt62XfNdmf0fuWyXCccVc=";
+                    })
+                  }
+                  background_image_layout scaled
+                  background_image_linear yes
+                  window_padding_width    20 105 20 105
+                ''}
+              '';
         };
 
         moreCfg = lib.mkOption {
@@ -313,21 +339,6 @@
             }
           );
         };
-      };
-      config = lib.mkIf (cfg.enable) {
-        hj.packages = [
-          cfg.package
-          pkgs.app2unit
-        ];
-        forte.lib.resize =
-          width: height: app: # bash
-          ''
-            hyprctl --batch "dispatch hl.dsp.window.resize({ x = ${toString width}, y = ${toString height} }); dispatch hl.dsp.window.center(); dispatch hl.dsp.window.set_prop({ prop = 'rounding', value = 0 }); dispatch hl.dsp.window.set_prop({ prop = 'no_shadow', value = false }); dispatch hl.dsp.window.set_prop({ prop = 'border_size', value = 9 })" \
-            && kitten @ set-background-image none \
-            && kitten @ set-spacing padding=0 \
-            && kitten @ set-font-size ${toString config.forte.kitty.fontConfig.font_size} \
-            && ${app}
-          '';
       };
     };
 

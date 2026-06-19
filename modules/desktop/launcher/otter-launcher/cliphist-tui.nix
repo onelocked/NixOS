@@ -12,9 +12,85 @@
       cfg = config.forte.cliphist-tui;
     in
     {
+      config =
+        lib.mkIf (cfg.enable)
+        <| lib.mkMerge [
+          {
+            hj.packages = [ cfg.package ];
+            forte.hyprland.lua = {
+              window-rules = # lua
+                ''
+                  hl.window_rule({
+                    name         = "cliphist-tui",
+                    match        = { class = "ClipboardHistory" },
+                    size         = { 830, 1056 },
+                    center       = true,
+                    float        = true,
+                    stay_focused = true,
+                    pin          = true,
+                    opacity      = "1 override",
+                  })
+                '';
+              keybinds = # lua
+                ''
+                  hl.bind("SUPER + V", function()
+                      local win = hl.get_window("class:ClipboardHistory")
+                      if win then
+                          hl.dispatch(hl.dsp.window.close({ window = win }))
+                      else
+                          hl.dispatch(hl.dsp.exec_raw("kitty -1 --app-id=ClipboardHistory -e cliphist-tui"))
+                      end
+                  end)
+                '';
+            };
+            forte.persist.home.directories = [ ".cache/cliphist" ];
+          }
+          (lib.mkIf cfg.systemd.startup {
+            hj.systemd.services = {
+              cliphist-text = {
+                description = "Clipboard history service (Text)";
+                after = [ "graphical-session.target" ];
+                partOf = [ "graphical-session.target" ];
+                wantedBy = [ "graphical-session.target" ];
+
+                serviceConfig = {
+                  ExecStart = "${pkgs.wl-clipboard}/bin/wl-paste --type text --watch ${self'.packages.cliphist}/bin/cliphist store";
+                  Restart = "on-failure";
+                };
+              };
+
+              cliphist-image = {
+                description = "Clipboard history service (Images)";
+                after = [ "graphical-session.target" ];
+                partOf = [ "graphical-session.target" ];
+                wantedBy = [ "graphical-session.target" ];
+
+                serviceConfig = {
+                  ExecStart = "${pkgs.wl-clipboard}/bin/wl-paste --type image --watch ${self'.packages.cliphist}/bin/cliphist store";
+                  Restart = "on-failure";
+                };
+              };
+            };
+          })
+          (lib.mkIf config.forte.otter-launcher.enable {
+            forte.otter-launcher = {
+              modules =
+                let
+                  inherit (config.forte.otter-launcher) resize;
+                in
+                [
+                  {
+                    description = "cliphist";
+                    "prefix" = "cc";
+                    cmd = resize 750 900 "cliphist-tui";
+                  }
+                ];
+            };
+          })
+        ];
       options.forte.cliphist-tui = {
         enable = lib.mkEnableOption "cliphist-tui" // {
-          default = config.forte.otter-launcher.enable;
+          default = true;
         };
         package = lib.mkOption {
           default = birdee.lib.wrapPackage {
@@ -26,76 +102,10 @@
               pkgs.ffmpegthumbnailer
             ];
           };
-
         };
-      };
-      config = lib.mkIf (cfg.enable) {
-        hj.packages = [ cfg.package ];
-        forte.hyprland.lua = {
-          window-rules = # lua
-            ''
-              hl.window_rule({
-                name         = "cliphist-tui",
-                match        = { class = "ClipboardHistory" },
-                size         = { 830, 1056 },
-                center       = true,
-                float        = true,
-                stay_focused = true,
-                pin          = true,
-                opacity      = "1 override",
-              })
-            '';
-          keybinds = # lua
-            ''
-              hl.bind("SUPER + V", function()
-                  local win = hl.get_window("class:ClipboardHistory")
-                  if win then
-                      hl.dispatch(hl.dsp.window.close({ window = win }))
-                  else
-                      hl.dispatch(hl.dsp.exec_raw("kitty -1 --app-id=ClipboardHistory -e cliphist-tui"))
-                  end
-              end)
-            '';
+        systemd.startup = lib.mkEnableOption null // {
+          default = true;
         };
-
-        forte.otter-launcher = {
-          modules = [
-            {
-              description = "cliphist";
-              "prefix" = "cc";
-              cmd = config.forte.lib.resize 750 900 "cliphist-tui";
-            }
-          ];
-        };
-
-        hj.systemd.services = {
-          cliphist-text = {
-            description = "Clipboard history service (Text)";
-            after = [ "graphical-session.target" ];
-            partOf = [ "graphical-session.target" ];
-            wantedBy = [ "graphical-session.target" ];
-
-            serviceConfig = {
-              ExecStart = "${pkgs.wl-clipboard}/bin/wl-paste --type text --watch ${self'.packages.cliphist}/bin/cliphist store";
-              Restart = "on-failure";
-            };
-          };
-
-          cliphist-image = {
-            description = "Clipboard history service (Images)";
-            after = [ "graphical-session.target" ];
-            partOf = [ "graphical-session.target" ];
-            wantedBy = [ "graphical-session.target" ];
-
-            serviceConfig = {
-              ExecStart = "${pkgs.wl-clipboard}/bin/wl-paste --type image --watch ${self'.packages.cliphist}/bin/cliphist store";
-              Restart = "on-failure";
-            };
-          };
-        };
-        forte.persist.home.directories = [
-          ".cache/cliphist"
-        ];
       };
     };
   envoy.cliphist-tui.github = "SHORiN-KiWATA/cliphist-tui";

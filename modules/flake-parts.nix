@@ -12,24 +12,6 @@
 
   disabledModules = [ (inputs.flake-file + "/modules/flake-parts.nix") ];
 
-  options.exo = {
-    mods = lib.mkOption {
-      type = lib.types.lazyAttrsOf lib.types.deferredModule;
-    };
-    core = lib.mkOption {
-      type = lib.types.deferredModule;
-    };
-    skeleton = lib.mkOption {
-      type = lib.types.deferredModule;
-    };
-    hardware = lib.mkOption {
-      type = lib.types.lazyAttrsOf lib.types.deferredModule;
-    };
-    pilot = lib.mkOption {
-      type = lib.types.lazyAttrsOf lib.types.deferredModule;
-    };
-  };
-
   config = {
     perSystem =
       { pkgs, ... }:
@@ -41,16 +23,10 @@
       in
       {
         apps = config.flake-file.apps |> lib.mapAttrs (_: mkApp);
-        _module.args = { inherit (inputs) birdee; };
         formatter = pkgs.nixfmt-rs;
+        _module.args = { inherit (inputs) birdee; };
       };
-    exo.core = {
-      config._module.args = { inherit (inputs) birdee; };
-      options.forte.lib = lib.mkOption {
-        type = lib.types.attrsOf lib.types.unspecified;
-        default = { };
-      };
-    };
+    exo.core.config._module.args = { inherit (inputs) birdee; };
 
     systems = import inputs.systems;
 
@@ -97,5 +73,21 @@
       };
     };
   };
-
+  options.exo = {
+    mods = lib.mkOption {
+      type = lib.types.lazyAttrsOf lib.types.deferredModule;
+    };
+    core = lib.mkOption {
+      type = lib.types.deferredModule;
+    };
+    skeleton = lib.mkOption {
+      type = lib.types.deferredModule;
+    };
+    hardware = lib.mkOption {
+      type = lib.types.lazyAttrsOf lib.types.deferredModule;
+    };
+    pilot = lib.mkOption {
+      type = lib.types.lazyAttrsOf lib.types.deferredModule;
+    };
+  };
 }

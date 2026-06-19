@@ -45,8 +45,6 @@
             workspace = "name:media silent",
           })
         '';
-      forte.persist.home.directories = [
-        ".config/spotify"
-      ];
+      forte.persist.home.directories = [ ".config/spotify" ];
     };
 }

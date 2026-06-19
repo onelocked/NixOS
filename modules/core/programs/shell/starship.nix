@@ -48,21 +48,21 @@
             symbol = "[󰡨 ](bold sky)";
           };
           palettes.mocha = with scheme.withHashtag; {
-            color_fg0 = base05; # Primary text (Default foreground)
-            color_bg1 = base01; # Lifted surface (Lighter background)
-            color_bg3 = base03; # Overlay/comments (Comments, invisibles)
-            color_blue = base0D; # Blue/Indigo
-            color_aqua = base0C; # Cyan
-            color_green = base0B; # Green
-            color_dark_green = base14; # Bright green (Success indicator)
-            color_teal = base15; # Bright cyan
-            color_teal1 = base16; # Bright blue (Branch text visibility)
-            color_orange = base09; # Orange
-            color_purple = base0E; # Mauve
-            color_red = base08; # Red
-            color_red1 = base12; # Bright red (Error messages)
-            color_yellow = base0A; # Yellow
-            color_pink = base17; # Bright magenta (Error symbol hue)
+            color_fg0 = base05;
+            color_bg1 = base01;
+            color_bg3 = base03;
+            color_blue = base0D;
+            color_aqua = base0C;
+            color_green = base0B;
+            color_dark_green = base14;
+            color_teal = base15;
+            color_teal1 = base16;
+            color_orange = base09;
+            color_purple = base0E;
+            color_red = base08;
+            color_red1 = base12;
+            color_yellow = base0A;
+            color_pink = base17;
           };
         };
       };

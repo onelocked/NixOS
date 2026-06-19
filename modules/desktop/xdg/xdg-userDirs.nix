@@ -12,7 +12,6 @@
       pkgs,
       ...
     }:
-
     let
       inherit (lib) literalExpression mkOption types;
       cfg = config.forte.xdg.userDirs;
