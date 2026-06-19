@@ -8,6 +8,7 @@
       extraConfig = {
         forte.lan-mouse.enable = true;
         forte.rtp-audio.enable = true;
+        forte.moonlight-qt.enable = true;
         services.sunshine.enable = true;
       };
     };

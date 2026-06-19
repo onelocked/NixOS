@@ -3,7 +3,6 @@
     { pkgs, birdee, ... }:
     {
       hj.packages = with pkgs; [
-        moonlight-qt
         ayugram-desktop
         (birdee.lib.wrapPackage {
           inherit pkgs;
@@ -41,42 +40,8 @@
             opacity          = "1 override",
           })
 
-
-          hl.window_rule({
-            name            = "Moonlight",
-            match           = { class = "com.moonlight_stream.Moonlight", title = "onelock - Moonlight" },
-            fullscreen      = false,
-            scrolling_width = 0.95,
-            content         = "game",
-            workspace       = "name:media silent",
-            immediate       = true,
-            no_shadow       = false,
-            opacity         = "1 override",
-            no_auto_hdr     = true,
-          })
-          hl.window_rule({
-            name             = "Moonlight-window",
-            match            = { class = "com.moonlight_stream.Moonlight", title = "negative:onelock - Moonlight" },
-            fullscreen       = false,
-            no_initial_focus = true,
-            suppress_event   = "fullscreen maximize activate activatefocus",
-            workspace       = "name:media silent",
-            decorate         = false,
-            opacity          = "1 override",
-          })
         '';
-      forte.otter-launcher = {
-        modules = [
-          {
-            description = "pc";
-            "prefix" = "game";
-            cmd = "app2unit -- moonlight stream onelock desktop; exit";
-          }
-        ];
-      };
 
-      forte.persist.home.directories = [
-        ".local/share/jellyfin-desktop"
-      ];
+      forte.persist.home.directories = [ ".local/share/jellyfin-desktop" ];
     };
 }
