@@ -63,7 +63,6 @@
           }
           |> (eval: { inherit eval; } // eval.config.processedFlake)
         '';
-      description = "nixos flake-parts configuration";
       style = {
         sortPriority.inputs = [
           "nixpkgs"

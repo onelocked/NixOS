@@ -1,6 +1,4 @@
 {
-  description = "nixos flake-parts configuration";
-
   outputs =
     inputs:
     inputs.flake-parts.lib.evalFlakeModule { inherit inputs; } {
