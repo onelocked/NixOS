@@ -71,7 +71,6 @@
                   "/var/lib/nixos" # for persisting user uids and gids
                   "/var/log" # logs
                   "/var/lib/systemd"
-                  # "/var/lib/bluetooth" # maybe if I ever use bluetooth
                 ]
                 ++ cfg.root.directories
               );
