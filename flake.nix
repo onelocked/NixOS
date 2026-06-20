@@ -81,6 +81,10 @@
         flake-utils.follows = "flake-utils";
       };
     };
+    oneshill = {
+      url = "git+ssh://git@gitea.onelock.org/onelock/oneshill.git?ref=retroid";
+      flake = false;
+    };
     preservation.url = "github:nix-community/preservation";
     quickshell = {
       url = "github:quickshell-mirror/quickshell";

@@ -768,6 +768,23 @@
         "type": "github"
       }
     },
+    "oneshill": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1781991184,
+        "narHash": "sha256-cUlrJhbeaqRxPigAdUBrm+YiiRBnS0jeqdRP5K6D9NY=",
+        "ref": "retroid",
+        "rev": "ad22e34f1c95ff3cdc05c1ae624120893d5b9f27",
+        "revCount": 595,
+        "type": "git",
+        "url": "ssh://git@gitea.onelock.org/onelock/oneshill.git"
+      },
+      "original": {
+        "ref": "retroid",
+        "type": "git",
+        "url": "ssh://git@gitea.onelock.org/onelock/oneshill.git"
+      }
+    },
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": "flake-compat_2",
@@ -843,6 +860,7 @@
         "nixos-core": "nixos-core",
         "nixpkgs": "nixpkgs_2",
         "nvfetcher": "nvfetcher",
+        "oneshill": "oneshill",
         "preservation": "preservation",
         "quickshell": "quickshell",
         "rust-overlay": "rust-overlay",

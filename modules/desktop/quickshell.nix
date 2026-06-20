@@ -1,8 +1,13 @@
+{ inputs, ... }:
 {
   ff = {
     quickshell = {
       url = "github:quickshell-mirror/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    oneshill = {
+      url = "git+ssh://git@gitea.onelock.org/onelock/oneshill.git?ref=retroid";
+      flake = false;
     };
   };
   exo.mods.desktop = {
@@ -35,32 +40,12 @@
       qtPluginPath = lib.makeSearchPath pkgs.kdePackages.qtbase.qtPluginPrefix runtimePkgs; # lib/qt-6/plugins
     in
     {
-      options = {
-        forte.quickshell = {
-          enable = lib.mkEnableOption "quickshell";
-          package = lib.mkOption {
-            type = lib.types.package;
-            default = birdee.lib.wrapPackage {
-              inherit pkgs;
-              inherit runtimePkgs;
-              package = self'.packages.quickshell;
-              aliases = [ "qs" ];
-              env = {
-                QT_QPA_PLATFORMTHEME = "gtk3";
-                QS_ICON_THEME = config.forte.gtk.icons.name;
-                QS_DROP_EXPENSIVE_FONTS = "1";
-                QML_IMPORT_PATH = qmlImportPath;
-                QML2_IMPORT_PATH = qmlImportPath;
-                QT_PLUGIN_PATH = qtPluginPath;
-                FONTCONFIG_FILE = pkgs.makeFontsConf { fontDirectories = [ pkgs.lucide ]; };
-              };
-            };
-          };
-        };
-      };
       config = lib.mkIf (cfg.enable) {
         hj = {
-          packages = [ cfg.package ];
+          packages = [
+            cfg.package
+            cfg.oneshill
+          ];
           systemd.services.quickshell = {
             description = "quickshell";
             after = [ "graphical-session.target" ];
@@ -76,7 +61,7 @@
             serviceConfig = {
               Type = "dbus";
               BusName = "org.kde.StatusNotifierWatcher";
-              ExecStart = "${cfg.package}/bin/qs --no-duplicate";
+              ExecStart = "${cfg.oneshill}/bin/oneshill";
               Restart = "on-failure";
 
               MemoryHigh = "512M";
@@ -104,6 +89,42 @@
           ".config/oneshill"
           ".cache/oneshill"
         ];
+      };
+      options = {
+        forte.quickshell = {
+          enable = lib.mkEnableOption "quickshell";
+          package = lib.mkOption {
+            type = lib.types.package;
+            default = birdee.lib.wrapPackage {
+              inherit pkgs;
+              inherit runtimePkgs;
+              package = self'.packages.quickshell;
+              aliases = [ "qs" ];
+              env = {
+                QT_QPA_PLATFORMTHEME = "gtk3";
+                QS_ICON_THEME = config.forte.gtk.icons.name;
+                QS_DROP_EXPENSIVE_FONTS = "1";
+                QML_IMPORT_PATH = qmlImportPath;
+                QML2_IMPORT_PATH = qmlImportPath;
+                QT_PLUGIN_PATH = qtPluginPath;
+                FONTCONFIG_FILE = pkgs.makeFontsConf { fontDirectories = [ pkgs.lucide ]; };
+              };
+            };
+          };
+          oneshill = lib.mkOption {
+            type = lib.types.package;
+            default = pkgs.symlinkJoin {
+              name = "oneshill";
+              meta.mainProgram = "oneshill";
+              paths = [ cfg.package ];
+              nativeBuildInputs = [ pkgs.makeWrapper ];
+              postBuild = ''
+                makeWrapper ${pkgs.lib.getExe cfg.package} $out/bin/oneshill \
+                  --add-flags '-p ${inputs.oneshill}'
+              '';
+            };
+          };
+        };
       };
     };
   perSystem =
