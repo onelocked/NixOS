@@ -77,10 +77,6 @@
 
               "mousebutton.4th.enabled" = false;
               "mousebutton.5th.enabled" = false;
-              "zen.welcome-screen.seen" = true;
-              "zen.view.experimental-no-window-controls" = true;
-              "zen.view.compact.hide-toolbar" = false;
-              "zen.view.compact.hide-tabbar" = true;
               "middlemouse.paste" = false;
             };
             ExtensionSettings =
@@ -108,6 +104,14 @@
           };
         profiles.default = {
           isDefault = true;
+          settings = {
+            "zen.workspaces.continue-where-left-off" = true;
+            "zen.urlbar.behavior" = "float";
+            "zen.welcome-screen.seen" = true;
+            "zen.view.experimental-no-window-controls" = true;
+            "zen.view.compact.hide-toolbar" = false;
+            "zen.view.compact.hide-tabbar" = true;
+          };
           mods = {
             "Load Bar" = "ae7868dc-1fa1-469e-8b89-a5edf7ab1f24";
             "No Top Sites" = "e122b5d9-d385-4bf8-9971-e137809097d0";
@@ -118,9 +122,7 @@
           };
         };
       };
-      forte.persist.home.directories = [
-        ".config/zen"
-      ];
+      forte.persist.home.directories = [ ".config/zen" ];
     };
 
   exo.skeleton =
