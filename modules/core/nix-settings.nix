@@ -13,6 +13,7 @@
       pkgs,
       lib,
       constants,
+      config,
       ...
     }:
     let
@@ -26,6 +27,7 @@
         pkgs.cifs-utils
       ];
       nix = {
+        channel.enable = false; # required for nix-shell -p to work, set it to true if needed
         optimise.automatic = true;
         package = pkgs.nixVersions.latest;
         settings = {
@@ -53,7 +55,11 @@
           keep-outputs = true;
           keep-derivations = true;
         };
+        extraOptions = ''
+          !include ${config.sops.secrets.nix_extra_config.path}
+        '';
       };
+      sops.secrets.nix_extra_config.owner = username;
       programs.nano.enable = lib.mkForce false;
       nixpkgs = {
         hostPlatform = lib.mkDefault "x86_64-linux";
