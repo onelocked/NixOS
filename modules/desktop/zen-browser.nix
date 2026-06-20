@@ -288,7 +288,11 @@
               hl.window_rule({
                 name       = "zen-pip",
                 match      = { class = "zen-twilight", title = "Picture-in-Picture" },
-                fullscreen = true,
+                fullscreen = false,
+                float      = true,
+                size       = { 900, 506 },
+                move       = { 28, 906 },
+                pin        = true,
                 workspace  = "name:web",
               })
               hl.window_rule({
