@@ -214,41 +214,6 @@
           for index, name in ipairs({ "web", "dev", "chat", "media" }) do
             hl.workspace_rule({ workspace = tostring(index), default_name = name, persistent = true })
           end
-
-          -- somewhat of an overview
-          local original_gaps = { top = 60, bottom = 30, left = 30, right = 30 }
-          local original_fit_method = nil
-
-          hl.define_submap("hyprview", function()
-            hl.bind("SUPER + left", hl.dsp.focus({ direction = "left" }))
-            hl.bind("SUPER + right", hl.dsp.focus({ direction = "right" }))
-            hl.bind("SUPER + up", hl.dsp.focus({ direction = "up" }))
-            hl.bind("SUPER + down", hl.dsp.focus({ direction = "down" }))
-
-            hl.bind("SUPER + up", hl.dsp.focus({ workspace = "e-1" }))
-            hl.bind("SUPER + down", hl.dsp.focus({ workspace = "e+1" }))
-
-            hl.bind("SUPER + G", function()
-              hl.dispatch(hl.dsp.exec_raw("qs ipc call overview toggle"))
-              hl.config({
-                general   = { gaps_out = original_gaps },
-                scrolling = { focus_fit_method = original_fit_method },
-              })
-              hl.dispatch(hl.dsp.submap("reset"))
-            end, { repeating = false })
-          end)
-
-          hl.bind("SUPER + G", function()
-            -- Save current value before overriding
-            original_fit_method = hl.get_config("scrolling.focus_fit_method")
-
-            hl.dispatch(hl.dsp.exec_raw("qs ipc call overview toggle"))
-            hl.config({
-              general   = { gaps_out = { top = 180, bottom = 180, left = 260, right = 260 } },
-              scrolling = { focus_fit_method = 0 },
-            })
-            hl.dispatch(hl.dsp.submap("hyprview"))
-          end, { repeating = false })
         '';
     };
 }

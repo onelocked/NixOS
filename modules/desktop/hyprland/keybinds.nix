@@ -189,16 +189,6 @@
           hl.bind("SUPER + mouse:272", hl.dsp.window.drag(), { mouse = true })
           hl.bind("SUPER + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
-          -- quickshell keybinds
-          hl.bind("ALT + SHIFT + equal", hl.dsp.exec_raw("qs ipc call brightness increase"),
-            { locked = true, repeating = false })
-
-          hl.bind("ALT + SHIFT + minus", hl.dsp.exec_raw("qs ipc call brightness decrease"),
-            { locked = true, repeating = false })
-
-          hl.bind("ALT + SHIFT + W", hl.dsp.exec_raw("qs ipc call WallpaperPanel toggle"),
-            { locked = true, repeating = false })
-
           -- disable side mouse buttons
           hl.bind("mouse:276", hl.dsp.no_op())
           hl.bind("mouse:275", hl.dsp.no_op())
