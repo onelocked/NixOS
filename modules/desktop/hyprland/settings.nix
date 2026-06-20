@@ -1,6 +1,6 @@
 {
   exo.mods.desktop =
-    { pkgs, config, ... }:
+    { config, ... }:
     let
       theme = config.forte.theme.variant;
     in
@@ -173,6 +173,25 @@
             },
           })
 
+          -- scroll behave like dwindle for first 4 windows
+          hl.on("window.open", function(w)
+            local ws = w.workspace
+            if not ws then return end
+            if ws.name ~= "dev" then return end
+            if ws.tiled_layout ~= "scrolling" then return end
+
+            local count = ws.windows
+            if count >= 2 and count <= 3 then
+              hl.dispatch(hl.dsp.layout("fit all"))
+            elseif count == 4 then
+              hl.dispatch(hl.dsp.layout("inhibit_scroll 1"))
+              hl.dispatch(hl.dsp.layout("focus l"))
+              hl.dispatch(hl.dsp.layout("consume"))
+              hl.dispatch(hl.dsp.layout("focus d"))
+              hl.dispatch(hl.dsp.layout("inhibit_scroll 0"))
+              hl.dispatch(hl.dsp.layout("fit all"))
+            end
+          end)
 
           -- lib
           function is_file_exists(name)
@@ -195,10 +214,6 @@
           for index, name in ipairs({ "web", "dev", "chat", "media" }) do
             hl.workspace_rule({ workspace = tostring(index), default_name = name, persistent = true })
           end
-
-          -- dev workspace starts in dwindle layout
-          hl.workspace_rule({ workspace = "name:dev", layout = "dwindle" })
-
 
           -- somewhat of an overview
           local original_gaps = { top = 60, bottom = 30, left = 30, right = 30 }

@@ -110,7 +110,7 @@
             bold_font = ''family="Montserrat" style="Black"'';
             italic_font = ''family="Maple Mono NF" style="Bold Italic"'';
             bold_italic_font = ''family="Maple Mono NF" style="ExtraBold Italic"'';
-            font_size = "12";
+            font_size = "10";
             disable_ligatures = "never";
             "font_features MapleMono-NF-Bold" = mapleFeatures;
             "font_features MapleMono-NF-ExtraBold" = mapleFeatures;

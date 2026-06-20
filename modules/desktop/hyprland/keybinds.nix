@@ -7,7 +7,7 @@
           -- scrolling dynamic column width based on workspace
           local workspace_widths = {
             ["web"] = { 0.711, 0.93 },
-            ["dev"] = { 0.5, 0.7 },
+            ["dev"] = { 0.3333, 0.5, 0.71 },
           }
           local default_widths = { 0.3, 0.5, 0.71 }
           local cycle_idx = 0
@@ -234,7 +234,16 @@
           scrolling_binds("SUPER + CTRL + right", hl.dsp.layout("swapcol r"))
           scrolling_binds("SUPER + bracketright", hl.dsp.layout("consume_or_expel next"))
           scrolling_binds("SUPER + bracketleft", hl.dsp.layout("consume_or_expel prev"))
-          scrolling_binds("SUPER + F", hl.dsp.layout("fit active"))
+          hl.bind("SUPER + F", function()
+            local ws = hl.get_active_workspace()
+            if not ws or ws.tiled_layout ~= "scrolling" then return end
+
+            if ws.name == "dev" then
+              hl.dispatch(hl.dsp.layout("fit all"))
+            else
+              hl.dispatch(hl.dsp.layout("fit active"))
+            end
+          end)
 
           scrolling_binds("SUPER" .. " + R", function()
             -- Find out what workspace we are currently on
