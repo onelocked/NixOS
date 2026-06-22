@@ -82,7 +82,7 @@
       };
     };
     oneshill = {
-      url = "git+ssh://git@gitea.onelock.org/onelock/oneshill.git?ref=retroid";
+      url = "git+https://gitea.onelock.org/onelock/oneshill.git?ref=retroid";
       flake = false;
     };
     preservation.url = "github:nix-community/preservation";

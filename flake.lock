@@ -777,12 +777,12 @@
         "rev": "ad22e34f1c95ff3cdc05c1ae624120893d5b9f27",
         "revCount": 595,
         "type": "git",
-        "url": "ssh://git@gitea.onelock.org/onelock/oneshill.git"
+        "url": "https://gitea.onelock.org/onelock/oneshill.git"
       },
       "original": {
         "ref": "retroid",
         "type": "git",
-        "url": "ssh://git@gitea.onelock.org/onelock/oneshill.git"
+        "url": "https://gitea.onelock.org/onelock/oneshill.git"
       }
     },
     "pre-commit-hooks": {

@@ -6,7 +6,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     oneshill = {
-      url = "git+ssh://git@gitea.onelock.org/onelock/oneshill.git?ref=retroid";
+      url = "git+https://gitea.onelock.org/onelock/oneshill.git?ref=retroid";
       flake = false;
     };
   };
@@ -20,6 +20,7 @@
       birdee,
       self',
       config,
+      constants,
       ...
     }:
     let
@@ -134,10 +135,20 @@
         systemd.tmpfiles.rules = [
           "L+ ${config.hj.xdg.config.directory}/quickshell - onelock users - ${config.hj.directory}/Development/quickshell/oneshill"
         ];
-        forte.persist.home.directories = [
-          ".config/oneshill"
-          ".cache/oneshill"
-        ];
+        systemd.tmpfiles.settings.preservation = {
+          "${config.hj.directory}/.netrc".z = lib.mkForce {
+            user = constants.username;
+            group = "users";
+            mode = "0600";
+          };
+        };
+        forte.persist.home = {
+          files = [ ".netrc" ];
+          directories = [
+            ".config/oneshill"
+            ".cache/oneshill"
+          ];
+        };
       };
       options = {
         forte.quickshell = {
