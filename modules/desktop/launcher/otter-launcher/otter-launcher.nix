@@ -202,7 +202,7 @@
     let
       cfg = config.forte.otter-launcher;
       fsel = config.forte.fsel;
-      toml = pkgs.formats.toml { };
+      tomlFormat = pkgs.formats.toml { };
       theme = config.forte.theme.variant;
     in
     {
@@ -261,7 +261,7 @@
         enable = lib.mkEnableOption "otter-launcher";
 
         settings = lib.mkOption {
-          inherit (toml) type;
+          inherit (tomlFormat) type;
           default = { };
           description = "Options to go into otter-launcher's toml config";
         };
@@ -327,7 +327,7 @@
                 relPath = "config.toml";
                 builder = ''
                   mkdir -p "$(dirname "$2")"
-                  cat ${toml.generate "config.toml" (cfg.settings // { inherit (cfg) modules; })} > "$2"
+                  cat ${tomlFormat.generate "config.toml" (cfg.settings // { inherit (cfg) modules; })} > "$2"
                   printf '%s\n' "${cfg.moreCfg}" >> "$2"
                 '';
               };

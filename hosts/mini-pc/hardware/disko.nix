@@ -7,9 +7,7 @@
     };
   };
   exo.hardware.mini-pc = {
-    imports = [
-      inputs.disko.nixosModules.disko
-    ];
+    imports = [ inputs.disko.nixosModules.disko ];
 
     fileSystems."/nix".neededForBoot = true;
     fileSystems."/persist".neededForBoot = true;

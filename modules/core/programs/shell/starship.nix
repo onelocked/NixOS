@@ -77,13 +77,13 @@
     }:
     let
       cfg = config.forte.starship;
-      toml = pkgs.formats.toml { };
+      tomlFormat = pkgs.formats.toml { };
     in
     {
       options.forte.starship = {
         enable = lib.mkEnableOption "starship";
         settings = lib.mkOption {
-          inherit (toml) type;
+          inherit (tomlFormat) type;
           default = { };
           description = "Options to go into otter-launcher's toml config";
         };
@@ -96,7 +96,7 @@
               env.STARSHIP_CONFIG = config.constructFiles.starship.path;
               constructFiles.starship = {
                 relPath = "starship.toml";
-                builder = ''mkdir -p "$(dirname "$2")" && cp ${toml.generate "starship.toml" cfg.settings} "$2"'';
+                builder = ''mkdir -p "$(dirname "$2")" && cp ${tomlFormat.generate "starship.toml" cfg.settings} "$2"'';
               };
             }
           );

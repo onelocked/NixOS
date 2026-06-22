@@ -19,7 +19,7 @@
         la = "${_ lla} --sort-dirs-first";
         ll = "${_ lla} -S";
       };
-      forte.persist.home.directories = [ ".config/lla" ];
+      forte.persist.home.directories = [ ".config/lla/plugins" ];
       hj.xdg.config.files = {
         "lla/config.toml" = {
           generator = tomlFormat.generate "lla-config";

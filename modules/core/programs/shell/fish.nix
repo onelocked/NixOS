@@ -199,11 +199,12 @@
                     modifiers = if isAttrs def then " ${toString mods}" else "";
                     body = if isAttrs def then def.body else def;
                   in
-                  fishIndent "${name}.fish" ''
-                    function ${name}${modifiers}
-                      ${body |> lib.strings.removeSuffix "\n"}
-                    end
-                  '';
+                  fishIndent "${name}.fish" # fish
+                    ''
+                      function ${name}${modifiers}
+                        ${body |> lib.strings.removeSuffix "\n"}
+                      end
+                    '';
               };
             }
           );

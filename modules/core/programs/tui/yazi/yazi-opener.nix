@@ -7,9 +7,7 @@
       ...
     }:
     let
-
       mkOpener = desc: run: { inherit desc run; };
-
       mkNixRun = desc: pkg: mkOpener desc "${pkgs.nix}/bin/nix run nixpkgs#${pkg} %s";
     in
     {
@@ -17,14 +15,14 @@
         open = {
           prepend_rules = [
             {
-              mime = "image/*"; # Apply this to all image types
+              mime = "image/*";
               use = [
                 "open"
                 "images"
               ];
             }
             {
-              mime = "video/*"; # Apply this to all video types
+              mime = "video/*";
               use = [
                 "open"
                 "videos"

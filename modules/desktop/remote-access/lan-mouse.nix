@@ -81,7 +81,8 @@
           };
         };
         hj.xdg.config.files."lan-mouse/config.toml" = lib.mkIf (cfg.settings != { }) {
-          source = tomlFormat.generate "config.toml" cfg.settings;
+          generator = tomlFormat.generate "lan-mouse-config";
+          value = cfg.settings;
         };
         networking.firewall.allowedUDPPorts = lib.mkIf cfg.openFirewall [ 4242 ];
       };

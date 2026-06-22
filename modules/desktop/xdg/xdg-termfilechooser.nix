@@ -8,7 +8,7 @@
     }:
     let
       cfg = config.forte.xdg.termfilechooser;
-      iniFmt = lib.generators.toINI { };
+      iniFormat = lib.generators.toINI { };
     in
     {
       config = lib.mkIf cfg.enable {
@@ -20,7 +20,7 @@
         };
         hj.xdg.config.files = {
           "xdg-desktop-portal-termfilechooser/config" = {
-            generator = iniFmt;
+            generator = iniFormat;
             value = {
               filechooser = {
                 cmd = cfg.yazi-wrapper;

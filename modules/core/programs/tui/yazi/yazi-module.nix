@@ -10,35 +10,45 @@
     }:
     let
       cfg = config.forte.yazi;
-      inherit (pkgs.formats.toml { }) type;
-      default = { };
-      mkMapOption = description: lib.mkOption { inherit type description default; };
+
+      tomlFormat = pkgs.formats.toml { };
+
+      mkTomlOption =
+        description:
+        lib.mkOption {
+          type = tomlFormat.type;
+          default = { };
+          inherit description;
+        };
     in
     {
-      config = lib.mkIf (cfg.enable) {
+      config = lib.mkIf cfg.enable {
         forte.xdg.desktopEntries."yazi".noDisplay = true;
         hj.packages = [ cfg.package ];
 
-        programs.fish.functions.y = /* fish */ ''
-          set -l tmp (mktemp -t "yazi-cwd.XXXXX")
-          command yazi $argv --cwd-file="$tmp"
-          if read cwd < "$tmp"; and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
-            builtin cd -- "$cwd"
-          end
-          rm -f -- "$tmp"
-        '';
+        programs.fish.functions.y = # fish
+          ''
+            set -l tmp (mktemp -t "yazi-cwd.XXXXX")
+            command yazi $argv --cwd-file="$tmp"
+            if read cwd < "$tmp"; and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
+              builtin cd -- "$cwd"
+            end
+            rm -f -- "$tmp"
+          '';
       };
+
       options.forte.yazi = {
         enable = lib.mkEnableOption "yazi";
+
         package = lib.mkOption {
           type = lib.types.package;
           default = birdee.wrappers.yazi.wrap {
             inherit pkgs;
-            runtimePkgs = [
-              pkgs.ouch
-              pkgs.exiv2
-              pkgs.ffmpeg
-              pkgs.xxhash
+            runtimePkgs = with pkgs; [
+              ouch
+              exiv2
+              ffmpeg
+              xxhash
             ];
             package = self'.packages.yazi;
             inherit (cfg) plugins;
@@ -49,17 +59,19 @@
             constructFiles = {
               initLua = {
                 relPath = "yazi-config/init.lua";
-                content = config.forte.yazi.initLua;
+                content = cfg.initLua;
               };
               flavor = {
                 relPath = "yazi-config/flavors/oneshill.yazi/flavor.toml";
-                content = config.forte.yazi.flavorContent;
+                content = cfg.flavorContent;
               };
             };
           };
+          description = "The Yazi package to use, wrapped with required dependencies.";
         };
+
         plugins = lib.mkOption {
-          type = lib.types.attrsOf (lib.types.nullOr lib.types.path);
+          type = with lib.types; attrsOf (nullOr path);
           default = { };
           description = "Yazi plugins";
         };
@@ -80,63 +92,53 @@
         };
 
         theme = lib.mkOption {
-          inherit type;
+          type = tomlFormat.type;
           default = { };
           description = "Theme settings";
         };
 
         settings = lib.mkOption {
           default = { };
-
           description = ''
             Content of yazi.toml file.
             See the configuration reference at <https://yazi-rs.github.io/docs/configuration/yazi>
           '';
-
           type = lib.types.submodule {
-            freeformType = type;
+            freeformType = tomlFormat.type;
             options = {
-              mgr = mkMapOption ''
+              mgr = mkTomlOption ''
                 Manager settings
                 See <https://yazi-rs.github.io/docs/configuration/yazi#mgr>
               '';
-
-              preview = mkMapOption ''
+              preview = mkTomlOption ''
                 Preview settings
                 See <https://yazi-rs.github.io/docs/configuration/yazi#preview>
               '';
-
-              opener = mkMapOption ''
+              opener = mkTomlOption ''
                 Opener settings
                 See <https://yazi-rs.github.io/docs/configuration/yazi#opener>
               '';
-
-              open = mkMapOption ''
+              open = mkTomlOption ''
                 Open settings
                 See <https://yazi-rs.github.io/docs/configuration/yazi#open>
               '';
-
-              plugin = mkMapOption ''
+              plugin = mkTomlOption ''
                 Plugin settings
                 See <https://yazi-rs.github.io/docs/configuration/yazi#plugin>
               '';
-
-              input = mkMapOption ''
+              input = mkTomlOption ''
                 Input settings
                 See <https://yazi-rs.github.io/docs/configuration/yazi#input>
               '';
-
-              confirm = mkMapOption ''
+              confirm = mkTomlOption ''
                 Confirm settings
                 See <https://yazi-rs.github.io/docs/configuration/yazi#confirm>
               '';
-
-              pick = mkMapOption ''
+              pick = mkTomlOption ''
                 Pick settings
                 See <https://yazi-rs.github.io/docs/configuration/yazi#pick>
               '';
-
-              which = mkMapOption ''
+              which = mkTomlOption ''
                 Which settings
                 See <https://yazi-rs.github.io/docs/configuration/yazi#which>
               '';
@@ -150,54 +152,47 @@
             Content of keymap.toml file.
             See the configuration reference at <https://yazi-rs.github.io/docs/configuration/keymap>
           '';
-
           type = lib.types.submodule {
-            freeformType = type;
+            freeformType = tomlFormat.type;
             options = {
-              mgr = mkMapOption ''
+              mgr = mkTomlOption ''
                 Keymap mgr settings
                 See <https://yazi-rs.github.io/docs/configuration/keymap#mgr>
               '';
-
-              tasks = mkMapOption ''
+              tasks = mkTomlOption ''
                 Keymap tasks settings
                 See <https://yazi-rs.github.io/docs/configuration/keymap#tasks>
               '';
-
-              spot = mkMapOption ''
+              spot = mkTomlOption ''
                 Keymap spot settings
                 See <https://yazi-rs.github.io/docs/configuration/keymap#spot>
               '';
-
-              pick = mkMapOption ''
+              pick = mkTomlOption ''
                 Keymap pick settings
                 See <https://yazi-rs.github.io/docs/configuration/keymap#pick>
               '';
-
-              input = mkMapOption ''
+              input = mkTomlOption ''
                 Keymap input settings
                 See <https://yazi-rs.github.io/docs/configuration/keymap#input>
               '';
-
-              confirm = mkMapOption ''
-                 Keymap confirm settings
-                See < https://yazi-rs.github.io/docs/configuration/keymap#confirm>
+              confirm = mkTomlOption ''
+                Keymap confirm settings
+                See <https://yazi-rs.github.io/docs/configuration/keymap#confirm>
               '';
-
-              cmp = mkMapOption ''
-                 Keymap cmp settings
-                See < https://yazi-rs.github.io/docs/configuration/keymap#cmp>
+              cmp = mkTomlOption ''
+                Keymap cmp settings
+                See <https://yazi-rs.github.io/docs/configuration/keymap#cmp>
               '';
-
-              help = mkMapOption ''
-                 Keymap help settings
-                See < https://yazi-rs.github.io/docs/configuration/keymap#help>
+              help = mkTomlOption ''
+                Keymap help settings
+                See <https://yazi-rs.github.io/docs/configuration/keymap#help>
               '';
             };
           };
         };
       };
     };
+
   ff = {
     yazi = {
       url = "github:/sxyazi/yazi";
@@ -206,6 +201,7 @@
       inputs.flake-utils.follows = "flake-utils";
     };
   };
+
   perSystem =
     { inputs', ... }:
     {

@@ -95,11 +95,15 @@
     }:
     let
       cfg = config.forte.qview;
+      iniFormat = lib.generators.toINI { };
     in
     {
       config = lib.mkIf cfg.enable {
         hj.packages = [ cfg.package ];
-        hj.xdg.config.files."qView/qView.conf".text = lib.generators.toINI { } cfg.settings;
+        hj.xdg.config.files."qView/qView.conf" = {
+          generator = iniFormat;
+          value = cfg.settings;
+        };
         forte.hyprland.lua.window-rules = # lua
           ''
             hl.window_rule({
