@@ -305,18 +305,18 @@
     }:
     let
       cfg = config.forte.vesktop;
-      generator = lib.generators.toJSON { };
+      jsonFmt = lib.generators.toJSON { };
     in
     {
       config = lib.mkIf cfg.enable {
         hj.packages = [ cfg.package ];
         hj.xdg.config.files = {
           "vesktop/settings.json" = {
-            inherit generator;
+            generator = jsonFmt;
             value = cfg.settings;
           };
           "vesktop/settings/settings.json" = {
-            inherit generator;
+            generator = jsonFmt;
             value = cfg.vencord-settings;
           };
         };

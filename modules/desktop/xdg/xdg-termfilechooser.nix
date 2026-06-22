@@ -6,19 +6,53 @@
       pkgs,
       ...
     }:
+    let
+      cfg = config.forte.xdg.termfilechooser;
+      iniFmt = lib.generators.toINI { };
+    in
     {
-      xdg.portal = {
-        extraPortals = [ pkgs.xdg-desktop-portal-termfilechooser ];
-        config.common = {
-          "org.freedesktop.impl.portal.FileChooser" = lib.mkForce [ "termfilechooser" ];
+      config = lib.mkIf cfg.enable {
+        xdg.portal = {
+          extraPortals = [ pkgs.xdg-desktop-portal-termfilechooser ];
+          config.common = {
+            "org.freedesktop.impl.portal.FileChooser" = lib.mkForce [ "termfilechooser" ];
+          };
         };
+        hj.xdg.config.files = {
+          "xdg-desktop-portal-termfilechooser/config" = {
+            generator = iniFmt;
+            value = {
+              filechooser = {
+                cmd = cfg.yazi-wrapper;
+                default_dir = "${config.hj.directory}/Downloads";
+                open_mode = "default";
+                save_mode = "default";
+                create_help_file = 1;
+              };
+            };
+          };
+        };
+        forte.hyprland.lua.window-rules = # lua
+          ''
+            hl.window_rule({
+              name             = "yazi-filechooser",
+              match            = { class = "FileChooser" },
+              float            = true,
+              size             = { 1600, 1000 },
+              opacity          = "1 override",
+            })
+          '';
       };
-      hj.xdg.config.files =
-        let
-          yazi-wrapper =
-            pkgs.writeShellScript "yazi-wrapper.sh" # bash
+
+      options.forte.xdg.termfilechooser = {
+        enable = lib.mkEnableOption "xdg-termfilechooser" // {
+          default = true;
+        };
+        yazi-wrapper = lib.mkOption {
+          type = lib.types.package;
+          default =
+            pkgs.writeShellScript "yazi-wrapper" # bash
               ''
-                #!/usr/bin/env sh
                 set -e
 
                 if [ "$6" -ge 4 ]; then
@@ -60,27 +94,9 @@
                     fi
                 fi
               '';
-        in
-        {
-          "xdg-desktop-portal-termfilechooser/config".text = lib.generators.toINI { } {
-            filechooser = {
-              cmd = yazi-wrapper;
-              default_dir = "${config.hj.directory}/Downloads";
-              open_mode = "default";
-              save_mode = "default";
-              create_help_file = 1;
-            };
-          };
+          description = "Wrapper for yazi";
         };
-      forte.hyprland.lua.window-rules = # lua
-        ''
-          hl.window_rule({
-            name             = "yaz-filechooser",
-            match            = { class = "FileChooser" },
-            float            = true,
-            size             = { 1600, 1000 },
-            opacity          = "1 override",
-          })
-        '';
+      };
+
     };
 }
