@@ -1,7 +1,7 @@
 <h1 align="center">
    <img src="https://raw.githubusercontent.com/NixOS/nixos-artwork/9d2cdedd73d64a068214482902adea3d02783ba8/logo/nix-snowflake-colours.svg" width="150px" />
    <br>
-      Impermanent NixOS + Hjem Configurations
+      Impermanent NixOS + Hjem Configuration
    <br>
       <img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/palette/macchiato.png" width="600px" /> <br>
    <div align="center">

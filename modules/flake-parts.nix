@@ -15,14 +15,15 @@
   config = {
     perSystem =
       { pkgs, ... }:
-      let
-        mkApp = f: {
-          type = "app";
-          program = lib.getExe (f pkgs);
-        };
-      in
       {
-        apps = config.flake-file.apps |> lib.mapAttrs (_: mkApp);
+        apps =
+          config.flake-file.apps
+          |> lib.mapAttrs (
+            _: f: {
+              type = "app";
+              program = lib.getExe (f pkgs);
+            }
+          );
         formatter = pkgs.nixfmt-rs;
         _module.args = { inherit (inputs) birdee; };
       };
