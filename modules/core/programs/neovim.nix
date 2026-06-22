@@ -32,6 +32,23 @@
     let
       cfg = config.forte.neovim;
       theme = config.forte.theme.variant;
+      mimeType = [
+        "text/english"
+        "text/plain"
+        "text/x-makefile"
+        "text/x-c++hdr"
+        "text/x-c++src"
+        "text/x-chdr"
+        "text/x-csrc"
+        "text/x-java"
+        "text/x-moc"
+        "text/x-pascal"
+        "text/x-tcl"
+        "text/x-tex"
+        "application/x-shellscript"
+        "text/x-c"
+        "text/x-c++"
+      ];
     in
     {
       config =
@@ -58,28 +75,14 @@
                 type = "Application";
                 icon = "nvim";
                 startupNotify = false;
-                mimeType = [
-                  "text/english"
-                  "text/plain"
-                  "text/x-makefile"
-                  "text/x-c++hdr"
-                  "text/x-c++src"
-                  "text/x-chdr"
-                  "text/x-csrc"
-                  "text/x-java"
-                  "text/x-moc"
-                  "text/x-pascal"
-                  "text/x-tcl"
-                  "text/x-tex"
-                  "application/x-shellscript"
-                  "text/x-c"
-                  "text/x-c++"
-                ];
+                inherit mimeType;
                 settings = {
                   TryExec = "nvim";
                 };
               };
             };
+            xdg.mime.defaultApplications =
+              mimeType |> map (mime: lib.nameValuePair mime [ "nvim.desktop" ]) |> lib.listToAttrs;
           })
         ];
       options.forte.neovim = {

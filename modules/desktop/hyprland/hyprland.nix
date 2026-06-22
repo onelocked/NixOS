@@ -177,6 +177,7 @@
               "org.freedesktop.impl.portal.FileChooser" = lib.mkForce [ "termfilechooser" ];
               "org.freedesktop.impl.portal.Secret" = lib.mkForce [ "gnome-keyring" ];
               "org.freedesktop.impl.portal.Chooser" = lib.mkForce [ "none" ];
+              "org.freedesktop.impl.portal.AppChooser" = lib.mkForce [ "none" ];
             };
           })
           (lib.mkIf (cfg.withUWSM) {

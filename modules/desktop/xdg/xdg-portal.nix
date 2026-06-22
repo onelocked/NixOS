@@ -1,20 +1,18 @@
 {
   exo.mods.desktop =
     { lib, constants, ... }:
-    let
-      inherit (lib) mkForce;
-    in
     {
       xdg = {
         portal = {
           enable = true;
-          xdgOpenUsePortal = true;
+          xdgOpenUsePortal = false;
           wlr.enable = false;
           config = {
             common = {
-              default = mkForce [ "gnome" ];
-              "org.freedesktop.impl.portal.Secret" = mkForce [ "gnome-keyring" ];
-              "org.freedesktop.impl.portal.Chooser" = mkForce [ "none" ];
+              default = lib.mkForce [ "gtk" ];
+              "org.freedesktop.impl.portal.Secret" = lib.mkForce [ "gnome-keyring" ];
+              "org.freedesktop.impl.portal.Chooser" = lib.mkForce [ "none" ];
+              "org.freedesktop.impl.portal.AppChooser" = lib.mkForce [ "none" ];
             };
           };
         };
@@ -26,7 +24,7 @@
         };
       };
       environment.sessionVariables = {
-        GTK_USE_PORTAL = "1";
+        GTK_USE_PORTAL = "0";
       };
     };
 }

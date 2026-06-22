@@ -99,12 +99,51 @@
             "image/gif"
           ];
         };
+        xdg.mime.defaultApplications =
+          (
+            [
+              # Audio
+              "audio/aac"
+              "audio/mpeg"
+              "audio/ogg"
+              "audio/opus"
+              "audio/wav"
+              "audio/webm"
+              "audio/x-matroska"
+
+              # Video
+              "video/mp2t"
+              "video/mp4"
+              "video/mpeg"
+              "video/ogg"
+              "video/webm"
+              "video/x-flv"
+              "video/x-matroska"
+              "video/x-msvideo"
+            ]
+            |> map (mime: lib.nameValuePair mime [ "mpv.desktop" ])
+            |> lib.listToAttrs
+          )
+          // (
+            [
+              # Image
+              "image/bmp"
+              "image/gif"
+              "image/jpeg"
+              "image/jpg"
+              "image/png"
+              "image/tiff"
+              "image/vnd.microsoft.icon"
+              "image/webp"
+            ]
+            |> map (mime: lib.nameValuePair mime [ "mpvi.desktop" ])
+            |> lib.listToAttrs
+          );
       };
 
       options.forte.mpv = {
         enable = lib.mkEnableOption "mpv";
         with-wlpaste = lib.mkEnableOption "mpv-wl-paste";
-
         conf = lib.mkOption {
           default = "";
           type = lib.types.lines;
@@ -271,7 +310,6 @@
               exec mpv "$url"
             '';
           };
-
         };
       };
     };

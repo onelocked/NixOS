@@ -83,6 +83,14 @@
           "footclient".noDisplay = true;
           "foot-server".noDisplay = true;
         };
+        xdg.mime.defaultApplications =
+          [
+            "terminal"
+            "x-terminal-emulator"
+            "inode/directory"
+          ]
+          |> map (mime: lib.nameValuePair mime [ "foot.desktop" ])
+          |> lib.listToAttrs;
         hj = {
           packages = [ cfg.package ];
           systemd.services.foot-server = {

@@ -203,6 +203,14 @@
               hl.bind("SUPER + T", hl.dsp.exec_raw("kitty -1"))
             '';
         };
+        xdg.mime.defaultApplications =
+          [
+            "terminal"
+            "x-terminal-emulator"
+            "inode/directory"
+          ]
+          |> map (mime: lib.nameValuePair mime [ "kitty.desktop" ])
+          |> lib.listToAttrs;
       };
       options.forte.kitty = {
         enable = lib.mkEnableOption "zen-browser";
