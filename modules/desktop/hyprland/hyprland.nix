@@ -158,7 +158,11 @@
               greetd = {
                 enable = true;
                 settings.default_session = {
-                  command = "${pkgs.uwsm}/bin/uwsm start hyprland-uwsm.desktop";
+                  command =
+                    if cfg.withUWSM then
+                      "${pkgs.uwsm}/bin/uwsm start hyprland-uwsm.desktop"
+                    else
+                      "${cfg.package}/bin/start-hyprland";
                   user = constants.username;
                 };
               };
