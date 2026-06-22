@@ -10,7 +10,6 @@
       cfg = config.forte.gaming;
     in
     {
-
       options.forte.gaming = {
         enable = lib.mkEnableOption "Gaming";
       };
