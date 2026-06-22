@@ -11,6 +11,7 @@
         };
       };
       users = {
+        mutableUsers = false;
         users.root.hashedPasswordFile = password;
         users.${constants.username} = {
           hashedPasswordFile = password;
