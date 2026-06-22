@@ -9,6 +9,7 @@
           nix-init
           nix-melt
           self'.legacyPackages.figlet
+          self'.legacyPackages.remote-install
         ];
       };
       legacyPackages.figlet = pkgs.symlinkJoin {

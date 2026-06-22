@@ -1,6 +1,6 @@
 {
   exo.core =
-    { lib, pkgs, ... }:
+    { pkgs, ... }:
     {
       services = {
         system76-scheduler = {
@@ -8,9 +8,9 @@
           useStockConfig = true;
         };
         scx = {
-          enable = false;
+          enable = true;
           package = pkgs.scx.rustscheds;
-          scheduler = lib.mkForce "scx_lavd"; # Gaming scheduler https://github.com/sched-ext/scx/blob/main/scheds/rust/README.md
+          scheduler = "scx_lavd"; # Gaming scheduler https://github.com/sched-ext/scx/blob/main/scheds/rust/README.md
         };
       };
     };

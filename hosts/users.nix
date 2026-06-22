@@ -1,3 +1,13 @@
+let
+  constants = {
+    username = "onelock";
+    homedir = "/home/onelock";
+    locale = "en_GB.UTF-8";
+    timezone = "Europe/London";
+    stateVersion = "25.11";
+    terminal = "kitty.desktop";
+  };
+in
 {
   exo.core =
     { config, constants, ... }:
@@ -30,18 +40,6 @@
         };
       };
     };
-  exo.pilot.onelock =
-    let
-      constants = {
-        username = "onelock";
-        homedir = "/home/onelock";
-        locale = "en_GB.UTF-8";
-        timezone = "Europe/London";
-        stateVersion = "25.11";
-        terminal = "kitty.desktop";
-      };
-    in
-    {
-      _module.args = { inherit constants; };
-    };
+  exo.pilot.onelock._module.args = { inherit constants; };
+  perSystem._module.args = { inherit constants; };
 }

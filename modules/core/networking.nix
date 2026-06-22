@@ -5,7 +5,6 @@
       inherit (lib) mkDefault;
     in
     {
-
       networking = {
         useDHCP = mkDefault true;
         networkmanager.enable = true;
