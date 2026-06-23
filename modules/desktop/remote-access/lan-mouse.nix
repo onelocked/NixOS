@@ -20,7 +20,6 @@
         };
       };
     };
-    forte.persist.home.directories = [ ".config/lan-mouse" ];
   };
   exo.skeleton =
     {
@@ -35,29 +34,6 @@
       tomlFormat = pkgs.formats.toml { };
     in
     {
-      options.forte.lan-mouse = {
-        enable = lib.mkEnableOption "lan-mouse";
-        package = lib.mkOption {
-          type = lib.types.package;
-          default = self'.packages.lan-mouse;
-          description = "The package to use for lan-mouse";
-        };
-        settings = lib.mkOption {
-          inherit (tomlFormat) type;
-          default = { };
-          description = ''
-            Optional configuration written to {file}`$XDG_CONFIG_HOME/lan-mouse/config.toml`.
-
-            See <https://github.com/feschber/lan-mouse/> for
-            available options and documentation.
-          '';
-        };
-        openFirewall = lib.mkEnableOption null // {
-          description = ''
-            Whether to open the firewall for lan-mouse.
-          '';
-        };
-      };
       config = lib.mkIf cfg.enable {
         hj.systemd.services.lan-mouse = {
           description = "Lan Mouse Daemon";
@@ -85,6 +61,30 @@
           value = cfg.settings;
         };
         networking.firewall.allowedUDPPorts = lib.mkIf cfg.openFirewall [ 4242 ];
+        forte.persist.home.directories = [ ".config/lan-mouse" ];
+      };
+      options.forte.lan-mouse = {
+        enable = lib.mkEnableOption "lan-mouse";
+        package = lib.mkOption {
+          type = lib.types.package;
+          default = self'.packages.lan-mouse;
+          description = "The package to use for lan-mouse";
+        };
+        settings = lib.mkOption {
+          inherit (tomlFormat) type;
+          default = { };
+          description = ''
+            Optional configuration written to {file}`$XDG_CONFIG_HOME/lan-mouse/config.toml`.
+
+            See <https://github.com/feschber/lan-mouse/> for
+            available options and documentation.
+          '';
+        };
+        openFirewall = lib.mkEnableOption null // {
+          description = ''
+            Whether to open the firewall for lan-mouse.
+          '';
+        };
       };
     };
   perSystem =
