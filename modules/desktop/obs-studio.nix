@@ -1,7 +1,6 @@
 {
   exo.mods.desktop = {
     forte.obs-studio = {
-      enable = false;
       systemd = true;
       openFirewall = true;
     };

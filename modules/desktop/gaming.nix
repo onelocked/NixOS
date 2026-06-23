@@ -19,7 +19,10 @@
           enable = true;
           remotePlay.openFirewall = true;
           localNetworkGameTransfers.openFirewall = true;
-          extraCompatPackages = with pkgs; [ proton-ge-bin ];
+          extraCompatPackages = with pkgs; [
+            proton-ge-bin
+            dwproton-bin
+          ];
         };
         programs.gamescope = {
           enable = true;
@@ -47,6 +50,14 @@
           "vm.max_map_count" = 2147483642;
         };
         hardware.steam-hardware.enable = true;
+        forte.persist.home.directories = [
+          ".steam"
+          ".local/share/Steam"
+          ".local/share/vulkan"
+          ".cache/nvidia"
+          ".cache/winetricks"
+          ".cache/umu-protonfixes"
+        ];
       };
     };
 }

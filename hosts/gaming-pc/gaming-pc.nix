@@ -7,8 +7,13 @@
       modules = [ config.exo.mods.desktop ];
       extraConfig = {
         forte.rtp-audio.enable = true;
-        # forte.gaming.enable = true;
+        forte.gaming.enable = true;
         forte.vesktop.enable = lib.mkForce false;
+        forte.lan-mouse.enable = true;
+        services.sunshine = {
+          enable = true;
+          autoStart = true;
+        };
         programs.spicetify.enable = lib.mkForce false;
 
         users.users.onelock.openssh.authorizedKeys.keys = [

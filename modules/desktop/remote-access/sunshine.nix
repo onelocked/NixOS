@@ -1,17 +1,21 @@
 { inputs, ... }:
 {
   exo.mods.desktop =
-    { self', ... }:
+    {
+      self',
+      config,
+      lib,
+      ...
+    }:
     {
       services.sunshine = {
         package = self'.packages.sunshine;
         capSysAdmin = false;
-        autoStart = false;
         openFirewall = true;
       };
-      forte.persist.home.directories = [
-        ".config/sunshine"
-      ];
+      forte.persist.home = lib.mkIf config.services.sunshine.enable {
+        directories = [ ".config/sunshine" ];
+      };
     };
   ff.sunshine = {
     url = "github:Qubasa/nixpkgs/update_sunshine";
