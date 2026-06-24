@@ -17,7 +17,11 @@ in
         withSystem hostConfig.system (
           { self', inputs', ... }:
           inputs.nixpkgs.lib.nixosSystem {
-            specialArgs = { inherit self' inputs'; };
+            specialArgs = {
+              inherit self' inputs';
+              hardware = hostConfig.hardware;
+              hostName = name;
+            };
             modules = hostConfig.modules ++ [
               config.exo.skeleton
               config.exo.core
