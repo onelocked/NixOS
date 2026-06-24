@@ -120,7 +120,9 @@
 
             programs.xwayland.enable = true;
 
-            systemd.user.extraConfig = ''DefaultEnvironment="PATH=/run/wrappers/bin:/etc/profiles/per-user/%u/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin:$PATH" '';
+            systemd.user.settings.Manager.DefaultEnvironment =
+              "PATH=/run/wrappers/bin:/etc/profiles/per-user/%u/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin:$PATH";
+
             xdg.portal = {
               wlr.enable = false;
               enable = true;
