@@ -1,4 +1,9 @@
+{ inputs, ... }:
 {
+  ff.nix-gaming-edge = {
+    url = "github:powerofthe69/nix-gaming-edge";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
   exo.mods.desktop =
     {
       config,
@@ -15,6 +20,13 @@
       };
 
       config = lib.mkIf cfg.enable {
+        nix.settings = {
+          substituters = [ "https://nix-cache.tokidoki.dev/tokidoki" ];
+          trusted-public-keys = [ "tokidoki:MD4VWt3kK8Fmz3jkiGoNRJIW31/QAm7l1Dcgz2Xa4hk=" ];
+        };
+
+        nixpkgs.overlays = with inputs.nix-gaming-edge.overlays; [ proton-cachyos ];
+
         programs.steam = {
           enable = true;
           remotePlay.openFirewall = true;
@@ -22,8 +34,10 @@
           extraCompatPackages = with pkgs; [
             proton-ge-bin
             dwproton-bin
+            proton-cachyos-x86_64-v3
           ];
         };
+        programs.gamemode.enable = true;
         programs.gamescope = {
           enable = true;
           args = [
@@ -50,6 +64,7 @@
           "vm.max_map_count" = 2147483642;
         };
         hardware.steam-hardware.enable = true;
+
         forte.persist.home.directories = [
           ".steam"
           ".local/share/Steam"
