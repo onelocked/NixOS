@@ -54,6 +54,10 @@
 
       # setup persistence
       config = {
+        boot = {
+          tmp.useTmpfs = true;
+          tmp.tmpfsSize = "75%";
+        };
         preservation = {
           enable = true;
           preserveAt = {
@@ -93,37 +97,9 @@
           };
         };
         systemd.suppressedSystemUnits = [ "systemd-machine-id-commit.service" ];
-        # shut up sudo
-        security.sudo-rs.extraConfig = ''
-          Defaults lecture="never"
-        '';
-        # permissions
+        security.sudo-rs.extraConfig = ''Defaults lecture="never" ''; # shut up sudo
+        # set permissions
         systemd.tmpfiles.settings.preservation = {
-          "${config.hj.directory}/.config".d = {
-            user = constants.username;
-            group = "users";
-            mode = "0755";
-          };
-          "${config.hj.directory}/.local".d = {
-            user = constants.username;
-            group = "users";
-            mode = "0755";
-          };
-          "${config.hj.directory}/.cache".d = {
-            user = constants.username;
-            group = "users";
-            mode = "0755";
-          };
-          "${config.hj.directory}/.local/share".d = {
-            user = constants.username;
-            group = "users";
-            mode = "0755";
-          };
-          "${config.hj.directory}/.local/state".d = {
-            user = constants.username;
-            group = "users";
-            mode = "0755";
-          };
           "${config.hj.directory}/.ssh".d = lib.mkForce {
             user = constants.username;
             group = "users";

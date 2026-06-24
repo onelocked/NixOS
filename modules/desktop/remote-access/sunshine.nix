@@ -5,10 +5,13 @@
       self',
       config,
       lib,
+      hostName,
       ...
     }:
     {
       services.sunshine = {
+        enable = config.desktop.remote-access.enable;
+        autoStart = if hostName != "gaming-pc" then false else true;
         package = self'.packages.sunshine;
         capSysAdmin = false;
         openFirewall = true;

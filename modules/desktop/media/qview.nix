@@ -3,7 +3,6 @@
     { scheme, ... }:
     {
       forte.qview = {
-        enable = true;
         settings = {
           General = {
             configversion = "7.1";
@@ -116,7 +115,9 @@
           '';
       };
       options.forte.qview = {
-        enable = lib.mkEnableOption "qview";
+        enable = lib.mkEnableOption "qview" // {
+          default = config.desktop.media.enable;
+        };
         package = lib.mkOption {
           type = lib.types.package;
           default = pkgs.qview;

@@ -10,5 +10,7 @@
       open = true;
       nvidiaSettings = true;
     };
+    services.lact.enable = true;
+    forte.persist.root.directories = [ "/etc/lact" ];
   };
 }

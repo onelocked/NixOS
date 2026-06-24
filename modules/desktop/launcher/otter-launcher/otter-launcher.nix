@@ -147,7 +147,6 @@
           ];
       };
 
-      forte.cliamp.enable = true;
       forte.fsel = {
         enable = true;
         settings = with scheme.withHashtag; {

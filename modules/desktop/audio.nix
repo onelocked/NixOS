@@ -1,7 +1,6 @@
 {
   exo.mods.desktop = {
     security.rtkit.enable = true;
-
     services = {
       pulseaudio.enable = false;
       pipewire = {

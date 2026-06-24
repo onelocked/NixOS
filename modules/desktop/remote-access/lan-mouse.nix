@@ -64,7 +64,9 @@
         forte.persist.home.directories = [ ".config/lan-mouse" ];
       };
       options.forte.lan-mouse = {
-        enable = lib.mkEnableOption "lan-mouse";
+        enable = lib.mkEnableOption "lan-mouse" // {
+          default = config.desktop.remote-access.enable;
+        };
         package = lib.mkOption {
           type = lib.types.package;
           default = self'.packages.lan-mouse;

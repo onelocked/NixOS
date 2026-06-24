@@ -36,7 +36,9 @@
         };
       };
       options.forte.jellyfin-tui = {
-        enable = lib.mkEnableOption "jellyfin-tui";
+        enable = lib.mkEnableOption "jellyfin-tui" // {
+          default = config.desktop.media.enable;
+        };
       };
     };
 }

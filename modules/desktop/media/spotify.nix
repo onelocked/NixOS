@@ -7,7 +7,12 @@
   };
 
   exo.mods.desktop =
-    { inputs', scheme, ... }:
+    {
+      inputs',
+      scheme,
+      config,
+      ...
+    }:
     let
       spicePkgs = inputs'.spicetify-nix.legacyPackages;
     in
@@ -15,7 +20,7 @@
       imports = [ inputs.spicetify-nix.nixosModules.default ];
 
       programs.spicetify = {
-        enable = true;
+        enable = config.desktop.media.enable;
         theme = spicePkgs.themes.text;
         customColorScheme = with scheme; {
           accent = base0E;

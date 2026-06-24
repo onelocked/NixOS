@@ -4,22 +4,19 @@
     url = "github:powerofthe69/nix-gaming-edge";
     inputs.nixpkgs.follows = "nixpkgs";
   };
-  exo.mods.desktop =
+  exo.mods.gaming =
     {
+      pkgs,
       config,
       lib,
-      pkgs,
+      constants,
       ...
     }:
     let
-      cfg = config.forte.gaming;
+      cfg = config.forte.persist;
     in
     {
-      options.forte.gaming = {
-        enable = lib.mkEnableOption "Gaming";
-      };
-
-      config = lib.mkIf cfg.enable {
+      config = {
         nix.settings = {
           substituters = [ "https://nix-cache.tokidoki.dev/tokidoki" ];
           trusted-public-keys = [ "tokidoki:MD4VWt3kK8Fmz3jkiGoNRJIW31/QAm7l1Dcgz2Xa4hk=" ];
@@ -31,11 +28,7 @@
           enable = true;
           remotePlay.openFirewall = true;
           localNetworkGameTransfers.openFirewall = true;
-          extraCompatPackages = with pkgs; [
-            proton-ge-bin
-            dwproton-bin
-            proton-cachyos-x86_64-v3
-          ];
+          extraCompatPackages = with pkgs; [ proton-cachyos-x86_64-v3 ];
         };
         programs.gamemode.enable = true;
         programs.gamescope = {
@@ -46,7 +39,6 @@
             "-f"
           ];
         };
-
         boot.kernel.sysctl = {
           # 20-shed.conf
           "kernel.sched_cfs_bandwidth_slice_us" = 3000;
@@ -63,16 +55,56 @@
           # see comment in include/linux/mm.h in the kernel tree.
           "vm.max_map_count" = 2147483642;
         };
-        hardware.steam-hardware.enable = true;
 
-        forte.persist.home.directories = [
+        # preserve steam
+        preservation = {
+          preserveAt = {
+            "/steam" = {
+              commonMountOptions = [ "x-gvfs-hide" ];
+              users.${constants.username} = {
+                files = lib.unique cfg.home.steam.files;
+                directories = lib.unique cfg.home.steam.directories;
+              };
+            };
+          };
+        };
+        systemd.tmpfiles.settings.preservation = {
+          "/steam".d = {
+            user = constants.username;
+            group = "users";
+            mode = "0755";
+          };
+          "/games".d = {
+            user = constants.username;
+            group = "users";
+            mode = "0755";
+          };
+        };
+        forte.persist.home.steam.directories = [
           ".steam"
+          ".nv"
           ".local/share/Steam"
           ".local/share/vulkan"
           ".cache/nvidia"
           ".cache/winetricks"
           ".cache/umu-protonfixes"
         ];
+      };
+      options.forte = {
+        persist = {
+          home = {
+            steam = {
+              directories = lib.mkOption {
+                type = lib.types.listOf lib.types.anything;
+                default = [ ];
+              };
+              files = lib.mkOption {
+                type = lib.types.listOf lib.types.anything;
+                default = [ ];
+              };
+            };
+          };
+        };
       };
     };
 }

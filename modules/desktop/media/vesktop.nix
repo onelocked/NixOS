@@ -3,7 +3,6 @@
     { scheme, config, ... }:
     {
       forte.vesktop = {
-        enable = true;
         settings = {
           appBadge = false;
           arRPC = true;
@@ -336,7 +335,7 @@
       };
       options.forte.vesktop = {
         enable = lib.mkEnableOption "vesktop" // {
-          default = true;
+          default = config.desktop.media.enable;
         };
         package = lib.mkOption {
           type = lib.types.package;

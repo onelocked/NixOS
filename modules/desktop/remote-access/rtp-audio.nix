@@ -33,7 +33,9 @@
         };
       };
       options.forte.rtp-audio = {
-        enable = lib.mkEnableOption "RTP Audio";
+        enable = lib.mkEnableOption "RTP Audio" // {
+          default = config.desktop.remote-access.enable;
+        };
       };
     };
 }

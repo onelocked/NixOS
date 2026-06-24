@@ -55,7 +55,9 @@
           })
         ];
       options.forte.moonlight-qt = {
-        enable = lib.mkEnableOption "moonlight-qt";
+        enable = lib.mkEnableOption "moonlight-qt" // {
+          default = config.desktop.media.enable;
+        };
         package = lib.mkOption {
           type = lib.types.package;
           default = pkgs.moonlight-qt;

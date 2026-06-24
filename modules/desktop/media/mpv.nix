@@ -3,7 +3,6 @@
     { config, ... }:
     {
       forte.mpv = {
-        enable = true;
         with-wlpaste = true;
         conf = # ini
           ''
@@ -142,7 +141,9 @@
       };
 
       options.forte.mpv = {
-        enable = lib.mkEnableOption "mpv";
+        enable = lib.mkEnableOption "mpv" // {
+          default = config.desktop.media.enable;
+        };
         with-wlpaste = lib.mkEnableOption "mpv-wl-paste";
         conf = lib.mkOption {
           default = "";

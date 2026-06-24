@@ -10,9 +10,6 @@
       flake = false;
     };
   };
-  exo.mods.desktop = {
-    forte.quickshell.enable = true;
-  };
   exo.skeleton =
     {
       lib,
@@ -152,7 +149,9 @@
       };
       options = {
         forte.quickshell = {
-          enable = lib.mkEnableOption "quickshell";
+          enable = lib.mkEnableOption "quickshell" // {
+            default = true;
+          };
           package = lib.mkOption {
             type = lib.types.package;
             default = birdee.lib.wrapPackage {

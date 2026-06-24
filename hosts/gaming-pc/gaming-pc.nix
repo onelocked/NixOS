@@ -1,24 +1,17 @@
-{ config, lib, ... }:
+{ config, ... }:
 {
   exo.configurations = {
     gaming-pc = {
       user = "onelock";
       hardware = "gaming-pc";
-      modules = [ config.exo.mods.desktop ];
+      modules = with config.exo.mods; [
+        desktop
+        gaming
+      ];
       extraConfig = {
-        forte.rtp-audio.enable = true;
-        forte.gaming.enable = true;
-        forte.vesktop.enable = lib.mkForce false;
-        forte.lan-mouse.enable = true;
-        services.sunshine = {
-          enable = true;
-          autoStart = true;
-        };
-        programs.spicetify.enable = lib.mkForce false;
+        desktop.media.enable = false;
+        forte.quickshell.enable = false;
 
-        users.users.onelock.openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICM7ifW7zlpT8VeWOgCpKSAdnHr4vgIzrcyId/RQ822J gaming-pc"
-        ];
         services.openssh = {
           enable = true;
           settings = {
@@ -27,6 +20,10 @@
             PermitEmptyPasswords = false;
           };
         };
+
+        users.users.onelock.openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICM7ifW7zlpT8VeWOgCpKSAdnHr4vgIzrcyId/RQ822J gaming-pc"
+        ];
       };
     };
   };
