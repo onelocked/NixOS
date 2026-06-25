@@ -22,6 +22,7 @@
       constants,
       pkgs,
       self',
+      hostName,
       ...
     }:
     let
@@ -199,6 +200,11 @@
                 RestartSec = 1;
                 TimeoutStopSec = 10;
               };
+            };
+          })
+          (lib.mkIf (hostName == "mini-pc") {
+            environment.sessionVariables = {
+              AQ_NO_MODIFIERS = 1;
             };
           })
         ];
