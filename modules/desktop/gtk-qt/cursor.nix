@@ -4,6 +4,9 @@
       lib,
       pkgs,
       config,
+      envoy,
+      self',
+      hostName,
       ...
     }:
     let
@@ -11,6 +14,11 @@
     in
     {
       config = {
+        forte.cursor = lib.mkIf (hostName != "gaming-pc") {
+          name = envoy.aemeath-cursor.pname;
+          size = 24;
+          package = self'.legacyPackages.aemeath-cursor;
+        };
         hj.packages = [ cfg.package ];
         hj.environment.sessionVariables = {
           XCURSOR_SIZE = cfg.size;
@@ -37,6 +45,29 @@
           type = lib.types.nullOr lib.types.package;
           default = pkgs.apple-cursor;
         };
+      };
+    };
+  envoy.aemeath-cursor = {
+    tarball = "https://s3.onelock.org/download/cursors/aemeath-cursor.tar.gz";
+    locked = true;
+  };
+  perSystem =
+    { pkgs, envoy, ... }:
+    {
+      legacyPackages = {
+        aemeath-cursor = pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
+          name = envoy.aemeath-cursor.pname;
+          version = "1.0";
+          inherit (envoy.aemeath-cursor) src;
+
+          dontConfigure = true;
+          dontBuild = true;
+
+          installPhase = ''
+            mkdir -p $out/share/icons/${finalAttrs.name}
+            cp -r . $out/share/icons/${finalAttrs.name}
+          '';
+        });
       };
     };
 }

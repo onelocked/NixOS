@@ -5,17 +5,10 @@
       pkgs,
       config,
       lib,
-      envoy,
-      self',
       ...
     }:
     {
       forte = lib.mkIf (config.forte.theme.variant == "dark") {
-        cursor = {
-          name = envoy.aemeath-cursor.pname;
-          size = 24;
-          package = self'.legacyPackages.aemeath-cursor;
-        };
         gtk = {
           icons = {
             name = "Papirus-Dark";
@@ -101,30 +94,6 @@
               '';
           };
         };
-      };
-    };
-
-  envoy.aemeath-cursor = {
-    tarball = "https://s3.onelock.org/download/cursors/aemeath-cursor.tar.gz";
-    locked = true;
-  };
-  perSystem =
-    { pkgs, envoy, ... }:
-    {
-      legacyPackages = {
-        aemeath-cursor = pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
-          name = envoy.aemeath-cursor.pname;
-          version = "1.0";
-          inherit (envoy.aemeath-cursor) src;
-
-          dontConfigure = true;
-          dontBuild = true;
-
-          installPhase = ''
-            mkdir -p $out/share/icons/${finalAttrs.name}
-            cp -r . $out/share/icons/${finalAttrs.name}
-          '';
-        });
       };
     };
 }
