@@ -647,11 +647,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1782185372,
-        "narHash": "sha256-jO6i+wiLzJBzVk9nGS6JZxEnm7Pf9acxIennMennyrw=",
+        "lastModified": 1782284164,
+        "narHash": "sha256-DR3x+0ZUbvRlSjt/g7hek2OraQ2pPmEHqIp01C4qaq8=",
         "owner": "powerofthe69",
         "repo": "nix-gaming-edge",
-        "rev": "4af9d03dbee6bb5c4b203d958f941c99e8840d71",
+        "rev": "ad38a28bfd690b1ec80ea2548c9a7fd77ebb8d8b",
         "type": "github"
       },
       "original": {
