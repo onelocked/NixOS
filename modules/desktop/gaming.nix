@@ -7,14 +7,10 @@
   exo.mods.gaming =
     {
       pkgs,
-      config,
       lib,
       constants,
       ...
     }:
-    let
-      cfg = config.forte.persist;
-    in
     {
       config = {
         nix.settings = {
@@ -62,8 +58,15 @@
             "/steam" = {
               commonMountOptions = [ "x-gvfs-hide" ];
               users.${constants.username} = {
-                files = lib.unique cfg.home.steam.files;
-                directories = lib.unique cfg.home.steam.directories;
+                directories = lib.unique [
+                  ".steam"
+                  ".nv"
+                  ".local/share/Steam"
+                  ".local/share/vulkan"
+                  ".cache/nvidia"
+                  ".cache/winetricks"
+                  ".cache/umu-protonfixes"
+                ];
               };
             };
           };
@@ -78,31 +81,6 @@
             user = constants.username;
             group = "users";
             mode = "0755";
-          };
-        };
-        forte.persist.home.steam.directories = [
-          ".steam"
-          ".nv"
-          ".local/share/Steam"
-          ".local/share/vulkan"
-          ".cache/nvidia"
-          ".cache/winetricks"
-          ".cache/umu-protonfixes"
-        ];
-      };
-      options.forte = {
-        persist = {
-          home = {
-            steam = {
-              directories = lib.mkOption {
-                type = lib.types.listOf lib.types.anything;
-                default = [ ];
-              };
-              files = lib.mkOption {
-                type = lib.types.listOf lib.types.anything;
-                default = [ ];
-              };
-            };
           };
         };
       };
