@@ -54,10 +54,13 @@
 
       # setup persistence
       config = {
-        boot = {
-          tmp.useTmpfs = true;
-          tmp.tmpfsSize = "75%";
+        boot.tmp = {
+          useTmpfs = true;
+          tmpfsSize = "75%";
         };
+        fileSystems."/nix".neededForBoot = true;
+        fileSystems."/persist".neededForBoot = true;
+
         preservation = {
           enable = true;
           preserveAt = {
