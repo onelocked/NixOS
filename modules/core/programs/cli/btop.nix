@@ -13,6 +13,7 @@
           vim_keys = true;
           rounded_corners = true;
           proc_tree = false;
+          proc_gradient = false;
           show_gpu_info = "on";
           show_uptime = true;
           show_coretemp = true;
@@ -39,8 +40,8 @@
               theme[inactive_fg]="${base03}"
               theme[proc_misc]="${base0C}"
               theme[cpu_box]="${base0D}"
-              theme[mem_box]="${base0B}"
-              theme[net_box]="${base0C}"
+              theme[mem_box]="${base0D}"
+              theme[net_box]="${base0D}"
               theme[proc_box]="${base0E}"
               theme[div_line]="${base03}"
               theme[temp_start]="${base0B}"
