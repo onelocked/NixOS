@@ -17,7 +17,7 @@
             sub-auto=fuzzy
             sub-font="Apple Color Emoji"
             gpu-context=auto
-            hwdec=auto-copy
+            hwdec=auto
             profile=gpu-hq
             vo=gpu-next
             gpu-api=auto
@@ -270,7 +270,6 @@
             script = {
               mpris.path = pkgs.mpvScripts.mpris;
               sponsorblock.path = pkgs.mpvScripts.sponsorblock;
-              dynamic-crop.path = pkgs.mpvScripts.dynamic-crop;
               modernz = {
                 path = pkgs.mpvScripts.modernz;
                 opts.download_path = "${config.hj.directory}/Videos/mpv";
