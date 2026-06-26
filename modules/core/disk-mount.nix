@@ -1,9 +1,12 @@
 {
-  exo.core = {
-    services = {
-      devmon.enable = false;
-      gvfs.enable = false;
-      udisks2.enable = false;
+  exo.core =
+    { pkgs, ... }:
+    {
+      services = {
+        devmon.enable = false;
+        gvfs.enable = true;
+        # udisks2.enable = false;
+      };
+      hj.packages = with pkgs; [ glib ];
     };
-  };
 }

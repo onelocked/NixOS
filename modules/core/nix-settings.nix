@@ -22,10 +22,7 @@
     {
       forte.xdg.desktopEntries."nixos-manual".noDisplay = true;
       system = { inherit stateVersion; };
-      environment.systemPackages = [
-        pkgs.nix-output-monitor
-        pkgs.cifs-utils
-      ];
+      environment.systemPackages = [ pkgs.nix-output-monitor ];
       nix = {
         channel.enable = false; # required for nix-shell -p to work, set it to true if needed
         optimise.automatic = true;
