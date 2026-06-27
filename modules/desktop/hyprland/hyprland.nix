@@ -114,6 +114,13 @@
                       }
                     }
                   '';
+                "hypr/xdph.conf".text = # kdl
+                  ''
+                    screencopy {
+                        max_fps = 60
+                        allow_token_by_default = true
+                    }
+                  '';
               }
             ];
             services.graphical-desktop.enable = true;
