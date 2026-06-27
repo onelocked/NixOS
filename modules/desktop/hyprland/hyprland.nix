@@ -22,7 +22,7 @@
       constants,
       pkgs,
       self',
-      hostName,
+      hardware,
       ...
     }:
     let
@@ -202,7 +202,7 @@
               };
             };
           })
-          (lib.mkIf (hostName == "mini-pc") {
+          (lib.mkIf (hardware == "mini-pc") {
             environment.sessionVariables = {
               AQ_NO_MODIFIERS = 1;
             };
