@@ -28,7 +28,9 @@
           hl.config({
             general = {
               gaps_in           = 10,
-              gaps_out = { top = 60, bottom = 30, left = 30, right = 30 },
+              gaps_out = { top = ${
+                if config.forte.quickshell.enable then toString 60 else toString 30
+              }, bottom = 30, left = 30, right = 30 },
               no_focus_fallback = true,
 
               border_size       = 9,
