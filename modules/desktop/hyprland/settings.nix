@@ -231,7 +231,9 @@
           --                               █
 
           -- named workspaces
-          for index, name in ipairs({ "web", "dev", "chat", "media" }) do
+          for index, name in ipairs({ "web", "dev", "chat", "media"${
+            lib.optionalString (hostName == "gaming-pc") '', "games"''
+          } }) do
             hl.workspace_rule({ workspace = tostring(index), default_name = name, persistent = true })
           end
         '';

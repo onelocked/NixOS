@@ -80,6 +80,15 @@
             float = true,
             no_screen_share = true,
           })
+
+          hl.window_rule({
+            name = "move-all-games",
+            match = {
+              xdg_tag = "proton-game"
+            },
+            decorate = false,
+            workspace = "name:games",
+          })
         '';
       # preserve steam
       preservation = {
