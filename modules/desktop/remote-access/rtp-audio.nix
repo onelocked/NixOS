@@ -1,6 +1,11 @@
 {
   exo.mods.desktop =
-    { lib, config, ... }:
+    {
+      lib,
+      config,
+      hostName,
+      ...
+    }:
     let
       cfg = config.forte.rtp-audio;
     in
@@ -13,7 +18,7 @@
                 name = "libpipewire-module-rtp-sink";
                 args = {
                   "destination.ip" = "192.168.1.209";
-                  "destination.port" = 45599;
+                  "destination.port" = if hostName == "mini-pc" then 45599 else 45610;
                   "sess.latency.msec" = 15;
                   "audio.channels" = 2;
                   "audio.format" = "S16BE";
