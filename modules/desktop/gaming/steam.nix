@@ -1,9 +1,4 @@
-{ inputs, ... }:
 {
-  ff.nix-gaming-edge = {
-    url = "github:powerofthe69/nix-gaming-edge";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
   exo.mods.gaming =
     {
       pkgs,
@@ -17,13 +12,10 @@
         trusted-public-keys = [ "tokidoki:MD4VWt3kK8Fmz3jkiGoNRJIW31/QAm7l1Dcgz2Xa4hk=" ];
       };
 
-      nixpkgs.overlays = with inputs.nix-gaming-edge.overlays; [ proton-cachyos ];
-
       programs.steam = {
         enable = true;
         remotePlay.openFirewall = true;
         localNetworkGameTransfers.openFirewall = true;
-        extraCompatPackages = with pkgs; [ proton-cachyos-x86_64-v3 ];
       };
       hj.packages = with pkgs; [ protonup-rs ];
       hj.environment.sessionVariables = {
