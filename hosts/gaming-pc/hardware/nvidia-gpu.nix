@@ -5,8 +5,8 @@
     };
     services.xserver.videoDrivers = [ "nvidia" ];
     hardware.nvidia = {
+      branch = "bleeding_edge";
       modesetting.enable = true;
-      powerManagement.enable = true;
       open = true;
       nvidiaSettings = true;
     };
