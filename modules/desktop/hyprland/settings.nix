@@ -111,6 +111,7 @@
               disable_autoreload         = false,
               layers_hog_keyboard_focus  = false,
               focus_on_activate          = true,
+              vrr = 0,
             },
 
             binds = {

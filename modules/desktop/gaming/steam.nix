@@ -25,6 +25,11 @@
         localNetworkGameTransfers.openFirewall = true;
         extraCompatPackages = with pkgs; [ proton-cachyos-x86_64-v3 ];
       };
+      hj.packages = with pkgs; [ protonup-rs ];
+      hj.environment.sessionVariables = {
+        PROTON_NO_FSYNC = 1;
+        PROTON_ENABLE_WAYLAND = 1;
+      };
       programs.gamemode.enable = true;
       boot.kernel.sysctl = {
         # 20-shed.conf
