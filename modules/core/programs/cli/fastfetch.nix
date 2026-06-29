@@ -134,7 +134,7 @@
             { config, ... }:
             {
               inherit pkgs;
-              package = pkgs.fastfetch.minimal;
+              package = pkgs.fastfetch-unwrapped;
               flags = {
                 "--config" = config.constructFiles.generatedConfig.path;
               };
