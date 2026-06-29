@@ -26,14 +26,6 @@
         extraCompatPackages = with pkgs; [ proton-cachyos-x86_64-v3 ];
       };
       programs.gamemode.enable = true;
-      programs.gamescope = {
-        enable = true;
-        args = [
-          "-W 3440"
-          "-H 1440"
-          "-f"
-        ];
-      };
       boot.kernel.sysctl = {
         # 20-shed.conf
         "kernel.sched_cfs_bandwidth_slice_us" = 3000;
@@ -87,6 +79,7 @@
               xdg_tag = "proton-game"
             },
             decorate = false,
+            content = "game";
             workspace = "name:games",
           })
         '';
