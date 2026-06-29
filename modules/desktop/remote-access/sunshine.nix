@@ -13,7 +13,7 @@
         enable = config.desktop.remote-access.enable;
         autoStart = if hostName != "gaming-pc" then false else true;
         package = self'.packages.sunshine;
-        capSysAdmin = false;
+        capSysAdmin = true;
         openFirewall = true;
       };
       forte.persist.home = lib.mkIf config.services.sunshine.enable {
