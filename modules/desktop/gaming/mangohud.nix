@@ -2,6 +2,7 @@
   exo.mods.gaming = {
     forte.mangohud = {
       enable = true;
+      envConfig = true;
 
       settings = {
         position = "top-left";
@@ -20,6 +21,7 @@
       };
     };
   };
+
   exo.skeleton =
     {
       config,
@@ -52,21 +54,49 @@
           int = toString option;
           float = int;
           path = int;
-          bool = "0"; # "on/off" opts are disabled with `=0`
+          bool = "0";
           string = option;
           list = lib.concatStringsSep "," (lib.lists.forEach option toString);
         }
         .${builtins.typeOf option};
 
-      renderLine = k: v: (if lib.isBool v && v then k else "${k}=${renderOption v}");
-      renderSettings =
-        attrs: lib.strings.concatStringsSep "\n" (lib.attrsets.mapAttrsToList renderLine attrs) + "\n";
+      renderFormat =
+        sep: suffix: attrs:
+        attrs
+        |> lib.mapAttrsToList (k: v: if lib.isBool v && v then k else "${k}=${renderOption v}")
+        |> lib.concatStringsSep sep
+        |> (str: str + suffix);
+
+      renderSettings = renderFormat "\n" "\n";
+      renderEnvString = renderFormat "," "";
 
     in
     {
+      config = mkIf cfg.enable {
+        hj.packages = [ cfg.package ];
+
+        hj.environment.sessionVariables = lib.mkMerge [
+          (mkIf cfg.enableSessionWide {
+            MANGOHUD = 1;
+            MANGOHUD_DLSYM = 1;
+          })
+          (mkIf (cfg.envConfig && cfg.settings != { }) {
+            MANGOHUD_CONFIG = renderEnvString cfg.settings;
+          })
+        ];
+
+        hj.xdg.config.files = {
+          "MangoHud/MangoHud.conf" = mkIf (cfg.settings != { }) { text = renderSettings cfg.settings; };
+        }
+        // lib.mapAttrs' (
+          n: v: lib.nameValuePair "MangoHud/${n}.conf" { text = renderSettings v; }
+        ) cfg.settingsPerApplication;
+      };
       options = {
         forte.mangohud = {
           enable = lib.mkEnableOption "Mangohud";
+
+          envConfig = lib.mkEnableOption "MANGOHUD_CONFIG environment variable generation";
 
           package = lib.mkPackageOption pkgs "mangohud" { };
 
@@ -113,21 +143,6 @@
             '';
           };
         };
-      };
-
-      config = mkIf cfg.enable {
-        hj.packages = [ cfg.package ];
-
-        hj.environment.sessionVariables = mkIf cfg.enableSessionWide {
-          MANGOHUD = 1;
-          MANGOHUD_DLSYM = 1;
-        };
-        hj.xdg.config.files = {
-          "MangoHud/MangoHud.conf" = mkIf (cfg.settings != { }) { text = renderSettings cfg.settings; };
-        }
-        // lib.mapAttrs' (
-          n: v: lib.nameValuePair "MangoHud/${n}.conf" { text = renderSettings v; }
-        ) cfg.settingsPerApplication;
       };
     };
 }
