@@ -5,16 +5,17 @@
     inputs.nixpkgs.follows = "nixpkgs";
     inputs.systems.follows = "systems";
   };
-
   exo.mods.desktop =
     {
       inputs',
       scheme,
       config,
+      lib,
       ...
     }:
     let
       spicePkgs = inputs'.spicetify-nix.legacyPackages;
+      cfg = config.programs.spicetify;
     in
     {
       imports = [ inputs.spicetify-nix.nixosModules.default ];
@@ -42,14 +43,20 @@
           hidePodcasts
         ];
       };
-      forte.hyprland.lua.window-rules = # lua
-        ''
-          hl.window_rule({
-            name      = "spotify",
-            match     = { class = "Spotify" },
-            workspace = "name:media silent",
-          })
-        '';
-      forte.persist.home.directories = [ ".config/spotify" ];
+
+      forte.hyprland.lua.window-rules =
+        lib.mkIf cfg.enable # lua
+          ''
+            hl.window_rule({
+              name      = "spotify",
+              match     = { class = "spotify" },
+              workspace = "name:media silent",
+            })
+          '';
+
+      forte.persist.home.directories = lib.mkIf cfg.enable [
+        ".config/spotify"
+        ".cache/spotify"
+      ];
     };
 }
