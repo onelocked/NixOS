@@ -13,7 +13,7 @@
       };
 
       programs.steam = {
-        enable = true;
+        enable = false; # install via flatpak, for better permission control using flatseal
         remotePlay.openFirewall = true;
         localNetworkGameTransfers.openFirewall = true;
       };
