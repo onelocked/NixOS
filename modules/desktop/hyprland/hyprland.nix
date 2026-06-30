@@ -1,6 +1,6 @@
 {
   ff.hyprland = {
-    url = "github:hyprwm/Hyprland";
+    url = "github:hyprwm/Hyprland/f52070ee8c82bad0971b00863bb5debf0db66fd4";
     inputs.nixpkgs.follows = "nixpkgs";
     inputs.systems.follows = "systems";
   };
