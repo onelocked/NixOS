@@ -22,6 +22,7 @@
         <| lib.mkMerge [
           {
             hj.packages = [ cfg.package ];
+            forte.allowUnfree = [ "ndi-6" ];
           }
           (lib.mkIf cfg.systemd {
             hj.systemd.services."obs-startup" = {

@@ -52,9 +52,7 @@
           keep-outputs = true;
           keep-derivations = true;
         };
-        extraOptions = ''
-          !include ${config.sops.secrets.nix_extra_config.path}
-        '';
+        extraOptions = "!include ${config.sops.secrets.nix_extra_config.path}";
       };
       sops.secrets.nix_extra_config.owner = username;
       programs.nano.enable = lib.mkForce false;
@@ -62,16 +60,7 @@
         hostPlatform = lib.mkDefault "x86_64-linux";
         config = {
           allowUnfree = false;
-          allowUnfreePredicate =
-            pkg:
-            builtins.elem (lib.getName pkg) [
-              "parsec-bin"
-              "ndi-6"
-              "spotify"
-              "steam"
-              "steam-unwrapped"
-              "apple_cursor"
-            ];
+          allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.forte.allowUnfree;
         };
       };
 
@@ -83,5 +72,16 @@
         wf = "nix run .#write-flake . --offline";
         ws = "nix run .#write-sources . --offline";
       };
+    };
+  exo.skeleton =
+    { lib, ... }:
+    {
+      options.forte = {
+        allowUnfree = lib.mkOption {
+          type = lib.types.listOf lib.types.str;
+          default = [ ];
+        };
+      };
+
     };
 }

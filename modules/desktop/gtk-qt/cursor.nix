@@ -24,6 +24,7 @@
           XCURSOR_SIZE = cfg.size;
           XCURSOR_THEME = cfg.name;
         };
+        forte.allowUnfree = [ "apple_cursor" ];
       };
 
       options.forte.cursor = {

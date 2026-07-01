@@ -7,11 +7,6 @@
       ...
     }:
     {
-      nix.settings = {
-        substituters = [ "https://nix-cache.tokidoki.dev/tokidoki" ];
-        trusted-public-keys = [ "tokidoki:MD4VWt3kK8Fmz3jkiGoNRJIW31/QAm7l1Dcgz2Xa4hk=" ];
-      };
-
       programs.steam = {
         enable = false; # install via flatpak, for better permission control using flatseal
         remotePlay.openFirewall = true;
@@ -111,5 +106,10 @@
           mode = "0755";
         };
       };
+
+      forte.allowUnfree = [
+        "steam"
+        "steam-unwrapped"
+      ];
     };
 }

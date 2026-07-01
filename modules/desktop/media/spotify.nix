@@ -44,6 +44,7 @@
         ];
       };
 
+      forte.allowUnfree = lib.mkIf cfg.enable [ "spotify" ];
       forte.hyprland.lua.window-rules =
         lib.mkIf cfg.enable # lua
           ''
