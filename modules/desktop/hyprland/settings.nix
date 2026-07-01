@@ -4,7 +4,6 @@
       config,
       lib,
       hostName,
-      pkgs,
       ...
     }:
     let
@@ -24,18 +23,6 @@
             position = "auto",
             scale    = "auto",
           })
-
-          ${lib.optionalString (hostName == "gaming-pc") # lua
-            ''
-              hl.on("hyprland.start", function()
-                hl.dispatch(hl.dsp.exec_raw("${lib.getExe' pkgs.awww "awww-daemon"}"))
-              end)
-              -- Restore wallpaper on monitor reconnect
-              hl.on("monitor.added", function()
-                hl.dispatch(hl.dsp.exec_raw("${pkgs.awww}/bin/awww img ${config.hj.directory}/Pictures/wallpaper.png "))
-              end)
-            ''
-          }
 
           --                                      ▀█
           -- ▄▀▀▀█ ▄▀▀▀▄ █▀▀▀▄ ▄▀▀▀▄ █▄▀▀▀  ▀▀▀▄   █
