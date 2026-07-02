@@ -27,6 +27,7 @@
             enable = true;
             settings.PermitRootLogin = "prohibit-password";
           };
+          programs.nano.enable = false;
           nix.settings.experimental-features = [
             "nix-command"
             "flakes"
