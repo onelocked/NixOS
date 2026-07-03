@@ -1,7 +1,13 @@
 {
   perSystem =
-    { pkgs, constants, ... }:
     {
+      pkgs,
+      constants,
+      self',
+      ...
+    }:
+    {
+      devShells.remote-install = pkgs.mkShell { packages = [ self'.legacyPackages.remote-install ]; };
       legacyPackages.remote-install = pkgs.writeShellApplication {
         name = "remote-install";
         runtimeInputs = with pkgs; [

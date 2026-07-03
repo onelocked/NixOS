@@ -2,15 +2,16 @@
   perSystem =
     { pkgs, self', ... }:
     {
-      devShells.default = pkgs.mkShell {
-        packages = with pkgs; [
-          nix-tree
-          nix-update
-          nix-init
-          nix-melt
-          self'.legacyPackages.figlet
-          self'.legacyPackages.remote-install
-        ];
+      devShells = {
+        default = pkgs.mkShell {
+          packages = with pkgs; [
+            nix-tree
+            nix-update
+            nix-init
+            nix-melt
+          ];
+        };
+        figlet = pkgs.mkShell { packages = [ self'.legacyPackages.figlet ]; };
       };
       legacyPackages.figlet = pkgs.symlinkJoin {
         name = "figlet-custom";
