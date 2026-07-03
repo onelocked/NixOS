@@ -18,6 +18,7 @@
         {
           desktop.media.enable = false;
           forte.quickshell.enable = false;
+          forte.flatkpak.enable = true;
 
           services.openssh = {
             enable = true;

@@ -2,12 +2,15 @@
   exo.mods.desktop =
     {
       lib,
-      hostName,
       constants,
+      config,
       ...
     }:
+    let
+      cfg = config.forte.flatpak;
+    in
     {
-      config = lib.mkIf (hostName == "gaming-pc") {
+      config = lib.mkIf cfg.enable {
         services.flatpak.enable = true;
         preservation.preserveAt = {
           "/games" = {
@@ -20,6 +23,9 @@
             ];
           };
         };
+      };
+      options.forte.flatpak = {
+        enable = lib.mkEnableOption "Flatpak";
       };
     };
 }
