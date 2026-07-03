@@ -2,48 +2,60 @@
   exo.core =
     {
       lib,
-      config,
       hostName,
+      config,
       ...
     }:
     let
-      cfg = config.forte.ssh-config;
+      cfg = config.forte.openssh;
     in
     {
-      config = lib.mkIf cfg.enable {
-        forte.persist = {
-          home = {
-            directories = [
-              ".ssh"
-              ".local/share/.gnupg"
-            ];
+      config = lib.mkMerge [
+        (lib.mkIf cfg.enable {
+          services.openssh = {
+            enable = true;
+            settings = {
+              PermitRootLogin = "no";
+              PasswordAuthentication = false;
+              PermitEmptyPasswords = false;
+            };
           };
-        };
-        hj.files.".ssh/config".text = # bash
-          ''
-            Host Raspberry
-              User onelock
-              HostName 192.168.1.239
-            Host gitea.onelock.org
-              Port 2222
-              IdentitiesOnly yes
-              User git
-              HostName gitea.onelock.org
-              IdentityFile ~/.ssh/id_ed25519_gitea
-            Host github.com
-              IdentitiesOnly yes
-              User git
-              HostName github.com
-              IdentityFile ~/.ssh/id_ed25519_github
-            Host router
-              User root
-              HostName 192.168.1.1
-          '';
-      };
-      options.forte.ssh-config = {
-        enable = lib.mkEnableOption null // {
-          default = if hostName != "gaming-pc" then true else false;
-        };
-      };
+          users.users.onelock.openssh.authorizedKeys.keys = [
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICM7ifW7zlpT8VeWOgCpKSAdnHr4vgIzrcyId/RQ822J gaming-pc"
+          ];
+        })
+        (lib.mkIf (hostName == "mini-pc") {
+          forte.persist = {
+            home = {
+              directories = [
+                ".ssh"
+                ".local/share/.gnupg"
+              ];
+            };
+          };
+          hj.files.".ssh/config".text = # bash
+            ''
+              Host Raspberry
+                User onelock
+                HostName 192.168.1.239
+              Host gitea.onelock.org
+                Port 2222
+                IdentitiesOnly yes
+                User git
+                HostName gitea.onelock.org
+                IdentityFile ~/.ssh/id_ed25519_gitea
+              Host github.com
+                IdentitiesOnly yes
+                User git
+                HostName github.com
+                IdentityFile ~/.ssh/id_ed25519_github
+              Host router
+                User root
+                HostName 192.168.1.1
+            '';
+        })
+      ];
+
+      options.forte.openssh.enable = lib.mkEnableOption null;
     };
 }
