@@ -55,7 +55,6 @@
             '';
         })
       ];
-
       options.forte.openssh.enable = lib.mkEnableOption null;
     };
 }
