@@ -9,7 +9,6 @@
         useDHCP = mkDefault true;
         networkmanager.enable = true;
         firewall.enable = true;
-        interfaces.eno1.wakeOnLan.enable = true;
       };
       # TCP fq optimisation
       boot = {

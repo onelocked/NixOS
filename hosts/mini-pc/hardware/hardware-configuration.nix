@@ -17,6 +17,8 @@
         "sd_mod"
       ];
       boot.kernelModules = [ "kvm-amd" ];
+
+      networking.interfaces.eno1.wakeOnLan.enable = true;
       hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     };
 }

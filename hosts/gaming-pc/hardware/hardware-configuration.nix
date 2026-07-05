@@ -20,6 +20,7 @@
       boot.kernelModules = [ "kvm-intel" ];
 
       nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+      networking.interfaces.enp6s0.wakeOnLan.enable = true;
       hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     };
 }
