@@ -5,6 +5,7 @@
       nixpkgs.config.rocmSupport = true;
       hardware.amdgpu.opencl.enable = true;
       hj.packages = [ self'.packages.amdgpu_top ];
+      boot.initrd.kernelModules = [ "amdgpu" ];
     };
   perSystem =
     { pkgs, ... }:
