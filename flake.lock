@@ -640,26 +640,6 @@
         "type": "github"
       }
     },
-    "nix-gaming-edge": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1782572771,
-        "narHash": "sha256-7oehXD0pdsfzNiBZxR4SEbR0LR7A0gFVk6YgE7Vy+UI=",
-        "owner": "powerofthe69",
-        "repo": "nix-gaming-edge",
-        "rev": "94d78dcdbc3a6f6f8ad064294c1d17a54aa57e9f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "powerofthe69",
-        "repo": "nix-gaming-edge",
-        "type": "github"
-      }
-    },
     "nix-index-database": {
       "inputs": {
         "nixpkgs": [
@@ -875,7 +855,6 @@
         "hyprland": "hyprland",
         "lan-mouse": "lan-mouse",
         "nix-cachyos-kernel": "nix-cachyos-kernel",
-        "nix-gaming-edge": "nix-gaming-edge",
         "nix-index-database": "nix-index-database",
         "nixos-core": "nixos-core",
         "nixpkgs": "nixpkgs_2",
@@ -886,7 +865,6 @@
         "rust-overlay": "rust-overlay",
         "sops-nix": "sops-nix",
         "spicetify-nix": "spicetify-nix",
-        "sunshine": "sunshine",
         "systems": "systems",
         "theme-store": "theme-store",
         "treefmt-nix": "treefmt-nix",
@@ -956,23 +934,6 @@
       "original": {
         "owner": "Gerg-L",
         "repo": "spicetify-nix",
-        "type": "github"
-      }
-    },
-    "sunshine": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1780670869,
-        "narHash": "sha256-vNjd59YIP2eH6wfcjcaNW0ec+xjIe0/ZsjKHycGt/5Y=",
-        "owner": "Qubasa",
-        "repo": "nixpkgs",
-        "rev": "391d69d880514742b8612cbcd6480b5a8c3c08b5",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Qubasa",
-        "ref": "update_sunshine",
-        "repo": "nixpkgs",
         "type": "github"
       }
     },

@@ -62,10 +62,6 @@
         flake-compat.follows = "flake-compat";
       };
     };
-    nix-gaming-edge = {
-      url = "github:powerofthe69/nix-gaming-edge";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -105,10 +101,6 @@
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems";
       };
-    };
-    sunshine = {
-      url = "github:Qubasa/nixpkgs/update_sunshine";
-      flake = false;
     };
     systems.url = "github:nix-systems/x86_64-linux";
     theme-store = {
