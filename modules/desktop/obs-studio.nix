@@ -16,7 +16,6 @@
       cfg = config.forte.obs-studio;
     in
     {
-
       config =
         lib.mkIf cfg.enable
         <| lib.mkMerge [
