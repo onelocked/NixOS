@@ -282,13 +282,12 @@
                 match            = { class = "zen-twilight" },
                 workspace        = "name:web",
                 fullscreen_state = "0 3",
+                sync_fullscreen  = false,
                 opacity          = "1 override",
-                no_initial_focus = true,
               })
               hl.window_rule({
                 name       = "zen-pip",
                 match      = { class = "zen-twilight", title = "Picture-in-Picture" },
-                fullscreen = false,
                 float      = true,
                 size       = { 900, 506 },
                 move       = { 28, 906 },
@@ -301,6 +300,7 @@
                 float  = true,
                 size   = { 1300, 900 },
                 center = true,
+                workspace  = "name:web",
               })
             '';
           keybinds = # lua
@@ -309,6 +309,12 @@
                   local win = hl.get_window("class:zen-twilight")
                   if win then
                       hl.dispatch(hl.dsp.focus({ window = win }))
+                      hl.dispatch(hl.dsp.window.fullscreen_state({
+                          internal = 0,
+                          client   = 3,
+                          action   = "set",
+                          window   = win,
+                      }))
                   else
                       hl.dispatch(hl.dsp.exec_raw("zen-twilight"))
                   end
