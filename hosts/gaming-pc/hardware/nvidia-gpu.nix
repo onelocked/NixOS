@@ -19,8 +19,6 @@
       LIBVA_DRIVER_NAME = "nvidia";
       __GLX_VENDOR_LIBRARY_NAME = "nvidia";
     };
-
-    boot.kernelModules = [ "ntsync" ]; # support driver for emulation of NT synchronization, used by Wine/Proton
     forte.persist.root.directories = [ "/etc/lact" ];
   };
 }
