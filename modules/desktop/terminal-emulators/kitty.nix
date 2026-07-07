@@ -198,9 +198,9 @@
                 opacity          = "1 override 0.9 override",
               })
               hl.window_rule({
-                  name  = "kitty-scroll",
-                  match = { class = "kitty", workspace = "w[t3-99]" },
-                  scrolling_width = 0.333,
+                name  = "kitty-scroll",
+                match = { class = "kitty", workspace = "n[s:dev] n[e:dev] w[t3-99]" },
+                scrolling_width = 0.333,
               })
             '';
           keybinds = # lua
