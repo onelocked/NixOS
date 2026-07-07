@@ -63,7 +63,7 @@
           # Splits
           "ctrl+a>p>d" = "launch --location=hsplit --cwd=current";
           "ctrl+a>p>n" = "launch --location=vsplit --cwd=current";
-          "ctrl+n" = "launch --location=vsplit --cwd=current";
+          "ctrl+n" = "combine : launch --location=hsplit --cwd=current: layout_action bias 25";
           "alt+f" = "toggle_layout stack";
 
           # Navigation with Alt + arrows
