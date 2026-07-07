@@ -181,6 +181,19 @@
           })
 
           -- scroll behave like dwindle for first 4 windows
+          hl.on("window.open_early", function(w)
+            local ws = w.workspace
+            if not ws then return end
+            if ws.name ~= "dev" then return end
+            if ws.tiled_layout ~= "scrolling" then return end
+
+            -- ws.windows here is the count BEFORE the new window is added
+            local next_count = ws.windows + 1
+            if next_count % 4 == 0 then
+              hl.dispatch(hl.dsp.layout("inhibit_scroll 1"))
+            end
+          end)
+
           hl.on("window.open", function(w)
             local ws = w.workspace
             if not ws then return end
@@ -188,14 +201,31 @@
             if ws.tiled_layout ~= "scrolling" then return end
 
             local count = ws.windows
+
             if count >= 2 and count <= 3 then
               hl.dispatch(hl.dsp.layout("fit all"))
-            elseif count == 4 then
-              hl.dispatch(hl.dsp.layout("inhibit_scroll 1"))
+            elseif count % 4 == 0 then
               hl.dispatch(hl.dsp.layout("focus l"))
               hl.dispatch(hl.dsp.layout("consume"))
               hl.dispatch(hl.dsp.layout("focus d"))
               hl.dispatch(hl.dsp.layout("inhibit_scroll 0"))
+              if count == 4 then
+                hl.dispatch(hl.dsp.layout("fit all"))
+              end
+            end
+          end)
+
+          -- when closing windows resize them and make them fit the screen, single window is always column width 0.71
+          hl.on("window.destroy", function()
+            local ws = hl.get_active_workspace()
+            if not ws then return end
+            if ws.name ~= "dev" then return end
+            if ws.tiled_layout ~= "scrolling" then return end
+
+            local count = ws.windows
+            if count == 1 then
+              hl.dispatch(hl.dsp.layout("colresize 0.7111"))
+            elseif count >= 2 and count <= 3 then
               hl.dispatch(hl.dsp.layout("fit all"))
             end
           end)
