@@ -3,7 +3,6 @@
     { config, ... }:
     {
       forte.mpv = {
-        with-wlpaste = true;
         conf = # ini
           ''
             osd-duration=500
@@ -33,19 +32,77 @@
             loop-file=inf
             autofit=x1355
           '';
-        image-conf = # ini
+        input = # bash
           ''
-            image-display-duration=inf
-            loop-file=inf
-            autofit=x1200
-            osd-level=0
-            window-dragging=no
-            osc=no
-            gpu-context=auto
-            hwdec=auto-copy
-            profile=gpu-hq
-            vo=gpu-next
-            gpu-api=auto
+            MBTN_LEFT cycle pause
+            WHEEL_DOWN add volume -1
+            WHEEL_UP add volume 1
+            S screenshot video
+
+            h no-osd seek -5 exact
+            LEFT no-osd seek -5 exact
+            l no-osd seek 5 exact
+            RIGHT no-osd seek 5 exact
+            j seek -30
+            DOWN seek -30
+            k seek 30
+            UP seek 30
+
+            H no-osd seek -1 exact
+            Shift+LEFT no-osd seek -1 exact
+            L no-osd seek 1 exact
+            Shift+RIGHT no-osd seek 1 exact
+            J seek -300
+            Shift+DOWN seek -300
+            K seek 300
+            Shift+UP seek 300
+
+            Ctrl+LEFT no-osd sub-seek -1
+            Ctrl+h no-osd sub-seek -1
+            Ctrl+RIGHT no-osd sub-seek 1
+            Ctrl+l no-osd sub-seek 1
+            Ctrl+DOWN add chapter -1
+            Ctrl+j add chapter -1
+            Ctrl+UP add chapter 1
+            Ctrl+k add chapter 1
+
+            Alt+LEFT frame-back-step
+            Alt+h frame-back-step
+            Alt+RIGHT frame-step
+            Alt+l frame-step
+
+            PGUP add chapter 1
+            PGDWN add chapter -1
+
+            u revert-seek
+
+            Ctrl++ add sub-scale 0.1
+            Ctrl+- add sub-scale -0.1
+            Ctrl+0 set sub-scale 0
+
+            q quit
+            Q quit-watch-later
+            q {encode} quit 4
+            p cycle pause
+            SPACE cycle pause
+            f cycle fullscreen
+
+            n playlist-next
+            N playlist-prev
+
+            o show-progress
+            O script-binding stats/display-stats-toggle
+
+            s cycle sub
+            v cycle video
+            a cycle audio
+            c add panscan 0.1
+            PLAY cycle pause
+            PAUSE cycle pause
+            PLAYPAUSE cycle pause
+            PLAYONLY set pause no
+            PAUSEONLY set pause yes
+            STOP stop
           '';
       };
     };
@@ -63,11 +120,8 @@
     in
     {
       config = lib.mkIf cfg.enable {
-        hj.packages = [
-          cfg.package
-          cfg.image-viewer
-        ];
-        forte.otter-launcher.modules = lib.mkIf cfg.with-wlpaste [
+        hj.packages = [ cfg.package ];
+        forte.otter-launcher.modules = [
           {
             description = "video";
             prefix = "mpv";
@@ -85,182 +139,43 @@
             })
           '';
         forte.xdg.desktopEntries."umpv".noDisplay = true;
-        forte.xdg.desktopEntries."mpvi" = {
-          name = "MPV Image Viewer";
-          exec = "${cfg.image-viewer}/bin/mpv %U";
-          noDisplay = true;
-          icon = "mpv";
-          mimeType = [
-            "image/png"
-            "image/jpeg"
-            "image/jpg"
-            "image/webp"
-            "image/gif"
-          ];
-        };
         xdg.mime.defaultApplications =
-          (
-            [
-              # Audio
-              "audio/aac"
-              "audio/mpeg"
-              "audio/ogg"
-              "audio/opus"
-              "audio/wav"
-              "audio/webm"
-              "audio/x-matroska"
+          [
+            # Audio
+            "audio/aac"
+            "audio/mpeg"
+            "audio/ogg"
+            "audio/opus"
+            "audio/wav"
+            "audio/webm"
+            "audio/x-matroska"
 
-              # Video
-              "video/mp2t"
-              "video/mp4"
-              "video/mpeg"
-              "video/ogg"
-              "video/webm"
-              "video/x-flv"
-              "video/x-matroska"
-              "video/x-msvideo"
-            ]
-            |> map (mime: lib.nameValuePair mime [ "mpv.desktop" ])
-            |> lib.listToAttrs
-          )
-          // (
-            [
-              # Image
-              "image/bmp"
-              "image/gif"
-              "image/jpeg"
-              "image/jpg"
-              "image/png"
-              "image/tiff"
-              "image/vnd.microsoft.icon"
-              "image/webp"
-            ]
-            |> map (mime: lib.nameValuePair mime [ "mpvi.desktop" ])
-            |> lib.listToAttrs
-          );
+            # Video
+            "video/mp2t"
+            "video/mp4"
+            "video/mpeg"
+            "video/ogg"
+            "video/webm"
+            "video/x-flv"
+            "video/x-matroska"
+            "video/x-msvideo"
+          ]
+          |> map (mime: lib.nameValuePair mime [ "mpv.desktop" ])
+          |> lib.listToAttrs;
       };
 
       options.forte.mpv = {
         enable = lib.mkEnableOption "mpv" // {
           default = config.desktop.media.enable;
         };
-        with-wlpaste = lib.mkEnableOption "mpv-wl-paste";
         conf = lib.mkOption {
           default = "";
           type = lib.types.lines;
         };
 
-        image-conf = lib.mkOption {
-          default = "";
-          type = lib.types.lines;
-        };
-
-        image-input = lib.mkOption {
-          type = lib.types.lines;
-          default = # bash
-            ''
-              MBTN_LEFT script-binding positioning/drag-to-pan
-              WHEEL_UP      add video-zoom  0.1
-              WHEEL_DOWN    add video-zoom -0.1
-
-              k             add video-pan-y  0.01
-              j             add video-pan-y -0.01
-              h             add video-pan-x  0.01
-              l             add video-pan-x -0.01
-
-              Ctrl+r         set video-zoom 0 ; set video-pan-x 0 ; set video-pan-y 0
-            '';
-        };
-
         input = lib.mkOption {
-          default = # bash
-            ''
-              MBTN_LEFT cycle pause
-              WHEEL_DOWN add volume -1
-              WHEEL_UP add volume 1
-              S screenshot video
-
-              h no-osd seek -5 exact
-              LEFT no-osd seek -5 exact
-              l no-osd seek 5 exact
-              RIGHT no-osd seek 5 exact
-              j seek -30
-              DOWN seek -30
-              k seek 30
-              UP seek 30
-
-              H no-osd seek -1 exact
-              Shift+LEFT no-osd seek -1 exact
-              L no-osd seek 1 exact
-              Shift+RIGHT no-osd seek 1 exact
-              J seek -300
-              Shift+DOWN seek -300
-              K seek 300
-              Shift+UP seek 300
-
-              Ctrl+LEFT no-osd sub-seek -1
-              Ctrl+h no-osd sub-seek -1
-              Ctrl+RIGHT no-osd sub-seek 1
-              Ctrl+l no-osd sub-seek 1
-              Ctrl+DOWN add chapter -1
-              Ctrl+j add chapter -1
-              Ctrl+UP add chapter 1
-              Ctrl+k add chapter 1
-
-              Alt+LEFT frame-back-step
-              Alt+h frame-back-step
-              Alt+RIGHT frame-step
-              Alt+l frame-step
-
-              PGUP add chapter 1
-              PGDWN add chapter -1
-
-              u revert-seek
-
-              Ctrl++ add sub-scale 0.1
-              Ctrl+- add sub-scale -0.1
-              Ctrl+0 set sub-scale 0
-
-              q quit
-              Q quit-watch-later
-              q {encode} quit 4
-              p cycle pause
-              SPACE cycle pause
-              f cycle fullscreen
-
-              n playlist-next
-              N playlist-prev
-
-              o show-progress
-              O script-binding stats/display-stats-toggle
-
-              s cycle sub
-              v cycle video
-              a cycle audio
-              c add panscan 0.1
-              PLAY cycle pause
-              PAUSE cycle pause
-              PLAYPAUSE cycle pause
-              PLAYONLY set pause no
-              PAUSEONLY set pause yes
-              STOP stop
-            '';
           type = lib.types.lines;
-        };
-        image-viewer = lib.mkOption {
-          type = lib.types.package;
-          default = birdee.wrappers.mpv.wrap {
-            inherit pkgs;
-            package = pkgs.mpv;
-            "mpv.conf".content = cfg.image-conf;
-            "mpv.input".content = cfg.image-input;
-            script.rotate-resize = {
-              opts = {
-                keybinds = "r";
-              };
-              path = self'.legacyPackages.mpv-rotate-resize;
-            };
-          };
+          default = "";
         };
         package = lib.mkOption {
           type = lib.types.package;
