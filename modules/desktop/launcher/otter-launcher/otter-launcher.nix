@@ -189,6 +189,7 @@
     };
 
   envoy.otter-launcher.github = "kuokuo123/otter-launcher";
+  envoy.fsel.github = "Mjoyufull/fsel";
   exo.skeleton =
     {
       self',
@@ -256,87 +257,115 @@
         };
       };
 
-      options.forte.otter-launcher = {
-        enable = lib.mkEnableOption "otter-launcher";
+      options.forte = {
+        otter-launcher = {
+          enable = lib.mkEnableOption "otter-launcher";
 
-        settings = lib.mkOption {
-          inherit (tomlFormat) type;
-          default = { };
-          description = "Options to go into otter-launcher's toml config";
-        };
+          settings = lib.mkOption {
+            inherit (tomlFormat) type;
+            default = { };
+            description = "Options to go into otter-launcher's toml config";
+          };
 
-        modules = lib.mkOption {
-          type = lib.types.listOf (lib.types.attrsOf lib.types.anything);
-          default = [ ];
-        };
+          modules = lib.mkOption {
+            type = lib.types.listOf (lib.types.attrsOf lib.types.anything);
+            default = [ ];
+          };
 
-        resize = lib.mkOption {
-          type = lib.types.anything;
-          default =
-            width: height: app: # bash
-            ''
-              hyprctl --batch "dispatch hl.dsp.window.resize({ x = ${toString width}, y = ${toString height} }); dispatch hl.dsp.window.center(); dispatch hl.dsp.window.set_prop({ prop = 'rounding', value = 0 }); dispatch hl.dsp.window.set_prop({ prop = 'no_shadow', value = false }); dispatch hl.dsp.window.set_prop({ prop = 'border_size', value = 9 })" \
-              && kitten @ set-background-image none \
-              && kitten @ set-spacing padding=0 \
-              && kitten @ set-font-size ${toString config.forte.kitty.fontConfig.font_size} \
-              && ${app}
-            '';
-        };
-
-        otter-kitty-conf = lib.mkOption {
-          type = lib.types.package;
-          default =
-            pkgs.writeText "otter-kitty.conf" # bash
+          resize = lib.mkOption {
+            type = lib.types.anything;
+            default =
+              width: height: app: # bash
               ''
-                font_size               15
-                background_opacity ${if theme == "dark" then "1" else "0.7"}
-                allow_remote_control yes
-                ${lib.optionalString (theme == "dark") ''
-                  background_image        ${
-                    (pkgs.fetchurl {
-                      url = "https://raw.githubusercontent.com/onelocked/images/refs/heads/main/fleet-controller.png";
-                      hash = "sha256-pI4EzF6S7++rws35Ki3dD/Kt62XfNdmf0fuWyXCccVc=";
-                    })
-                  }
-                  background_image_layout scaled
-                  background_image_linear yes
-                  window_padding_width    20 105 20 105
-                ''}
+                hyprctl --batch "dispatch hl.dsp.window.resize({ x = ${toString width}, y = ${toString height} }); dispatch hl.dsp.window.center(); dispatch hl.dsp.window.set_prop({ prop = 'rounding', value = 0 }); dispatch hl.dsp.window.set_prop({ prop = 'no_shadow', value = false }); dispatch hl.dsp.window.set_prop({ prop = 'border_size', value = 9 })" \
+                && kitten @ set-background-image none \
+                && kitten @ set-spacing padding=0 \
+                && kitten @ set-font-size ${toString config.forte.kitty.fontConfig.font_size} \
+                && ${app}
               '';
-        };
+          };
 
-        moreCfg = lib.mkOption {
-          type = with lib.types; nullOr (either path lines);
-          default = "";
-          description = "Additional config lines.";
-          example = lib.literalExpression "./config.toml";
-        };
-
-        package = lib.mkOption {
-          type = lib.types.package;
-          default = birdee.lib.wrapPackage (
-            { config, ... }:
-            {
-              inherit pkgs;
-              package = self'.packages.otter-launcher;
-              flags = {
-                "--config" = config.constructFiles.generatedConfig.path;
-              };
-              constructFiles.generatedConfig = {
-                relPath = "config.toml";
-                builder = ''
-                  mkdir -p "$(dirname "$2")"
-                  cat ${tomlFormat.generate "config.toml" (cfg.settings // { inherit (cfg) modules; })} > "$2"
-                  printf '%s\n' "${cfg.moreCfg}" >> "$2"
+          otter-kitty-conf = lib.mkOption {
+            type = lib.types.package;
+            default =
+              pkgs.writeText "otter-kitty.conf" # bash
+                ''
+                  font_size               15
+                  background_opacity ${if theme == "dark" then "1" else "0.7"}
+                  allow_remote_control yes
+                  ${lib.optionalString (theme == "dark") ''
+                    background_image        ${
+                      (pkgs.fetchurl {
+                        url = "https://raw.githubusercontent.com/onelocked/images/refs/heads/main/fleet-controller.png";
+                        hash = "sha256-pI4EzF6S7++rws35Ki3dD/Kt62XfNdmf0fuWyXCccVc=";
+                      })
+                    }
+                    background_image_layout scaled
+                    background_image_linear yes
+                    window_padding_width    20 105 20 105
+                  ''}
                 '';
-              };
-              runtimePkgs = [
-                pkgs.wiremix
-                pkgs.chafa
-              ]
-              ++ lib.optional fsel.enable (fsel.package);
-            }
-          );
+          };
+
+          moreCfg = lib.mkOption {
+            type = with lib.types; nullOr (either path lines);
+            default = "";
+            description = "Additional config lines.";
+            example = lib.literalExpression "./config.toml";
+          };
+
+          package = lib.mkOption {
+            type = lib.types.package;
+            default = birdee.lib.wrapPackage (
+              { config, ... }:
+              {
+                inherit pkgs;
+                package = self'.packages.otter-launcher;
+                flags = {
+                  "--config" = config.constructFiles.generatedConfig.path;
+                };
+                constructFiles.generatedConfig = {
+                  relPath = "config.toml";
+                  builder = ''
+                    mkdir -p "$(dirname "$2")"
+                    cat ${tomlFormat.generate "config.toml" (cfg.settings // { inherit (cfg) modules; })} > "$2"
+                    printf '%s\n' "${cfg.moreCfg}" >> "$2"
+                  '';
+                };
+                runtimePkgs = [
+                  pkgs.wiremix
+                  pkgs.chafa
+                ]
+                ++ lib.optional fsel.enable (fsel.package);
+              }
+            );
+          };
+        };
+        fsel = {
+          enable = lib.mkEnableOption "fsel";
+          settings = lib.mkOption {
+            inherit (tomlFormat) type;
+            default = { };
+            description = "Options to go into fsel's toml config";
+          };
+          package = lib.mkOption {
+            type = lib.types.package;
+            default = birdee.lib.wrapPackage (
+              { config, ... }:
+              {
+                inherit pkgs;
+                package = self'.packages.fsel;
+                runtimePkgs = [ pkgs.app2unit ];
+                flags = {
+                  "--config" = config.constructFiles.generatedConfig.path;
+                };
+                constructFiles.generatedConfig = {
+                  relPath = "config.toml";
+                  builder = ''mkdir -p "$(dirname "$2")" && cp ${tomlFormat.generate "config.toml" fsel.settings} "$2"'';
+                };
+              }
+            );
+          };
         };
       };
     };
@@ -394,6 +423,11 @@
             )
           ];
         };
+        fsel = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
+          inherit (envoy.fsel) pname version src;
+          cargoHash = "sha256-G1wfue1Q+3NMH/5NqPVKeO0NpU0WJlwWkh51r3TM5IM=";
+          doCheck = false;
+        });
       };
     };
 }
