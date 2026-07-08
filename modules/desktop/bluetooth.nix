@@ -1,15 +1,23 @@
 {
   exo.mods.desktop =
     { config, lib, ... }:
+    let
+      cfg = config.forte.bluetooth;
+    in
     {
-      services.blueman.enable = false;
-      hardware.bluetooth = {
-        enable = false;
-        powerOnBoot = false;
-        settings.General.Experimental = true;
+      config = lib.mkIf cfg.enable {
+        services.blueman.enable = true;
+        hardware.bluetooth = {
+          enable = true;
+          powerOnBoot = true;
+          settings.General.Experimental = true;
+        };
+        forte.persist = {
+          root.directories = [ "/var/lib/bluetooth" ];
+        };
       };
-      forte.persist = lib.mkIf config.hardware.bluetooth.enable {
-        root.directories = [ "/var/lib/bluetooth" ];
+      options.forte.bluetooth = {
+        enable = lib.mkEnableOption "bluetooth";
       };
     };
 }
