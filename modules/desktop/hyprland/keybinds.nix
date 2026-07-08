@@ -8,6 +8,7 @@
           local workspace_widths = {
             ["web"] = { 0.711, 0.93 },
             ["dev"] = { 0.3333, 0.5, 0.71 },
+            ["chat"] = { 0.5, 0.71 },
           }
           local default_widths = { 0.3, 0.5, 0.71 }
           local cycle_idx = 0

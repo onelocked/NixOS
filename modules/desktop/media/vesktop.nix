@@ -325,7 +325,7 @@
             hl.window_rule({
               name            = "vesktop",
               match           = { class = "vesktop" },
-              scrolling_width = 0.79,
+              scrolling_width = 0.5,
               workspace       = "name:chat silent",
               suppress_event  = "fullscreen maximize activate activatefocus",
               fullscreen_state = "0 3",

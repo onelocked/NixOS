@@ -54,6 +54,7 @@
                 name      = "spotify",
                 match     = { class = "spotify" },
                 workspace = "name:chat silent",
+                scrolling_width = 0.5,
               })
             '';
           forte.persist.home.directories = [
