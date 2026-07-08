@@ -129,7 +129,6 @@
                 fi
               ''}; exit";
             }
-
           ]
           ++ lib.optionals fsel.enable [
             {
