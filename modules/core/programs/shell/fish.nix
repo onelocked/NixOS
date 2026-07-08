@@ -141,9 +141,19 @@
             ".local/share/zoxide"
           ];
         };
-        hj.packages = [
+        hj.packages = with pkgs; [
           cfg.atuin
-          pkgs.zoxide
+          zoxide
+          eza
+          lsof
+          fd
+          jq
+          wget
+          unzip
+          ripgrep
+          killall
+          isd # TUI systemd
+          scooter # search and replace
         ];
         programs.fish.interactiveShellInit = ''
           ${lib.getExe pkgs.zoxide} init fish | source
