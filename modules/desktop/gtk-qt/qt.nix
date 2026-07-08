@@ -73,18 +73,20 @@
         };
 
         hj.xdg.config.files =
-          lib.genAttrs
-            [
-              "qt5ct/qt5ct.conf"
-              "qt6ct/qt6ct.conf"
-            ]
-            (_: {
-              source = ini "qtct.conf" cfg.settings;
-            });
+          [
+            "qt5ct/qt5ct.conf"
+            "qt6ct/qt6ct.conf"
+          ]
+          |> map (f: lib.nameValuePair f { source = ini "qtct.conf" cfg.settings; })
+          |> builtins.listToAttrs;
 
-        forte.xdg.desktopEntries = lib.genAttrs [ "qt5ct" "qt6ct" ] (_: {
-          noDisplay = true;
-        });
+        forte.xdg.desktopEntries =
+          [
+            "qt5ct"
+            "qt6ct"
+          ]
+          |> map (f: lib.nameValuePair f { noDisplay = true; })
+          |> builtins.listToAttrs;
       };
 
       options.forte.qt = {

@@ -1,11 +1,6 @@
 {
   perSystem =
-    {
-      pkgs,
-      constants,
-      self',
-      ...
-    }:
+    { pkgs, self', ... }:
     {
       devShells.remote-install = pkgs.mkShell { packages = [ self'.legacyPackages.remote-install ]; };
       legacyPackages.remote-install = pkgs.writeShellApplication {
@@ -113,8 +108,8 @@
           STAGING_DIR=$(mktemp -d)
           trap 'rm -rf "$STAGING_DIR"' EXIT
 
-          KEY_PATH="${constants.homedir}/.config/sops/age/keys.txt"
-          TARGET_DIR="$STAGING_DIR/persist${constants.homedir}/.config/sops/age"
+          KEY_PATH="/home/onelock/.config/sops/age/keys.txt"
+          TARGET_DIR="$STAGING_DIR/persist/home/onelock/.config/sops/age"
 
           mkdir -p "$TARGET_DIR"
           rsync -av "$KEY_PATH" "$TARGET_DIR/keys.txt"
@@ -125,7 +120,7 @@
           nix run github:nix-community/nixos-anywhere -- \
             --phases "$PHASES" \
             --extra-files "$STAGING_DIR" \
-            --chown /persist${constants.homedir}/.config/sops/age/keys.txt 1000:100 \
+            --chown /persist/home/onelock/.config/sops/age/keys.txt 1000:100 \
             --build-on local \
             --flake .#"$HOST" \
             "$TARGET_IP"

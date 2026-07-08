@@ -1,23 +1,22 @@
 {
   exo.core =
-    { constants, ... }:
-    let
-      inherit (constants) timezone locale;
-    in
+    { lib, ... }:
     {
-      # Timezone and locale
-      time.timeZone = timezone;
-      i18n.defaultLocale = locale;
-      i18n.extraLocaleSettings = {
-        LC_ADDRESS = locale;
-        LC_IDENTIFICATION = locale;
-        LC_MEASUREMENT = locale;
-        LC_MONETARY = locale;
-        LC_NAME = locale;
-        LC_NUMERIC = locale;
-        LC_PAPER = locale;
-        LC_TELEPHONE = locale;
-        LC_TIME = locale;
-      };
+      time.timeZone = "Europe/London";
+      i18n.defaultLocale = "en_GB.UTF-8";
+      i18n.extraLocaleSettings =
+        [
+          "LC_ADDRESS"
+          "LC_IDENTIFICATION"
+          "LC_MEASUREMENT"
+          "LC_MONETARY"
+          "LC_NAME"
+          "LC_NUMERIC"
+          "LC_PAPER"
+          "LC_TELEPHONE"
+          "LC_TIME"
+        ]
+        |> map (locale: lib.nameValuePair locale "en_GB.UTF-8")
+        |> builtins.listToAttrs;
     };
 }

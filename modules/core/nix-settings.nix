@@ -16,12 +16,9 @@
       config,
       ...
     }:
-    let
-      inherit (constants) stateVersion username;
-    in
     {
       forte.xdg.desktopEntries."nixos-manual".noDisplay = true;
-      system = { inherit stateVersion; };
+      system.stateVersion = "25.11";
       environment.systemPackages = [ pkgs.nix-output-monitor ];
       nix = {
         channel.enable = false; # required for nix-shell -p to work, set it to true if needed
@@ -29,7 +26,7 @@
         package = pkgs.nixVersions.latest;
         settings = {
           allow-import-from-derivation = false;
-          trusted-users = [ username ];
+          trusted-users = [ constants.username ];
           # Binary Cache
           substituters = [
             "https://cachix.cachix.org"
@@ -54,7 +51,7 @@
         };
         extraOptions = "!include ${config.sops.secrets.nix_extra_config.path}";
       };
-      sops.secrets.nix_extra_config.owner = username;
+      sops.secrets.nix_extra_config.owner = constants.username;
       programs.nano.enable = lib.mkForce false;
       nixpkgs = {
         hostPlatform = lib.mkDefault "x86_64-linux";

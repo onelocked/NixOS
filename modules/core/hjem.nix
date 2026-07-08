@@ -13,9 +13,6 @@
       inputs',
       ...
     }:
-    let
-      inherit (constants) username homedir;
-    in
     {
       imports = [
         inputs.hjem.nixosModules.default
@@ -24,8 +21,8 @@
       hjem.linker = inputs'.hjem.packages.smfh;
       hj = {
         enable = true;
-        user = username;
-        directory = homedir;
+        user = constants.username;
+        directory = constants.homedir;
         clobberFiles = true;
         files.".profile" = {
           executable = true;

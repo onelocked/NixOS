@@ -270,7 +270,8 @@
               "application/pdf"
               "text/html"
             ]
-            |> (mimes: lib.genAttrs mimes (_: [ "zen-twilight.desktop" ]));
+            |> map (mime: lib.nameValuePair mime [ "zen-twilight.desktop" ])
+            |> lib.listToAttrs;
         };
 
         hj.environment.sessionVariables = lib.mkIf cfg.setAsDefaultBrowser { BROWSER = "zen-twilight"; };

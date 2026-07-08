@@ -189,6 +189,9 @@
     {
       config = lib.mkIf (cfg.enable) {
         hj.packages = [ cfg.package ];
+        xdg.terminal-exec.settings = {
+          default = [ "kitty.desktop" ];
+        };
         forte.hyprland.lua = {
           window-rules = # lua
             ''

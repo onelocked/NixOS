@@ -1,6 +1,6 @@
 {
   exo.mods.desktop =
-    { lib, constants, ... }:
+    { lib, ... }:
     {
       xdg = {
         portal = {
@@ -16,12 +16,7 @@
             };
           };
         };
-        terminal-exec = {
-          enable = true;
-          settings = {
-            default = [ constants.terminal ];
-          };
-        };
+        terminal-exec.enable = true;
       };
       environment.sessionVariables = {
         GTK_USE_PORTAL = "0";
