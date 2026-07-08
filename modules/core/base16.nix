@@ -3,14 +3,10 @@
   ff.base16.url = "github:SenchoPens/base16.nix";
 
   exo.core =
-    { config, ... }:
-    let
-      cfg = config.forte.theme;
-    in
+    { config, theme, ... }:
     {
       imports = [ inputs.base16.nixosModule ];
-      scheme = cfg.${cfg.variant};
-      forte.theme.variant = "dark";
+      scheme = config.forte.theme.${theme};
       forte.theme = {
         light = {
           slug = "retroism";
@@ -93,15 +89,6 @@
     { lib, ... }:
     {
       options.forte.theme = {
-        variant = lib.mkOption {
-          type = lib.types.enum [
-            "light"
-            "dark"
-          ];
-          default = "light";
-          description = "Choose between the light and dark theme variant.";
-        };
-
         light = lib.mkOption {
           type = lib.types.attrs;
           default = { };

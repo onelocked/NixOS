@@ -4,11 +4,11 @@
       lib,
       config,
       pkgs,
+      theme,
       ...
     }:
     let
       cfg = config.forte.cliamp;
-      theme = config.forte.theme.variant;
     in
     {
       config =

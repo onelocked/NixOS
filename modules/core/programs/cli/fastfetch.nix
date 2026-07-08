@@ -2,16 +2,15 @@
   exo.core =
     {
       scheme,
-      config,
       lib,
       pkgs,
+      theme,
       ...
     }:
     {
       forte.fastfetch =
         let
           esc = (builtins.fromJSON ''{ "value": "\u001b" }'').value;
-          theme = config.forte.theme.variant;
           tux = pkgs.fetchurl {
             url = "https://raw.githubusercontent.com/onelocked/images/refs/heads/main/tux.png";
             hash = "sha256-XbAnJefiU9FD2aOm3rit8Et0lfI7Itt5rqsFxm3AZk4=";
@@ -104,12 +103,12 @@
       birdee,
       pkgs,
       config,
+      theme,
       ...
     }:
     let
       cfg = config.forte.fastfetch;
       json = pkgs.formats.json { };
-      theme = config.forte.theme.variant;
     in
     {
       config = lib.mkIf cfg.enable {

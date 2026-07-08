@@ -5,10 +5,10 @@
       lib,
       pkgs,
       scheme,
+      theme,
       ...
     }:
     let
-      theme = config.forte.theme.variant;
       fsel = config.forte.fsel;
       aemeath = pkgs.fetchurl {
         url = "https://raw.githubusercontent.com/onelocked/images/refs/heads/main/aemeath.png";
@@ -196,13 +196,13 @@
       pkgs,
       config,
       lib,
+      theme,
       ...
     }:
     let
       cfg = config.forte.otter-launcher;
       fsel = config.forte.fsel;
       tomlFormat = pkgs.formats.toml { };
-      theme = config.forte.theme.variant;
     in
     {
       config = lib.mkIf (cfg.enable) {

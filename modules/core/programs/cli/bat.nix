@@ -3,7 +3,7 @@
     {
       pkgs,
       birdee,
-      config,
+      theme,
       ...
     }:
     {
@@ -12,7 +12,7 @@
           inherit pkgs;
           package = pkgs.bat;
           flags = {
-            "--theme" = if config.forte.theme.variant == "dark" then "TwoDark" else "base16";
+            "--theme" = if theme == "dark" then "TwoDark" else "base16";
             "--style" = "plain";
           };
         })

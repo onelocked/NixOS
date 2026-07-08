@@ -13,22 +13,21 @@ in
     flake.nixosConfigurations =
       cfg.configurations
       |> lib.mapAttrs (
-        name: hostConfig:
+        hostName: hostConfig:
         withSystem hostConfig.system (
           { self', inputs', ... }:
           inputs.nixpkgs.lib.nixosSystem {
             specialArgs = {
-              inherit self' inputs';
-              hardware = hostConfig.hardware;
-              hostName = name;
+              inherit self' inputs' hostName;
+              inherit (hostConfig) hardware theme;
             };
             modules = hostConfig.modules ++ [
-              config.exo.skeleton
-              config.exo.core
-              config.exo.hardware.${hostConfig.hardware}
-              config.exo.pilot.${hostConfig.user}
+              cfg.skeleton
+              cfg.core
+              cfg.hardware.${hostConfig.hardware}
+              cfg.pilot.${hostConfig.user}
               hostConfig.extraConfig
-              { networking.hostName = lib.mkDefault name; }
+              { networking.hostName = lib.mkDefault hostName; }
             ];
           }
         )
@@ -41,7 +40,7 @@ in
       default = { };
       type = lib.types.attrsOf (
         lib.types.submodule (
-          { name, ... }:
+          { hostName, ... }:
           {
             options = {
               system = lib.mkOption {
@@ -52,14 +51,23 @@ in
 
               user = lib.mkOption {
                 type = lib.types.str;
-                default = throw "Configuration failed: You must define a `user` for the host '${name}'.";
+                default = throw "Configuration failed: You must define a `user` for the host '${hostName}'.";
                 description = "The primary user (pilot) for this system.";
               };
 
               hardware = lib.mkOption {
                 type = lib.types.str;
-                default = throw "Configuration failed: You must define a `hardware` profile for the host '${name}'.";
+                default = throw "Configuration failed: You must define a `hardware` profile for the host '${hostName}'.";
                 description = "The hardware profile for this system.";
+              };
+
+              theme = lib.mkOption {
+                type = lib.types.enum [
+                  "light"
+                  "dark"
+                ];
+                default = "dark";
+                description = "The color theme for this system.";
               };
 
               modules = lib.mkOption {

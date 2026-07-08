@@ -4,11 +4,9 @@
       config,
       lib,
       hostName,
+      theme,
       ...
     }:
-    let
-      theme = config.forte.theme.variant;
-    in
     {
       forte.hyprland.lua.settings = # lua
         ''

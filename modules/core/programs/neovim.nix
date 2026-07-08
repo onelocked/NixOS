@@ -27,11 +27,11 @@
       lib,
       inputs',
       config,
+      theme,
       ...
     }:
     let
       cfg = config.forte.neovim;
-      theme = config.forte.theme.variant;
       mimeType = [
         "text/english"
         "text/plain"

@@ -3,12 +3,12 @@
     {
       scheme,
       pkgs,
-      config,
       lib,
+      theme,
       ...
     }:
     {
-      forte = lib.mkIf (config.forte.theme.variant == "dark") {
+      forte = lib.mkIf (theme == "dark") {
         gtk = {
           icons = {
             name = "Papirus-Dark";

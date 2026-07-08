@@ -4,6 +4,7 @@
     gaming-pc = {
       user = "onelock";
       hardware = "gaming-pc";
+      theme = "dark";
       modules = with config.exo.mods; [
         desktop
         gaming

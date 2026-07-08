@@ -73,6 +73,7 @@
       lib,
       config,
       birdee,
+      theme,
       ...
     }:
     let
@@ -113,9 +114,7 @@
             end
             # Starship transient prompt
             function starship_transient_prompt_func
-              printf " \e[38;2;${
-                if config.forte.theme.variant == "dark" then "232;196;216" else "122;24;48"
-              }m\e[0m "
+              printf " \e[38;2;${if theme == "dark" then "232;196;216" else "122;24;48"}m\e[0m "
             end
           '';
       };
