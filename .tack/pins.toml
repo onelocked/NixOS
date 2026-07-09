@@ -1,0 +1,87 @@
+[shorturls]
+gh = "github:{path}"
+
+[all_follow]
+nixpkgs = ["nixpkgs"]
+systems = "systems"
+flake-parts = "flake-parts"
+flake-compat = "flake-compat"
+flake-utils = "flake-utils"
+rust-overlay = "rust-overlay"
+treefmt-nix = "treefmt-nix"
+
+[inputs.nixpkgs]
+url = "gh:nixos/nixpkgs/nixos-unstable"
+
+[inputs.flake-parts]
+url = "gh:hercules-ci/flake-parts"
+
+[inputs.flake-file]
+url = "gh:vic/flake-file"
+
+[inputs.base16]
+url = "gh:SenchoPens/base16.nix"
+
+[inputs.birdee]
+url = "gh:BirdeeHub/nix-wrapper-modules"
+
+[inputs.disko]
+url = "gh:nix-community/disko"
+
+[inputs.hjem]
+url = "gh:feel-co/hjem"
+
+[inputs.hyprland]
+url = "gh:hyprwm/Hyprland/7046c0ff531661288ba5d672546144d6191d0f71"
+
+[inputs.lan-mouse]
+url = "gh:feschber/lan-mouse"
+
+[inputs.nix-cachyos-kernel]
+url = "gh:xddxdd/nix-cachyos-kernel/release"
+exclude_follow = ["nixpkgs"]
+
+[inputs.nix-index-database]
+url = "gh:nix-community/nix-index-database"
+
+[inputs.nixos-core]
+url = "gh:manic-systems/nixos-core"
+
+[inputs.nvfetcher]
+url = "gh:berberman/nvfetcher"
+
+[inputs.oneshill]
+url = "git+https://gitea.onelock.org/onelock/oneshill.git?ref=retroid"
+type = "fetch"
+
+[inputs.preservation]
+url = "gh:nix-community/preservation"
+
+[inputs.quickshell]
+url = "gh:quickshell-mirror/quickshell/ead3b00afdf603bb6d4c30fc9c9f582d8f712168"
+
+[inputs.sops-nix]
+url = "gh:Mic92/sops-nix"
+
+[inputs.spicetify-nix]
+url = "gh:Gerg-L/spicetify-nix"
+
+[inputs.systems]
+url = "gh:nix-systems/x86_64-linux"
+
+[inputs.vimmax]
+url = "gh:onelocked/vimmax"
+
+[inputs.yazi]
+url = "gh:sxyazi/yazi"
+
+[inputs.yazi-plugins]
+url = "gh:AminurAlam/yazi-plugins"
+type = "fetch"
+
+[inputs.zen-browser]
+url = "gh:0xc000022070/zen-browser-flake"
+
+[inputs.theme-store]
+url = "gh:zen-browser/theme-store"
+type = "fetch"
