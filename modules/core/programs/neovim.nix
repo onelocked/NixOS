@@ -1,12 +1,4 @@
 {
-  ff.vimmax = {
-    url = "github:onelocked/vimmax";
-    inputs = {
-      flake-parts.follows = "flake-parts";
-      nixpkgs.follows = "nixpkgs";
-      systems.follows = "systems";
-    };
-  };
   exo.core = {
     forte.neovim = {
       enable = true;

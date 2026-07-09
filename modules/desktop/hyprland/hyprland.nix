@@ -1,10 +1,4 @@
 {
-  ff.hyprland = {
-    url = "github:hyprwm/Hyprland";
-    inputs.nixpkgs.follows = "nixpkgs";
-    inputs.systems.follows = "systems";
-  };
-
   exo.mods.desktop = {
     forte.hyprland = {
       enable = true;

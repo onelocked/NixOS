@@ -1,10 +1,5 @@
 { inputs, ... }:
 {
-  ff.spicetify-nix = {
-    url = "github:Gerg-L/spicetify-nix";
-    inputs.nixpkgs.follows = "nixpkgs";
-    inputs.systems.follows = "systems";
-  };
   exo.mods.desktop =
     {
       inputs',

@@ -214,18 +214,6 @@ in
   };
 
   config = {
-    ff = {
-      nvfetcher = {
-        url = "github:berberman/nvfetcher";
-        inputs.nixpkgs.follows = "nixpkgs";
-        inputs.flake-compat.follows = "flake-compat";
-        inputs.flake-utils.follows = "flake-utils";
-      };
-      flake-utils = {
-        url = "github:numtide/flake-utils";
-        inputs.systems.follows = "systems";
-      };
-    };
     exo.skeleton = injectArg;
 
     perSystem =

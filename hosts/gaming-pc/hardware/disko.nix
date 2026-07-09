@@ -1,11 +1,5 @@
 { inputs, ... }:
 {
-  ff = {
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-  };
   exo.hardware.gaming-pc = {
     imports = [ inputs.disko.nixosModules.disko ];
     disko.devices.nodev = {

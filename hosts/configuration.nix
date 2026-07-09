@@ -10,18 +10,6 @@ let
 in
 {
   config = {
-    ff = {
-      flake-parts = {
-        url = "github:hercules-ci/flake-parts";
-        inputs.nixpkgs-lib.follows = "nixpkgs";
-      };
-      birdee = {
-        url = "github:BirdeeHub/nix-wrapper-modules";
-        inputs.nixpkgs.follows = "nixpkgs";
-      };
-      systems.url = "github:nix-systems/x86_64-linux";
-    };
-
     systems = import inputs.systems;
 
     flake.nixosConfigurations =

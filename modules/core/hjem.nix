@@ -1,10 +1,5 @@
 { inputs, ... }:
 {
-  ff.hjem = {
-    url = "github:feel-co/hjem";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
-
   exo.core =
     {
       lib,

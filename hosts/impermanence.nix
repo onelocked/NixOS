@@ -1,6 +1,5 @@
 { inputs, ... }:
 {
-  ff.preservation.url = "github:nix-community/preservation";
   exo.core =
     {
       config,

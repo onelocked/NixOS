@@ -1,7 +1,5 @@
 { inputs, ... }:
 {
-  ff.base16.url = "github:SenchoPens/base16.nix";
-
   exo.core =
     { config, theme, ... }:
     {

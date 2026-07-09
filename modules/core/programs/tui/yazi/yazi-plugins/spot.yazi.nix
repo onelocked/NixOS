@@ -68,9 +68,4 @@
           '';
       };
     };
-
-  ff.yazi-plugins = {
-    url = "github:AminurAlam/yazi-plugins";
-    flake = false;
-  };
 }

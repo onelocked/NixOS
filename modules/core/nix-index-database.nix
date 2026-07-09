@@ -1,10 +1,5 @@
 { inputs, ... }:
 {
-  ff.nix-index-database = {
-    url = "github:nix-community/nix-index-database";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
-
   exo.core =
     { lib, ... }:
     {

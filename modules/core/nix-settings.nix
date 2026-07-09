@@ -1,13 +1,4 @@
 {
-  ff = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    flake-compat.url = "github:NixOS/flake-compat";
-    treefmt-nix = {
-      url = "github:numtide/treefmt-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-  };
-
   exo.core =
     {
       pkgs,

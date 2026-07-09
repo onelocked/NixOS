@@ -1,15 +1,5 @@
 { inputs, ... }:
 {
-  ff = {
-    quickshell = {
-      url = "github:quickshell-mirror/quickshell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    oneshill = {
-      url = "git+https://gitea.onelock.org/onelock/oneshill.git?ref=retroid";
-      flake = false;
-    };
-  };
   exo.skeleton =
     {
       lib,

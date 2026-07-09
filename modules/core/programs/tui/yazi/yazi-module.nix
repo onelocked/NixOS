@@ -192,16 +192,6 @@
         };
       };
     };
-
-  ff = {
-    yazi = {
-      url = "github:/sxyazi/yazi";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.rust-overlay.follows = "rust-overlay";
-      inputs.flake-utils.follows = "flake-utils";
-    };
-  };
-
   perSystem =
     { inputs', ... }:
     {
