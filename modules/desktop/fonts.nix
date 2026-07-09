@@ -47,7 +47,7 @@
       locked = true;
     };
   };
-  perSystem =
+  omniSystem =
     { pkgs, envoy, ... }:
     {
       legacyPackages = {

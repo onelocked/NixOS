@@ -1,5 +1,5 @@
 {
-  perSystem =
+  omniSystem =
     { pkgs, self', ... }:
     {
       devShells.remote-install = pkgs.mkShell { packages = [ self'.legacyPackages.remote-install ]; };

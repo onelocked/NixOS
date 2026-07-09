@@ -4,7 +4,6 @@ gh = "github:{path}"
 [all_follow]
 nixpkgs = ["nixpkgs"]
 systems = "systems"
-flake-parts = "flake-parts"
 flake-compat = "flake-compat"
 flake-utils = "flake-utils"
 rust-overlay = "rust-overlay"
@@ -12,12 +11,6 @@ treefmt-nix = "treefmt-nix"
 
 [inputs.nixpkgs]
 url = "gh:nixos/nixpkgs/nixos-unstable"
-
-[inputs.flake-parts]
-url = "gh:hercules-ci/flake-parts"
-
-[inputs.flake-file]
-url = "gh:vic/flake-file"
 
 [inputs.base16]
 url = "gh:SenchoPens/base16.nix"

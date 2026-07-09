@@ -31,22 +31,6 @@
     "narHash": "sha256-vNpUSpF5Nuw8xvDLj2KCwwksIbjua2LZCqhV1LNRDns=",
     "lastModified": 1767039857
   },
-  "flake-file": {
-    "type": "github",
-    "owner": "vic",
-    "repo": "flake-file",
-    "rev": "ce63eaf7ebfe04a176653f66385a7f0a36380cee",
-    "narHash": "sha256-N3q/SP2Ropk336e9KSgLh7kpROY6P70dprYdbPIfd5c=",
-    "lastModified": 1781217157
-  },
-  "flake-parts": {
-    "type": "github",
-    "owner": "hercules-ci",
-    "repo": "flake-parts",
-    "rev": "17c9d6cdfc60c64f4ee8d306f9bc0b4ccb51481e",
-    "narHash": "sha256-vp6Y/Grm98ESt6ceOkWiHWyZRDV3J1RID4w+6NWK9yA=",
-    "lastModified": 1782949081
-  },
   "flake-utils": {
     "type": "github",
     "owner": "numtide",

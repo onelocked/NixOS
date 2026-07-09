@@ -176,7 +176,7 @@
         };
       };
     };
-  perSystem =
+  omniSystem =
     { inputs', ... }:
     {
       packages.quickshell =

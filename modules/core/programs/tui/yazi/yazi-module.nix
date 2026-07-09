@@ -192,7 +192,7 @@
         };
       };
     };
-  perSystem =
+  omniSystem =
     { inputs', ... }:
     {
       packages.yazi = inputs'.yazi.packages.default.overrideAttrs {

@@ -52,7 +52,7 @@
     tarball = "https://s3.onelock.org/download/cursors/aemeath-cursor.tar.gz";
     locked = true;
   };
-  perSystem =
+  omniSystem =
     { pkgs, envoy, ... }:
     {
       legacyPackages = {

@@ -7,31 +7,90 @@
       inherit (tackInputs.nixpkgs) lib;
 
       inputs = tackInputs // {
-        self = self';
+        inherit self;
       };
 
-      self' = flakeOutputs // {
-        inherit inputs;
-        inherit (self) outPath;
-      };
+      rootPath = ./.;
 
-      importsList =
-        with lib;
+      projectInput =
+        system: input:
         [
-          ./modules
-          ./hosts
-          ./.secrets
+          "packages"
+          "legacyPackages"
+          "devShells"
+          "checks"
+          "apps"
+          "formatter"
         ]
-        |> map (fileset.fileFilter (file: file.hasExt "nix" && !hasPrefix "_" file.name))
-        |> fileset.unions
-        |> fileset.toList;
+        |> lib.filter (key: input ? ${key} && input.${key} ? ${system})
+        |> map (key: {
+          name = key;
+          value = input.${key}.${system};
+        })
+        |> lib.listToAttrs;
 
-      flakeOutputs =
-        tackInputs.flake-parts.lib.evalFlakeModule { inherit inputs; } {
-          imports = importsList;
-          _module.args.rootPath = ./.;
-        }
-        |> (eval: { inherit eval; } // eval.config.processedFlake);
+      withSystem =
+        system: f:
+        f {
+          inherit system inputs rootPath;
+          pkgs = tackInputs.nixpkgs.legacyPackages.${system};
+          inputs' = inputs |> lib.mapAttrs (_: projectInput system);
+          self' = projectInput system self;
+        };
+
+      #  Evaluate the top-level modules
+      topEval = lib.evalModules {
+        specialArgs = { inherit inputs withSystem rootPath; };
+        modules =
+          [
+            ./modules
+            ./hosts
+            ./.secrets
+          ]
+          |> map (lib.fileset.fileFilter (file: file.hasExt "nix" && !lib.hasPrefix "_" file.name))
+          |> lib.fileset.unions
+          |> lib.fileset.toList;
+      };
+
+      # Evaluate omniSystem blocks for each system
+      # the output looks something like this
+      # systemOutputs = { "x86_64-linux" = { packages = "pkg1"; devShells = "shell1"; }; }
+      systemOutputs =
+        topEval.config.systems
+        |> map (system: {
+          name = system;
+          value = withSystem system (
+            specialArgs:
+            (lib.evalModules {
+              inherit specialArgs;
+              modules = [
+                topEval.config.omniSystem
+                { config._module.freeformType = lib.types.lazyAttrsOf lib.types.unspecified; }
+              ];
+            }).config
+          );
+        })
+        |> lib.listToAttrs;
+
+      # Transpose system-dependent configurations to the top level
+      transposed =
+        systemOutputs
+        |> lib.attrValues
+        |> map lib.attrNames
+        |> lib.flatten
+        |> lib.unique
+        |> map (key: {
+          name = key;
+          value =
+            topEval.config.systems
+            |> lib.filter (system: systemOutputs.${system} ? ${key})
+            |> map (system: {
+              name = system;
+              value = systemOutputs.${system}.${key};
+            })
+            |> lib.listToAttrs;
+        })
+        |> lib.listToAttrs;
     in
-    flakeOutputs;
+    topEval.config.flake // transposed;
 }

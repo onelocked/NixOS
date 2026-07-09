@@ -1,5 +1,5 @@
 {
-  perSystem =
+  omniSystem =
     { pkgs, self', ... }:
     {
       devShells = {

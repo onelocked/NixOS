@@ -216,10 +216,10 @@ in
   config = {
     exo.skeleton = injectArg;
 
-    perSystem =
+    omniSystem =
       { pkgs, inputs', ... }:
       let
-        # `topLevel.config.…` (not perSystem `config`) because sources are
+        # `topLevel.config.…` (not omniSystem `config`) because sources are
         # defined at the top level, not per-system.
         sources = topLevel.config.envoy;
         processedSources = lib.mapAttrs (_: stripInternal) sources;
@@ -232,8 +232,8 @@ in
       {
         imports = [ injectArg ];
         apps.write-sources = {
-          meta.description = "Update nvfetcher sources. Usage: nix run .#write-sources";
-          program = pkgs.writeShellApplication {
+          type = "app";
+          program = lib.getExe (pkgs.writeShellApplication {
             name = "write-sources";
             runtimeInputs = with pkgs; [
               nvfetcher
@@ -269,7 +269,7 @@ in
 
               gum log --level info "Done."
             '';
-          };
+          });
         };
       };
   };

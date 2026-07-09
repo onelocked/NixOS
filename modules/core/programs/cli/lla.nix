@@ -387,7 +387,7 @@
         };
       };
     };
-  perSystem =
+  omniSystem =
     { pkgs, ... }:
     {
       packages.lla = pkgs.lla.overrideAttrs {

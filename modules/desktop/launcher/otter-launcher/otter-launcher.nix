@@ -369,7 +369,7 @@
       };
     };
 
-  perSystem =
+  omniSystem =
     { pkgs, envoy, ... }:
     {
       packages = {

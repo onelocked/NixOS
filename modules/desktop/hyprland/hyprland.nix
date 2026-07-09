@@ -309,7 +309,7 @@
         };
       };
     };
-  perSystem =
+  omniSystem =
     { inputs', pkgs, ... }:
     {
       packages = {

@@ -110,7 +110,7 @@
     };
   envoy.cliphist-tui.github = "SHORiN-KiWATA/cliphist-tui";
   envoy.cliphist.github = "sentriz/cliphist";
-  perSystem =
+  omniSystem =
     {
       birdee,
       envoy,

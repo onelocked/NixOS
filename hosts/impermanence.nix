@@ -91,6 +91,7 @@
                     "Pictures"
                     "Videos"
                     "Downloads"
+                    ".cache/nix"
                   ]
                   ++ cfg.home.directories
                 );
