@@ -2,13 +2,10 @@
   outputs =
     { self, ... }:
     let
-      tackInputs = import ./.tack;
-
-      inherit (tackInputs.nixpkgs) lib;
-
-      inputs = tackInputs // {
+      inputs = (import ./.tack) // {
         inherit self;
       };
+      inherit (inputs.nixpkgs) lib;
 
       rootPath = ./.;
 
@@ -23,17 +20,13 @@
           "formatter"
         ]
         |> lib.filter (key: input ? ${key} && input.${key} ? ${system})
-        |> map (key: {
-          name = key;
-          value = input.${key}.${system};
-        })
-        |> lib.listToAttrs;
+        |> lib.flip lib.genAttrs (key: input.${key}.${system});
 
       withSystem =
         system: f:
         f {
           inherit system inputs rootPath;
-          pkgs = tackInputs.nixpkgs.legacyPackages.${system};
+          pkgs = inputs.nixpkgs.legacyPackages.${system};
           inputs' = inputs |> lib.mapAttrs (_: projectInput system);
           self' = projectInput system self;
         };
@@ -53,13 +46,11 @@
       };
 
       # Evaluate omniSystem blocks for each system
-      # the output looks something like this
-      # systemOutputs = { "x86_64-linux" = { packages = "pkg1"; devShells = "shell1"; }; }
       systemOutputs =
         topEval.config.systems
-        |> map (system: {
-          name = system;
-          value = withSystem system (
+        |> lib.flip lib.genAttrs (
+          system:
+          withSystem system (
             specialArgs:
             (lib.evalModules {
               inherit specialArgs;
@@ -68,9 +59,8 @@
                 { config._module.freeformType = lib.types.lazyAttrsOf lib.types.unspecified; }
               ];
             }).config
-          );
-        })
-        |> lib.listToAttrs;
+          )
+        );
 
       # Transpose system-dependent configurations to the top level
       transposed =
@@ -79,18 +69,12 @@
         |> map lib.attrNames
         |> lib.flatten
         |> lib.unique
-        |> map (key: {
-          name = key;
-          value =
-            topEval.config.systems
-            |> lib.filter (system: systemOutputs.${system} ? ${key})
-            |> map (system: {
-              name = system;
-              value = systemOutputs.${system}.${key};
-            })
-            |> lib.listToAttrs;
-        })
-        |> lib.listToAttrs;
+        |> lib.flip lib.genAttrs (
+          key:
+          topEval.config.systems
+          |> lib.filter (system: systemOutputs.${system} ? ${key})
+          |> lib.flip lib.genAttrs (system: systemOutputs.${system}.${key})
+        );
     in
     topEval.config.flake // transposed;
 }
