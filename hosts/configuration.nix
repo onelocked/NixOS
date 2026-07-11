@@ -15,10 +15,20 @@ in
       |> lib.mapAttrs (
         hostName: hostConfig:
         withSystem hostConfig.system (
-          { self', inputs', ... }:
+          {
+            self',
+            inputs',
+            packages',
+            ...
+          }:
           inputs.nixpkgs.lib.nixosSystem {
             specialArgs = {
-              inherit self' inputs' hostName;
+              inherit
+                self'
+                inputs'
+                packages'
+                hostName
+                ;
               inherit (inputs) birdee;
               inherit (hostConfig) hardware theme;
               constants = {

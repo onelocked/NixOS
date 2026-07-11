@@ -24,11 +24,29 @@
 
       withSystem =
         system: f:
+        let
+        in
         f {
-          inherit system inputs rootPath;
+          inherit
+            system
+            inputs
+            rootPath
+            ;
           pkgs = inputs.nixpkgs.legacyPackages.${system};
           inputs' = inputs |> lib.mapAttrs (_: projectInput system);
           self' = projectInput system self;
+          packages' =
+            inputs
+            |> lib.mapAttrs (_: projectInput system)
+            |> lib.mapAttrs (
+              name: key:
+              if key.packages ? default then
+                key.packages // key.packages.default
+              else if key.packages ? ${name} then
+                key.packages // key.packages.${name}
+              else
+                key.packages
+            );
         };
 
       #  Evaluate the top-level modules

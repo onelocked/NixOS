@@ -310,7 +310,12 @@
       };
     };
   omniSystem =
-    { inputs', pkgs, ... }:
+    {
+      inputs',
+      packages',
+      pkgs,
+      ...
+    }:
     {
       packages = {
         hyprland = inputs'.hyprland.packages.hyprland.overrideAttrs (oldAttrs: {
@@ -398,7 +403,7 @@
             )
           ];
         });
-        xdg-desktop-portal-hyprland = inputs'.hyprland.packages.xdg-desktop-portal-hyprland.overrideAttrs {
+        xdg-desktop-portal-hyprland = packages'.hyprland.xdg-desktop-portal-hyprland.overrideAttrs {
           doCheck = false;
         };
       };
