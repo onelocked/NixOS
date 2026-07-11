@@ -1,12 +1,16 @@
 {
-  envoy.tmuxFloax.github = "omerxx/tmux-floax";
+  tack.tmuxFloax = {
+    url = "gh:omerxx/tmux-floax";
+    fetch = true;
+  };
   exo.core =
-    { pkgs, envoy, ... }:
+    { pkgs, inputs, ... }:
     let
       tmux-floax = pkgs.tmuxPlugins.mkTmuxPlugin {
         pluginName = "tmux-floax";
         rtpFilePath = "floax.tmux";
-        inherit (envoy.tmuxFloax) src version;
+        src = inputs.tmuxFloax;
+        version = "v1.0";
       };
       tmuxRun =
         plugin:

@@ -1,27 +1,30 @@
 { inputs, ... }:
 {
   exo.core =
-    {
-      pkgs,
-      lib,
-      ...
-    }:
+    { pkgs, lib, ... }:
     {
       forte.yazi = {
         plugins =
-          let
-            mkSpotPlugin =
-              name:
+          [
+            "spot"
+            "spot-image"
+            "spot-video"
+            "spot-audio"
+          ]
+          |> map (
+            name:
+            lib.nameValuePair name (
               pkgs.yaziPlugins.mkYaziPlugin {
                 pname = name;
                 version = "1.0";
-                src = lib.cleanSourceWith {
+                src = pkgs.lib.cleanSourceWith {
                   src = "${inputs.yazi-plugins}/${name}.yazi";
                   filter = path: _type: baseNameOf path == "main.lua";
                 };
-              };
-          in
-          lib.genAttrs [ "spot" "spot-image" "spot-video" "spot-audio" ] mkSpotPlugin;
+              }
+            )
+          )
+          |> lib.listToAttrs;
 
         settings.plugins = {
           prepend_spotters =

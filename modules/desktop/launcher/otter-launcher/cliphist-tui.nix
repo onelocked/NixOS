@@ -108,18 +108,28 @@
         };
       };
     };
-  envoy.cliphist-tui.github = "SHORiN-KiWATA/cliphist-tui";
-  envoy.cliphist.github = "sentriz/cliphist";
+  tack = {
+    cliphist-tui = {
+      url = "gh:SHORiN-KiWATA/cliphist-tui";
+      fetch = true;
+    };
+    cliphist = {
+      url = "gh:sentriz/cliphist";
+      fetch = true;
+    };
+  };
   omniSystem =
     {
       birdee,
-      envoy,
+      inputs,
       pkgs,
       ...
     }:
     {
       packages.cliphist-tui = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
-        inherit (envoy.cliphist-tui) pname version src;
+        pname = "cliphist-tui";
+        version = "v1.0";
+        src = inputs.cliphist-tui;
         doCheck = false;
         cargoHash = "sha256-KHlEw5RZNeCYeNngPvgDFvBFMKD2OZrx8sg2QWdwjQ8=";
         patches = [
@@ -156,7 +166,9 @@
         inherit pkgs;
         env.CLIPHIST_MAX_STORE_SIZE = "1GB";
         package = pkgs.buildGoModule (finalAttrs: {
-          inherit (envoy.cliphist) pname version src;
+          pname = "cliphist";
+          version = "v1.0";
+          src = inputs.cliphist;
           doCheck = false;
           patches = [
             (pkgs.writeText "fix-browser-copy-with-meta.patch" # go

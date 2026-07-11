@@ -1,5 +1,12 @@
 { inputs, ... }:
 {
+  tack = {
+    zen-browser = "gh:0xc000022070/zen-browser-flake";
+    theme-store = {
+      url = "gh:zen-browser/theme-store";
+      fetch = true;
+    };
+  };
   exo.mods.desktop =
     { lib, ... }:
     {

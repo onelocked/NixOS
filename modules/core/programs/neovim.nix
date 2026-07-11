@@ -1,4 +1,5 @@
 {
+  tack.vimmax = "gh:onelocked/vimmax";
   exo.core = {
     forte.neovim = {
       enable = true;

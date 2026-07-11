@@ -1,5 +1,6 @@
 { inputs, ... }:
 {
+  tack.sops-nix = "gh:Mic92/sops-nix";
   exo.core =
     {
       pkgs,

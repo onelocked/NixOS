@@ -1,5 +1,12 @@
 { inputs, ... }:
 {
+  tack = {
+    oneshill = {
+      url = "git+https://gitea.onelock.org/onelock/oneshill.git?ref=retroid";
+      fetch = true;
+    };
+    quickshell = "gh:quickshell-mirror/quickshell/ead3b00afdf603bb6d4c30fc9c9f582d8f712168";
+  };
   exo.skeleton =
     {
       lib,

@@ -1,4 +1,5 @@
 {
+  tack.hyprland = "gh:hyprwm/Hyprland/7046c0ff531661288ba5d672546144d6191d0f71";
   exo.mods.desktop = {
     forte.hyprland = {
       enable = true;

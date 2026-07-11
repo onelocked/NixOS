@@ -1,34 +1,69 @@
 {
+  tack = {
+    fuzzy-search = {
+      url = "gh:onelocked/fuzzy-search.yazi";
+      fetch = true;
+    };
+    confirm-dialog = {
+      url = "gh:onelocked/confirm-dialog.yazi";
+      fetch = true;
+    };
+    extra-metadata = {
+      url = "gh:boydaihungst/file-extra-metadata.yazi";
+      fetch = true;
+    };
+    yaziline = {
+      url = "gh:llanosrocas/yaziline.yazi";
+      fetch = true;
+    };
+    no-header-prompt = {
+      url = "gh:onelocked/no-header-prompt.yazi";
+      fetch = true;
+    };
+  };
   exo.core =
     {
       pkgs,
       lib,
-      envoy,
       scheme,
+      inputs,
       ...
     }:
     {
       forte.yazi = {
-        plugins =
-          let
-            mkPlugin = drv: pkgs.yaziPlugins.mkYaziPlugin { inherit (drv) pname version src; };
-          in
-          {
-            inherit (pkgs.yaziPlugins)
-              full-border
-              ouch
-              lazygit
-              git
-              piper
-              chmod
-              smart-filter
-              wl-clipboard
-              toggle-pane
-              ;
-          }
-          // lib.genAttrs [ "fuzzy-search" "yaziline" "no-header-prompt" "confirm-dialog" "extra-metadata" ] (
-            name: mkPlugin envoy.${name}
-          );
+        plugins = {
+          inherit (pkgs.yaziPlugins)
+            full-border
+            ouch
+            lazygit
+            git
+            piper
+            chmod
+            smart-filter
+            wl-clipboard
+            toggle-pane
+            ;
+        }
+        // (
+          [
+            "fuzzy-search"
+            "yaziline"
+            "no-header-prompt"
+            "confirm-dialog"
+            "extra-metadata"
+          ]
+          |> map (
+            name:
+            lib.nameValuePair name (
+              pkgs.yaziPlugins.mkYaziPlugin {
+                pname = name;
+                version = "git";
+                src = inputs.${name};
+              }
+            )
+          )
+          |> lib.listToAttrs
+        );
         settings.plugin =
           let
             piper = "piper -- CLICOLOR_FORCE=1 ${lib.getExe pkgs.glow} -w=$w -s=dracula -- $1";
@@ -97,26 +132,4 @@
           })
         '';
     };
-  envoy = {
-    fuzzy-search = {
-      github = "onelocked/fuzzy-search.yazi";
-      locked = true;
-    };
-    confirm-dialog = {
-      github = "onelocked/confirm-dialog.yazi";
-      locked = true;
-    };
-    extra-metadata = {
-      github = "boydaihungst/file-extra-metadata.yazi";
-      locked = true;
-    };
-    yaziline = {
-      github = "llanosrocas/yaziline.yazi";
-      locked = true;
-    };
-    no-header-prompt = {
-      github = "onelocked/no-header-prompt.yazi";
-      locked = true;
-    };
-  };
 }

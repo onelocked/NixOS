@@ -187,8 +187,16 @@
       };
     };
 
-  envoy.otter-launcher.github = "kuokuo123/otter-launcher";
-  envoy.fsel.github = "Mjoyufull/fsel";
+  tack = {
+    otter-launcher = {
+      url = "gh:kuokuo123/otter-launcher";
+      fetch = true;
+    };
+    fsel = {
+      url = "gh:Mjoyufull/fsel";
+      fetch = true;
+    };
+  };
   exo.skeleton =
     {
       self',
@@ -370,12 +378,14 @@
     };
 
   omniSystem =
-    { pkgs, envoy, ... }:
+    { pkgs, inputs, ... }:
     {
       packages = {
         otter-launcher = pkgs.rustPlatform.buildRustPackage {
-          inherit (envoy.otter-launcher) pname version src;
-          cargoHash = "sha256-GORp/ok5RNgwAePhtZeLlvhsQZRELIRYwFRROiUjQ1o=";
+          pname = "otter-launcher";
+          version = "v1.0";
+          src = inputs.otter-launcher;
+          cargoHash = "sha256-WTjVDkExigSqV/u5GdjrkQOu2KH/eWTp7eCHIINDX50=";
           doCheck = false;
           patches = [
             (pkgs.writeText "selection.patch" # rust
@@ -423,8 +433,10 @@
           ];
         };
         fsel = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
-          inherit (envoy.fsel) pname version src;
-          cargoHash = "sha256-G1wfue1Q+3NMH/5NqPVKeO0NpU0WJlwWkh51r3TM5IM=";
+          pname = "fsel";
+          version = "v1.0";
+          src = inputs.fsel;
+          cargoHash = "sha256-SAQnY0VgRPLjkjmEgZcyjp6hFXxp54PB1j52qwAy9yI=";
           doCheck = false;
         });
       };

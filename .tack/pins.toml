@@ -1,16 +1,22 @@
-[shorturls]
-gh = "github:{path}"
-
 [all_follow]
-nixpkgs = ["nixpkgs"]
-systems = "systems"
 flake-compat = "flake-compat"
 flake-utils = "flake-utils"
+nixpkgs = "nixpkgs"
 rust-overlay = "rust-overlay"
+systems = "systems"
 treefmt-nix = "treefmt-nix"
 
-[inputs.nixpkgs]
-url = "gh:nixos/nixpkgs/nixos-unstable"
+[inputs.aemeath-cursor]
+type = "fetch"
+url = "https://s3.onelock.org/download/cursors/aemeath-cursor.tar.gz"
+
+[inputs.apple-font]
+type = "fixed"
+url = "https://s3.onelock.org/download/fonts/apple-nerd.tar.gz"
+
+[inputs.apple-font-emoji]
+type = "fixed"
+url = "https://github.com/samuelngs/apple-emoji-ttf/releases/download/macos-26-20260613-f1fc560b/AppleColorEmoji-Linux.ttf"
 
 [inputs.base16]
 url = "gh:SenchoPens/base16.nix"
@@ -18,8 +24,32 @@ url = "gh:SenchoPens/base16.nix"
 [inputs.birdee]
 url = "gh:BirdeeHub/nix-wrapper-modules"
 
+[inputs.cliphist]
+type = "fetch"
+url = "gh:sentriz/cliphist"
+
+[inputs.cliphist-tui]
+type = "fetch"
+url = "gh:SHORiN-KiWATA/cliphist-tui"
+
+[inputs.confirm-dialog]
+type = "fetch"
+url = "gh:onelocked/confirm-dialog.yazi"
+
 [inputs.disko]
 url = "gh:nix-community/disko"
+
+[inputs.extra-metadata]
+type = "fetch"
+url = "gh:boydaihungst/file-extra-metadata.yazi"
+
+[inputs.fsel]
+type = "fetch"
+url = "gh:Mjoyufull/fsel"
+
+[inputs.fuzzy-search]
+type = "fetch"
+url = "gh:onelocked/fuzzy-search.yazi"
 
 [inputs.hjem]
 url = "gh:feel-co/hjem"
@@ -31,8 +61,8 @@ url = "gh:hyprwm/Hyprland/7046c0ff531661288ba5d672546144d6191d0f71"
 url = "gh:feschber/lan-mouse"
 
 [inputs.nix-cachyos-kernel]
-url = "gh:xddxdd/nix-cachyos-kernel/release"
 exclude_follow = ["nixpkgs"]
+url = "gh:xddxdd/nix-cachyos-kernel/release"
 
 [inputs.nix-index-database]
 url = "gh:nix-community/nix-index-database"
@@ -40,12 +70,20 @@ url = "gh:nix-community/nix-index-database"
 [inputs.nixos-core]
 url = "gh:manic-systems/nixos-core"
 
-[inputs.nvfetcher]
-url = "gh:berberman/nvfetcher"
+[inputs.nixpkgs]
+url = "gh:nixos/nixpkgs/nixos-unstable"
+
+[inputs.no-header-prompt]
+type = "fetch"
+url = "gh:onelocked/no-header-prompt.yazi"
 
 [inputs.oneshill]
-url = "git+https://gitea.onelock.org/onelock/oneshill.git?ref=retroid"
 type = "fetch"
+url = "git+https://gitea.onelock.org/onelock/oneshill.git?ref=retroid"
+
+[inputs.otter-launcher]
+type = "fetch"
+url = "gh:kuokuo123/otter-launcher"
 
 [inputs.preservation]
 url = "gh:nix-community/preservation"
@@ -62,6 +100,17 @@ url = "gh:Gerg-L/spicetify-nix"
 [inputs.systems]
 url = "gh:nix-systems/x86_64-linux"
 
+[inputs.tack]
+url = "gh:manic-systems/tack"
+
+[inputs.theme-store]
+type = "fetch"
+url = "gh:zen-browser/theme-store"
+
+[inputs.tmuxFloax]
+type = "fetch"
+url = "gh:omerxx/tmux-floax"
+
 [inputs.vimmax]
 url = "gh:onelocked/vimmax"
 
@@ -69,12 +118,15 @@ url = "gh:onelocked/vimmax"
 url = "gh:sxyazi/yazi"
 
 [inputs.yazi-plugins]
-url = "gh:AminurAlam/yazi-plugins"
 type = "fetch"
+url = "gh:AminurAlam/yazi-plugins"
+
+[inputs.yaziline]
+type = "fetch"
+url = "gh:llanosrocas/yaziline.yazi"
 
 [inputs.zen-browser]
 url = "gh:0xc000022070/zen-browser-flake"
 
-[inputs.theme-store]
-url = "gh:zen-browser/theme-store"
-type = "fetch"
+[shorturls]
+gh = "github:{path}"

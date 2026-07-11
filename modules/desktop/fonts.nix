@@ -37,23 +37,23 @@
         };
       };
     };
-  envoy = {
+  tack = {
     apple-font = {
-      tarball = "https://s3.onelock.org/download/fonts/apple-nerd.tar.gz";
-      locked = true;
+      url = "https://s3.onelock.org/download/fonts/apple-nerd.tar.gz";
+      fixed = true;
     };
     apple-font-emoji = {
       url = "https://github.com/samuelngs/apple-emoji-ttf/releases/download/macos-26-20260613-f1fc560b/AppleColorEmoji-Linux.ttf";
-      locked = true;
+      fixed = true;
     };
   };
   omniSystem =
-    { pkgs, envoy, ... }:
+    { pkgs, inputs, ... }:
     {
       legacyPackages = {
         apple-font = pkgs.stdenvNoCC.mkDerivation {
-          name = envoy.apple-font.pname;
-          inherit (envoy.apple-font) src;
+          name = "apple-font";
+          src = inputs.apple-font;
           dontUnpack = true;
           dontBuild = true;
           dontConfigure = true;
@@ -63,8 +63,8 @@
           '';
         };
         apple-font-emoji = pkgs.stdenvNoCC.mkDerivation {
-          name = envoy.apple-font-emoji.pname;
-          inherit (envoy.apple-font-emoji) src;
+          name = "apple-font-emoji";
+          src = inputs.apple-font-emoji;
           dontUnpack = true;
           dontBuild = true;
           dontConfigure = true;

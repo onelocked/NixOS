@@ -1,4 +1,8 @@
 {
+  tack.nix-cachyos-kernel = {
+    url = "gh:xddxdd/nix-cachyos-kernel/release";
+    exclude_follow = [ "nixpkgs" ];
+  };
   exo.core =
     { inputs', ... }:
     {

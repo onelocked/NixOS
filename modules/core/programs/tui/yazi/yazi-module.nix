@@ -1,4 +1,11 @@
 {
+  tack = {
+    yazi = "gh:sxyazi/yazi";
+    yazi-plugins = {
+      url = "gh:AminurAlam/yazi-plugins";
+      fetch = true;
+    };
+  };
   exo.core =
     {
       pkgs,

@@ -24,6 +24,7 @@ in
           inputs.nixpkgs.lib.nixosSystem {
             specialArgs = {
               inherit
+                inputs
                 self'
                 inputs'
                 packages'

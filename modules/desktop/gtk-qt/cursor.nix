@@ -4,7 +4,6 @@
       lib,
       pkgs,
       config,
-      envoy,
       self',
       hostName,
       ...
@@ -15,7 +14,7 @@
     {
       config = {
         forte.cursor = lib.mkIf (hostName != "gaming-pc") {
-          name = envoy.aemeath-cursor.pname;
+          name = "aemeath-cursor";
           size = 24;
           package = self'.legacyPackages.aemeath-cursor;
         };
@@ -48,18 +47,18 @@
         };
       };
     };
-  envoy.aemeath-cursor = {
-    tarball = "https://s3.onelock.org/download/cursors/aemeath-cursor.tar.gz";
-    locked = true;
+  tack.aemeath-cursor = {
+    url = "https://s3.onelock.org/download/cursors/aemeath-cursor.tar.gz";
+    fetch = true;
   };
   omniSystem =
-    { pkgs, envoy, ... }:
+    { pkgs, inputs, ... }:
     {
       legacyPackages = {
         aemeath-cursor = pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
-          name = envoy.aemeath-cursor.pname;
+          name = "aemeath-cursor";
           version = "1.0";
-          inherit (envoy.aemeath-cursor) src;
+          src = inputs.aemeath-cursor;
 
           dontConfigure = true;
           dontBuild = true;
