@@ -1,15 +1,16 @@
 { config, lib, ... }:
 {
   config = {
+    tack.tack = "gh:manic-systems/tack";
     exo.core =
-      { pkgs, ... }:
+      { packages', ... }:
       {
-        hj.packages = [ pkgs.tack ];
+        hj.packages = [ packages'.tack ];
         hj.environment.sessionVariables = {
           TACK_NIX_CONF_TOKENS = "1";
         };
       };
-    omniSystem =
+    perSystem =
       { pkgs, ... }:
       let
         tomlFormat = pkgs.formats.toml { };

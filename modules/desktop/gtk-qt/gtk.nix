@@ -175,7 +175,7 @@
       };
     };
 
-  omniSystem =
+  perSystem =
     { pkgs, ... }:
     {
       legacyPackages = {

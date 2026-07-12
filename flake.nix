@@ -63,7 +63,7 @@
           |> lib.fileset.toList;
       };
 
-      # Evaluate omniSystem blocks for each system
+      # Evaluate perSystem blocks for each system
       systemOutputs =
         topEval.config.systems
         |> lib.flip lib.genAttrs (
@@ -73,7 +73,7 @@
             (lib.evalModules {
               inherit specialArgs;
               modules = [
-                topEval.config.omniSystem
+                topEval.config.perSystem
                 { config._module.freeformType = lib.types.lazyAttrsOf lib.types.unspecified; }
               ];
             }).config

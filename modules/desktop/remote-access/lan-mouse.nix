@@ -79,7 +79,7 @@
         };
       };
     };
-  omniSystem =
+  perSystem =
     { packages', ... }:
     {
       packages.lan-mouse = packages'.lan-mouse.overrideAttrs { doCheck = false; };

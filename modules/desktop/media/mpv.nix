@@ -228,7 +228,7 @@
         };
       };
     };
-  omniSystem =
+  perSystem =
     { pkgs, ... }:
     {
       legacyPackages.mpv-rotate-resize = pkgs.writeTextFile {

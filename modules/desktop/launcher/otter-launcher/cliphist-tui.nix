@@ -118,7 +118,7 @@
       fetch = true;
     };
   };
-  omniSystem =
+  perSystem =
     {
       birdee,
       inputs,

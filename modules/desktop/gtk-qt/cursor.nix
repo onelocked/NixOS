@@ -51,7 +51,7 @@
     url = "https://s3.onelock.org/download/cursors/aemeath-cursor.tar.gz";
     fetch = true;
   };
-  omniSystem =
+  perSystem =
     { pkgs, inputs, ... }:
     {
       legacyPackages = {

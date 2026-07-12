@@ -38,5 +38,5 @@
       )
     ];
   };
-  omniSystem.legacyPackages.iso-image = self.nixosConfigurations.iso.config.system.build.isoImage;
+  perSystem.legacyPackages.iso-image = self.nixosConfigurations.iso.config.system.build.isoImage;
 }

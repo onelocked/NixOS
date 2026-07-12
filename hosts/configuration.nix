@@ -47,7 +47,7 @@ in
           }
         )
       );
-    omniSystem =
+    perSystem =
       { pkgs, ... }:
       {
         formatter = pkgs.nixfmt-rs;
@@ -64,7 +64,7 @@ in
       type = lib.types.lazyAttrsOf lib.types.unspecified;
       default = { };
     };
-    omniSystem = lib.mkOption {
+    perSystem = lib.mkOption {
       type = lib.types.deferredModule;
       default = { };
     };

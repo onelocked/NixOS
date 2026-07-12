@@ -183,7 +183,7 @@
         };
       };
     };
-  omniSystem =
+  perSystem =
     { inputs', ... }:
     {
       packages.quickshell =

@@ -43,7 +43,7 @@
         };
       };
     };
-  omniSystem =
+  perSystem =
     { pkgs, ... }:
     {
       packages.loupe = pkgs.loupe.overrideAttrs (oldAttrs: {

@@ -47,7 +47,7 @@
       fixed = true;
     };
   };
-  omniSystem =
+  perSystem =
     { pkgs, inputs, ... }:
     {
       legacyPackages = {

@@ -7,7 +7,7 @@
       hj.packages = [ self'.packages.amdgpu_top ];
       boot.initrd.kernelModules = [ "amdgpu" ];
     };
-  omniSystem =
+  perSystem =
     { pkgs, ... }:
     {
       packages.amdgpu_top = pkgs.amdgpu_top.overrideAttrs (old: {

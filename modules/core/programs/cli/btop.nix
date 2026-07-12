@@ -73,7 +73,7 @@
       };
     };
 
-  omniSystem =
+  perSystem =
     { pkgs, ... }:
     {
       packages.btop = pkgs.btop-rocm.overrideAttrs {

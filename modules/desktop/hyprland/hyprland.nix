@@ -310,7 +310,7 @@
         };
       };
     };
-  omniSystem =
+  perSystem =
     {
       inputs',
       packages',
