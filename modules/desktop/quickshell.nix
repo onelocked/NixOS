@@ -184,10 +184,10 @@
       };
     };
   perSystem =
-    { inputs', ... }:
+    { packages', ... }:
     {
       packages.quickshell =
-        (inputs'.quickshell.packages.default.override {
+        (packages'.quickshell.override {
           withWayland = true;
           withPipewire = true;
           withQtSvg = true;

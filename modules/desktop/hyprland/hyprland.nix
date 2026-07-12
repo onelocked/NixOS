@@ -312,14 +312,13 @@
     };
   perSystem =
     {
-      inputs',
       packages',
       pkgs,
       ...
     }:
     {
       packages = {
-        hyprland = inputs'.hyprland.packages.hyprland.overrideAttrs (oldAttrs: {
+        hyprland = packages'.hyprland.overrideAttrs (oldAttrs: {
           doCheck = false;
           patches = (oldAttrs.patches or [ ]) ++ [
             (pkgs.writeText "border-rounding.patch" # cpp

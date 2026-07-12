@@ -122,16 +122,16 @@
 
   exo.skeleton =
     {
-      inputs',
       config,
       lib,
       pkgs,
+      packages',
       ...
     }:
     let
       cfg = config.forte.zen-browser;
 
-      unwrapped = inputs'.zen-browser.packages.twilight-unwrapped.override { inherit (cfg) policies; };
+      unwrapped = packages'.zen-browser.twilight-unwrapped.override { inherit (cfg) policies; };
 
       wrapped = pkgs.wrapFirefox unwrapped { inherit (cfg) extraPrefs nativeMessagingHosts; };
 
