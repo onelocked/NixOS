@@ -131,7 +131,7 @@
         version = "v1.0";
         src = inputs.cliphist-tui;
         doCheck = false;
-        cargoHash = "sha256-KHlEw5RZNeCYeNngPvgDFvBFMKD2OZrx8sg2QWdwjQ8=";
+        cargoLock.lockFile = finalAttrs.src + "/Cargo.lock";
         patches = [
           (pkgs.writeText "better-binds.patch" # rust
             ''

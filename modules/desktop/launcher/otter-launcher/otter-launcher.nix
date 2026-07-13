@@ -381,11 +381,11 @@
     { pkgs, inputs, ... }:
     {
       packages = {
-        otter-launcher = pkgs.rustPlatform.buildRustPackage {
+        otter-launcher = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
           pname = "otter-launcher";
           version = "v1.0";
           src = inputs.otter-launcher;
-          cargoHash = "sha256-WTjVDkExigSqV/u5GdjrkQOu2KH/eWTp7eCHIINDX50=";
+          cargoLock.lockFile = finalAttrs.src + "/Cargo.lock";
           doCheck = false;
           patches = [
             (pkgs.writeText "selection.patch" # rust
@@ -431,12 +431,12 @@
               ''
             )
           ];
-        };
+        });
         fsel = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
           pname = "fsel";
           version = "v1.0";
           src = inputs.fsel;
-          cargoHash = "sha256-SAQnY0VgRPLjkjmEgZcyjp6hFXxp54PB1j52qwAy9yI=";
+          cargoLock.lockFile = finalAttrs.src + "/Cargo.lock";
           doCheck = false;
         });
       };
