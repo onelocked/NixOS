@@ -37,12 +37,13 @@
     perSystem =
       { pkgs, ... }:
       let
-        tomlFormat = pkgs.formats.toml { };
-        pinsToml = tomlFormat.generate "pins.toml" config.tack-config;
+        tomlFormat = (pkgs.formats.toml { }).generate;
+        pinsToml = tomlFormat "pins.toml" config.tack-config;
       in
       {
         apps.tack-update = {
           type = "app";
+          meta.description = "Update .tack/pins.toml";
           program = lib.getExe (
             pkgs.writeShellApplication {
               name = "tack-write";
