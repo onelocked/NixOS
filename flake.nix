@@ -25,28 +25,23 @@
       withSystem =
         system: f:
         let
+          pkgs = inputs.nixpkgs.legacyPackages.${system};
+          inputs' = inputs |> lib.mapAttrs (_: projectInput system);
+          self' = projectInput system self;
+          packages' =
+            inputs'
+            |> lib.mapAttrs (name: key: key.packages // (key.packages.default or key.packages.${name} or { }));
         in
         f {
           inherit
             system
             inputs
             rootPath
+            pkgs
+            inputs'
+            self'
+            packages'
             ;
-          pkgs = inputs.nixpkgs.legacyPackages.${system};
-          inputs' = inputs |> lib.mapAttrs (_: projectInput system);
-          self' = projectInput system self;
-          packages' =
-            inputs
-            |> lib.mapAttrs (_: projectInput system)
-            |> lib.mapAttrs (
-              name: key:
-              if key.packages ? default then
-                key.packages // key.packages.default
-              else if key.packages ? ${name} then
-                key.packages // key.packages.${name}
-              else
-                key.packages
-            );
         };
 
       #  Evaluate the top-level modules
@@ -83,16 +78,8 @@
       # Transpose system-dependent configurations to the top level
       transposed =
         systemOutputs
-        |> lib.attrValues
-        |> map lib.attrNames
-        |> lib.flatten
-        |> lib.unique
-        |> lib.flip lib.genAttrs (
-          key:
-          topEval.config.systems
-          |> lib.filter (system: systemOutputs.${system} ? ${key})
-          |> lib.flip lib.genAttrs (system: systemOutputs.${system}.${key})
-        );
+        |> lib.mapAttrsToList (system: lib.mapAttrs (_: v: { ${system} = v; }))
+        |> lib.foldAttrs (a: b: a // b) { };
     in
     topEval.config.flake // transposed;
 }
