@@ -102,14 +102,6 @@
         };
         systemd.suppressedSystemUnits = [ "systemd-machine-id-commit.service" ];
         security.sudo-rs.extraConfig = ''Defaults lecture="never" ''; # shut up sudo
-        # set permissions
-        systemd.tmpfiles.settings.preservation = {
-          "${config.hj.directory}/.ssh".d = lib.mkForce {
-            user = constants.username;
-            group = "users";
-            mode = "0700";
-          };
-        };
       };
     };
 }

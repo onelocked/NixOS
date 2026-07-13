@@ -4,6 +4,7 @@
       lib,
       hostName,
       config,
+      constants,
       ...
     }:
     let
@@ -23,6 +24,14 @@
           users.users.onelock.openssh.authorizedKeys.keys = [
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICM7ifW7zlpT8VeWOgCpKSAdnHr4vgIzrcyId/RQ822J gaming-pc"
           ];
+          # set permissions
+          systemd.tmpfiles.settings.preservation = {
+            "${config.hj.directory}/.ssh".d = lib.mkForce {
+              user = constants.username;
+              group = "users";
+              mode = "0700";
+            };
+          };
         })
         (lib.mkIf (hostName == "mini-pc") {
           forte.persist = {
