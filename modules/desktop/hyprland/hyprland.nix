@@ -21,20 +21,7 @@
       ...
     }:
     let
-      pluginPath =
-        entry: if lib.types.package.check entry then "${entry}/lib/lib${entry.pname}.so" else entry;
-
       cfg = config.forte.hyprland;
-
-      luaFileName =
-        name:
-        let
-          base = lib.removeSuffix ".lua" name;
-        in
-        builtins.replaceStrings [ "." ] [ "/" ] base + ".lua";
-
-      requireName = name: lib.removeSuffix ".lua" name;
-
       autoLoadFiles = lib.filterAttrs (_: file: file.autoLoad) cfg.lua;
     in
     {
@@ -52,7 +39,9 @@
                 ''
                   hl.on("hyprland.start", function ()
                     ${lib.concatMapStrings (entry: ''
-                      hl.exec_raw("hyprctl plugin load ${pluginPath entry}")
+                      hl.exec_raw("hyprctl plugin load ${
+                        if lib.types.package.check entry then "${entry}/lib/lib${entry.pname}.so" else entry
+                      }")
                     '') cfg.plugins}
                   end)
                 '';
@@ -65,7 +54,7 @@
                   in
                   autoLoadFiles
                   |> lib.mapAttrsToList (name: _: name)
-                  |> builtins.sort (
+                  |> lib.sort (
                     a: b:
                     let
                       ra = rank a;
@@ -73,7 +62,7 @@
                     in
                     if ra != rb then ra < rb else a < b
                   )
-                  |> map (name: ''require("${requireName name}")'')
+                  |> map (name: ''require("${lib.removeSuffix ".lua" name}")'')
                   |> (
                     lines:
                     lines
@@ -92,9 +81,9 @@
                 cfg.lua
                 |> lib.mapAttrs' (
                   name: file:
-                  lib.nameValuePair "hypr/${luaFileName name}" (
-                    if builtins.isPath file.content then { source = file.content; } else { text = file.content; }
-                  )
+                  lib.nameValuePair "hypr/${
+                    lib.replaceStrings [ "." ] [ "/" ] (lib.removeSuffix ".lua" name) + ".lua"
+                  }" (if lib.isPath file.content then { source = file.content; } else { text = file.content; })
                 )
               )
               {
