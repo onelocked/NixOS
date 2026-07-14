@@ -49,13 +49,13 @@
               name = "tack-write";
               runtimeInputs = [
                 pkgs.diffutils
-                pkgs.difftastic
+                pkgs.delta
               ];
               text = ''
                 if [ -f .tack/pins.toml ]; then
                   if ! diff -q .tack/pins.toml "${pinsToml}" >/dev/null; then
                     echo "Changes to .tack/pins.toml:"
-                    difft .tack/pins.toml "${pinsToml}" || true
+                    delta --dark .tack/pins.toml "${pinsToml}" || true
                   fi
                 fi
                 install -m 444 -D -T "${pinsToml}" .tack/pins.toml
