@@ -150,7 +150,7 @@
       pkgs,
       config,
       lib,
-      birdee,
+      wrapPackage,
       ...
     }:
     let
@@ -196,23 +196,14 @@
         };
         package = lib.mkOption {
           type = lib.types.package;
-          default = birdee.lib.wrapPackage (
-            { config, ... }:
-            {
-              inherit pkgs;
-              package = pkgs.lazygit;
-              env.LG_CONFIG_FILE = config.constructFiles.generatedConfig.path;
-              constructFiles.generatedConfig = {
-                relPath = "config.toml";
-                builder = ''mkdir -p "$(dirname "$2")" && cp ${yamlFormat.generate "lazygit.yml" cfg.settings} "$2"'';
-              };
-            }
-          );
+          default = wrapPackage {
+            package = pkgs.lazygit;
+            env.LG_CONFIG_FILE = yamlFormat.generate "lazygit.yml" cfg.settings;
+          };
         };
         worktrunkPackage = lib.mkOption {
           type = lib.types.package;
-          default = birdee.lib.wrapPackage {
-            inherit pkgs;
+          default = wrapPackage {
             package = pkgs.worktrunk;
             env.WORKTRUNK_CONFIG_PATH = tomlFormat.generate "worktrunk-config.toml" {
               skip-shell-integration-prompt = true;

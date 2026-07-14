@@ -1,7 +1,6 @@
 {
   tack = {
     nixpkgs = "gh:nixos/nixpkgs/nixos-unstable";
-    birdee = "gh:BirdeeHub/nix-wrapper-modules";
     disko = "gh:nix-community/disko";
     systems = "gh:nix-systems/x86_64-linux";
   };

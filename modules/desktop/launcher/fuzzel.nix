@@ -37,7 +37,7 @@
   exo.skeleton =
     {
       lib,
-      birdee,
+      wrapPackage,
       pkgs,
       config,
       ...
@@ -57,10 +57,11 @@
         };
         package = lib.mkOption {
           type = lib.types.package;
-          default = birdee.wrappers.fuzzel.wrap {
-            inherit pkgs;
+          default = wrapPackage {
             package = pkgs.fuzzel;
-            inherit (cfg) settings;
+            flags = lib.optionalAttrs (cfg.settings != { }) {
+              "--config" = pkgs.writeText "fuzzel.ini" (lib.generators.toINI { } cfg.settings);
+            };
           };
         };
       };

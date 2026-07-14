@@ -5,7 +5,7 @@
       config,
       lib,
       pkgs,
-      birdee,
+      wrapPackage,
       ...
     }:
     let
@@ -93,8 +93,7 @@
           default = true;
         };
         package = lib.mkOption {
-          default = birdee.lib.wrapPackage {
-            inherit pkgs;
+          default = wrapPackage {
             package = self'.packages.cliphist-tui;
             runtimePkgs = [
               self'.packages.cliphist
@@ -120,7 +119,7 @@
   };
   perSystem =
     {
-      birdee,
+      wrapPackage,
       inputs,
       pkgs,
       ...
@@ -162,8 +161,7 @@
         ];
       });
 
-      packages.cliphist = birdee.lib.wrapPackage {
-        inherit pkgs;
+      packages.cliphist = wrapPackage {
         env.CLIPHIST_MAX_STORE_SIZE = "1GB";
         package = pkgs.buildGoModule (finalAttrs: {
           pname = "cliphist";

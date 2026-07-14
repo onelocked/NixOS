@@ -70,12 +70,13 @@
     {
       lib,
       pkgs,
-      birdee,
+      wrapPackage,
       config,
       ...
     }:
     let
       cfg = config.forte.foot;
+      iniFmt = pkgs.formats.ini { };
     in
     {
       config = lib.mkIf (cfg.enable) {
@@ -114,11 +115,25 @@
         };
         package = lib.mkOption {
           type = lib.types.package;
-          default = birdee.wrappers.foot.wrap {
-            inherit pkgs;
-            inherit (cfg) settings;
-            env.FONTCONFIG_FILE = pkgs.makeFontsConf { fontDirectories = [ pkgs.maple-mono.NL-NF ]; };
-          };
+          default =
+            let
+              footConfigDir = pkgs.linkFarm "foot-config" [
+                {
+                  name = "foot/foot.ini";
+                  path = iniFmt.generate "foot.ini" cfg.settings;
+                }
+              ];
+            in
+            wrapPackage {
+              package = pkgs.foot;
+              flags = {
+                "--config" = "${footConfigDir}/foot/foot.ini";
+              };
+              env = {
+                FONTCONFIG_FILE = pkgs.makeFontsConf { fontDirectories = [ pkgs.maple-mono.NL-NF ]; };
+              };
+              paths = [ footConfigDir ];
+            };
           defaultText = lib.literalExpression "pkgs.foot";
           description = "Package to use for foot";
         };

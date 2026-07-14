@@ -1,7 +1,7 @@
 {
   exo.mods.desktop =
     {
-      birdee,
+      wrapPackage,
       lib,
       config,
       pkgs,
@@ -32,8 +32,7 @@
         };
         package = lib.mkOption {
           type = lib.types.package;
-          default = birdee.lib.wrapPackage {
-            inherit pkgs;
+          default = wrapPackage {
             package = pkgs.jellyfin-desktop;
             flags = {
               "--platform" = "xcb";

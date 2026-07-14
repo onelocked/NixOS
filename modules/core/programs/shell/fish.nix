@@ -125,7 +125,7 @@
     {
       lib,
       config,
-      birdee,
+      wrapPackage,
       pkgs,
       ...
     }:
@@ -227,23 +227,26 @@
         atuin = lib.mkOption {
           type = lib.types.package;
           description = "Atuin shell history package.";
-          default = birdee.lib.wrapPackage (
-            { config, ... }:
-            {
-              inherit pkgs;
+          default =
+            let
+              atuinConfigDir = pkgs.linkFarm "atuin-config" [
+                {
+                  name = "config.toml";
+                  path =
+                    pkgs.writeText "atuin-config.toml" # toml
+                      ''
+                        enter_accept = true
+                        filter_mode = "session-preload"
+                        search_mode = "fuzzy"
+                      '';
+                }
+              ];
+            in
+            wrapPackage {
               package = pkgs.atuin;
-              env.ATUIN_CONFIG_DIR = dirOf config.constructFiles.atuin-config.path;
-              constructFiles.atuin-config = {
-                relPath = "atuin-config/config.toml";
-                content = # toml
-                  ''
-                    enter_accept = true
-                    filter_mode = "session-preload"
-                    search_mode = "fuzzy"
-                  '';
-              };
-            }
-          );
+              env.ATUIN_CONFIG_DIR = atuinConfigDir;
+              paths = [ atuinConfigDir ];
+            };
         };
       };
     };

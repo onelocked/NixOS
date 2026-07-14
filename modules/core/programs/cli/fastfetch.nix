@@ -100,7 +100,7 @@
   exo.skeleton =
     {
       lib,
-      birdee,
+      wrapPackage,
       pkgs,
       config,
       theme,
@@ -129,20 +129,12 @@
         enable = lib.mkEnableOption "fastfetch";
         package = lib.mkOption {
           type = lib.types.package;
-          default = birdee.lib.wrapPackage (
-            { config, ... }:
-            {
-              inherit pkgs;
-              package = pkgs.fastfetch-unwrapped;
-              flags = {
-                "--config" = config.constructFiles.generatedConfig.path;
-              };
-              constructFiles.generatedConfig = {
-                relPath = "config.jsonc";
-                builder = ''mkdir -p "$(dirname "$2")" && cp ${json.generate "config.jsonc" cfg.settings} "$2"'';
-              };
-            }
-          );
+          default = wrapPackage {
+            package = pkgs.fastfetch-unwrapped;
+            flags = {
+              "--config" = json.generate "config.jsonc" cfg.settings;
+            };
+          };
         };
         settings = lib.mkOption {
           inherit (json) type;

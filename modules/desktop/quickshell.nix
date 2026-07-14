@@ -11,7 +11,7 @@
     {
       lib,
       pkgs,
-      birdee,
+      wrapPackage,
       self',
       config,
       constants,
@@ -151,8 +151,7 @@
           };
           package = lib.mkOption {
             type = lib.types.package;
-            default = birdee.lib.wrapPackage {
-              inherit pkgs;
+            default = wrapPackage {
               inherit runtimePkgs;
               package = self'.packages.quickshell;
               aliases = [ "qs" ];
@@ -169,15 +168,12 @@
           };
           oneshill = lib.mkOption {
             type = lib.types.package;
-            default = pkgs.symlinkJoin {
-              name = "oneshill";
-              meta.mainProgram = "oneshill";
-              paths = [ cfg.package ];
-              nativeBuildInputs = [ pkgs.makeWrapper ];
-              postBuild = ''
-                makeWrapper ${pkgs.lib.getExe cfg.package} $out/bin/oneshill \
-                  --add-flags '-p ${inputs.oneshill}'
-              '';
+            default = wrapPackage {
+              package = cfg.package;
+              binName = "oneshill";
+              flags = {
+                "-p" = inputs.oneshill;
+              };
             };
           };
         };

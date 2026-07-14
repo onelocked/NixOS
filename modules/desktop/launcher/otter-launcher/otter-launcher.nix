@@ -200,7 +200,7 @@
   exo.skeleton =
     {
       self',
-      birdee,
+      wrapPackage,
       pkgs,
       config,
       lib,
@@ -314,38 +314,19 @@
                 '';
           };
 
-          moreCfg = lib.mkOption {
-            type = with lib.types; nullOr (either path lines);
-            default = "";
-            description = "Additional config lines.";
-            example = lib.literalExpression "./config.toml";
-          };
-
           package = lib.mkOption {
             type = lib.types.package;
-            default = birdee.lib.wrapPackage (
-              { config, ... }:
-              {
-                inherit pkgs;
-                package = self'.packages.otter-launcher;
-                flags = {
-                  "--config" = config.constructFiles.generatedConfig.path;
-                };
-                constructFiles.generatedConfig = {
-                  relPath = "config.toml";
-                  builder = ''
-                    mkdir -p "$(dirname "$2")"
-                    cat ${tomlFormat.generate "config.toml" (cfg.settings // { inherit (cfg) modules; })} > "$2"
-                    printf '%s\n' "${cfg.moreCfg}" >> "$2"
-                  '';
-                };
-                runtimePkgs = [
-                  pkgs.wiremix
-                  pkgs.chafa
-                ]
-                ++ lib.optional fsel.enable (fsel.package);
-              }
-            );
+            default = wrapPackage {
+              package = self'.packages.otter-launcher;
+              flags = {
+                "--config" = tomlFormat.generate "otter-config.toml" (cfg.settings // { inherit (cfg) modules; });
+              };
+              runtimePkgs = [
+                pkgs.wiremix
+                pkgs.chafa
+              ]
+              ++ lib.optional fsel.enable fsel.package;
+            };
           };
         };
         fsel = {
@@ -357,21 +338,13 @@
           };
           package = lib.mkOption {
             type = lib.types.package;
-            default = birdee.lib.wrapPackage (
-              { config, ... }:
-              {
-                inherit pkgs;
-                package = self'.packages.fsel;
-                runtimePkgs = [ pkgs.app2unit ];
-                flags = {
-                  "--config" = config.constructFiles.generatedConfig.path;
-                };
-                constructFiles.generatedConfig = {
-                  relPath = "config.toml";
-                  builder = ''mkdir -p "$(dirname "$2")" && cp ${tomlFormat.generate "config.toml" fsel.settings} "$2"'';
-                };
-              }
-            );
+            default = wrapPackage {
+              package = self'.packages.fsel;
+              runtimePkgs = [ pkgs.app2unit ];
+              flags = {
+                "--config" = tomlFormat.generate "config.toml" fsel.settings;
+              };
+            };
           };
         };
       };

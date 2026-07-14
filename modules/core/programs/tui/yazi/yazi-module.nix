@@ -11,7 +11,7 @@
       pkgs,
       lib,
       config,
-      birdee,
+      wrapPackage,
       self',
       ...
     }:
@@ -49,31 +49,50 @@
 
         package = lib.mkOption {
           type = lib.types.package;
-          default = birdee.wrappers.yazi.wrap {
-            inherit pkgs;
-            runtimePkgs = with pkgs; [
-              ouch
-              exiv2
-              ffmpeg
-              xxhash
-            ];
-            package = self'.packages.yazi;
-            inherit (cfg) plugins;
-            settings = {
-              inherit (cfg) keymap theme;
-              yazi = cfg.settings;
-            };
-            constructFiles = {
-              initLua = {
-                relPath = "yazi-config/init.lua";
-                content = cfg.initLua;
+          default =
+            let
+              yaziConfigDir = pkgs.linkFarm "yazi-config" (
+                (lib.optional (cfg.settings != { }) {
+                  name = "yazi-config/yazi.toml";
+                  path = tomlFormat.generate "yazi.toml" cfg.settings;
+                })
+                ++ (lib.optional (cfg.keymap != { }) {
+                  name = "yazi-config/keymap.toml";
+                  path = tomlFormat.generate "keymap.toml" cfg.keymap;
+                })
+                ++ (lib.optional (cfg.theme != { }) {
+                  name = "yazi-config/theme.toml";
+                  path = tomlFormat.generate "theme.toml" cfg.theme;
+                })
+                ++ (lib.mapAttrsToList (
+                  name: path: {
+                    name = "yazi-config/plugins/${name}.yazi";
+                    inherit path;
+                  }
+                ) (lib.filterAttrs (_: path: path != null) cfg.plugins))
+                ++ (lib.optional (cfg.initLua != "") {
+                  name = "yazi-config/init.lua";
+                  path = pkgs.writeText "init.lua" cfg.initLua;
+                })
+                ++ (lib.optional (cfg.flavorContent != "") {
+                  name = "yazi-config/flavors/oneshill.yazi/flavor.toml";
+                  path = pkgs.writeText "flavor.toml" cfg.flavorContent;
+                })
+              );
+            in
+            wrapPackage {
+              package = self'.packages.yazi;
+              runtimePkgs = with pkgs; [
+                ouch
+                exiv2
+                ffmpeg
+                xxhash
+              ];
+              env = {
+                YAZI_CONFIG_HOME = "${yaziConfigDir}/yazi-config";
               };
-              flavor = {
-                relPath = "yazi-config/flavors/oneshill.yazi/flavor.toml";
-                content = cfg.flavorContent;
-              };
+              paths = [ yaziConfigDir ];
             };
-          };
           description = "The Yazi package to use, wrapped with required dependencies.";
         };
 

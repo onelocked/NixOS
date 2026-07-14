@@ -2,14 +2,13 @@
   exo.core =
     {
       pkgs,
-      birdee,
+      wrapPackage,
       theme,
       ...
     }:
     {
       hj.packages = [
-        (birdee.lib.wrapPackage {
-          inherit pkgs;
+        (wrapPackage {
           package = pkgs.bat;
           flags = {
             "--theme" = if theme == "dark" then "TwoDark" else "base16";

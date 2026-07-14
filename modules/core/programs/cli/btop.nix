@@ -91,7 +91,7 @@
     {
       lib,
       pkgs,
-      birdee,
+      wrapPackage,
       config,
       self',
       ...
@@ -104,7 +104,7 @@
         hj.packages = [ cfg.package ];
       };
       options.forte.btop = {
-        enable = lib.mkEnableOption "zen-browser";
+        enable = lib.mkEnableOption "btop";
 
         settings = lib.mkOption {
           type = lib.types.attrs;
@@ -117,11 +117,34 @@
         };
 
         package = lib.mkOption {
-          default = birdee.wrappers.btop.wrap {
-            inherit pkgs;
-            package = self'.packages.btop;
-            inherit (cfg) settings themes;
-          };
+          default =
+            let
+              toBtopConf = lib.generators.toKeyValue {
+                mkKeyValue = lib.generators.mkKeyValueDefault {
+                  mkValueString =
+                    v:
+                    if builtins.isBool v then
+                      (if v then "True" else "False")
+                    else if builtins.isString v then
+                      ''"${v}"''
+                    else
+                      toString v;
+                } " = ";
+              };
+            in
+            wrapPackage {
+              package = self'.packages.btop;
+              flags =
+                (lib.optionalAttrs (cfg.settings != { }) {
+                  "--config" = pkgs.writeText "btop.conf" (toBtopConf cfg.settings);
+                })
+                // (lib.optionalAttrs (cfg.themes != { }) {
+                  "--themes-dir" = pkgs.symlinkJoin {
+                    name = "btop-themes";
+                    paths = lib.mapAttrsToList (name: content: pkgs.writeTextDir "${name}.theme" content) cfg.themes;
+                  };
+                });
+            };
         };
       };
     };

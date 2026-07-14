@@ -72,7 +72,7 @@
       pkgs,
       lib,
       config,
-      birdee,
+      wrapPackage,
       theme,
       ...
     }:
@@ -89,18 +89,10 @@
           description = "Options to go into otter-launcher's toml config";
         };
         package = lib.mkOption {
-          default = birdee.lib.wrapPackage (
-            { config, ... }:
-            {
-              inherit pkgs;
-              package = pkgs.starship;
-              env.STARSHIP_CONFIG = config.constructFiles.starship.path;
-              constructFiles.starship = {
-                relPath = "starship.toml";
-                builder = ''mkdir -p "$(dirname "$2")" && cp ${tomlFormat.generate "starship.toml" cfg.settings} "$2"'';
-              };
-            }
-          );
+          default = wrapPackage {
+            package = pkgs.starship;
+            env.STARSHIP_CONFIG = tomlFormat.generate "starship.toml" cfg.settings;
+          };
         };
       };
 

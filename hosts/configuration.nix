@@ -30,7 +30,6 @@ in
                 packages'
                 hostName
                 ;
-              inherit (inputs) birdee;
               inherit (hostConfig) hardware theme;
               constants = {
                 username = hostConfig.user;
@@ -51,7 +50,6 @@ in
       { pkgs, ... }:
       {
         formatter = pkgs.nixfmt-rs;
-        _module.args = { inherit (inputs) birdee; };
       };
   };
 

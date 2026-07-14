@@ -110,9 +110,9 @@
     {
       lib,
       pkgs,
-      birdee,
       config,
       self',
+      wrapPackage,
       ...
     }:
     let
@@ -179,29 +179,57 @@
         };
         package = lib.mkOption {
           type = lib.types.package;
-          default = birdee.wrappers.mpv.wrap {
-            inherit pkgs;
-            package = pkgs.mpv;
-            script = {
-              mpris.path = pkgs.mpvScripts.mpris;
-              sponsorblock.path = pkgs.mpvScripts.sponsorblock;
-              modernz = {
-                path = pkgs.mpvScripts.modernz;
-                opts.download_path = "${config.hj.directory}/Videos/mpv";
-                opts.osc_on_start = "no";
-                opts.osc_on_seek = "no";
-                opts.showonpause = "no";
+          default =
+            let
+              mpvScripts = pkgs.symlinkJoin {
+                name = "mpv-scripts";
+                paths = with pkgs.mpvScripts; [
+                  mpris
+                  sponsorblock
+                  modernz
+                  self'.legacyPackages.mpv-rotate-resize
+                ];
               };
-              rotate-resize = {
-                opts = {
-                  keybinds = "r";
-                };
-                path = self'.legacyPackages.mpv-rotate-resize;
-              };
+
+              mpvConfigDir = pkgs.linkFarm "mpv-config" [
+                {
+                  name = "mpv.conf";
+                  path = pkgs.writeText "mpv.conf" cfg.conf;
+                }
+                {
+                  name = "input.conf";
+                  path = pkgs.writeText "input.conf" cfg.input;
+                }
+                {
+                  name = "scripts";
+                  path = "${mpvScripts}/share/mpv/scripts";
+                }
+                {
+                  name = "fonts";
+                  path = "${mpvScripts}/share/fonts";
+                }
+                {
+                  name = "script-opts/modernz.conf";
+                  path = pkgs.writeText "modernz.conf" (
+                    lib.generators.toKeyValue { } {
+                      download_path = "${config.hj.directory}/Videos/mpv";
+                      osc_on_start = "no";
+                      osc_on_seek = "no";
+                      showonpause = "no";
+                    }
+                  );
+                }
+                {
+                  name = "script-opts/rotate-resize.conf";
+                  path = pkgs.writeText "rotate-resize.conf" "keybinds=r";
+                }
+              ];
+            in
+            wrapPackage {
+              package = pkgs.mpv;
+              env.MPV_HOME = "${mpvConfigDir}";
+              paths = [ mpvConfigDir ];
             };
-            "mpv.conf".content = cfg.conf;
-            "mpv.input".content = cfg.input;
-          };
         };
         mpv-wlpaste = lib.mkOption {
           type = lib.types.package;
@@ -233,7 +261,7 @@
     {
       legacyPackages.mpv-rotate-resize = pkgs.writeTextFile {
         name = "rotate-resize";
-        destination = "/main.lua";
+        destination = "/share/mpv/scripts/rotate-resize.lua";
         text = # lua
           ''
             local opt = require 'mp.options'
