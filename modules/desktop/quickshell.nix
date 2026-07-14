@@ -152,7 +152,7 @@
           package = lib.mkOption {
             type = lib.types.package;
             default = wrapPackage {
-              inherit runtimePkgs;
+              extraPkgs = runtimePkgs;
               package = self'.packages.quickshell;
               aliases = [ "qs" ];
               env = {
@@ -171,9 +171,7 @@
             default = wrapPackage {
               package = cfg.package;
               binName = "oneshill";
-              flags = {
-                "-p" = inputs.oneshill;
-              };
+              args = [ "-p ${inputs.oneshill}" ];
             };
           };
         };

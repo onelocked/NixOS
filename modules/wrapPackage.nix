@@ -5,47 +5,66 @@ let
     {
       package,
       binName ? package.meta.mainProgram or (lib.getName package),
-      flags ? { },
+      args ? [ ],
       env ? { },
-      runtimePkgs ? [ ],
-      paths ? [ ],
+      extraPkgs ? [ ],
+      files ? { },
       aliases ? [ ],
     }:
     pkgs.symlinkJoin {
       name = "${package.name}-wrapped";
-      paths = [ package ] ++ paths;
+      paths = [
+        (
+          files
+          |> lib.mapAttrsToList (
+            name: value:
+            let
+              path =
+                if (value |> lib.isString) then (value |> pkgs.writeText "${lib.baseNameOf name}-text") else value;
+            in
+            {
+              inherit name path;
+            }
+          )
+          |> pkgs.linkFarm "${package.name}"
+        )
+        package
+      ];
       nativeBuildInputs = [ pkgs.makeWrapper ];
       meta = removeAttrs (package.meta or { }) [ "outputsToInstall" ] // {
         mainProgram = binName;
       };
       postBuild =
         let
-          wrapperArgs = ''
-            ${
-              lib.concatStringsSep " \\\n  " (
-                lib.mapAttrsToList (
-                  n: v: "--add-flags ${lib.escapeShellArg n} --add-flags ${lib.escapeShellArg (toString v)}"
-                ) flags
-              )
-            } \
-            ${
-              lib.concatStringsSep " \\\n  " (
-                lib.mapAttrsToList (n: v: "--set ${lib.escapeShellArg n} ${lib.escapeShellArg (toString v)}") env
-              )
-            } \
-            ${lib.optionalString (lib.length runtimePkgs > 0) "--prefix PATH : ${lib.makeBinPath runtimePkgs}"}
-          '';
+          env' =
+            env
+            |> lib.mapAttrsToList (n: v: "--set ${lib.escapeShellArg n} ${lib.escapeShellArg (toString v)}")
+            |> lib.concatStringsSep " \\\n  ";
+
+          args' = args |> map (v: "--add-flags ${lib.escapeShellArg v}") |> lib.concatStringsSep " \\\n  ";
+
+          extraPkgs' = lib.optionalString (extraPkgs != [ ]) " --prefix PATH : ${lib.makeBinPath extraPkgs}";
+
+          aliases' =
+            aliases
+            |> map (alias: "ln -sf $out/bin/${binName} $out/bin/${lib.escapeShellArg alias}")
+            |> lib.concatStringsSep "\n";
+
+          binName' = lib.escapeShellArg binName;
+
+          wrapperArgs = "${args'} ${env'}${extraPkgs'}";
         in
+        #bash
         ''
-          if [ ! -e $out/bin/${binName} ]; then
-            makeWrapper ${lib.getExe' package (package.meta.mainProgram or (lib.getName package))} $out/bin/${binName} ${wrapperArgs}
+          if [ ! -e $out/bin/${binName'} ]; then
+            makeWrapper ${
+              lib.getExe' package (package.meta.mainProgram or (lib.getName package))
+            } $out/bin/${binName'} ${wrapperArgs}
           else
-            wrapProgram $out/bin/${binName} ${wrapperArgs}
+            wrapProgram $out/bin/${binName'} ${wrapperArgs}
           fi
 
-          ${lib.concatStringsSep "\n" (
-            map (alias: "ln -sf $out/bin/${binName} $out/bin/${lib.escapeShellArg alias}") aliases
-          )}
+          ${lib.optionalString (aliases != [ ]) aliases'}
         '';
     };
 in

@@ -10,10 +10,10 @@
       hj.packages = [
         (wrapPackage {
           package = pkgs.bat;
-          flags = {
-            "--theme" = if theme == "dark" then "TwoDark" else "base16";
-            "--style" = "plain";
-          };
+          args = [
+            "--theme ${(if theme == "dark" then "TwoDark" else "base16")}"
+            "--style=plain"
+          ];
         })
         (pkgs.bat-extras.batman.overrideAttrs (o: {
           postInstall =

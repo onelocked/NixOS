@@ -318,10 +318,10 @@
             type = lib.types.package;
             default = wrapPackage {
               package = self'.packages.otter-launcher;
-              flags = {
-                "--config" = tomlFormat.generate "otter-config.toml" (cfg.settings // { inherit (cfg) modules; });
-              };
-              runtimePkgs = [
+              args = [
+                "--config ${(tomlFormat.generate "otter-config.toml" (cfg.settings // { inherit (cfg) modules; }))}"
+              ];
+              extraPkgs = [
                 pkgs.wiremix
                 pkgs.chafa
               ]
@@ -340,10 +340,8 @@
             type = lib.types.package;
             default = wrapPackage {
               package = self'.packages.fsel;
-              runtimePkgs = [ pkgs.app2unit ];
-              flags = {
-                "--config" = tomlFormat.generate "config.toml" fsel.settings;
-              };
+              extraPkgs = [ pkgs.app2unit ];
+              args = [ "--config ${(tomlFormat.generate "config.toml" fsel.settings)}" ];
             };
           };
         };

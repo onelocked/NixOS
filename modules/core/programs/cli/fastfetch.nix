@@ -131,9 +131,7 @@
           type = lib.types.package;
           default = wrapPackage {
             package = pkgs.fastfetch-unwrapped;
-            flags = {
-              "--config" = json.generate "config.jsonc" cfg.settings;
-            };
+            args = [ "--config ${(json.generate "config.jsonc" cfg.settings)}" ];
           };
         };
         settings = lib.mkOption {

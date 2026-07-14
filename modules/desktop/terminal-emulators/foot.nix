@@ -115,25 +115,16 @@
         };
         package = lib.mkOption {
           type = lib.types.package;
-          default =
-            let
-              footConfigDir = pkgs.linkFarm "foot-config" [
-                {
-                  name = "foot/foot.ini";
-                  path = iniFmt.generate "foot.ini" cfg.settings;
-                }
-              ];
-            in
-            wrapPackage {
-              package = pkgs.foot;
-              flags = {
-                "--config" = "${footConfigDir}/foot/foot.ini";
-              };
-              env = {
-                FONTCONFIG_FILE = pkgs.makeFontsConf { fontDirectories = [ pkgs.maple-mono.NL-NF ]; };
-              };
-              paths = [ footConfigDir ];
+          default = wrapPackage {
+            package = pkgs.foot;
+            files = {
+              "configuration/foot.ini" = iniFmt.generate "foot.ini" cfg.settings;
             };
+            args = [ "--config=${placeholder "out"}/configuration/foot.ini" ];
+            env = {
+              FONTCONFIG_FILE = pkgs.makeFontsConf { fontDirectories = [ pkgs.maple-mono.NL-NF ]; };
+            };
+          };
           defaultText = lib.literalExpression "pkgs.foot";
           description = "Package to use for foot";
         };

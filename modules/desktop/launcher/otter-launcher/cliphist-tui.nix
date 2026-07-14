@@ -95,7 +95,7 @@
         package = lib.mkOption {
           default = wrapPackage {
             package = self'.packages.cliphist-tui;
-            runtimePkgs = [
+            extraPkgs = [
               self'.packages.cliphist
               pkgs.chafa
               pkgs.ffmpegthumbnailer

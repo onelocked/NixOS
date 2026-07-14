@@ -220,103 +220,94 @@
           |> map (mime: lib.nameValuePair mime [ "kitty.desktop" ])
           |> lib.listToAttrs;
       };
-      options.forte.kitty =
-        let
-          toKittyConfig = lib.generators.toKeyValue {
-            mkKeyValue =
-              key: value:
-              let
-                yesNo = v: if v then "yes" else "no";
-                value' = (if builtins.isBool value then yesNo else toString) value;
-              in
-              "${key} ${value'}";
-          };
-        in
-        {
-          enable = lib.mkEnableOption "kitty";
-          package = lib.mkOption {
-            type = lib.types.package;
-            default =
-              let
-                kittyConfigDir = pkgs.linkFarm "kitty-config" [
-                  {
-                    name = "kitty.conf";
-                    path = pkgs.writeText "kitty.conf" ''
-                      ${toKittyConfig (cfg.settings // cfg.theme // cfg.fontConfig)}
-
-                      # Keybindings
-                      ${lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "map ${k} ${v}") cfg.keybindings)}
-
-                      # Mouse bindings
-                      ${lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "mouse_map ${k} ${v}") cfg.mouseBindings)}
-                    '';
-                  }
-                ];
-              in
-              wrapPackage {
-                package = pkgs.kitty;
-                flags = {
-                  "--config" = "${kittyConfigDir}/kitty.conf";
-                };
-                paths = [ kittyConfigDir ];
+      options.forte.kitty = {
+        enable = lib.mkEnableOption "kitty";
+        package = lib.mkOption {
+          type = lib.types.package;
+          default =
+            let
+              toKittyConfig = lib.generators.toKeyValue {
+                mkKeyValue =
+                  key: value:
+                  let
+                    yesNo = v: if v then "yes" else "no";
+                    value' = (if builtins.isBool value then yesNo else toString) value;
+                  in
+                  "${key} ${value'}";
               };
-          };
-          settings = mkOption {
-            type = types.attrsOf settingsValueType;
-            default = { };
-            example = literalExpression ''
-              {
-                scrollback_lines = 10000;
-                enable_audio_bell = false;
-                update_check_interval = 0;
-              }
-            '';
-            description = ''
-              Key/value pairs written into `kitty.conf`.
-              See <https://sw.kovidgoyal.net/kitty/conf.html>.
-            '';
-          };
-          theme = mkOption {
-            type = types.attrsOf types.str;
-            default = { };
-            description = "Color scheme attributes for kitty, structurally merged into settings.";
-            example = literalExpression ''
-              {
-                color0 = "#131316";
-                background = "#131316";
-              }
-            '';
-          };
+            in
+            wrapPackage {
+              package = pkgs.kitty;
+              files = {
+                "configuration/kitty.conf" = ''
+                  ${toKittyConfig (cfg.settings // cfg.theme // cfg.fontConfig)}
 
-          fontConfig = mkOption {
-            type = types.attrsOf types.str;
-            default = { };
-            description = "Font configuration for kitty";
-          };
+                  # Keybindings
+                  ${lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "map ${k} ${v}") cfg.keybindings)}
 
-          keybindings = mkOption {
-            type = types.attrsOf types.str;
-            default = { };
-            example = literalExpression ''
-              {
-                "ctrl+c" = "copy_or_interrupt";
-                "ctrl+f>2" = "set_font_size 20";
-              }
-            '';
-            description = "Mapping of keybindings to actions.";
-          };
-
-          mouseBindings = mkOption {
-            type = types.attrsOf types.str;
-            default = { };
-            description = "Mapping of mouse bindings to actions.";
-            example = literalExpression ''
-              {
-                "ctrl+left click" = "ungrabbed mouse_handle_click selection link prompt";
-                "left click" = "ungrabbed no-op";
+                  # Mouse bindings
+                  ${lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "mouse_map ${k} ${v}") cfg.mouseBindings)}
+                '';
               };
-            '';
-          };
+              args = [ "--config=${placeholder "out"}/configuration/kitty.conf" ];
+            };
         };
+        settings = mkOption {
+          type = types.attrsOf settingsValueType;
+          default = { };
+          example = literalExpression ''
+            {
+              scrollback_lines = 10000;
+              enable_audio_bell = false;
+              update_check_interval = 0;
+            }
+          '';
+          description = ''
+            Key/value pairs written into `kitty.conf`.
+            See <https://sw.kovidgoyal.net/kitty/conf.html>.
+          '';
+        };
+        theme = mkOption {
+          type = types.attrsOf types.str;
+          default = { };
+          description = "Color scheme attributes for kitty, structurally merged into settings.";
+          example = literalExpression ''
+            {
+              color0 = "#131316";
+              background = "#131316";
+            }
+          '';
+        };
+
+        fontConfig = mkOption {
+          type = types.attrsOf types.str;
+          default = { };
+          description = "Font configuration for kitty";
+        };
+
+        keybindings = mkOption {
+          type = types.attrsOf types.str;
+          default = { };
+          example = literalExpression ''
+            {
+              "ctrl+c" = "copy_or_interrupt";
+              "ctrl+f>2" = "set_font_size 20";
+            }
+          '';
+          description = "Mapping of keybindings to actions.";
+        };
+
+        mouseBindings = mkOption {
+          type = types.attrsOf types.str;
+          default = { };
+          description = "Mapping of mouse bindings to actions.";
+          example = literalExpression ''
+            {
+              "ctrl+left click" = "ungrabbed mouse_handle_click selection link prompt";
+              "left click" = "ungrabbed no-op";
+            };
+          '';
+        };
+      };
     };
 }

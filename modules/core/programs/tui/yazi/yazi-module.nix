@@ -50,48 +50,39 @@
         package = lib.mkOption {
           type = lib.types.package;
           default =
-            let
-              yaziConfigDir = pkgs.linkFarm "yazi-config" (
-                (lib.optional (cfg.settings != { }) {
-                  name = "yazi-config/yazi.toml";
-                  path = tomlFormat.generate "yazi.toml" cfg.settings;
-                })
-                ++ (lib.optional (cfg.keymap != { }) {
-                  name = "yazi-config/keymap.toml";
-                  path = tomlFormat.generate "keymap.toml" cfg.keymap;
-                })
-                ++ (lib.optional (cfg.theme != { }) {
-                  name = "yazi-config/theme.toml";
-                  path = tomlFormat.generate "theme.toml" cfg.theme;
-                })
-                ++ (lib.mapAttrsToList (
-                  name: path: {
-                    name = "yazi-config/plugins/${name}.yazi";
-                    inherit path;
-                  }
-                ) (lib.filterAttrs (_: path: path != null) cfg.plugins))
-                ++ (lib.optional (cfg.initLua != "") {
-                  name = "yazi-config/init.lua";
-                  path = pkgs.writeText "init.lua" cfg.initLua;
-                })
-                ++ (lib.optional (cfg.flavorContent != "") {
-                  name = "yazi-config/flavors/oneshill.yazi/flavor.toml";
-                  path = pkgs.writeText "flavor.toml" cfg.flavorContent;
-                })
-              );
-            in
             wrapPackage {
               package = self'.packages.yazi;
-              runtimePkgs = with pkgs; [
+              extraPkgs = with pkgs; [
                 ouch
                 exiv2
                 ffmpeg
                 xxhash
               ];
+              files =
+                (lib.optionalAttrs (cfg.settings != { }) {
+                  "yazi-config/yazi.toml" = tomlFormat.generate "yazi.toml" cfg.settings;
+                })
+                // (lib.optionalAttrs (cfg.keymap != { }) {
+                  "yazi-config/keymap.toml" = tomlFormat.generate "keymap.toml" cfg.keymap;
+                })
+                // (lib.optionalAttrs (cfg.theme != { }) {
+                  "yazi-config/theme.toml" = tomlFormat.generate "theme.toml" cfg.theme;
+                })
+                // (lib.mapAttrs' (
+                  name: path: {
+                    name = "yazi-config/plugins/${name}.yazi";
+                    value = path;
+                  }
+                ) (lib.filterAttrs (_: path: path != null) cfg.plugins))
+                // (lib.optionalAttrs (cfg.initLua != "") {
+                  "yazi-config/init.lua" = cfg.initLua;
+                })
+                // (lib.optionalAttrs (cfg.flavorContent != "") {
+                  "yazi-config/flavors/oneshill.yazi/flavor.toml" = cfg.flavorContent;
+                });
               env = {
-                YAZI_CONFIG_HOME = "${yaziConfigDir}/yazi-config";
+                YAZI_CONFIG_HOME = "${placeholder "out"}/yazi-config";
               };
-              paths = [ yaziConfigDir ];
             };
           description = "The Yazi package to use, wrapped with required dependencies.";
         };

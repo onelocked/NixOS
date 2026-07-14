@@ -190,45 +190,23 @@
                   self'.legacyPackages.mpv-rotate-resize
                 ];
               };
-
-              mpvConfigDir = pkgs.linkFarm "mpv-config" [
-                {
-                  name = "mpv.conf";
-                  path = pkgs.writeText "mpv.conf" cfg.conf;
-                }
-                {
-                  name = "input.conf";
-                  path = pkgs.writeText "input.conf" cfg.input;
-                }
-                {
-                  name = "scripts";
-                  path = "${mpvScripts}/share/mpv/scripts";
-                }
-                {
-                  name = "fonts";
-                  path = "${mpvScripts}/share/fonts";
-                }
-                {
-                  name = "script-opts/modernz.conf";
-                  path = pkgs.writeText "modernz.conf" (
-                    lib.generators.toKeyValue { } {
-                      download_path = "${config.hj.directory}/Videos/mpv";
-                      osc_on_start = "no";
-                      osc_on_seek = "no";
-                      showonpause = "no";
-                    }
-                  );
-                }
-                {
-                  name = "script-opts/rotate-resize.conf";
-                  path = pkgs.writeText "rotate-resize.conf" "keybinds=r";
-                }
-              ];
             in
             wrapPackage {
               package = pkgs.mpv;
-              env.MPV_HOME = "${mpvConfigDir}";
-              paths = [ mpvConfigDir ];
+              files = {
+                "configuration/mpv.conf" = cfg.conf;
+                "configuration/input.conf" = cfg.input;
+                "configuration/scripts" = "${mpvScripts}/share/mpv/scripts";
+                "configuration/fonts" = "${mpvScripts}/share/fonts";
+                "configuration/script-opts/modernz.conf" = lib.generators.toKeyValue { } {
+                  download_path = "${config.hj.directory}/Videos/mpv";
+                  osc_on_start = "no";
+                  osc_on_seek = "no";
+                  showonpause = "no";
+                };
+                "configuration/script-opts/rotate-resize.conf" = "keybinds=r";
+              };
+              env.MPV_HOME = "${placeholder "out"}/configuration";
             };
         };
         mpv-wlpaste = lib.mkOption {

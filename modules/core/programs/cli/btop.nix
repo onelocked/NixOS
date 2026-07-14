@@ -134,16 +134,18 @@
             in
             wrapPackage {
               package = self'.packages.btop;
-              flags =
-                (lib.optionalAttrs (cfg.settings != { }) {
-                  "--config" = pkgs.writeText "btop.conf" (toBtopConf cfg.settings);
-                })
-                // (lib.optionalAttrs (cfg.themes != { }) {
-                  "--themes-dir" = pkgs.symlinkJoin {
+              args =
+                (lib.optionals (cfg.settings != { }) [
+                  "--config"
+                  (pkgs.writeText "btop.conf" (toBtopConf cfg.settings))
+                ])
+                ++ (lib.optionals (cfg.themes != { }) [
+                  "--themes-dir"
+                  (pkgs.symlinkJoin {
                     name = "btop-themes";
                     paths = lib.mapAttrsToList (name: content: pkgs.writeTextDir "${name}.theme" content) cfg.themes;
-                  };
-                });
+                  })
+                ]);
             };
         };
       };

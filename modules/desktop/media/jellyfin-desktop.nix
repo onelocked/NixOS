@@ -34,9 +34,7 @@
           type = lib.types.package;
           default = wrapPackage {
             package = pkgs.jellyfin-desktop;
-            flags = {
-              "--platform" = "xcb";
-            };
+            args = [ "--platform=xcb" ];
           };
         };
       };
