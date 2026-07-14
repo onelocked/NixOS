@@ -1,7 +1,7 @@
 { config, lib, ... }:
 {
   config = {
-    tack.tack = "gh:manic-systems/tack";
+    tack.tack = "gh:iynaix/tack/update-exclude-arg"; # TODO: remove once this PR is merge gh:manic-systems/tack
     exo.core =
       { packages', ... }:
       {

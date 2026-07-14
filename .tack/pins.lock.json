@@ -235,11 +235,11 @@
   },
   "tack": {
     "type": "github",
-    "owner": "manic-systems",
+    "owner": "iynaix",
     "repo": "tack",
-    "rev": "1b35dea7e2f90863cce2099eafdf318d4c96f2e6",
-    "narHash": "sha256-5peItmNvgVHeLDf/T7JxA/By0r8JsQx75MuMni1Q9ns=",
-    "lastModified": 1783834540
+    "rev": "7dcaeea2e048319b00e9e5081be65bfa5607d22f",
+    "narHash": "sha256-gS60JhCWIto8CysCTNU7SuWRsUIulswS5LWKYIWaDJU=",
+    "lastModified": 1783916621
   },
   "theme-store": {
     "type": "github",
