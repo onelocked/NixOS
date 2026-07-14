@@ -21,9 +21,6 @@ url = "https://github.com/samuelngs/apple-emoji-ttf/releases/download/macos-26-2
 [inputs.base16]
 url = "gh:SenchoPens/base16.nix"
 
-[inputs.birdee]
-url = "gh:BirdeeHub/nix-wrapper-modules"
-
 [inputs.cliphist]
 type = "fetch"
 url = "gh:sentriz/cliphist"
@@ -55,7 +52,7 @@ url = "gh:onelocked/fuzzy-search.yazi"
 url = "gh:feel-co/hjem"
 
 [inputs.hyprland]
-url = "gh:hyprwm/Hyprland/7046c0ff531661288ba5d672546144d6191d0f71"
+url = "gh:hyprwm/Hyprland"
 
 [inputs.lan-mouse]
 url = "gh:feschber/lan-mouse"

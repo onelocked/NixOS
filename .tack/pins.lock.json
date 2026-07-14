@@ -25,14 +25,6 @@
     "narHash": "sha256-qcMhnL7aGAuFuutH4rq9fvAhCpJWVHLcHVZLtPctPlo=",
     "lastModified": 1755819240
   },
-  "birdee": {
-    "type": "github",
-    "owner": "BirdeeHub",
-    "repo": "nix-wrapper-modules",
-    "rev": "6e7f66fa2cdf4d63162580b438f7fcf87c28a46f",
-    "narHash": "sha256-vAmbArdCyjqpVW+37aCy/PMBOLIqukUXLQuEKLwUhA4=",
-    "lastModified": 1782135443
-  },
   "cliphist": {
     "type": "github",
     "owner": "sentriz",
@@ -117,9 +109,9 @@
     "type": "github",
     "owner": "hyprwm",
     "repo": "Hyprland",
-    "rev": "7046c0ff531661288ba5d672546144d6191d0f71",
-    "narHash": "sha256-u/55nD/fpx7RXpm+wGLs+JXN4/anmouGIh0oj6F8N4M=",
-    "lastModified": 1783354131
+    "rev": "79bc0ca16e7cca40c247a9200634d150fa8193d1",
+    "narHash": "sha256-vd4VSlddmDAToJv/twyr0O8Siq4U/sOIXeo6DFZIolc=",
+    "lastModified": 1784043142
   },
   "lan-mouse": {
     "type": "github",
