@@ -58,7 +58,7 @@
                       --preview '
                           printf "   Tree Structure\n";
                           printf "  \033[2m────────────────\033[0m\n";
-                          eza -TL=3 --color=always --icons {2} 2>/dev/null | tail -n +2
+                          eza --tree --level=3 --color=always --icons=always -- {2} 2>/dev/null | tail -n +2
                       ' \
                       --preview-window="right:50%:wrap:border-left" \
                       --bind "ctrl-j:down,ctrl-k:up" \
