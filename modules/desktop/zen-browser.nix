@@ -191,13 +191,11 @@
                   mods =
                     profile.mods
                     |> lib.attrValues
-                    |> map (
-                      uuid: {
-                        inherit uuid;
-                        themePath = "${inputs.theme-store}/themes/${uuid}";
-                        themeJson = lib.fromJSON (lib.readFile "${inputs.theme-store}/themes/${uuid}/theme.json");
-                      }
-                    );
+                    |> map (uuid: {
+                      inherit uuid;
+                      themePath = "${inputs.theme-store}/themes/${uuid}";
+                      themeJson = lib.fromJSON (lib.readFile "${inputs.theme-store}/themes/${uuid}/theme.json");
+                    });
                 in
                 lib.listToAttrs (
                   lib.concatMap (
@@ -265,7 +263,6 @@
                 match            = { class = "zen-twilight" },
                 workspace        = "name:web",
                 fullscreen_state = "0 3",
-                sync_fullscreen  = false,
                 opacity          = "1 override",
               })
               hl.window_rule({

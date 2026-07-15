@@ -72,7 +72,7 @@
                     xdg_tag = "proton-game"
                   },
                   decorate = false,
-                  content = "game";
+                  content = "game",
                   workspace = "name:games",
                 })
               '';

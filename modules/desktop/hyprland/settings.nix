@@ -197,24 +197,26 @@
           end)
 
           hl.on("window.open", function(w)
-            local ws = w.workspace
-            if not ws then return end
-            if ws.name ~= "dev" then return end
-            if ws.tiled_layout ~= "scrolling" then return end
+              local ws = w.workspace
+              if not ws then return end
+              if ws.name ~= "dev" then return end
+              if ws.tiled_layout ~= "scrolling" then return end
 
-            local count = ws.windows
+              local count = ws.windows
 
-            if count >= 2 and count <= 3 then
-              hl.dispatch(hl.dsp.layout("fit all"))
-            elseif count % 4 == 0 then
-              hl.dispatch(hl.dsp.layout("focus l"))
-              hl.dispatch(hl.dsp.layout("consume"))
-              hl.dispatch(hl.dsp.layout("focus d"))
-              hl.dispatch(hl.dsp.layout("inhibit_scroll 0"))
-              if count == 4 then
-                hl.dispatch(hl.dsp.layout("fit all"))
+              if count >= 2 and count <= 3 then
+                  hl.dispatch(hl.dsp.layout("fit all"))
+              elseif count % 4 == 0 then
+                  -- Explicitly focus the new window first
+                  hl.dispatch(hl.dsp.focus({ window = w }))
+                  hl.dispatch(hl.dsp.layout("focus l"))
+                  hl.dispatch(hl.dsp.layout("consume"))
+                  hl.dispatch(hl.dsp.layout("focus d"))
+                  hl.dispatch(hl.dsp.layout("inhibit_scroll 0"))
+                  if count == 4 then
+                      hl.dispatch(hl.dsp.layout("fit all"))
+                  end
               end
-            end
           end)
 
           -- when closing windows resize them and make them fit the screen, single window is always column width 0.71
