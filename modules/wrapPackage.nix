@@ -20,7 +20,13 @@ let
             name: value:
             let
               path =
-                if (value |> lib.isString) then (value |> pkgs.writeText "${lib.baseNameOf name}-text") else value;
+                if (value |> lib.isString) then
+                  if (lib.hasPrefix builtins.storeDir value && !(lib.hasInfix "\n" value)) then
+                    value
+                  else
+                    (value |> pkgs.writeText "${lib.baseNameOf name}-text")
+                else
+                  value;
             in
             {
               inherit name path;
