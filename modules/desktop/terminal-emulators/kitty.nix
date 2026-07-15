@@ -249,7 +249,7 @@
                   ${lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "mouse_map ${k} ${v}") cfg.mouseBindings)}
                 '';
               };
-              args = [ "--config=${placeholder "out"}/configuration/kitty.conf" ];
+              args = [ "--config ${wrapPackage.out}/configuration/kitty.conf" ];
             };
         };
         settings = mkOption {

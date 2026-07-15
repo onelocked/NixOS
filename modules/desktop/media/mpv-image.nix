@@ -94,9 +94,7 @@
             let
               mpvScripts = pkgs.symlinkJoin {
                 name = "mpv-scripts";
-                paths = [
-                  self'.legacyPackages.mpv-rotate-resize
-                ];
+                paths = [ self'.legacyPackages.mpv-rotate-resize ];
               };
             in
             wrapPackage {
@@ -107,7 +105,7 @@
                 "configuration/scripts" = "${mpvScripts}/share/mpv/scripts";
                 "configuration/script-opts/rotate-resize.conf" = "keybinds=r";
               };
-              env.MPV_HOME = "${placeholder "out"}/configuration";
+              env.MPV_HOME = wrapPackage.out + "/configuration";
             };
         };
       };

@@ -198,15 +198,15 @@
                 "configuration/input.conf" = cfg.input;
                 "configuration/scripts" = "${mpvScripts}/share/mpv/scripts";
                 "configuration/fonts" = "${mpvScripts}/share/fonts";
+                "configuration/script-opts/rotate-resize.conf" = "keybinds=r";
                 "configuration/script-opts/modernz.conf" = lib.generators.toKeyValue { } {
                   download_path = "${config.hj.directory}/Videos/mpv";
                   osc_on_start = "no";
                   osc_on_seek = "no";
                   showonpause = "no";
                 };
-                "configuration/script-opts/rotate-resize.conf" = "keybinds=r";
               };
-              env.MPV_HOME = "${placeholder "out"}/configuration";
+              env.MPV_HOME = wrapPackage.out + "/configuration";
             };
         };
         mpv-wlpaste = lib.mkOption {
@@ -216,7 +216,7 @@
             runtimeInputs = with pkgs; [
               cfg.package
               wl-clipboard
-              uutils-coreutils-noprefix
+              coreutils
             ];
             text = ''
               url=$(wl-paste | tr -d '[:space:]')

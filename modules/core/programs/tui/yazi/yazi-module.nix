@@ -49,46 +49,39 @@
 
         package = lib.mkOption {
           type = lib.types.package;
-          default =
-            wrapPackage {
-              package = self'.packages.yazi;
-              extraPkgs = with pkgs; [
-                ouch
-                exiv2
-                ffmpeg
-                xxhash
-              ];
-              files =
-                (lib.optionalAttrs (cfg.settings != { }) {
-                  "yazi-config/yazi.toml" = tomlFormat.generate "yazi.toml" cfg.settings;
-                })
-                // (lib.optionalAttrs (cfg.keymap != { }) {
-                  "yazi-config/keymap.toml" = tomlFormat.generate "keymap.toml" cfg.keymap;
-                })
-                // (lib.optionalAttrs (cfg.theme != { }) {
-                  "yazi-config/theme.toml" = tomlFormat.generate "theme.toml" cfg.theme;
-                })
-                // (lib.mapAttrs' (
+          default = wrapPackage {
+            package = self'.packages.yazi;
+            extraPkgs = with pkgs; [
+              ouch
+              exiv2
+              ffmpeg
+              xxhash
+            ];
+            files = {
+              "yazi-config/yazi.toml" = wrapPackage.toml cfg.settings;
+              "yazi-config/keymap.toml" = wrapPackage.toml cfg.keymap;
+              "yazi-config/theme.toml" = wrapPackage.toml cfg.theme;
+              "yazi-config/init.lua" = cfg.initLua;
+              "yazi-config/flavors/oneshill.yazi/flavor.toml" = cfg.flavorContent;
+              "yazi-config/plugins" =
+                cfg.plugins
+                |> lib.mapAttrsToList (
                   name: path: {
-                    name = "yazi-config/plugins/${name}.yazi";
-                    value = path;
+                    name = "${name}.yazi";
+                    inherit path;
                   }
-                ) (lib.filterAttrs (_: path: path != null) cfg.plugins))
-                // (lib.optionalAttrs (cfg.initLua != "") {
-                  "yazi-config/init.lua" = cfg.initLua;
-                })
-                // (lib.optionalAttrs (cfg.flavorContent != "") {
-                  "yazi-config/flavors/oneshill.yazi/flavor.toml" = cfg.flavorContent;
-                });
-              env = {
-                YAZI_CONFIG_HOME = "${placeholder "out"}/yazi-config";
-              };
+                )
+                |> pkgs.linkFarm "yazi-plugins";
             };
+            env = {
+              YAZI_CONFIG_HOME = wrapPackage.out + "/yazi-config";
+            };
+          };
           description = "The Yazi package to use, wrapped with required dependencies.";
         };
 
         plugins = lib.mkOption {
-          type = with lib.types; attrsOf (nullOr path);
+          type = lib.types.attrsOf lib.types.path;
           default = { };
           description = "Yazi plugins";
         };

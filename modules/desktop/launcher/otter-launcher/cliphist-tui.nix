@@ -168,6 +168,7 @@
           version = "v1.0";
           src = inputs.cliphist;
           doCheck = false;
+          vendorHash = "sha256-fDl+ul1t2Ux1w5WcCo6YMJtrcC20o+eUEO3NNycSNvI=";
           patches = [
             (pkgs.writeText "fix-browser-copy-with-meta.patch" # go
               ''
@@ -203,11 +204,6 @@
               ''
             )
           ];
-          vendorHash = "sha256-fDl+ul1t2Ux1w5WcCo6YMJtrcC20o+eUEO3NNycSNvI=";
-          postInstall = ''
-            cp ${finalAttrs.src}/contrib/* $out/bin/
-          '';
-          buildInputs = [ pkgs.bash ];
         });
       };
     };

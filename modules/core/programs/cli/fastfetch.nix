@@ -108,7 +108,6 @@
     }:
     let
       cfg = config.forte.fastfetch;
-      json = pkgs.formats.json { };
     in
     {
       config = lib.mkIf cfg.enable {
@@ -131,11 +130,12 @@
           type = lib.types.package;
           default = wrapPackage {
             package = pkgs.fastfetch-unwrapped;
-            args = [ "--config ${(json.generate "config.jsonc" cfg.settings)}" ];
+            files."config.jsonc" = cfg.settings |> wrapPackage.json;
+            args = [ "--config ${wrapPackage.out}/config.jsonc" ];
           };
         };
         settings = lib.mkOption {
-          inherit (json) type;
+          type = lib.types.json;
           default = { };
           description = "Fastfetch config options";
         };

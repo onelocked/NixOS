@@ -59,10 +59,8 @@
           type = lib.types.package;
           default = wrapPackage {
             package = pkgs.fuzzel;
-            args = lib.optionals (cfg.settings != { }) [
-              "--config"
-              (pkgs.writeText "fuzzel.ini" (lib.generators.toINI { } cfg.settings))
-            ];
+            files."configuration/fuzzel.ini" = wrapPackage.ini cfg.settings;
+            args = [ "--config ${wrapPackage.out}/configuration/fuzzel.ini" ];
           };
         };
       };

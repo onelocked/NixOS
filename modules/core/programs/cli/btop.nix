@@ -90,7 +90,6 @@
   exo.skeleton =
     {
       lib,
-      pkgs,
       wrapPackage,
       config,
       self',
@@ -100,9 +99,7 @@
       cfg = config.forte.btop;
     in
     {
-      config = lib.mkIf (cfg.enable) {
-        hj.packages = [ cfg.package ];
-      };
+      config = lib.mkIf (cfg.enable) { hj.packages = [ cfg.package ]; };
       options.forte.btop = {
         enable = lib.mkEnableOption "btop";
 
@@ -134,18 +131,17 @@
             in
             wrapPackage {
               package = self'.packages.btop;
-              args =
-                (lib.optionals (cfg.settings != { }) [
-                  "--config"
-                  (pkgs.writeText "btop.conf" (toBtopConf cfg.settings))
-                ])
-                ++ (lib.optionals (cfg.themes != { }) [
-                  "--themes-dir"
-                  (pkgs.symlinkJoin {
-                    name = "btop-themes";
-                    paths = lib.mapAttrsToList (name: content: pkgs.writeTextDir "${name}.theme" content) cfg.themes;
-                  })
-                ]);
+              files = {
+                "config/btop.conf" = cfg.settings |> toBtopConf;
+              }
+              // (
+                cfg.themes |> lib.mapAttrs' (name: content: lib.nameValuePair "config/themes/${name}.theme" content)
+              );
+
+              args = [
+                "--config ${wrapPackage.out}/config/btop.conf"
+                "--themes-dir ${wrapPackage.out}/config/themes"
+              ];
             };
         };
       };
