@@ -51,16 +51,17 @@
                 pkgs.diffutils
                 pkgs.delta
               ];
-              text = ''
-                if [ -f .tack/pins.toml ]; then
-                  if ! diff -q .tack/pins.toml "${pinsToml}" >/dev/null; then
-                    echo "Changes to .tack/pins.toml:"
-                    delta --dark .tack/pins.toml "${pinsToml}" || true
+              text = # bash
+                ''
+                  if [ -f .tack/pins.toml ]; then
+                    if ! diff -q .tack/pins.toml "${pinsToml}" >/dev/null; then
+                      echo "Changes to .tack/pins.toml:"
+                      delta --dark .tack/pins.toml "${pinsToml}" || true
+                    fi
                   fi
-                fi
-                install -m 444 -D -T "${pinsToml}" .tack/pins.toml
-                echo "wrote .tack/pins.toml"
-              '';
+                  install -m 444 -D -T "${pinsToml}" .tack/pins.toml
+                  echo "wrote .tack/pins.toml"
+                '';
             }
           );
         };

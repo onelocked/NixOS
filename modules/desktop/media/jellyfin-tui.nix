@@ -31,7 +31,7 @@
                 Ctrl-Left: !Seek -5
                 left: PreviousPane
                 right: NextPane
-                =: VolumeUp
+                =: !Volume 5
             '';
         };
       };

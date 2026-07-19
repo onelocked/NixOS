@@ -116,8 +116,8 @@
           type = lib.types.package;
           default = wrapPackage {
             package = pkgs.foot;
-            files."configuration/foot.ini" = wrapPackage.ini cfg.settings;
-            args = [ "--config ${wrapPackage.out}/configuration/foot.ini" ];
+            files.configuration."foot.ini" = wrapPackage.ini cfg.settings;
+            args = [ "--config ${wrapPackage.out'}/configuration/foot.ini" ];
             env = {
               FONTCONFIG_FILE = pkgs.makeFontsConf { fontDirectories = [ pkgs.maple-mono.NL-NF ]; };
             };

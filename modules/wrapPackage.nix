@@ -28,21 +28,28 @@ let
             ]
             ++ [
               (
-                files
-                |> lib.mapAttrsToList (
-                  name: value:
-                  let
-                    path =
-                      if (value |> lib.isString) && !(lib.hasPrefix builtins.storeDir value) then
-                        (value |> pkgs.writeText "${lib.baseNameOf name}-text")
+                let
+                  mkList =
+                    prefix:
+                    lib.mapAttrsToList (
+                      name: value:
+                      let
+                        target = if prefix == "" then name else "${prefix}/${name}";
+                      in
+                      if lib.isAttrs value && !lib.isDerivation value then
+                        mkList target value
                       else
-                        value;
-                  in
-                  {
-                    inherit name path;
-                  }
-                )
-                |> pkgs.linkFarm "${package.name}"
+                        {
+                          name = target;
+                          path =
+                            if (value |> lib.isString) && !(lib.hasPrefix builtins.storeDir value) then
+                              (value |> pkgs.writeText "${lib.baseNameOf name}-text")
+                            else
+                              value;
+                        }
+                    );
+                in
+                files |> mkList "" |> lib.flatten |> pkgs.linkFarm "${package.name}"
               )
             ];
             nativeBuildInputs = [ pkgs.makeWrapper ];
@@ -51,34 +58,51 @@ let
             };
             postBuild =
               let
-                env' =
-                  env
-                  |> lib.mapAttrsToList (n: v: "--set ${lib.escapeShellArg n} ${lib.escapeShellArg (toString v)}")
-                  |> lib.concatStringsSep " \\\n  ";
-
-                args' = args |> map (v: "--add-flags ${lib.escapeShellArg v}") |> lib.concatStringsSep " \\\n  ";
-
-                extraPkgs' = lib.optionalString (extraPkgs != [ ]) " --prefix PATH : ${lib.makeBinPath extraPkgs}";
-
-                aliases' =
-                  aliases
-                  |> map (alias: "ln -sf $out/bin/${binName} $out/bin/${lib.escapeShellArg alias}")
-                  |> lib.concatStringsSep "\n";
-
-                binName' = lib.escapeShellArg binName;
-
-                wrapperArgs = "${args'} ${env'}${extraPkgs'}";
+                wrapperArgs =
+                  lib.escapeShellArgs
+                  <| (
+                    (
+                      args
+                      |> lib.concatMap (v: [
+                        "--add-flags"
+                        v
+                      ])
+                    )
+                    ++ (
+                      env
+                      |> lib.mapAttrsToList (
+                        n: v: [
+                          "--set"
+                          n
+                          (v |> toString)
+                        ]
+                      )
+                      |> lib.concatLists
+                    )
+                    ++ (lib.optionals (extraPkgs != [ ]) [
+                      "--prefix"
+                      "PATH"
+                      ":"
+                      (extraPkgs |> lib.makeBinPath)
+                    ])
+                  );
+                bin = binName |> lib.escapeShellArg;
               in
               #bash
               ''
-                if [ ! -e $out/bin/${binName'} ]; then
+                if [ ! -e "$out/bin/${bin}" ]; then
                   makeWrapper ${
                     lib.getExe' package (package.meta.mainProgram or (lib.getName package))
-                  } $out/bin/${binName'} ${wrapperArgs}
+                  } "$out/bin/${bin}" ${wrapperArgs}
                 else
-                  wrapProgram $out/bin/${binName'} ${wrapperArgs}
+                  wrapProgram "$out/bin/${bin}" ${wrapperArgs}
                 fi
-                ${lib.optionalString (aliases != [ ]) aliases'}
+                ${
+                  aliases
+                  |> lib.concatMapStringsSep "\n" (
+                    alias: "ln -sf $out/bin/${bin} $out/bin/${lib.escapeShellArg alias}"
+                  )
+                }
               '';
           };
       };
@@ -117,8 +141,9 @@ let
         };
 
         files = lib.mkOption {
-          type = lib.types.attrsOf (lib.types.either lib.types.str lib.types.path);
+          type = lib.types.attrsOf lib.types.anything;
           default = { };
+          description = "Files to link into the wrapper. Can be nested.";
         };
 
         aliases = lib.mkOption {
@@ -147,7 +172,8 @@ let
   wrapFunctor = pkgs: {
     inherit pkgs;
     __functor = self: spec: wrap pkgs spec;
-    out = placeholder "out";
+    out = "${placeholder "out"}/";
+    out' = placeholder "out";
     toml = (pkgs.formats.toml { }).generate "config.toml";
     json = (pkgs.formats.json { }).generate "config.json";
     yaml = (pkgs.formats.yaml { }).generate "config.yaml";

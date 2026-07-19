@@ -131,16 +131,13 @@
             in
             wrapPackage {
               package = self'.packages.btop;
-              files = {
-                "config/btop.conf" = cfg.settings |> toBtopConf;
+              files.configuration = {
+                "btop.conf" = cfg.settings |> toBtopConf;
               }
-              // (
-                cfg.themes |> lib.mapAttrs' (name: content: lib.nameValuePair "config/themes/${name}.theme" content)
-              );
-
+              // (cfg.themes |> lib.mapAttrs' (name: content: lib.nameValuePair "themes/${name}.theme" content));
               args = [
-                "--config ${wrapPackage.out}/config/btop.conf"
-                "--themes-dir ${wrapPackage.out}/config/themes"
+                "--config ${wrapPackage.out'}/configuration/btop.conf"
+                "--themes-dir ${wrapPackage.out'}/configuration/themes"
               ];
             };
         };

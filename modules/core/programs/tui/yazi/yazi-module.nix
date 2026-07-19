@@ -58,23 +58,25 @@
               xxhash
             ];
             files = {
-              "yazi-config/yazi.toml" = wrapPackage.toml cfg.settings;
-              "yazi-config/keymap.toml" = wrapPackage.toml cfg.keymap;
-              "yazi-config/theme.toml" = wrapPackage.toml cfg.theme;
-              "yazi-config/init.lua" = cfg.initLua;
-              "yazi-config/flavors/oneshill.yazi/flavor.toml" = cfg.flavorContent;
-              "yazi-config/plugins" =
-                cfg.plugins
-                |> lib.mapAttrsToList (
-                  name: path: {
-                    name = "${name}.yazi";
-                    inherit path;
-                  }
-                )
-                |> pkgs.linkFarm "yazi-plugins";
+              yazi-config = {
+                "yazi.toml" = wrapPackage.toml cfg.settings;
+                "keymap.toml" = wrapPackage.toml cfg.keymap;
+                "theme.toml" = wrapPackage.toml cfg.theme;
+                "init.lua" = cfg.initLua;
+                flavors."oneshill.yazi"."flavor.toml" = cfg.flavorContent;
+                plugins =
+                  cfg.plugins
+                  |> lib.mapAttrsToList (
+                    name: path: {
+                      name = "${name}.yazi";
+                      inherit path;
+                    }
+                  )
+                  |> pkgs.linkFarm "yazi-plugins";
+              };
             };
             env = {
-              YAZI_CONFIG_HOME = wrapPackage.out + "/yazi-config";
+              YAZI_CONFIG_HOME = wrapPackage.out + "yazi-config";
             };
           };
           description = "The Yazi package to use, wrapped with required dependencies.";

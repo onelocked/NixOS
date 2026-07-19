@@ -326,7 +326,7 @@
                   }
                 );
               };
-              args = [ "--config ${wrapPackage.out}/config.toml" ];
+              args = [ "--config ${wrapPackage.out'}/config.toml" ];
               extraPkgs = [
                 pkgs.wiremix
                 pkgs.chafa
@@ -350,7 +350,7 @@
               files = {
                 "config.toml" = wrapPackage.toml fsel.settings;
               };
-              args = [ "--config ${wrapPackage.out}/config.toml" ];
+              args = [ "--config ${wrapPackage.out'}/config.toml" ];
             };
           };
         };

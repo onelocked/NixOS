@@ -193,20 +193,20 @@
             in
             wrapPackage {
               package = pkgs.mpv;
-              files = {
-                "configuration/mpv.conf" = cfg.conf;
-                "configuration/input.conf" = cfg.input;
-                "configuration/scripts" = "${mpvScripts}/share/mpv/scripts";
-                "configuration/fonts" = "${mpvScripts}/share/fonts";
-                "configuration/script-opts/rotate-resize.conf" = "keybinds=r";
-                "configuration/script-opts/modernz.conf" = lib.generators.toKeyValue { } {
-                  download_path = "${config.hj.directory}/Videos/mpv";
+              env.MPV_HOME = wrapPackage.out + "configuration";
+              files.configuration = {
+                "mpv.conf" = cfg.conf;
+                "input.conf" = cfg.input;
+                "scripts" = mpvScripts + "/share/mpv/scripts";
+                "fonts" = mpvScripts + "/share/fonts";
+                "script-opts/rotate-resize.conf" = "keybinds=r";
+                "script-opts/modernz.conf" = lib.generators.toKeyValue { } {
+                  download_path = config.hj.directory + "/Videos/mpv";
                   osc_on_start = "no";
                   osc_on_seek = "no";
                   showonpause = "no";
                 };
               };
-              env.MPV_HOME = wrapPackage.out + "/configuration";
             };
         };
         mpv-wlpaste = lib.mkOption {

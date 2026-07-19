@@ -99,13 +99,13 @@
             in
             wrapPackage {
               package = pkgs.mpv;
-              files = {
-                "configuration/mpv.conf" = cfg.conf;
-                "configuration/input.conf" = cfg.input;
-                "configuration/scripts" = "${mpvScripts}/share/mpv/scripts";
-                "configuration/script-opts/rotate-resize.conf" = "keybinds=r";
+              files.configuration = {
+                "mpv.conf" = cfg.conf;
+                "input.conf" = cfg.input;
+                "scripts" = "${mpvScripts}/share/mpv/scripts";
+                "script-opts/rotate-resize.conf" = "keybinds=r";
               };
-              env.MPV_HOME = wrapPackage.out + "/configuration";
+              env.MPV_HOME = wrapPackage.out + "configuration";
             };
         };
       };

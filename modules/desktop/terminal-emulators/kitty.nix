@@ -238,8 +238,8 @@
             in
             wrapPackage {
               package = pkgs.kitty;
-              files = {
-                "configuration/kitty.conf" = ''
+              files.configuration = {
+                "kitty.conf" = ''
                   ${toKittyConfig (cfg.settings // cfg.theme // cfg.fontConfig)}
 
                   # Keybindings
@@ -249,7 +249,7 @@
                   ${lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "mouse_map ${k} ${v}") cfg.mouseBindings)}
                 '';
               };
-              args = [ "--config ${wrapPackage.out}/configuration/kitty.conf" ];
+              args = [ "--config ${wrapPackage.out'}/configuration/kitty.conf" ];
             };
         };
         settings = mkOption {

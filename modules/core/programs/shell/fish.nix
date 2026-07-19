@@ -229,12 +229,12 @@
           description = "Atuin shell history package.";
           default = wrapPackage {
             package = pkgs.atuin;
-            files."atuin/config.toml" = wrapPackage.toml {
+            files.configuration."config.toml" = wrapPackage.toml {
               enter_accept = true;
               filter_mode = "session-preload";
               search_mode = "fuzzy";
             };
-            env.ATUIN_CONFIG_DIR = wrapPackage.out + "/atuin";
+            env.ATUIN_CONFIG_DIR = wrapPackage.out + "configuration";
           };
         };
       };

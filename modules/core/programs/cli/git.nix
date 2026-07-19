@@ -197,7 +197,7 @@
           default = wrapPackage {
             package = pkgs.lazygit;
             files."configuration/lazygit.yml" = wrapPackage.yaml cfg.settings;
-            env.LG_CONFIG_FILE = wrapPackage.out + "/configuration/lazygit.yml";
+            env.LG_CONFIG_FILE = wrapPackage.out + "configuration/lazygit.yml";
           };
         };
         worktrunkPackage = lib.mkOption {
