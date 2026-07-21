@@ -21,7 +21,7 @@ in
             packages',
             ...
           }:
-          inputs.nixpkgs.lib.nixosSystem {
+          lib.nixosSystem {
             specialArgs = {
               inherit
                 inputs
@@ -46,6 +46,33 @@ in
           }
         )
       );
+    exo.core =
+      { config, constants, ... }:
+      let
+        password = config.sops.secrets."linux-password".path;
+      in
+      {
+        sops.secrets."linux-password".neededForUsers = true; # Required for pre-user-creation
+        users = {
+          mutableUsers = false;
+          users.root.hashedPasswordFile = password;
+          users.${constants.username} = {
+            hashedPasswordFile = password;
+            isNormalUser = true;
+            useDefaultShell = true;
+            extraGroups = [
+              "networkmanager"
+              "wheel"
+              "kvm"
+              "input"
+              "disk"
+              "libvirtd"
+              "video"
+              "audio"
+            ];
+          };
+        };
+      };
     perSystem =
       { pkgs, ... }:
       {
@@ -54,19 +81,19 @@ in
   };
 
   options = {
+    perSystem = lib.mkOption { type = lib.types.deferredModule; };
+    flake = lib.mkOption { type = lib.types.lazyAttrsOf lib.types.unspecified; };
+
     systems = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [ "x86_64-linux" ];
     };
-    flake = lib.mkOption {
-      type = lib.types.lazyAttrsOf lib.types.unspecified;
-      default = { };
-    };
-    perSystem = lib.mkOption {
-      type = lib.types.deferredModule;
-      default = { };
-    };
     exo = {
+      core = lib.mkOption { type = lib.types.deferredModule; };
+      skeleton = lib.mkOption { type = lib.types.deferredModule; };
+      mods = lib.mkOption { type = lib.types.lazyAttrsOf lib.types.deferredModule; };
+      hardware = lib.mkOption { type = lib.types.lazyAttrsOf lib.types.deferredModule; };
+
       configurations = lib.mkOption {
         description = "NixOS Configuration";
         default = { };
@@ -117,18 +144,6 @@ in
             }
           )
         );
-      };
-      mods = lib.mkOption {
-        type = lib.types.lazyAttrsOf lib.types.deferredModule;
-      };
-      core = lib.mkOption {
-        type = lib.types.deferredModule;
-      };
-      skeleton = lib.mkOption {
-        type = lib.types.deferredModule;
-      };
-      hardware = lib.mkOption {
-        type = lib.types.lazyAttrsOf lib.types.deferredModule;
       };
     };
   };

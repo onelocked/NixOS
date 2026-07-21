@@ -9,6 +9,7 @@
         hj.environment.sessionVariables = {
           TACK_NIX_CONF_TOKENS = "1";
         };
+        forte.persist.home.directories = [ ".cache/nix" ];
       };
     tack-config = {
       shorturls = {

@@ -3,6 +3,7 @@
     { pkgs, self', ... }:
     {
       devShells = {
+        figlet = pkgs.mkShell { packages = [ self'.legacyPackages.figlet ]; };
         default = pkgs.mkShell {
           packages = with pkgs; [
             nix-tree
@@ -11,7 +12,6 @@
             nix-melt
           ];
         };
-        figlet = pkgs.mkShell { packages = [ self'.legacyPackages.figlet ]; };
       };
       legacyPackages.figlet = pkgs.symlinkJoin {
         name = "figlet-custom";
