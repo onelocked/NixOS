@@ -7,6 +7,7 @@
       withGreetd = true;
       withTermFileChooser = true;
       withHyprpolkit = true;
+      withHyprshutdown = true;
     };
   };
 
@@ -29,10 +30,8 @@
         lib.mkIf cfg.enable
         <| lib.mkMerge [
           {
-            hj.packages = [
-              cfg.package
-              pkgs.hyprshutdown
-            ];
+            hj.packages = [ cfg.package ];
+
             forte.persist.home.directories = [ ".config/hypr" ];
             forte.hyprland.lua.settings =
               lib.optionalString (cfg.plugins != [ ]) # lua
@@ -193,6 +192,12 @@
               };
             };
           })
+          (lib.mkIf cfg.withHyprshutdown {
+            environment.shellAliases = {
+              shutdown = ''${lib.getExe pkgs.hyprshutdown} -t "Shutting down..." --post-cmd "shutdown -P 0"'';
+              reboot = ''${lib.getExe pkgs.hyprshutdown} -t "Restarting..." --post-cmd "reboot"'';
+            };
+          })
           (lib.mkIf (hardware == "mini-pc") {
             environment.sessionVariables = {
               AQ_NO_MODIFIERS = 1;
@@ -295,6 +300,11 @@
         withHyprpolkit = lib.mkEnableOption null // {
           description = ''
             Whether to enable hyprpolkit daemon
+          '';
+        };
+        withHyprshutdown = lib.mkEnableOption null // {
+          description = ''
+            Whether to enable hyprshutdown
           '';
         };
       };

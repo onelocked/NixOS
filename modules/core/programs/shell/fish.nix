@@ -115,8 +115,6 @@
           ping = getExe gping;
           zip = getExe zip;
           gr = "cd (git rev-parse --show-toplevel)";
-          shutdown = ''hyprshutdown -t "Shutting down..." --post-cmd "shutdown -P 0"'';
-          reboot = ''hyprshutdown -t "Restarting..." --post-cmd "reboot"'';
         };
     };
 
