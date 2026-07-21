@@ -113,7 +113,6 @@
         with lib;
         {
           ping = getExe gping;
-          cat = getExe bat;
           zip = getExe zip;
           gr = "cd (git rev-parse --show-toplevel)";
           shutdown = ''hyprshutdown -t "Shutting down..." --post-cmd "shutdown -P 0"'';
