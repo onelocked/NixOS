@@ -240,13 +240,20 @@
               package = pkgs.kitty;
               files.configuration = {
                 "kitty.conf" = ''
-                  ${toKittyConfig (cfg.settings // cfg.theme // cfg.fontConfig)}
+                  # Settings
+                  ${toKittyConfig cfg.settings}
+
+                  # Theme
+                  ${toKittyConfig cfg.theme}
+
+                  # Font Config
+                  ${toKittyConfig cfg.fontConfig}
 
                   # Keybindings
-                  ${lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "map ${k} ${v}") cfg.keybindings)}
+                  ${toKittyConfig cfg.keybindings}
 
-                  # Mouse bindings
-                  ${lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "mouse_map ${k} ${v}") cfg.mouseBindings)}
+                  # Mouse Bindings
+                  ${toKittyConfig cfg.mouseBindings}
                 '';
               };
               args = [ "--config ${wrapPackage.out'}/configuration/kitty.conf" ];
@@ -288,6 +295,7 @@
         keybindings = mkOption {
           type = types.attrsOf types.str;
           default = { };
+          apply = lib.mapAttrs' (name: value: lib.nameValuePair ("map " + name) value);
           example = literalExpression ''
             {
               "ctrl+c" = "copy_or_interrupt";
@@ -300,6 +308,7 @@
         mouseBindings = mkOption {
           type = types.attrsOf types.str;
           default = { };
+          apply = lib.mapAttrs' (name: value: lib.nameValuePair ("mouse_map " + name) value);
           description = "Mapping of mouse bindings to actions.";
           example = literalExpression ''
             {
