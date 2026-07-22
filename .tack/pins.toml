@@ -88,6 +88,18 @@ url = "gh:nix-community/preservation"
 [inputs.quickshell]
 url = "gh:quickshell-mirror/quickshell/ead3b00afdf603bb6d4c30fc9c9f582d8f712168"
 
+[inputs.sf-compact]
+type = "fixed"
+url = "https://devimages-cdn.apple.com/design/resources/download/SF-Compact.dmg"
+
+[inputs.sf-mono]
+type = "fixed"
+url = "https://devimages-cdn.apple.com/design/resources/download/SF-Mono.dmg"
+
+[inputs.sf-pro]
+type = "fixed"
+url = "https://devimages-cdn.apple.com/design/resources/download/SF-Pro.dmg"
+
 [inputs.sops-nix]
 url = "gh:Mic92/sops-nix"
 
