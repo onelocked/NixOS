@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  inputs,
   withSystem,
   ...
 }:
@@ -18,7 +17,9 @@ in
           {
             self',
             inputs',
+            inputs,
             packages',
+            rootPath,
             ...
           }:
           lib.nixosSystem {
@@ -28,6 +29,7 @@ in
                 self'
                 inputs'
                 packages'
+                rootPath
                 hostName
                 ;
               inherit (hostConfig) hardware theme;
