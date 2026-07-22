@@ -74,6 +74,8 @@
                   decorate = false,
                   content = "game",
                   workspace = "name:games",
+                  sync_fullscreen  = true,
+                  fullscreen_state = "3 3",
                 })
               '';
 
