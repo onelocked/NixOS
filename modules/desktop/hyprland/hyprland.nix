@@ -320,6 +320,31 @@
         hyprland = packages'.hyprland.overrideAttrs (oldAttrs: {
           doCheck = false;
           patches = (oldAttrs.patches or [ ]) ++ [
+            (pkgs.writeText "fix-layer-shell-kb-grab" # cpp
+              ''
+                diff --git a/src/desktop/state/FocusState.cpp b/src/desktop/state/FocusState.cpp
+                index c65a4550dca..172da082ecc 100644
+                --- a/src/desktop/state/FocusState.cpp
+                +++ b/src/desktop/state/FocusState.cpp
+                @@ -97,7 +97,7 @@ void CFocusState::rawWindowFocus(PHLWINDOW pWindow, eFocusReason reason, SP<CWLS
+                     static auto PFOLLOWMOUSE        = CConfigValue<Config::INTEGER>("input:follow_mouse");
+                     static auto PSPECIALFALLTHROUGH = CConfigValue<Config::INTEGER>("input:special_fallthrough");
+
+                -    if (pWindow == m_focusWindow && surface == m_focusSurface)
+                +    if (pWindow == m_focusWindow && surface == m_focusSurface && m_focusSurface)
+                         return;
+
+                     if (!pWindow || !pWindow->priorityFocus()) {
+                @@ -194,7 +194,6 @@ void CFocusState::rawWindowFocus(PHLWINDOW pWindow, eFocusReason reason, SP<CWLS
+                     }
+
+                     const auto PWINDOWSURFACE = surface ? surface : pWindow->wlSurface()->resource();
+                -
+                     rawSurfaceFocus(PWINDOWSURFACE, pWindow);
+
+                     g_pXWaylandManager->activateWindow(pWindow, true); // sets the m_pLastWindow
+              ''
+            )
             (pkgs.writeText "border-rounding.patch" # cpp
               ''
                 diff --git a/src/config/lua/bindings/LuaBindingsInternal.hpp b/src/config/lua/bindings/LuaBindingsInternal.hpp
