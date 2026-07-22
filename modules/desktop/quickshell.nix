@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  tack = {
+  tack.inputs = {
     oneshill = {
       url = "git+https://gitea.onelock.org/onelock/oneshill.git?ref=retroid";
       fetch = true;

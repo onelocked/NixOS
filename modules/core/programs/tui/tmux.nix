@@ -1,5 +1,5 @@
 {
-  tack.tmuxFloax = {
+  tack.inputs.tmuxFloax = {
     url = "gh:omerxx/tmux-floax";
     fetch = true;
   };

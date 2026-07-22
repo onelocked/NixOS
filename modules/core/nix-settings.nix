@@ -1,5 +1,5 @@
 {
-  tack = {
+  tack.inputs = {
     nixpkgs = "gh:nixos/nixpkgs/nixos-unstable";
     disko = "gh:nix-community/disko";
     systems = "gh:nix-systems/x86_64-linux";

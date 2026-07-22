@@ -107,7 +107,7 @@
         };
       };
     };
-  tack = {
+  tack.inputs = {
     cliphist-tui = {
       url = "gh:SHORiN-KiWATA/cliphist-tui";
       fetch = true;

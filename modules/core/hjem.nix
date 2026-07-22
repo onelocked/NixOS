@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  tack.hjem = "gh:feel-co/hjem";
+  tack.inputs.hjem = "gh:feel-co/hjem";
   exo.core =
     {
       lib,

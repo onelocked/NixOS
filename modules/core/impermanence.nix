@@ -1,5 +1,5 @@
 {
-  tack.preservation = "gh:nix-community/preservation";
+  tack.inputs.preservation = "gh:nix-community/preservation";
   exo.core =
     {
       config,

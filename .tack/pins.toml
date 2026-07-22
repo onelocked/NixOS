@@ -10,10 +10,6 @@ treefmt-nix = "treefmt-nix"
 type = "fetch"
 url = "https://s3.onelock.org/download/cursors/aemeath-cursor.tar.gz"
 
-[inputs.apple-font]
-type = "fixed"
-url = "https://s3.onelock.org/download/fonts/apple-nerd.tar.gz"
-
 [inputs.apple-font-emoji]
 type = "fixed"
 url = "https://github.com/samuelngs/apple-emoji-ttf/releases/download/macos-26-20260613-f1fc560b/AppleColorEmoji-Linux.ttf"

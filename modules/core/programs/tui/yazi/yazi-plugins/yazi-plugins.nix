@@ -1,5 +1,5 @@
 {
-  tack = {
+  tack.inputs = {
     fuzzy-search = {
       url = "gh:onelocked/fuzzy-search.yazi";
       fetch = true;

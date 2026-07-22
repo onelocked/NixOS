@@ -1,5 +1,5 @@
 {
-  tack.lan-mouse = "gh:feschber/lan-mouse";
+  tack.inputs.lan-mouse = "gh:feschber/lan-mouse";
   exo.mods.desktop = {
     forte.lan-mouse = {
       openFirewall = true;

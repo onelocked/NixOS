@@ -1,5 +1,5 @@
 {
-  tack.spicetify-nix = "gh:Gerg-L/spicetify-nix";
+  tack.inputs.spicetify-nix = "gh:Gerg-L/spicetify-nix";
   exo.mods.desktop =
     {
       inputs',

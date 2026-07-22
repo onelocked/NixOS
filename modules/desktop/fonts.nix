@@ -38,6 +38,9 @@
       makeAppleFont =
         name: pkgName: src:
         pkgs.stdenvNoCC.mkDerivation {
+          allowSubstitutes = false;
+          preferLocalBuild = true;
+
           inherit name src;
 
           unpackPhase = # bash
@@ -67,6 +70,9 @@
               sf-mono = makeAppleFont "sf-mono" "SF Mono Fonts.pkg" inputs.sf-mono;
               sf-compact = makeAppleFont "sf-compact" "SF Compact Fonts.pkg" inputs.sf-compact;
               emoji = pkgs.stdenvNoCC.mkDerivation {
+                allowSubstitutes = false;
+                preferLocalBuild = true;
+
                 name = "apple-font-emoji";
                 src = inputs.apple-font-emoji;
                 dontUnpack = true;
@@ -85,7 +91,7 @@
           };
       };
     };
-  tack = {
+  tack.inputs = {
     sf-pro = {
       url = "https://devimages-cdn.apple.com/design/resources/download/SF-Pro.dmg";
       fixed = true;

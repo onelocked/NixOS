@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  tack.nix-index-database = "gh:nix-community/nix-index-database";
+  tack.inputs.nix-index-database = "gh:nix-community/nix-index-database";
   exo.core =
     { lib, ... }:
     {

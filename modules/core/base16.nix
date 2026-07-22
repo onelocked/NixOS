@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  tack.base16 = "gh:SenchoPens/base16.nix";
+  tack.inputs.base16 = "gh:SenchoPens/base16.nix";
   exo.core =
     { config, theme, ... }:
     {

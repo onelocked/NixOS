@@ -187,7 +187,7 @@
       };
     };
 
-  tack = {
+  tack.inputs = {
     otter-launcher = {
       url = "gh:kuokuo123/otter-launcher";
       fetch = true;

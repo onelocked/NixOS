@@ -1,5 +1,5 @@
 {
-  tack = {
+  tack.inputs = {
     yazi = "gh:sxyazi/yazi";
     yazi-plugins = {
       url = "gh:AminurAlam/yazi-plugins";
