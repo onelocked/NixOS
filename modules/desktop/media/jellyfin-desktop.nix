@@ -1,5 +1,5 @@
 {
-  exo.mods.desktop =
+  exo.mods.media =
     {
       wrapPackage,
       lib,
@@ -28,7 +28,7 @@
 
       options.forte.jellyfin-desktop = {
         enable = lib.mkEnableOption "jellyfin-desktop" // {
-          default = config.desktop.media.enable;
+          default = true;
         };
         package = lib.mkOption {
           type = lib.types.package;

@@ -1,5 +1,5 @@
 {
-  exo.mods.desktop =
+  exo.mods.media =
     {
       lib,
       config,
@@ -37,7 +37,7 @@
       };
       options.forte.jellyfin-tui = {
         enable = lib.mkEnableOption "jellyfin-tui" // {
-          default = config.desktop.media.enable;
+          default = true;
         };
       };
     };

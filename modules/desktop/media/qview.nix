@@ -1,5 +1,5 @@
 {
-  exo.mods.desktop =
+  exo.mods.media =
     { scheme, ... }:
     {
       forte.qview = {
@@ -116,7 +116,7 @@
       };
       options.forte.qview = {
         enable = lib.mkEnableOption "qview" // {
-          default = config.desktop.media.enable;
+          default = true;
         };
         package = lib.mkOption {
           type = lib.types.package;

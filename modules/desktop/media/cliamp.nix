@@ -1,5 +1,5 @@
 {
-  exo.mods.desktop =
+  exo.mods.media =
     {
       lib,
       config,
@@ -38,7 +38,7 @@
         ];
       options.forte.cliamp = {
         enable = lib.mkEnableOption "cliamp" // {
-          default = config.desktop.media.enable;
+          default = true;
         };
         package = lib.mkOption {
           type = lib.types.package;

@@ -7,7 +7,7 @@
     };
     quickshell = "gh:quickshell-mirror/quickshell/ead3b00afdf603bb6d4c30fc9c9f582d8f712168";
   };
-  exo.skeleton =
+  exo.mods.desktop =
     {
       lib,
       pkgs,

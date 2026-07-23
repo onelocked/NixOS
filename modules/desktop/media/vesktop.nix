@@ -1,5 +1,5 @@
 {
-  exo.mods.desktop =
+  exo.mods.media =
     { scheme, theme, ... }:
     {
       forte.vesktop = {
@@ -335,7 +335,7 @@
       };
       options.forte.vesktop = {
         enable = lib.mkEnableOption "vesktop" // {
-          default = config.desktop.media.enable;
+          default = true;
         };
         package = lib.mkOption {
           type = lib.types.package;

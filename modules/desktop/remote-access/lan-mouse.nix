@@ -1,6 +1,6 @@
 {
   tack.inputs.lan-mouse = "gh:feschber/lan-mouse";
-  exo.mods.desktop = {
+  exo.mods.remote-access = {
     forte.lan-mouse = {
       openFirewall = true;
       settings = {
@@ -55,7 +55,7 @@
       };
       options.forte.lan-mouse = {
         enable = lib.mkEnableOption "lan-mouse" // {
-          default = config.desktop.remote-access.enable;
+          default = true;
         };
         package = lib.mkOption {
           type = lib.types.package;

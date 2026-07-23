@@ -1,5 +1,5 @@
 {
-  exo.mods.desktop =
+  exo.mods.media =
     {
       lib,
       pkgs,
@@ -56,7 +56,7 @@
         ];
       options.forte.moonlight-qt = {
         enable = lib.mkEnableOption "moonlight-qt" // {
-          default = config.desktop.media.enable;
+          default = true;
         };
         package = lib.mkOption {
           type = lib.types.package;

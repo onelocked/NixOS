@@ -7,6 +7,7 @@
       theme = "dark";
       modules = with config.exo.mods; [
         desktop
+        remote-access
         gaming
       ];
       extraConfig =
@@ -17,7 +18,6 @@
           ...
         }:
         {
-          desktop.media.enable = false;
           forte = {
             quickshell.enable = false;
             flatpak.enable = true;

@@ -1,5 +1,5 @@
 {
-  exo.mods.desktop =
+  exo.mods.remote-access =
     {
       config,
       lib,
@@ -8,7 +8,7 @@
     }:
     {
       services.sunshine = {
-        enable = config.desktop.remote-access.enable;
+        enable = true;
         autoStart = if hostName != "gaming-pc" then false else true;
         capSysAdmin = true;
         openFirewall = true;

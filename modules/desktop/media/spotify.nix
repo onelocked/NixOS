@@ -1,6 +1,6 @@
 {
   tack.inputs.spicetify-nix = "gh:Gerg-L/spicetify-nix";
-  exo.mods.desktop =
+  exo.mods.media =
     {
       inputs',
       inputs,
@@ -18,7 +18,7 @@
       config = lib.mkMerge [
         {
           programs.spicetify = {
-            enable = config.desktop.media.enable;
+            enable = true;
             theme = spicePkgs.themes.text;
             customColorScheme = with scheme; {
               accent = base0E;

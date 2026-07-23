@@ -1,5 +1,5 @@
 {
-  exo.mods.desktop =
+  exo.mods.remote-access =
     {
       lib,
       config,
@@ -39,7 +39,7 @@
       };
       options.forte.rtp-audio = {
         enable = lib.mkEnableOption "RTP Audio" // {
-          default = config.desktop.remote-access.enable;
+          default = true;
         };
       };
     };

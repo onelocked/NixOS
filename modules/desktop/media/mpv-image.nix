@@ -1,5 +1,5 @@
 {
-  exo.mods.desktop = {
+  exo.mods.media = {
     forte.mpv-image = {
       conf = # ini
         ''
@@ -76,7 +76,7 @@
       };
       options.forte.mpv-image = {
         enable = lib.mkEnableOption "mpv-image" // {
-          default = config.desktop.media.enable;
+          default = true;
         };
         conf = lib.mkOption {
           default = "";

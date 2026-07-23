@@ -1,5 +1,5 @@
 {
-  exo.mods.desktop =
+  exo.mods.media =
     {
       pkgs,
       config,
@@ -36,7 +36,7 @@
       };
       options.forte.ayugram = {
         enable = lib.mkEnableOption "ayugram" // {
-          default = config.desktop.media.enable;
+          default = true;
         };
         package = lib.mkOption {
           type = lib.types.package;
