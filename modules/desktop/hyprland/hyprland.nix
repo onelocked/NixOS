@@ -33,6 +33,13 @@
             hj.packages = [ cfg.package ];
 
             forte.persist.home.directories = [ ".config/hypr" ];
+            forte.hyprland.lua.autostart =
+              lib.optionalString (cfg.autostart != [ ]) # lua
+                ''
+                  hl.on("hyprland.start", function()
+                  ${lib.concatStringsSep "\n" (map (cmd: "  hl.dispatch(hl.dsp.exec_raw(\"${cmd}\"))") cfg.autostart)}
+                  end)
+                '';
             forte.hyprland.lua.settings =
               lib.optionalString (cfg.plugins != [ ]) # lua
                 ''
@@ -210,6 +217,12 @@
           You can manually launch Hyprland by executing {command}`start-hyprland` on a TTY.
           A configuration file will be generated in {file}`~/.config/hypr/hyprland.conf`.
           See <https://wiki.hyprland.org> for more information'';
+
+        autostart = lib.mkOption {
+          type = with lib.types; listOf str;
+          default = [ ];
+          description = "Applications to start on hyprland startup";
+        };
 
         package = lib.mkOption {
           type = lib.types.package;
