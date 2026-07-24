@@ -70,10 +70,6 @@ url = "gh:nixos/nixpkgs/nixos-unstable"
 type = "fetch"
 url = "gh:onelocked/no-header-prompt.yazi"
 
-[inputs.oneshill]
-type = "fetch"
-url = "git+https://gitea.onelock.org/onelock/oneshill.git?ref=retroid"
-
 [inputs.otter-launcher]
 type = "fetch"
 url = "gh:kuokuo123/otter-launcher"
@@ -115,6 +111,10 @@ url = "gh:zen-browser/theme-store"
 [inputs.tmuxFloax]
 type = "fetch"
 url = "gh:omerxx/tmux-floax"
+
+[inputs.tuishell]
+type = "fetch"
+url = "git+https://gitea.onelock.org/onelock/tuishell"
 
 [inputs.vimmax]
 url = "gh:onelocked/vimmax"

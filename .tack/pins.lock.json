@@ -155,14 +155,6 @@
     "narHash": "sha256-dHJNk3o9vMGUnO/KAl7R6UdEq1giyp2DNXzxmAKBZP0=",
     "lastModified": 1779745693
   },
-  "oneshill": {
-    "type": "git",
-    "url": "https://gitea.onelock.org/onelock/oneshill.git",
-    "ref": "refs/heads/retroid",
-    "rev": "ad22e34f1c95ff3cdc05c1ae624120893d5b9f27",
-    "narHash": "sha256-cUlrJhbeaqRxPigAdUBrm+YiiRBnS0jeqdRP5K6D9NY=",
-    "lastModified": 1781991184
-  },
   "otter-launcher": {
     "type": "github",
     "owner": "kuokuo123",
@@ -260,6 +252,14 @@
     "rev": "133f526793d90d2caa323c47687dd5544a2c704b",
     "narHash": "sha256-9Hb9dn2qHF6KcIhtogvycX3Z0MoQrLPLCzZXtjGlPHw=",
     "lastModified": 1771948640
+  },
+  "tuishell": {
+    "type": "git",
+    "url": "https://gitea.onelock.org/onelock/tuishell",
+    "ref": "HEAD",
+    "rev": "a4d12c949684449e3dab88e21a029577cefdf73f",
+    "narHash": "sha256-vlqk5Y7iULWv5gxo7hKynjoiPKUyiCBhwZjOUWlyKi8=",
+    "lastModified": 1785288944
   },
   "vimmax": {
     "type": "github",

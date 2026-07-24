@@ -19,7 +19,6 @@
         }:
         {
           forte = {
-            quickshell.enable = false;
             flatpak.enable = true;
             openssh.enable = true;
             nfs-share.enable = true;

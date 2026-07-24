@@ -1,8 +1,8 @@
 { inputs, ... }:
 {
   tack.inputs = {
-    oneshill = {
-      url = "git+https://gitea.onelock.org/onelock/oneshill.git?ref=retroid";
+    tuishell = {
+      url = "git+https://gitea.onelock.org/onelock/tuishell";
       fetch = true;
     };
     quickshell = "gh:quickshell-mirror/quickshell/ead3b00afdf603bb6d4c30fc9c9f582d8f712168";
@@ -25,21 +25,14 @@
         hj = {
           packages = [ cfg.package ];
           systemd.services.quickshell = {
+            enableDefaultPath = false;
             description = "quickshell";
             after = [ "graphical-session.target" ];
             wantedBy = [ "graphical-session.target" ];
-            path = with pkgs; [
-              bash
-              coreutils
-              gnugrep
-              gnused
-              gawk
-              procps
-            ];
             serviceConfig = {
               Type = "dbus";
               BusName = "org.kde.StatusNotifierWatcher";
-              ExecStart = "${cfg.package}/bin/oneshill";
+              ExecStart = "${cfg.package}/bin/tuishell";
               Restart = "on-failure";
 
               MemoryHigh = "512M";
@@ -60,58 +53,34 @@
             };
           };
         };
+        forte.hyprland.lua.settings = # lua
+          ''
+            hl.layer_rule({
+              name = "tuishell",
+              match = {
+                namespace = "^tuishell-.*",
+              },
+              no_anim = true,
+              ignore_alpha = 0.5,
+              blur = true,
+              blur_popups = true,
+            })
+          '';
         forte.hyprland.lua.keybinds = # lua
           ''
             -- brightness
-            hl.bind("ALT + SHIFT + equal", hl.dsp.exec_raw("oneshill ipc call brightness increase"),
+            hl.bind("ALT + SHIFT + equal", hl.dsp.exec_raw("tuishell ipc call brightness increase"),
               { locked = true, repeating = false })
 
-            hl.bind("ALT + SHIFT + minus", hl.dsp.exec_raw("oneshill ipc call brightness decrease"),
+            hl.bind("ALT + SHIFT + minus", hl.dsp.exec_raw("tuishell ipc call brightness decrease"),
               { locked = true, repeating = false })
 
-            -- wallpaper panel toggle
-            hl.bind("ALT + SHIFT + W", hl.dsp.exec_raw("oneshill ipc call WallpaperPanel toggle"),
+            hl.bind("SUPER + G", hl.dsp.exec_raw("tuishell ipc call desktop toggleWidgets"),
               { locked = true, repeating = false })
 
-            -- quickshell + hyprland overview
-            local original_gaps = { top = 60, bottom = 30, left = 30, right = 30 }
-            local original_fit_method = nil
-
-            hl.define_submap("hyprview", function()
-              hl.bind("SUPER + left", hl.dsp.focus({ direction = "left" }))
-              hl.bind("SUPER + right", hl.dsp.focus({ direction = "right" }))
-              hl.bind("SUPER + up", hl.dsp.focus({ direction = "up" }))
-              hl.bind("SUPER + down", hl.dsp.focus({ direction = "down" }))
-
-              hl.bind("SUPER + up", hl.dsp.focus({ workspace = "e-1" }))
-              hl.bind("SUPER + down", hl.dsp.focus({ workspace = "e+1" }))
-
-              hl.bind("SUPER + G", function()
-                hl.dispatch(hl.dsp.exec_raw("oneshill ipc call overview toggle"))
-                hl.config({
-                  general   = { gaps_out = original_gaps },
-                  scrolling = { focus_fit_method = original_fit_method },
-                })
-                hl.dispatch(hl.dsp.submap("reset"))
-              end, { repeating = false })
-            end)
-
-            hl.bind("SUPER + G", function()
-              -- Save current value before overriding
-              original_fit_method = hl.get_config("scrolling.focus_fit_method")
-
-              hl.dispatch(hl.dsp.exec_raw("oneshill ipc call overview toggle"))
-              hl.config({
-                general   = { gaps_out = { top = 180, bottom = 180, left = 260, right = 260 } },
-                scrolling = { focus_fit_method = 0 },
-              })
-              hl.dispatch(hl.dsp.submap("hyprview"))
-            end, { repeating = false })
-
+            hl.bind("SUPER + SPACE", hl.dsp.exec_raw("tuishell ipc call launcher toggle"),
+              { locked = true, repeating = false })
           '';
-        systemd.tmpfiles.rules = [
-          "L+ ${config.hj.xdg.config.directory}/quickshell - onelock users - ${config.hj.directory}/Development/quickshell/oneshill"
-        ];
         systemd.tmpfiles.settings.preservation = {
           "${config.hj.directory}/.netrc".z = lib.mkForce {
             user = constants.username;
@@ -121,10 +90,7 @@
         };
         forte.persist.home = {
           files = [ ".netrc" ];
-          directories = [
-            ".config/oneshill"
-            ".cache/oneshill"
-          ];
+          directories = [ ".cache/tuishell" ];
         };
       };
       options = {
@@ -135,8 +101,8 @@
           package = lib.mkOption {
             type = lib.types.package;
             default = wrapPackage {
-              binName = "oneshill";
-              args = [ "-p ${inputs.oneshill}" ];
+              binName = "tuishell";
+              args = [ "-p ${inputs.tuishell}" ];
               package =
                 let
                   extraPkgs =
@@ -148,6 +114,7 @@
                       cava
                       python3
                       awww
+                      config.forte.mpv.mpv-wlpaste
                     ]);
 
                   qmlImportPath = lib.makeSearchPath pkgs.kdePackages.qtbase.qtQmlPrefix extraPkgs; # lib/qt-6/qml
@@ -181,10 +148,10 @@
           withPipewire = true;
           withQtSvg = true;
           withJemalloc = true;
+          withHyprland = true;
+          withNetworkManager = true;
+          withPolkit = true;
 
-          withNetworkManager = false;
-          withPolkit = false;
-          withHyprland = false;
           withPam = false;
           withX11 = false;
           withI3 = false;

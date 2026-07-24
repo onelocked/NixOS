@@ -1,7 +1,6 @@
 {
   exo.mods.desktop =
     {
-      config,
       lib,
       hostName,
       theme,
