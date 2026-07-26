@@ -3,6 +3,7 @@
     { scheme, ... }:
     {
       forte.qview = {
+        enable = true;
         settings = {
           General = {
             configversion = "7.1";
@@ -115,9 +116,7 @@
           '';
       };
       options.forte.qview = {
-        enable = lib.mkEnableOption "qview" // {
-          default = true;
-        };
+        enable = lib.mkEnableOption "qview";
         package = lib.mkOption {
           type = lib.types.package;
           default = pkgs.qview;

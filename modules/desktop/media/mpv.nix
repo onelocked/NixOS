@@ -3,6 +3,7 @@
     { config, ... }:
     {
       forte.mpv = {
+        enable = true;
         conf = # ini
           ''
             osd-duration=500
@@ -165,9 +166,7 @@
       };
 
       options.forte.mpv = {
-        enable = lib.mkEnableOption "mpv" // {
-          default = true;
-        };
+        enable = lib.mkEnableOption "mpv";
         conf = lib.mkOption {
           default = "";
           type = lib.types.lines;

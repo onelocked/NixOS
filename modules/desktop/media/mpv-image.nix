@@ -1,6 +1,7 @@
 {
   exo.mods.media = {
     forte.mpv-image = {
+      enable = true;
       conf = # ini
         ''
           image-display-duration=inf
@@ -75,9 +76,7 @@
           |> lib.listToAttrs;
       };
       options.forte.mpv-image = {
-        enable = lib.mkEnableOption "mpv-image" // {
-          default = true;
-        };
+        enable = lib.mkEnableOption "mpv-image";
         conf = lib.mkOption {
           default = "";
           type = lib.types.lines;

@@ -3,6 +3,7 @@
     { scheme, theme, ... }:
     {
       forte.vesktop = {
+        enable = true;
         settings = {
           appBadge = false;
           arRPC = true;
@@ -347,9 +348,7 @@
         forte.persist.home.directories = [ ".config/vesktop" ];
       };
       options.forte.vesktop = {
-        enable = lib.mkEnableOption "vesktop" // {
-          default = true;
-        };
+        enable = lib.mkEnableOption "vesktop";
         package = lib.mkOption {
           type = lib.types.package;
           default = pkgs.vesktop.override { withMiddleClickScroll = true; };
