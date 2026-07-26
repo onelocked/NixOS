@@ -3,12 +3,19 @@
     { pkgs, self', ... }:
     {
       fonts = {
-        packages = with pkgs; [
-          nerd-fonts.symbols-only
-          montserrat
-          maple-mono.NF
-          self'.legacyPackages.apple-fonts
-        ];
+        packages =
+          with pkgs;
+          [
+            nerd-fonts.symbols-only
+            montserrat
+            maple-mono.NF
+          ]
+          ++ (with self'.legacyPackages.apple-fonts; [
+            sf-pro
+            sf-mono
+            sf-compact
+            emoji
+          ]);
         enableDefaultPackages = true;
         fontDir.enable = true;
         fontconfig = {
@@ -63,32 +70,24 @@
     in
     {
       legacyPackages = {
-        apple-fonts =
-          let
-            fonts = {
-              sf-pro = makeAppleFont "sf-pro" "SF Pro Fonts.pkg" inputs.sf-pro;
-              sf-mono = makeAppleFont "sf-mono" "SF Mono Fonts.pkg" inputs.sf-mono;
-              sf-compact = makeAppleFont "sf-compact" "SF Compact Fonts.pkg" inputs.sf-compact;
-              emoji = pkgs.stdenvNoCC.mkDerivation {
-                allowSubstitutes = false;
-                preferLocalBuild = true;
+        apple-fonts = {
+          sf-pro = makeAppleFont "sf-pro" "SF Pro Fonts.pkg" inputs.sf-pro;
+          sf-mono = makeAppleFont "sf-mono" "SF Mono Fonts.pkg" inputs.sf-mono;
+          sf-compact = makeAppleFont "sf-compact" "SF Compact Fonts.pkg" inputs.sf-compact;
+          emoji = pkgs.stdenvNoCC.mkDerivation {
+            allowSubstitutes = false;
+            preferLocalBuild = true;
 
-                name = "apple-font-emoji";
-                src = inputs.apple-font-emoji;
-                dontUnpack = true;
-                dontBuild = true;
-                dontConfigure = true;
-                installPhase = ''
-                  install -D -m644 $src $out/share/fonts/truetype/AppleColorEmoji-Linux.ttf
-                '';
-              };
-            };
-          in
-          pkgs.symlinkJoin {
-            name = "apple-fonts";
-            paths = builtins.attrValues fonts;
-            passthru = fonts;
+            name = "apple-font-emoji";
+            src = inputs.apple-font-emoji;
+            dontUnpack = true;
+            dontBuild = true;
+            dontConfigure = true;
+            installPhase = ''
+              install -D -m644 $src $out/share/fonts/truetype/AppleColorEmoji-Linux.ttf
+            '';
           };
+        };
       };
     };
   tack.inputs = {
