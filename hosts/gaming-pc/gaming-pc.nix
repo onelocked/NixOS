@@ -10,30 +10,13 @@
         remote-access
         gaming
       ];
-      extraConfig =
-        {
-          pkgs,
-          lib,
-          config,
-          ...
-        }:
-        {
-          forte = {
-            flatpak.enable = true;
-            openssh.enable = true;
-            nfs-share.enable = true;
-            hyprland.lua.settings = # lua
-              ''
-                hl.on("hyprland.start", function()
-                  hl.dispatch(hl.dsp.exec_raw("${lib.getExe' pkgs.awww "awww-daemon"}"))
-                end)
-                -- Restore wallpaper on monitor reconnect
-                hl.on("monitor.added", function()
-                  hl.dispatch(hl.dsp.exec_raw("${pkgs.awww}/bin/awww img ${config.hj.directory}/Pictures/wallpaper.png "))
-                end)
-              '';
-          };
+      extraConfig = {
+        forte = {
+          flatpak.enable = true;
+          openssh.enable = true;
+          nfs-share.enable = true;
         };
+      };
     };
   };
 }
