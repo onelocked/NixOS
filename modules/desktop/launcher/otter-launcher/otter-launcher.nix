@@ -21,7 +21,7 @@
     in
     {
       forte.otter-launcher = {
-        enable = true;
+        enable = false;
         settings = {
           general = {
             callback = "";
