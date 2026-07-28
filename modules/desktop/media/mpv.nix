@@ -17,7 +17,7 @@
             sub-auto=fuzzy
             sub-font="Apple Color Emoji"
             gpu-context=auto
-            hwdec=auto
+            hwdec=auto-safe
             profile=gpu-hq
             vo=gpu-next
             gpu-api=auto
@@ -32,6 +32,7 @@
             ytdl-format=bestvideo[height<=2160]+bestaudio/best[height<=2160]
             loop-file=inf
             autofit=x1355
+            msg-level=ffmpeg=fatal,vd=fatal,vo=fatal
           '';
         input = # bash
           ''
