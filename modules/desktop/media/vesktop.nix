@@ -300,6 +300,7 @@
       pkgs,
       lib,
       config,
+      hostName,
       ...
     }:
     let
@@ -317,6 +318,18 @@
           "vesktop/settings/settings.json" = {
             generator = jsonFormat;
             value = cfg.vencord-settings;
+          };
+        };
+        hj.systemd.services = lib.mkIf (hostName == "mini-pc") {
+          vesktop = {
+            enableDefaultPath = false;
+            description = "vesktop autostart";
+            after = [ "graphical-session.target" ];
+            wantedBy = [ "graphical-session.target" ];
+            serviceConfig = {
+              Type = "simple";
+              ExecStart = "${lib.getExe cfg.package}";
+            };
           };
         };
 

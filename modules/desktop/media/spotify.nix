@@ -7,6 +7,7 @@
       scheme,
       config,
       lib,
+      hostName,
       ...
     }:
     let
@@ -43,6 +44,18 @@
         }
         (lib.mkIf cfg.enable {
           forte.allowUnfree = [ "spotify" ];
+          hj.systemd.services = lib.mkIf (hostName == "mini-pc") {
+            spotify = {
+              enableDefaultPath = false;
+              description = "spotify autostart";
+              after = [ "graphical-session.target" ];
+              wantedBy = [ "graphical-session.target" ];
+              serviceConfig = {
+                Type = "simple";
+                ExecStart = "${lib.getExe cfg.spicedSpotify}";
+              };
+            };
+          };
           forte.hyprland.lua.window-rules =
             # lua
             ''
