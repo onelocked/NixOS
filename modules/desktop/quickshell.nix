@@ -64,6 +64,7 @@
               ignore_alpha = 0.5,
               blur = true,
               blur_popups = true,
+              xray = true,
             })
           '';
         forte.hyprland.lua.keybinds = # lua
@@ -79,6 +80,8 @@
               { locked = true, repeating = false })
 
             hl.bind("SUPER + SPACE", hl.dsp.exec_raw("tuishell ipc call launcher toggle"),
+              { locked = true, repeating = false })
+            hl.bind("SUPER + ALT + L", hl.dsp.exec_raw("tuishell ipc call lock lock"),
               { locked = true, repeating = false })
           '';
         systemd.tmpfiles.settings.preservation = {
@@ -151,8 +154,8 @@
           withHyprland = true;
           withNetworkManager = true;
           withPolkit = true;
+          withPam = true;
 
-          withPam = false;
           withX11 = false;
           withI3 = false;
         }).overrideAttrs
