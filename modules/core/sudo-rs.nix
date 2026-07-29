@@ -11,6 +11,7 @@
         '';
       };
       polkit.enable = true;
+      polkit.enablePkexecWrapper = true;
     };
   };
 }
