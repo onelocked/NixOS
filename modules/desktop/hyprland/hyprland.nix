@@ -8,6 +8,7 @@
       withTermFileChooser = true;
       withHyprpolkit = false;
       withHyprshutdown = true;
+      withHypridle = true;
     };
   };
 
@@ -136,20 +137,6 @@
               capabilities = "cap_sys_nice+ep";
               source = lib.getExe cfg.package;
             };
-            hj.systemd.services.unlock-keyring = {
-              description = "Unlock GNOME Keyring on startup";
-              wantedBy = [ "graphical-session.target" ];
-              requires = [ "graphical-session.target" ];
-              after = [ "graphical-session.target" ];
-              serviceConfig = {
-                Type = "oneshot";
-                ExecStart = "${pkgs.writeShellScript "unlock-keyring" # bash
-                  ''
-                    ${pkgs.libsecret}/bin/secret-tool lookup app keyring-init || echo 'init' | ${pkgs.libsecret}/bin/secret-tool store --label='keyring-init' app keyring-init
-                  ''
-                }";
-              };
-            };
           }
           (lib.mkIf cfg.withGreetd {
             security.pam.services.greetd.enableGnomeKeyring = true;
@@ -208,6 +195,41 @@
           (lib.mkIf (hardware == "mini-pc") {
             environment.sessionVariables = {
               AQ_NO_MODIFIERS = 1;
+            };
+          })
+          (lib.mkIf (cfg.withHypridle) {
+            hj.packages = [ pkgs.hypridle ];
+            hj.systemd.services.hypridle = {
+              description = "Hypridle autostart";
+              after = [ "graphical-session.target" ];
+              wantedBy = [ "graphical-session.target" ];
+              serviceConfig = {
+                Type = "simple";
+                ExecStart = "${lib.getExe pkgs.hypridle}";
+                Restart = "on-failure";
+                RestartSec = 1;
+                TimeoutStopSec = 10;
+              };
+            };
+            hj.xdg.config.files = {
+              "hypr/hypridle.conf".text = # bash
+                ''
+                  general {
+                      ignore_dbus_inhibit = false
+                      ignore_systemd_inhibit = false
+                      #lock the computer before sleeping
+                      before_sleep_cmd = ${config.forte.quickshell.package}/bin/oneshill ipc call lock lock
+                  }
+                  listener {
+                      timeout = 500
+                      on-timeout = ${config.forte.quickshell.package}/bin/oneshill ipc call lock lock
+                  }
+                  listener {
+                      timeout = 600 # 600 seconds = 10 minutes
+                      on-timeout = ${config.forte.hyprland.package}/bin/hyprctl dispatch 'hl.dsp.dpms({ action = "disable" })'  # Turn off the screen
+                      on-resume = ${config.forte.hyprland.package}/bin/hyprctl dispatch 'hl.dsp.dpms({ action = "enable" })'  # Turn it on when waking up
+                  }
+                '';
             };
           })
         ];
@@ -318,6 +340,12 @@
         withHyprshutdown = lib.mkEnableOption null // {
           description = ''
             Whether to enable hyprshutdown
+          '';
+        };
+
+        withHypridle = lib.mkEnableOption null // {
+          description = ''
+            Whether to enable hypridle
           '';
         };
       };
