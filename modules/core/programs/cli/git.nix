@@ -190,7 +190,6 @@
         settings = lib.mkOption {
           default = { };
           inherit (pkgs.formats.yaml { }) type;
-          description = "Options to go into otter-launcher's toml config";
         };
         package = lib.mkOption {
           type = lib.types.package;

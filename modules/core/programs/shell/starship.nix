@@ -86,7 +86,6 @@
         settings = lib.mkOption {
           inherit (tomlFormat) type;
           default = { };
-          description = "Options to go into otter-launcher's toml config";
         };
         package = lib.mkOption {
           default = wrapPackage {
