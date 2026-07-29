@@ -6,7 +6,7 @@
       withUWSM = true;
       withGreetd = true;
       withTermFileChooser = true;
-      withHyprpolkit = true;
+      withHyprpolkit = false;
       withHyprshutdown = true;
     };
   };
