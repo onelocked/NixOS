@@ -175,9 +175,9 @@
     "type": "github",
     "owner": "quickshell-mirror",
     "repo": "quickshell",
-    "rev": "ead3b00afdf603bb6d4c30fc9c9f582d8f712168",
-    "narHash": "sha256-67aeUrxZ9UQxU4n1GD3UXiVePPXkojMdCh5PQ1O9XJM=",
-    "lastModified": 1783409646
+    "rev": "43d4fa9e883cb03239b3d578c9c57070f4fbd281",
+    "narHash": "sha256-bv5gar+ZAXZCJH7UOv0eRFILKt5RKA/3px/XbVR98Cg=",
+    "lastModified": 1785134238
   },
   "rust-overlay": {
     "type": "github",

@@ -78,7 +78,7 @@ url = "gh:kuokuo123/otter-launcher"
 url = "gh:nix-community/preservation"
 
 [inputs.quickshell]
-url = "gh:quickshell-mirror/quickshell/ead3b00afdf603bb6d4c30fc9c9f582d8f712168"
+url = "gh:quickshell-mirror/quickshell"
 
 [inputs.sf-compact]
 type = "fixed"

@@ -29,8 +29,8 @@
 
     perSystem =
       {
+        rootPath,
         pkgs,
-        inputs,
         packages',
         ...
       }:
@@ -50,22 +50,20 @@
               // lib.optionalAttrs (val.exclude_follow != [ ]) { inherit (val) exclude_follow; }
             );
         };
-        pinsToml = tomlFormat "pins.toml" tackConfig;
+        pinsToml = tackConfig |> tomlFormat "pins.toml";
 
-        finalInputs = config.tack.inputs |> lib.attrNames;
-        prevInputs =
-          inputs
+        # Read the current state of pins.toml to diff against
+        prevPins = lib.importTOML (rootPath + /.tack/pins.toml);
+        hasChanges = prevPins != tackConfig;
+
+        # Inputs that need tack update: either new or URL-changed
+        updateInputs =
+          tackConfig.inputs
           |> lib.attrNames
-          |> lib.subtractLists (
-            [
-              "self"
-              "__functor"
-            ]
-            ++ (config.tack.all_follow |> lib.attrNames |> lib.subtractLists finalInputs)
-          );
-        newInputs = finalInputs |> lib.subtractLists prevInputs |> lib.join " ";
-        removedInputs = prevInputs |> lib.subtractLists finalInputs;
-        hasChanges = newInputs != "" || removedInputs != [ ];
+          |> lib.filter (
+            name: !(prevPins.inputs ? ${name}) || prevPins.inputs.${name}.url != tackConfig.inputs.${name}.url
+          )
+          |> lib.join " ";
       in
       {
         apps.tack-rebuild = {
@@ -89,15 +87,12 @@
                     exit 1
                   fi
 
-                  ${lib.optionalString (removedInputs != [ ]) ''
-                    echo "Changes to .tack/pins.toml (some inputs were removed):"
-                    delta --dark .tack/pins.toml "${pinsToml}" || true
-                  ''}
                   ${lib.optionalString hasChanges ''
+                    delta --dark --side-by-side --line-numbers --diff-so-fancy .tack/pins.toml "${pinsToml}" || true
                     install -m 644 -D -T "${pinsToml}" .tack/pins.toml
                     echo "wrote .tack/pins.toml"
                   ''}
-                  ${lib.optionalString (newInputs != "") "tack update ${newInputs}"}
+                  ${lib.optionalString (updateInputs != "") "tack update ${updateInputs}"}
 
                   if [[ $# -gt 0 ]]; then
                     nh os "$@"

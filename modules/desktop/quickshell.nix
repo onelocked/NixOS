@@ -5,7 +5,7 @@
       url = "git+https://gitea.onelock.org/onelock/tuishell";
       fetch = true;
     };
-    quickshell = "gh:quickshell-mirror/quickshell/ead3b00afdf603bb6d4c30fc9c9f582d8f712168";
+    quickshell = "gh:quickshell-mirror/quickshell";
   };
   exo.mods.desktop =
     {
