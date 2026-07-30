@@ -6,7 +6,7 @@
       lib,
       config,
       constants,
-      packages',
+      pkgs,
       ...
     }:
     {
@@ -14,7 +14,7 @@
         inputs.hjem.nixosModules.default
         (lib.mkAliasOptionModule [ "hj" ] [ "hjem" "users" constants.username ])
       ];
-      hjem.linker = packages'.hjem.smfh;
+      hjem.linker = pkgs.smfh;
       hj = {
         enable = true;
         user = constants.username;
