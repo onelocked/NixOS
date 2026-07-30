@@ -28,8 +28,6 @@ jobs:
             "lan-mouse"
             "lla"
             "quickshell"
-            "otter-launcher"
-            "fsel"
           )
           mkdir -p /tmp/missing
           pids=()
