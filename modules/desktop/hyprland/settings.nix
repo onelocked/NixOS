@@ -4,6 +4,7 @@
       lib,
       hostName,
       theme,
+      pkgs,
       ...
     }:
     {
@@ -23,6 +24,13 @@
             mode     = "preferred",
             position = "auto",
             scale    = "auto",
+            bitdepth = 10,
+            icc = "${
+              pkgs.fetchurl {
+                url = "https://s3.onelock.org/download/ZQE_CAA.icm";
+                hash = "sha256-ixFnNiAoi8wUJasFIOhUeQ5osjwkTzso6QSYhzo/pvo=";
+              }
+            }",
           })
 
           --                                      ▀█
@@ -105,8 +113,9 @@
             },
 
             render = {
-              direct_scanout = 2,
+              direct_scanout = 1,
               new_render_scheduling = true,
+              use_fp16 = 1,
             },
 
             --  ▀                       █
