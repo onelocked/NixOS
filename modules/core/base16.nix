@@ -8,41 +8,41 @@
       scheme = config.forte.theme.${theme};
       forte.theme = {
         light = {
-          slug = "retroism";
-          scheme = "retro";
+          slug = "coffee-pastel";
+          scheme = "Coffee Pastel";
           author = "onelock";
 
-          # Background & UI Chrome
-          base00 = "#d8d8d8";
-          base01 = "#aaaaaa";
-          base02 = "#bebebf";
-          base03 = "#8c8c8c";
+          # Backgrounds
+          base00 = "#F4EAE1";
+          base01 = "#e0d8ce";
+          base02 = "#C4B09E";
+          base03 = "#8a8078";
 
-          # Foregrounds
-          base04 = "#555555";
-          base05 = "#252525";
-          base06 = "#444444";
-          base07 = "#111111";
+          # Foregrounds (Grey
+          base04 = "#4a4640";
+          base05 = "#1c1a18";
+          base06 = "#1c1a18";
+          base07 = "#000000";
 
           # Accents
-          base08 = "#9e1c1c";
-          base09 = "#9e4e00";
-          base0A = "#6b6100";
-          base0B = "#246628";
-          base0C = "#005959";
-          base0D = "#183871";
-          base0E = "#5c2488";
-          base0F = "#6b3a1f";
+          base08 = "#b04030";
+          base09 = "#A65D3C";
+          base0A = "#7a6a50";
+          base0B = "#5C7457";
+          base0C = "#5a4a30";
+          base0D = "#8E4D2F";
+          base0E = "#9a6830";
+          base0F = "#8B7D6F";
 
-          # Extended
-          base10 = "#cacaca";
-          base11 = "#bcbcba";
-          base12 = "#8e2a46";
-          base13 = "#7a1830";
-          base14 = "#22634e";
-          base15 = "#0e5c6e";
-          base16 = "#502888";
-          base17 = "#782858";
+          # Extended (Brights
+          base10 = "#C2185B"; # Magenta
+          base11 = "#D81B60"; # Pink
+          base12 = "#4527A0"; # Clear Purple
+          base13 = "#283593"; # Indigo
+          base14 = "#0277BD"; # Cerulean
+          base15 = "#00695C"; # Pine
+          base16 = "#558B2F"; # Olive
+          base17 = "#4E342E"; # Deep Coffee
         };
         dark = {
           slug = "onemeath";

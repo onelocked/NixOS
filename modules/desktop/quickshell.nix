@@ -15,6 +15,7 @@
       self',
       config,
       constants,
+      theme,
       ...
     }:
     let
@@ -24,14 +25,13 @@
       config = lib.mkIf (cfg.enable) {
         hj = {
           packages = [ cfg.package ];
-          systemd.services.quickshell = {
+          systemd.services.tuishell = {
             enableDefaultPath = false;
-            description = "quickshell";
+            description = "tuishell";
             after = [ "graphical-session.target" ];
             wantedBy = [ "graphical-session.target" ];
             serviceConfig = {
-              Type = "dbus";
-              BusName = "org.kde.StatusNotifierWatcher";
+              Type = "simple";
               ExecStart = "${cfg.package}/bin/tuishell";
               Restart = "on-failure";
 
@@ -61,29 +61,28 @@
                 namespace = "^tuishell-.*",
               },
               no_anim = true,
-              ignore_alpha = 0.5,
-              blur = true,
-              blur_popups = true,
+              ignore_alpha = 0.1,
+              blur = false,
+              blur_popups = false,
               xray = true,
             })
           '';
-        forte.hyprland.lua.keybinds = # lua
-          ''
-            -- brightness
-            hl.bind("ALT + SHIFT + equal", hl.dsp.exec_raw("tuishell ipc call brightness increase"),
-              { locked = true, repeating = false })
-
-            hl.bind("ALT + SHIFT + minus", hl.dsp.exec_raw("tuishell ipc call brightness decrease"),
-              { locked = true, repeating = false })
-
-            hl.bind("SUPER + G", hl.dsp.exec_raw("tuishell ipc call desktop toggleWidgets"),
-              { locked = true, repeating = false })
-
-            hl.bind("SUPER + SPACE", hl.dsp.exec_raw("tuishell ipc call launcher toggle"),
-              { locked = true, repeating = false })
-            hl.bind("SUPER + ALT + L", hl.dsp.exec_raw("tuishell ipc call lock lock"),
-              { locked = true, repeating = false })
-          '';
+        forte.hyprland.lua.keybinds =
+          {
+            "ALT + SHIFT + equal" = "brightness increase";
+            "ALT + SHIFT + minus" = "brightness decrease";
+            "SUPER + G" = "desktop toggleWidgets";
+            "SUPER + SPACE" = "launcher toggle";
+            "SUPER + ALT + L" = "lock lock";
+            "SUPER + E" = "emoji toggle";
+          }
+          |> lib.mapAttrsToList (
+            key: cmd: # lua
+            ''
+              hl.bind("${key}", hl.dsp.exec_raw("tuishell ipc call ${cmd}"), { repeating = false })
+            ''
+          )
+          |> lib.join "\n";
         systemd.tmpfiles.settings.preservation = {
           "${config.hj.directory}/.netrc".z = lib.mkForce {
             user = constants.username;
@@ -117,6 +116,7 @@
                       cava
                       python3
                       awww
+                      app2unit
                       config.forte.mpv.mpv-wlpaste
                     ]);
 
@@ -135,6 +135,7 @@
                     QML2_IMPORT_PATH = qmlImportPath;
                     QT_PLUGIN_PATH = qtPluginPath;
                     FONTCONFIG_FILE = pkgs.makeFontsConf { fontDirectories = [ pkgs.lucide ]; };
+                    TUISHELL_THEME = theme;
                   };
                 };
             };
