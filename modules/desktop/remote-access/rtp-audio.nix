@@ -19,7 +19,6 @@
                 args = {
                   "destination.ip" = "192.168.1.209";
                   "destination.port" = if hostName == "mini-pc" then 45599 else 45610;
-                  "sess.latency.msec" = 15;
                   "audio.channels" = 2;
                   "audio.format" = "S16BE";
                   "sess.payload" = 127;
