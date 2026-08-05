@@ -90,22 +90,10 @@
         };
       };
     };
-  tack.inputs = {
-    sf-pro = {
-      url = "https://devimages-cdn.apple.com/design/resources/download/SF-Pro.dmg";
-      fixed = true;
-    };
-    sf-mono = {
-      url = "https://devimages-cdn.apple.com/design/resources/download/SF-Mono.dmg";
-      fixed = true;
-    };
-    sf-compact = {
-      url = "https://devimages-cdn.apple.com/design/resources/download/SF-Compact.dmg";
-      fixed = true;
-    };
-    apple-font-emoji = {
-      url = "https://github.com/samuelngs/apple-emoji-ttf/releases/download/macos-26-20260613-f1fc560b/AppleColorEmoji-Linux.ttf";
-      fixed = true;
-    };
+  tack.inputs.fixed = {
+    sf-pro = "https://devimages-cdn.apple.com/design/resources/download/SF-Pro.dmg";
+    sf-mono = "https://devimages-cdn.apple.com/design/resources/download/SF-Mono.dmg";
+    sf-compact = "https://devimages-cdn.apple.com/design/resources/download/SF-Compact.dmg";
+    apple-font-emoji = "https://github.com/samuelngs/apple-emoji-ttf/releases/download/macos-26-20260613-f1fc560b/AppleColorEmoji-Linux.ttf";
   };
 }

@@ -1,8 +1,6 @@
 {
-  tack.inputs.tmuxFloax = {
-    url = "gh:omerxx/tmux-floax";
-    fetch = true;
-  };
+  tack.inputs.fetch.tmuxFloax = "gh:omerxx/tmux-floax";
+
   exo.core =
     { pkgs, inputs, ... }:
     let

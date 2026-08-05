@@ -1,9 +1,8 @@
 { config, lib, ... }:
 {
   config = {
-
     tack = {
-      inputs.tack = "gh:iynaix/tack/update-exclude-arg"; # TODO: remove once this PR is merged gh:manic-systems/tack
+      inputs.tack = "gh:manic-systems/tack";
       shorturls = {
         gh = "github:{path}";
       };
@@ -36,25 +35,54 @@
       }:
       let
         tomlFormat = (pkgs.formats.toml { }).generate;
+        serialisedInputs =
+          (
+            removeAttrs config.tack.inputs [
+              "fetch"
+              "fixed"
+            ]
+            |> lib.mapAttrs (
+              _:
+              {
+                url,
+                type,
+                exclude_follow,
+                follows,
+                ...
+              }:
+              {
+                inherit url;
+              }
+              // lib.optionalAttrs (type != null) { inherit type; }
+              // lib.optionalAttrs (follows != { }) { inherit follows; }
+              // lib.optionalAttrs (exclude_follow != [ ]) { inherit exclude_follow; }
+            )
+          )
+          // (
+            config.tack.inputs.fetch
+            |> lib.mapAttrs (
+              _: url: {
+                inherit url;
+                type = "fetch";
+              }
+            )
+          )
+          // (
+            config.tack.inputs.fixed
+            |> lib.mapAttrs (
+              _: url: {
+                inherit url;
+                type = "fixed";
+              }
+            )
+          );
         tackConfig = {
           inherit (config.tack) shorturls all_follow;
-          inputs =
-            config.tack.inputs
-            |> lib.mapAttrs (
-              _: val:
-              {
-                inherit (val) url;
-              }
-              // lib.optionalAttrs val.fetch { type = "fetch"; }
-              // lib.optionalAttrs val.fixed { type = "fixed"; }
-              // lib.optionalAttrs (val.exclude_follow != [ ]) { inherit (val) exclude_follow; }
-            );
+          inputs = serialisedInputs;
         };
-        pinsToml = tackConfig |> tomlFormat "pins.toml";
 
         # Read the current state of pins.toml to diff against
         prevPins = lib.importTOML (rootPath + /.tack/pins.toml);
-        hasChanges = prevPins != tackConfig;
 
         # Inputs that need tack update: either new or URL-changed
         updateInputs =
@@ -87,9 +115,10 @@
                     exit 1
                   fi
 
-                  ${lib.optionalString hasChanges ''
-                    delta --dark --side-by-side --line-numbers --diff-so-fancy .tack/pins.toml "${pinsToml}" || true
-                    install -m 644 -D -T "${pinsToml}" .tack/pins.toml
+                  ${lib.optionalString (prevPins != tackConfig) ''
+                    newPinsToml="${tackConfig |> tomlFormat "pins.toml"}"
+                    delta --dark --side-by-side --line-numbers --diff-so-fancy .tack/pins.toml "$newPinsToml" || true
+                    install -m 644 -D -T "$newPinsToml" .tack/pins.toml
                     echo "wrote .tack/pins.toml"
                   ''}
                   ${lib.optionalString (updateInputs != "") "tack update ${updateInputs}"}
@@ -103,40 +132,66 @@
         };
       };
   };
+
   options.tack = lib.mkOption {
-    description = "Tack input manager configuration";
+    description = "Tack input manager configuration.";
     default = { };
     type = lib.types.submodule {
       options = {
         shorturls = lib.mkOption {
-          description = "Short URL patterns";
           type = lib.types.attrsOf lib.types.str;
-        };
-        all_follow = lib.mkOption {
-          description = "Inputs that all other inputs should follow";
-          type = lib.types.attrsOf lib.types.str;
-        };
-        inputs = lib.mkOption {
-          description = "Tack inputs";
           default = { };
-          type = lib.types.attrsOf (
-            lib.types.coercedTo lib.types.str (url: { inherit url; }) (
-              lib.types.submodule {
-                options = {
-                  url = lib.mkOption { type = lib.types.str; };
-                  fetch = lib.mkOption {
-                    type = lib.types.bool;
-                    default = false;
+        };
+
+        all_follow = lib.mkOption {
+          type = lib.types.attrsOf lib.types.str;
+          default = { };
+        };
+
+        inputs = lib.mkOption {
+          default = { };
+          type = lib.types.submodule {
+            options = {
+              fetch = lib.mkOption {
+                type = lib.types.attrsOf lib.types.str;
+                default = { };
+                description = "Shorthand for defining multiple fetch inputs";
+              };
+              fixed = lib.mkOption {
+                type = lib.types.attrsOf lib.types.str;
+                default = { };
+                description = "Shorthand for defining multiple fixed inputs";
+              };
+            };
+            freeformType = lib.types.attrsOf (
+              lib.types.coercedTo lib.types.str (url: { inherit url; }) (
+                lib.types.submodule {
+                  options = {
+                    url = lib.mkOption {
+                      type = lib.types.str;
+                    };
+                    type = lib.mkOption {
+                      type = lib.types.nullOr (
+                        lib.types.enum [
+                          "fetch"
+                          "fixed"
+                        ]
+                      );
+                      default = null;
+                    };
+                    follows = lib.mkOption {
+                      type = lib.types.attrsOf lib.types.str;
+                      default = { };
+                    };
+                    exclude_follow = lib.mkOption {
+                      type = lib.types.listOf lib.types.str;
+                      default = [ ];
+                    };
                   };
-                  fixed = lib.mkOption {
-                    type = lib.types.bool;
-                    default = false;
-                  };
-                  exclude_follow = lib.mkOption { type = lib.types.listOf lib.types.str; };
-                };
-              }
-            )
-          );
+                }
+              )
+            );
+          };
         };
       };
     };

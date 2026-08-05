@@ -1,10 +1,7 @@
 { inputs, ... }:
 {
   tack.inputs = {
-    tuishell = {
-      url = "git+https://gitea.onelock.org/onelock/tuishell";
-      fetch = true;
-    };
+    fetch.tuishell = "git+https://gitea.onelock.org/onelock/tuishell";
     quickshell = "gh:quickshell-mirror/quickshell";
   };
   exo.mods.desktop =
@@ -75,6 +72,7 @@
             "SUPER + SPACE" = "launcher toggle";
             "SUPER + ALT + L" = "lock lock";
             "SUPER + E" = "emoji toggle";
+            "ALT + SHIFT + A " = "booru toggle";
           }
           |> lib.mapAttrsToList (
             key: cmd: # lua

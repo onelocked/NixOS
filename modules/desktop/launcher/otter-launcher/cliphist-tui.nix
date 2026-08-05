@@ -107,15 +107,9 @@
         };
       };
     };
-  tack.inputs = {
-    cliphist-tui = {
-      url = "gh:SHORiN-KiWATA/cliphist-tui";
-      fetch = true;
-    };
-    cliphist = {
-      url = "gh:sentriz/cliphist";
-      fetch = true;
-    };
+  tack.inputs.fetch = {
+    cliphist-tui = "gh:SHORiN-KiWATA/cliphist-tui";
+    cliphist = "gh:sentriz/cliphist";
   };
   perSystem =
     {

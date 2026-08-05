@@ -1,10 +1,7 @@
 {
   tack.inputs = {
     yazi = "gh:sxyazi/yazi";
-    yazi-plugins = {
-      url = "gh:AminurAlam/yazi-plugins";
-      fetch = true;
-    };
+    fetch.yazi-plugins = "gh:AminurAlam/yazi-plugins";
   };
   exo.core =
     {

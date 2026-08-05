@@ -105,7 +105,7 @@ url = "gh:Gerg-L/spicetify-nix"
 url = "gh:nix-systems/x86_64-linux"
 
 [inputs.tack]
-url = "gh:iynaix/tack/update-exclude-arg"
+url = "gh:manic-systems/tack"
 
 [inputs.theme-store]
 type = "fetch"

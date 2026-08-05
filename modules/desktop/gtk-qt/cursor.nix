@@ -47,10 +47,7 @@
         };
       };
     };
-  tack.inputs.aemeath-cursor = {
-    url = "https://s3.onelock.org/download/cursors/aemeath-cursor.tar.gz";
-    fetch = true;
-  };
+  tack.inputs.fetch.aemeath-cursor = "https://s3.onelock.org/download/cursors/aemeath-cursor.tar.gz";
   perSystem =
     { pkgs, inputs, ... }:
     {

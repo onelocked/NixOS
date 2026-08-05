@@ -187,15 +187,9 @@
       };
     };
 
-  tack.inputs = {
-    otter-launcher = {
-      url = "gh:kuokuo123/otter-launcher";
-      fetch = true;
-    };
-    fsel = {
-      url = "gh:Mjoyufull/fsel";
-      fetch = true;
-    };
+  tack.inputs.fetch = {
+    otter-launcher = "gh:kuokuo123/otter-launcher";
+    fsel = "gh:Mjoyufull/fsel";
   };
   exo.skeleton =
     {
