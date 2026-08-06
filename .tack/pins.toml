@@ -47,6 +47,9 @@ url = "gh:onelocked/fuzzy-search.yazi"
 [inputs.hjem]
 url = "gh:feel-co/hjem"
 
+[inputs.hypr-plugs]
+url = "gh:hyprwm/hyprland-plugins"
+
 [inputs.hyprland]
 url = "gh:hyprwm/Hyprland"
 

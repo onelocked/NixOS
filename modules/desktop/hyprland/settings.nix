@@ -41,15 +41,15 @@
 
           hl.config({
             general = {
-              gaps_in           = 10,
-              gaps_out = 30,
+              gaps_in           = 8,
+              gaps_out = 17,
               no_focus_fallback = true,
 
-              border_size       = 9,
+              border_size       = 1,
 
-              col               = {
-                inactive_border = { colors = { "rgba(120, 120, 120, 1)" } },
-                active_border   = { colors = { "rgba(30, 30, 30, 1)" } },
+              col         = {
+                inactive_border = { colors = { "${if theme == "dark" then "#313245" else "#8a8078"}" } },
+                active_border   = { colors = { "${if theme == "dark" then "#7d75c0" else "#4b3a2b"}" } },
               },
 
               resize_on_border  = false,
@@ -58,6 +58,20 @@
               allow_tearing     = false,
 
               layout            = "scrolling",
+            },
+
+            plugin = {
+              borders_plus_plus = {
+                add_borders = ${if theme == "dark" then toString 1 else toString 2},
+                natural_rounding = true,
+                col = {
+                  border_1 = "${if theme == "dark" then "#131316D9" else "#F4EAE1DB"}",
+                  border_2 = "${if theme == "dark" then "#8c92aa" else "#8a8078"}",
+
+                },
+                border_size_1 = 13,
+                border_size_2 = 1,
+              },
             },
 
             decoration = {
@@ -76,12 +90,12 @@
                 vibrancy = 0.1696,
               },
 
-              shadow                = {
-                enabled      = true,
-                range        = 3,
-                render_power = 5,
-                color        = "0xe6222222",
-                offset       = { -19, 18 }
+              shadow = {
+                enabled      = ${if theme == "dark" then "false" else "true"},
+                range        = 15,
+                render_power = 30,
+                color        = "#59311fCC",
+                offset       = { 5, 5 }
               },
             },
 

@@ -1,10 +1,9 @@
 {
   exo.core =
     {
-      pkgs,
-      lib,
       scheme,
       config,
+      theme,
       ...
     }:
     {
@@ -93,29 +92,24 @@
               set -g fish_color_command            "${base0B}"
               set -g fish_color_keyword            "${base0E}"
               set -g fish_color_string             "${base0F}"
-              set -g fish_color_operator           "${base15}"
+              set -g fish_color_operator           "${if theme == "dark" then base15 else base0C}"
               set -g fish_color_escape             "${base09}"
               set -g fish_color_quote              "${base0B}"
-              set -g fish_color_param              "${base16}"
+              set -g fish_color_param              "${if theme == "dark" then base16 else base0D}"
               set -g fish_color_error              "${base08}"
 
 
               set -g fish_color_redirection        "${base0C}"
-              set -g fish_color_end                "${base17}"
+              set -g fish_color_end                "${if theme == "dark" then base17 else base0E}"
               set -g fish_color_directory          "${base0A}"
               set -g fish_color_commandpath        "${base0D}"
               set -g fish_color_bracket            "${base0B}"
             '';
         };
       };
-      environment.shellAliases =
-        with pkgs;
-        with lib;
-        {
-          ping = getExe gping;
-          zip = getExe zip;
-          gr = "cd (git rev-parse --show-toplevel)";
-        };
+      environment.shellAliases = {
+        gr = "cd (git rev-parse --show-toplevel)";
+      };
     };
 
   exo.skeleton =

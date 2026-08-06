@@ -1,5 +1,8 @@
 {
-  tack.inputs.hyprland = "gh:hyprwm/Hyprland";
+  tack.inputs = {
+    hyprland = "gh:hyprwm/Hyprland";
+    hypr-plugs = "gh:hyprwm/hyprland-plugins";
+  };
   exo.mods.desktop = {
     forte.hyprland = {
       enable = true;
@@ -33,23 +36,22 @@
           {
             hj.packages = [ cfg.package ];
 
+            forte.hyprland.plugins = [ self'.legacyPackages.borders-plus-plus ];
+
             forte.persist.home.directories = [ ".config/hypr" ];
             forte.hyprland.lua.autostart =
-              lib.optionalString (cfg.autostart != [ ]) # lua
+              lib.optionalString (cfg.autostart != [ ] || cfg.plugins != [ ]) # lua
                 ''
                   hl.on("hyprland.start", function()
                   ${lib.concatStringsSep "\n" (map (cmd: "  hl.dispatch(hl.dsp.exec_raw(\"${cmd}\"))") cfg.autostart)}
-                  end)
-                '';
-            forte.hyprland.lua.settings =
-              lib.optionalString (cfg.plugins != [ ]) # lua
-                ''
-                  hl.on("hyprland.start", function ()
-                    ${lib.concatMapStrings (entry: ''
-                      hl.exec_raw("hyprctl plugin load ${
+                  ${
+                    cfg.plugins
+                    |> lib.concatMapStrings (entry: ''
+                      hl.dispatch(hl.dsp.exec_raw("${config.forte.hyprland.package}/bin/hyprctl plugin load ${
                         if lib.types.package.check entry then "${entry}/lib/lib${entry.pname}.so" else entry
-                      }")
-                    '') cfg.plugins}
+                      }"))
+                    '')
+                  }
                   end)
                 '';
             hj.xdg.config.files = lib.mkMerge [
@@ -218,11 +220,11 @@
                       ignore_dbus_inhibit = false
                       ignore_systemd_inhibit = false
                       #lock the computer before sleeping
-                      before_sleep_cmd = ${config.forte.quickshell.package}/bin/oneshill ipc call lock lock
+                      before_sleep_cmd = ${config.forte.quickshell.package}/bin/tuishell ipc call lock lock
                   }
                   listener {
                       timeout = 500
-                      on-timeout = ${config.forte.quickshell.package}/bin/oneshill ipc call lock lock
+                      on-timeout = ${config.forte.quickshell.package}/bin/tuishell ipc call lock lock
                   }
                   listener {
                       timeout = 600 # 600 seconds = 10 minutes
@@ -354,9 +356,25 @@
     {
       packages',
       pkgs,
+      inputs,
+      self',
       ...
     }:
     {
+      legacyPackages = {
+        borders-plus-plus = pkgs.hyprlandPlugins.mkHyprlandPlugin {
+          pluginName = "borders-plus-plus";
+          version = "0.1";
+          src = "${inputs.hypr-plugs}/borders-plus-plus";
+          hyprland = self'.packages.hyprland;
+
+          inherit (self'.packages.hyprland) nativeBuildInputs;
+          meta = {
+            homepage = "https://github.com/hyprwm/hyprland-plugins/tree/main/borders-plus-plus";
+            description = "Hyprland borders-plus-plus plugin";
+          };
+        };
+      };
       packages = {
         hyprland = packages'.hyprland.overrideAttrs (oldAttrs: {
           doCheck = false;

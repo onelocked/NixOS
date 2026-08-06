@@ -1,6 +1,6 @@
 {
   exo.core =
-    { scheme, ... }:
+    { scheme, theme, ... }:
     {
       forte.starship = {
         enable = true;
@@ -54,15 +54,15 @@
             color_blue = base0D;
             color_aqua = base0C;
             color_green = base0B;
-            color_dark_green = base14;
-            color_teal = base15;
-            color_teal1 = base16;
+            color_dark_green = if theme == "dark" then base14 else base0B;
+            color_teal = if theme == "dark" then base15 else base0C;
+            color_teal1 = if theme == "dark" then base16 else base0D;
             color_orange = base09;
             color_purple = base0E;
             color_red = base08;
-            color_red1 = base12;
+            color_red1 = if theme == "dark" then base12 else base08;
             color_yellow = base0A;
-            color_pink = base17;
+            color_pink = if theme == "dark" then base17 else base0E;
           };
         };
       };

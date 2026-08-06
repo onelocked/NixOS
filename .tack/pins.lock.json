@@ -99,6 +99,14 @@
     "narHash": "sha256-7pu4iFZMGMdOYFaV+ezdF6XKmcdGOMGzeYkw69nXfe0=",
     "lastModified": 1785346857
   },
+  "hypr-plugs": {
+    "type": "github",
+    "owner": "hyprwm",
+    "repo": "hyprland-plugins",
+    "rev": "95768dbac04ceb8c4a45fc257f96dc551bd0d71b",
+    "narHash": "sha256-CEasxwTiWCJHR7+zYzsBFRz/td7BZJ3w8oXRRsY3/eI=",
+    "lastModified": 1785846949
+  },
   "hyprland": {
     "type": "github",
     "owner": "hyprwm",
@@ -257,9 +265,9 @@
     "type": "git",
     "url": "https://gitea.onelock.org/onelock/tuishell",
     "ref": "HEAD",
-    "rev": "e21b139a5ec8b347f05ef4a3e31d7a8db8e0f6db",
-    "narHash": "sha256-2XJTQ2aBUTTG92QsV3gzY/xt1GALtsExJQrXvsivbt8=",
-    "lastModified": 1785856373
+    "rev": "1962bb8ef3a4afe5deee1afb0596f2ea1e72fc27",
+    "narHash": "sha256-V2/8kKvMpGDd1FScJFc4RzTP3zH1R8t4F3Ssqze/lzw=",
+    "lastModified": 1786136734
   },
   "vimmax": {
     "type": "github",
