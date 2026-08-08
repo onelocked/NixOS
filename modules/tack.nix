@@ -50,12 +50,14 @@
                 follows,
                 ...
               }:
-              {
-                inherit url;
+              lib.filterAttrs (name: value: value != null && value != { } && value != [ ]) {
+                inherit
+                  url
+                  type
+                  follows
+                  exclude_follow
+                  ;
               }
-              // lib.optionalAttrs (type != null) { inherit type; }
-              // lib.optionalAttrs (follows != { }) { inherit follows; }
-              // lib.optionalAttrs (exclude_follow != [ ]) { inherit exclude_follow; }
             )
           )
           // (
