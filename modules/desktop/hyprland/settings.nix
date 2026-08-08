@@ -206,7 +206,7 @@
           hl.on("window.open_early", function(w)
             local ws = w.workspace
             if not ws then return end
-            if ws.name ~= "dev" then return end
+            if ws.name ~= "dev0" and ws.name ~= "dev1" then return end
             if ws.tiled_layout ~= "scrolling" then return end
 
             -- ws.windows here is the count BEFORE the new window is added
@@ -219,7 +219,7 @@
           hl.on("window.open", function(w)
               local ws = w.workspace
               if not ws then return end
-              if ws.name ~= "dev" then return end
+              if ws.name ~= "dev0" and ws.name ~= "dev1" then return end
               if ws.tiled_layout ~= "scrolling" then return end
 
               local count = ws.windows
@@ -243,7 +243,7 @@
           hl.on("window.destroy", function()
             local ws = hl.get_active_workspace()
             if not ws then return end
-            if ws.name ~= "dev" then return end
+            if ws.name ~= "dev0" and ws.name ~= "dev1" then return end
             if ws.tiled_layout ~= "scrolling" then return end
 
             local count = ws.windows
@@ -272,7 +272,7 @@
           --                               █
 
           -- named workspaces
-          for index, name in ipairs({ "web", "dev", "chat", "media"${
+          for index, name in ipairs({ "web", "dev0", "dev1", "chat", "media"${
             lib.optionalString (hostName == "gaming-pc") '', "games"''
           } }) do
             hl.workspace_rule({ workspace = tostring(index), default_name = name, persistent = true })

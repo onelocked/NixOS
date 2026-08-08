@@ -7,7 +7,8 @@
           -- scrolling dynamic column width based on workspace
           local workspace_widths = {
             ["web"] = {0.5, 0.709, 0.92 },
-            ["dev"] = { 0.3333, 0.5, 0.71 },
+            ["dev0"] = { 0.3333, 0.5, 0.71 },
+            ["dev1"] = { 0.3333, 0.5, 0.71 },
             ["chat"] = { 0.5, 0.71 },
           }
           local default_widths = { 0.3, 0.5, 0.71 }
@@ -234,7 +235,7 @@
             local ws = hl.get_active_workspace()
             if not ws or ws.tiled_layout ~= "scrolling" then return end
 
-            if ws.name == "dev" then
+            if ws.name ~= "dev0" and ws.name ~= "dev1" then
               hl.dispatch(hl.dsp.layout("fit all"))
             else
               hl.dispatch(hl.dsp.layout("fit active"))

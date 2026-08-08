@@ -59,11 +59,10 @@
                 "hypr/hyprland.lua".text =
                   let
                     priority = [ "settings" ];
-                    rank = name: lib.lists.findFirstIndex (x: x == name) (lib.length priority) priority;
+                    rank = name: lib.lists.findFirstIndex (x: x == name) (builtins.length priority) priority;
                   in
-                  autoLoadFiles
-                  |> lib.mapAttrsToList (name: _: name)
-                  |> lib.sort (
+                  builtins.attrNames autoLoadFiles
+                  |> builtins.sort (
                     a: b:
                     let
                       ra = rank a;
@@ -84,7 +83,7 @@
                       ''
                     ]
                   )
-                  |> lib.concatLines;
+                  |> builtins.concatStringsSep "\n";
               })
               (
                 cfg.lua
