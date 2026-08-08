@@ -33,6 +33,7 @@
                 workspace        = "name:web",
                 fullscreen_state = "0 1",
                 opacity          = "1 override",
+                scrolling_width  = "0.709",
               })
               hl.window_rule({
                 name             = "helium-pip",
@@ -41,7 +42,8 @@
                 pin        = true,
                 decorate = false,
                 size       = { 711, 400 },
-                move       = { 15, 1025 },
+                move       = { 0,1040 },
+                no_initial_focus = true,
                 opacity          = "1 override",
               })
             '';
