@@ -46,7 +46,7 @@
       managedKeysJson =
         dconfSettings
         |> lib.mapAttrsToList (dir: lib.mapAttrsToList (key: _: "/${dir}/${key}"))
-        |> lib.flatten
+        |> lib.concatLists
         |> builtins.toJSON
         |> pkgs.writeText "dconf-keys.json";
     in
