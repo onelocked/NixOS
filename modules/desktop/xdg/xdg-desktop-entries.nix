@@ -139,10 +139,15 @@
         default = { };
         type = desktopEntry |> types.submodule |> types.attrsOf;
       };
-      config = lib.fix (f: {
-        environment.systemPackages =
-          config.forte.xdg.desktopEntries |> lib.mapAttrsToList makeFile |> map lib.hiPrio;
-        hj.packages = f.environment.systemPackages;
-      });
+      config =
+        let
+          desktopPkgs =
+            builtins.attrNames config.forte.xdg.desktopEntries
+            |> map (name: makeFile name config.forte.xdg.desktopEntries.${name} |> lib.hiPrio);
+        in
+        {
+          environment.systemPackages = desktopPkgs;
+          hj.packages = desktopPkgs;
+        };
     };
 }
