@@ -9,18 +9,20 @@
 
       rootPath = ./.;
 
+      systemOutputKeys = [
+        "packages"
+        "legacyPackages"
+        "devShells"
+        "checks"
+        "apps"
+        "formatter"
+      ];
+
       projectInput =
         system: input:
-        [
-          "packages"
-          "legacyPackages"
-          "devShells"
-          "checks"
-          "apps"
-          "formatter"
-        ]
+        systemOutputKeys
         |> lib.filter (key: input ? ${key} && input.${key} ? ${system})
-        |> lib.flip lib.genAttrs (key: input.${key}.${system});
+        |> (keys: lib.genAttrs keys (key: input.${key}.${system}));
 
       withSystem =
         system: f:
@@ -30,7 +32,9 @@
           self' = projectInput system self;
           packages' =
             inputs'
-            |> lib.mapAttrs (name: key: key.packages // (key.packages.default or key.packages.${name} or { }));
+            |> lib.mapAttrs (
+              name: key: (key.packages or { }) // (key.packages.default or key.packages.${name} or { })
+            );
         in
         f {
           inherit
@@ -61,25 +65,27 @@
       # Evaluate perSystem blocks for each system
       systemOutputs =
         topEval.config.systems
-        |> lib.flip lib.genAttrs (
-          system:
-          withSystem system (
-            specialArgs:
-            (lib.evalModules {
-              inherit specialArgs;
-              modules = [
-                topEval.config.perSystem
-                { config._module.freeformType = lib.types.lazyAttrsOf lib.types.unspecified; }
-              ];
-            }).config
+        |> (
+          systems:
+          lib.genAttrs systems (
+            system:
+            withSystem system (
+              specialArgs:
+              (lib.evalModules {
+                inherit specialArgs;
+                modules = [
+                  topEval.config.perSystem
+                  { config._module.freeformType = lib.types.lazyAttrsOf lib.types.unspecified; }
+                ];
+              }).config
+            )
           )
         );
 
       # Transpose system-dependent configurations to the top level
-      transposed =
-        systemOutputs
-        |> lib.mapAttrsToList (system: lib.mapAttrs (_: v: { ${system} = v; }))
-        |> lib.foldAttrs (a: b: a // b) { };
+      transposed = lib.genAttrs systemOutputKeys (
+        key: lib.genAttrs (lib.attrNames systemOutputs) (system: systemOutputs.${system}.${key} or { })
+      );
     in
     topEval.config.flake // transposed;
 }
