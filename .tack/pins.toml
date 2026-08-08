@@ -6,10 +6,6 @@ rust-overlay = "rust-overlay"
 systems = "systems"
 treefmt-nix = "treefmt-nix"
 
-[inputs.aemeath-cursor]
-type = "fetch"
-url = "https://s3.onelock.org/download/cursors/aemeath-cursor.tar.gz"
-
 [inputs.app2unit]
 type = "fetch"
 url = "gh:Vladimir-csp/app2unit"
@@ -89,6 +85,14 @@ url = "gh:nix-community/preservation"
 
 [inputs.quickshell]
 url = "gh:quickshell-mirror/quickshell"
+
+[inputs.saturnian-light]
+type = "fixed"
+url = "https://s3.onelock.org/download/cursors/saturnian-light.tar.gz"
+
+[inputs.saturnian-night]
+type = "fixed"
+url = "https://s3.onelock.org/download/cursors/saturnian-night.tar.gz"
 
 [inputs.sf-compact]
 type = "fixed"

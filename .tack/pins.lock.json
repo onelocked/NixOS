@@ -1,10 +1,4 @@
 {
-  "aemeath-cursor": {
-    "type": "tarball",
-    "url": "https://s3.onelock.org/download/cursors/aemeath-cursor.tar.gz",
-    "narHash": "sha256-ubr7Zz8m5TFLtrNL8+u1nQjVh5WYG859oOmmXxlWIxI=",
-    "lastModified": 1779315543
-  },
   "app2unit": {
     "type": "github",
     "owner": "Vladimir-csp",
@@ -210,6 +204,18 @@
     "rev": "20ee15370c9256669d66968b89ee20a4b0a4e673",
     "narHash": "sha256-l7C/OsjcnWDOk2K3ssj+SBduwL67LashjBqis9+t468=",
     "lastModified": 1783320166
+  },
+  "saturnian-light": {
+    "type": "fixed",
+    "url": "https://s3.onelock.org/download/cursors/saturnian-light.tar.gz",
+    "sha256": "sha256-yj1X6+sKN5L58c7Q0mRf+LWSXqa1zTfVkIgjcH+72gE=",
+    "unpack": "tarball"
+  },
+  "saturnian-night": {
+    "type": "fixed",
+    "url": "https://s3.onelock.org/download/cursors/saturnian-night.tar.gz",
+    "sha256": "sha256-ChCTtk0F9L6La5UamI34yXP/k3MjcdlZTk05AhlRne0=",
+    "unpack": "tarball"
   },
   "sf-compact": {
     "type": "fixed",

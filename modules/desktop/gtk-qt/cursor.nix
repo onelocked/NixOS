@@ -2,10 +2,9 @@
   exo.mods.desktop =
     {
       lib,
-      pkgs,
       config,
       self',
-      hostName,
+      theme,
       ...
     }:
     let
@@ -13,24 +12,25 @@
     in
     {
       config = {
-        forte.cursor = lib.mkIf (hostName != "gaming-pc") {
-          name = "aemeath-cursor";
-          size = 24;
-          package = self'.legacyPackages.aemeath-cursor;
+        forte.cursor = lib.mkIf (theme == "dark") {
+          name = "saturnian-night";
+          size = 32;
+          package = self'.legacyPackages.cursors.saturnian-night;
         };
         hj.packages = [ cfg.package ];
         hj.environment.sessionVariables = {
           XCURSOR_SIZE = cfg.size;
           XCURSOR_THEME = cfg.name;
+          HYPRCURSOR_THEME = cfg.name;
+          HYPRCURSOR_SIZE = cfg.size;
         };
-        forte.allowUnfree = [ "apple_cursor" ];
       };
 
       options.forte.cursor = {
         name = lib.mkOption {
           description = "Cursor theme";
           type = lib.types.str;
-          default = "macOS-White";
+          default = "Saturnian-Day";
         };
 
         size = lib.mkOption {
@@ -43,28 +43,47 @@
         package = lib.mkOption {
           description = "Cursor theme package";
           type = lib.types.nullOr lib.types.package;
-          default = pkgs.apple-cursor;
+          default = self'.legacyPackages.cursors.saturnian-light;
         };
       };
     };
-  tack.inputs.fetch.aemeath-cursor = "https://s3.onelock.org/download/cursors/aemeath-cursor.tar.gz";
+  tack.inputs.fixed = {
+    saturnian-night = "https://s3.onelock.org/download/cursors/saturnian-night.tar.gz";
+    saturnian-light = "https://s3.onelock.org/download/cursors/saturnian-light.tar.gz";
+  };
   perSystem =
     { pkgs, inputs, ... }:
     {
       legacyPackages = {
-        aemeath-cursor = pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
-          name = "aemeath-cursor";
-          version = "1.0";
-          src = inputs.aemeath-cursor;
+        cursors = {
+          saturnian-night = pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
+            name = "Saturnian-Night";
+            version = "1.0";
+            src = inputs.saturnian-night;
 
-          dontConfigure = true;
-          dontBuild = true;
+            dontConfigure = true;
+            dontBuild = true;
 
-          installPhase = ''
-            mkdir -p $out/share/icons/${finalAttrs.name}
-            cp -r . $out/share/icons/${finalAttrs.name}
-          '';
-        });
+            installPhase = ''
+              mkdir -p $out/share/icons/${finalAttrs.name}
+              cp -r . $out/share/icons/${finalAttrs.name}
+            '';
+          });
+
+          saturnian-light = pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
+            name = "Saturnian-Day";
+            version = "1.0";
+            src = inputs.saturnian-light;
+
+            dontConfigure = true;
+            dontBuild = true;
+
+            installPhase = ''
+              mkdir -p $out/share/icons/${finalAttrs.name}
+              cp -r . $out/share/icons/${finalAttrs.name}
+            '';
+          });
+        };
       };
     };
 }
