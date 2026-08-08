@@ -30,19 +30,21 @@ let
               (
                 let
                   mkList =
-                    prefix:
-                    lib.mapAttrsToList (
-                      name: value:
+                    prefix: attrs:
+                    lib.attrNames attrs
+                    |> map (
+                      name:
                       let
+                        value = attrs.${name};
                         target = if prefix == "" then name else "${prefix}/${name}";
                       in
-                      if lib.isAttrs value && !lib.isDerivation value then
+                      if lib.isAttrs value && !(lib.isDerivation value) then
                         mkList target value
                       else
                         {
                           name = target;
                           path =
-                            if (value |> lib.isString) && !(lib.hasPrefix builtins.storeDir value) then
+                            if (lib.isString value) && !(lib.hasPrefix builtins.storeDir value) then
                               (value |> pkgs.writeText "${lib.baseNameOf name}-text")
                             else
                               value;
@@ -69,9 +71,13 @@ let
                       ])
                     )
                     ++ (
-                      env
-                      |> lib.mapAttrsToList (
-                        n: v: [
+                      lib.attrNames env
+                      |> map (
+                        n:
+                        let
+                          v = env.${n};
+                        in
+                        [
                           "--set"
                           n
                           (v |> toString)
