@@ -8,7 +8,7 @@
     { lib, ... }:
     {
       forte.zen-browser = {
-        enable = true;
+        enable = false;
         setAsDefaultBrowser = true;
         policies =
           let

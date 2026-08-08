@@ -99,6 +99,14 @@
     "narHash": "sha256-vW6o5vbYXr++cFAcyvl7E2tYHQMV5lGK2rEOG5iiRPg=",
     "lastModified": 1779745726
   },
+  "helium-browser": {
+    "type": "github",
+    "owner": "amaanq",
+    "repo": "helium-flake",
+    "rev": "083101ca32282976d19d499742d592b9dd5b6ec0",
+    "narHash": "sha256-YI35RV9O96mw9aBXTC69uVriw+8V1OX50ormx6TP8oo=",
+    "lastModified": 1786085490
+  },
   "hjem": {
     "type": "github",
     "owner": "feel-co",

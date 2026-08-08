@@ -48,6 +48,9 @@ url = "gh:Mjoyufull/fsel"
 type = "fetch"
 url = "gh:onelocked/fuzzy-search.yazi"
 
+[inputs.helium-browser]
+url = "gh:amaanq/helium-flake"
+
 [inputs.hjem]
 url = "gh:feel-co/hjem"
 
