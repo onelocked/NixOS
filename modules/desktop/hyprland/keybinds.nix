@@ -232,14 +232,13 @@
           scrolling_binds("SUPER + bracketright", hl.dsp.layout("consume_or_expel next"))
           scrolling_binds("SUPER + bracketleft", hl.dsp.layout("consume_or_expel prev"))
           hl.bind("SUPER + F", function()
-            local ws = hl.get_active_workspace()
-            if not ws or ws.tiled_layout ~= "scrolling" then return end
+              local ws = hl.get_active_workspace()
 
-            if ws.name ~= "dev0" and ws.name ~= "dev1" then
-              hl.dispatch(hl.dsp.layout("fit all"))
-            else
-              hl.dispatch(hl.dsp.layout("fit active"))
-            end
+              if ws and (ws.name == "dev0" or ws.name == "dev1") and ws.windows < 4 then
+                  hl.dispatch(hl.dsp.layout("fit all"))
+              else
+                  hl.dispatch(hl.dsp.layout("fit active"))
+              end
           end)
 
           scrolling_binds("SUPER" .. " + R", function()
