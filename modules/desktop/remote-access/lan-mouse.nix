@@ -80,8 +80,54 @@
       };
     };
   perSystem =
-    { packages', ... }:
+    { packages', pkgs, ... }:
     {
-      packages.lan-mouse = packages'.lan-mouse.overrideAttrs { doCheck = false; };
+      packages.lan-mouse = packages'.lan-mouse.overrideAttrs (oldAttrs: {
+        doCheck = false;
+        patches = (oldAttrs.patches or [ ]) ++ [
+          (pkgs.writeText "disable-side-buttons" # rust
+            ''
+              diff --git a/src/capture.rs b/src/capture.rs
+              index 8f739bd..f37803c 100644
+              --- a/src/capture.rs
+              +++ b/src/capture.rs
+              @@ -322,6 +322,14 @@ impl CaptureTask {
+                       let (handle, event) = event;
+                       log::trace!("({handle}): {event:?}");
+
+              +        if let CaptureEvent::Input(Event::Pointer(input_event::PointerEvent::Button {
+              +            button: input_event::BTN_BACK | input_event::BTN_FORWARD,
+              +            ..
+              +        })) = event
+              +        {
+              +            return Ok(());
+              +        }
+              +
+                       if capture.keys_pressed(&self.release_bind.borrow()) {
+                           log::info!("releasing capture: release-bind pressed");
+                           return self.release_capture(capture).await;
+              diff --git a/src/emulation.rs b/src/emulation.rs
+              index 923bf99..63eb224 100644
+              --- a/src/emulation.rs
+              +++ b/src/emulation.rs
+              @@ -278,6 +278,14 @@ impl EmulationProxy {
+                   }
+
+                   fn consume(&self, event: Event, addr: SocketAddr) {
+              +        if let Event::Pointer(input_event::PointerEvent::Button {
+              +            button: input_event::BTN_BACK | input_event::BTN_FORWARD,
+              +            ..
+              +        }) = event
+              +        {
+              +            return;
+              +        }
+              +
+                       // ignore events if emulation is currently disabled
+                       if self.emulation_active.get() {
+                           self.request_tx
+            ''
+          )
+        ];
+      });
     };
 }

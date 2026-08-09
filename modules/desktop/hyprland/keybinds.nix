@@ -192,8 +192,8 @@
           hl.bind("SUPER + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
           -- disable side mouse buttons
-          hl.bind("mouse:276", hl.dsp.no_op())
-          hl.bind("mouse:275", hl.dsp.no_op())
+          hl.bind("mouse:276", hl.dsp.no_op(), { release = true })
+          hl.bind("mouse:275", hl.dsp.no_op(), { release = true })
 
           hl.bind("SUPER + ALT + D", hl.dsp.exec_cmd("ddcutil setvcp 60 ${
             if hostName == "mini-pc" then "0x0f" else "0x11"
