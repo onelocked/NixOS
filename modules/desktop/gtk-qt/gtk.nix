@@ -113,7 +113,7 @@
           name = lib.mkOption {
             description = "GTK Theme";
             type = lib.types.str;
-            default = "ClassicPlatinumStreamlined";
+            default = "adw-gtk3-dark";
           };
 
           css = lib.mkOption {
@@ -125,7 +125,7 @@
           package = lib.mkOption {
             description = "GTK Theme package";
             type = lib.types.nullOr lib.types.package;
-            default = self'.legacyPackages.ClassicPlatinumStreamlined;
+            default = pkgs.adw-gtk3;
           };
         };
 
@@ -133,13 +133,13 @@
           name = lib.mkOption {
             description = "GTK Icon theme";
             type = lib.types.str;
-            default = "RetroismIcons";
+            default = "Papirus-Light";
           };
 
           package = lib.mkOption {
             description = "GTK Icon theme package";
             type = lib.types.nullOr lib.types.package;
-            default = self'.legacyPackages.RetroismIcons;
+            default = pkgs.papirus-icon-theme;
           };
         };
 
@@ -172,41 +172,6 @@
             default = self'.legacyPackages.apple-font;
           };
         };
-      };
-    };
-
-  perSystem =
-    { pkgs, ... }:
-    {
-      legacyPackages = {
-        ClassicPlatinumStreamlined = pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
-          name = "ClassicPlatinumStreamlined";
-          src = fetchTarball {
-            url = "https://s3.onelock.org/download/ClassicPlatinumStreamlined.tar.gz";
-            sha256 = "0ygs7zwndc1cadjvs6lvl3pvcl5agk9an61sc4g5s6iz9nnin0dr";
-          };
-          dontBuild = true;
-          dontConfigure = true;
-          installPhase = ''
-            mkdir -p $out/share/themes/
-            cp -r . $out/share/themes/${finalAttrs.name}/
-          '';
-        });
-
-        RetroismIcons = pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
-          name = "RetroismIcons";
-          src = fetchTarball {
-            url = "https://s3.onelock.org/download/RetroismIcons.tar.gz";
-            sha256 = "1sn5fyw0pfjbi1nm5c1f3dwvzp8359i0ij3k0fqj32n5yf09zbxg";
-          };
-          dontBuild = true;
-          dontConfigure = true;
-          dontFixup = true;
-          installPhase = ''
-            mkdir -p $out/share/icons/${finalAttrs.name}
-            cp -r . $out/share/icons/${finalAttrs.name}
-          '';
-        });
       };
     };
 }

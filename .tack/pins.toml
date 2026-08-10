@@ -50,6 +50,14 @@ url = "gh:amaanq/helium-flake"
 [inputs.hjem]
 url = "gh:feel-co/hjem"
 
+[inputs.hypr-bibata-classic]
+type = "fetch"
+url = "https://github.com/LOSEARDES77/Bibata-Cursor-hyprcursor/releases/download/1.0/hypr_Bibata-Modern-Classic.tar.gz"
+
+[inputs.hypr-bibata-ice]
+type = "fetch"
+url = "https://github.com/LOSEARDES77/Bibata-Cursor-hyprcursor/releases/download/1.0/hypr_Bibata-Modern-Ice.tar.gz"
+
 [inputs.hypr-plugs]
 url = "gh:hyprwm/hyprland-plugins"
 

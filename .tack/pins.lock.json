@@ -109,6 +109,18 @@
     "narHash": "sha256-7pu4iFZMGMdOYFaV+ezdF6XKmcdGOMGzeYkw69nXfe0=",
     "lastModified": 1785346857
   },
+  "hypr-bibata-classic": {
+    "type": "tarball",
+    "url": "https://release-assets.githubusercontent.com/github-production-release-asset/785245900/be86a683-8526-4847-ab4c-b1002053797c?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-08-11T11%3A51%3A58Z&rscd=attachment%3B+filename%3Dhypr_Bibata-Modern-Classic.tar.gz&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-08-11T10%3A51%3A24Z&ske=2026-08-11T11%3A51%3A58Z&sks=b&skv=2018-11-09&sig=8eiZRaXuzx9xeTbcel0D2ERM%2BamKg6EpxHN1Ayz6Q2E%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc4NjQ0NjM4NSwibmJmIjoxNzg2NDQ2MDg1LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.iaCkyenS5oxb-nDWrpafTZN9wVhfhTDaXfvY_p6EX8I&response-content-disposition=attachment%3B%20filename%3Dhypr_Bibata-Modern-Classic.tar.gz&response-content-type=application%2Foctet-stream",
+    "narHash": "sha256-Uv+96EieGBq6cJNWjoJEHPy/MshbHts+OBow7rWgBSM=",
+    "lastModified": 1713043230
+  },
+  "hypr-bibata-ice": {
+    "type": "tarball",
+    "url": "https://release-assets.githubusercontent.com/github-production-release-asset/785245900/37a963e6-8cfc-45a6-8b1b-78981836bbb7?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-08-11T11%3A52%3A05Z&rscd=attachment%3B+filename%3Dhypr_Bibata-Modern-Ice.tar.gz&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-08-11T10%3A51%3A49Z&ske=2026-08-11T11%3A52%3A05Z&sks=b&skv=2018-11-09&sig=FlOblqOc4FfZwVoS6%2Fc8N0C2m7RY%2BT6hMG4P6vJE%2B9c%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc4NjQ0NjM3OCwibmJmIjoxNzg2NDQ2MDc4LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.MNSA4PCCuctBzFKMKhz3TKyCvAWta6IJtO-YjNbGODE&response-content-disposition=attachment%3B%20filename%3Dhypr_Bibata-Modern-Ice.tar.gz&response-content-type=application%2Foctet-stream",
+    "narHash": "sha256-Ji5gqIBrAtFO3S9fCrY/LXPaq5gCY4CkxZJ1uAcjj70=",
+    "lastModified": 1713043224
+  },
   "hypr-plugs": {
     "type": "github",
     "owner": "hyprwm",
