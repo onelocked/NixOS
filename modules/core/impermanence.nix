@@ -15,9 +15,6 @@
       imports = [ inputs.preservation.nixosModules.default ];
       # setup persistence
       config = {
-        boot.tmp.useTmpfs = true;
-        boot.tmp.tmpfsSize = "75%";
-
         fileSystems."/nix".neededForBoot = true;
         fileSystems."/persist".neededForBoot = true;
 

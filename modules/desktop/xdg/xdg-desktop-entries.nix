@@ -1,5 +1,5 @@
 {
-  exo.mods.desktop =
+  exo.skeleton =
     {
       lib,
       config,

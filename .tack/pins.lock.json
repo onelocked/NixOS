@@ -109,18 +109,6 @@
     "narHash": "sha256-7pu4iFZMGMdOYFaV+ezdF6XKmcdGOMGzeYkw69nXfe0=",
     "lastModified": 1785346857
   },
-  "hypr-bibata-classic": {
-    "type": "tarball",
-    "url": "https://release-assets.githubusercontent.com/github-production-release-asset/785245900/be86a683-8526-4847-ab4c-b1002053797c?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-08-11T11%3A51%3A58Z&rscd=attachment%3B+filename%3Dhypr_Bibata-Modern-Classic.tar.gz&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-08-11T10%3A51%3A24Z&ske=2026-08-11T11%3A51%3A58Z&sks=b&skv=2018-11-09&sig=8eiZRaXuzx9xeTbcel0D2ERM%2BamKg6EpxHN1Ayz6Q2E%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc4NjQ0NjM4NSwibmJmIjoxNzg2NDQ2MDg1LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.iaCkyenS5oxb-nDWrpafTZN9wVhfhTDaXfvY_p6EX8I&response-content-disposition=attachment%3B%20filename%3Dhypr_Bibata-Modern-Classic.tar.gz&response-content-type=application%2Foctet-stream",
-    "narHash": "sha256-Uv+96EieGBq6cJNWjoJEHPy/MshbHts+OBow7rWgBSM=",
-    "lastModified": 1713043230
-  },
-  "hypr-bibata-ice": {
-    "type": "tarball",
-    "url": "https://release-assets.githubusercontent.com/github-production-release-asset/785245900/37a963e6-8cfc-45a6-8b1b-78981836bbb7?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-08-11T11%3A52%3A05Z&rscd=attachment%3B+filename%3Dhypr_Bibata-Modern-Ice.tar.gz&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-08-11T10%3A51%3A49Z&ske=2026-08-11T11%3A52%3A05Z&sks=b&skv=2018-11-09&sig=FlOblqOc4FfZwVoS6%2Fc8N0C2m7RY%2BT6hMG4P6vJE%2B9c%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc4NjQ0NjM3OCwibmJmIjoxNzg2NDQ2MDc4LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.MNSA4PCCuctBzFKMKhz3TKyCvAWta6IJtO-YjNbGODE&response-content-disposition=attachment%3B%20filename%3Dhypr_Bibata-Modern-Ice.tar.gz&response-content-type=application%2Foctet-stream",
-    "narHash": "sha256-Ji5gqIBrAtFO3S9fCrY/LXPaq5gCY4CkxZJ1uAcjj70=",
-    "lastModified": 1713043224
-  },
   "hypr-plugs": {
     "type": "github",
     "owner": "hyprwm",
@@ -153,14 +141,6 @@
     "narHash": "sha256-m0mLVZc4RmzlBMjPOFh+rnALT92jMXJqQtLBMP9jo90=",
     "lastModified": 1785437982
   },
-  "nix-index-database": {
-    "type": "github",
-    "owner": "nix-community",
-    "repo": "nix-index-database",
-    "rev": "11665045df8b9938ef811a3bfdc65cffb02b4b70",
-    "narHash": "sha256-UiK+mmZJuLWQVhJ5b2wDzogIYWAesyRm6LA3h3Ulh3Y=",
-    "lastModified": 1785046085
-  },
   "nixos-core": {
     "type": "github",
     "owner": "manic-systems",
@@ -168,6 +148,14 @@
     "rev": "bdf64399c48297978da2932287dfbcd192483d00",
     "narHash": "sha256-ZL0ZrwESUMua5NiNWO6rBKVsfFxrzIsXAYIeQV+K5tA=",
     "lastModified": 1782974239
+  },
+  "nixos-hardware": {
+    "type": "github",
+    "owner": "NixOS",
+    "repo": "nixos-hardware",
+    "rev": "2e790b0a6be8ec2b76174ac0931b8ff11919ec98",
+    "narHash": "sha256-65EQYIRRpTdpH8lUiB6Mvo5uBkG60aBIzAJuALfx+O0=",
+    "lastModified": 1785232496
   },
   "nixpkgs": {
     "type": "github",
@@ -217,18 +205,6 @@
     "narHash": "sha256-l7C/OsjcnWDOk2K3ssj+SBduwL67LashjBqis9+t468=",
     "lastModified": 1783320166
   },
-  "saturnian-light": {
-    "type": "fixed",
-    "url": "https://s3.onelock.org/download/cursors/saturnian-light.tar.gz",
-    "sha256": "sha256-yj1X6+sKN5L58c7Q0mRf+LWSXqa1zTfVkIgjcH+72gE=",
-    "unpack": "tarball"
-  },
-  "saturnian-night": {
-    "type": "fixed",
-    "url": "https://s3.onelock.org/download/cursors/saturnian-night.tar.gz",
-    "sha256": "sha256-ChCTtk0F9L6La5UamI34yXP/k3MjcdlZTk05AhlRne0=",
-    "unpack": "tarball"
-  },
   "sf-compact": {
     "type": "fixed",
     "url": "https://devimages-cdn.apple.com/design/resources/download/SF-Compact.dmg",
@@ -266,10 +242,10 @@
   "systems": {
     "type": "github",
     "owner": "nix-systems",
-    "repo": "x86_64-linux",
-    "rev": "2ecfcac5e15790ba6ce360ceccddb15ad16d08a8",
-    "narHash": "sha256-Gtqg8b/v49BFDpDetjclCYXm8mAnTrUzR0JnE2nv5aw=",
-    "lastModified": 1680978846
+    "repo": "default-linux",
+    "rev": "31732fcf5e8fea42e59c2488ad31a0e651500f68",
+    "narHash": "sha256-12tWmuL2zgBgZkdoB6qXZsgJEH9LR3oUgpaQq2RbI80=",
+    "lastModified": 1689347949
   },
   "tack": {
     "type": "github",
@@ -299,17 +275,17 @@
     "type": "git",
     "url": "https://gitea.onelock.org/onelock/tuishell",
     "ref": "HEAD",
-    "rev": "5f98c76ba6bf03ca8814899ce34ec9b8e2907b3f",
-    "narHash": "sha256-eaxj1ggFUP9T7xgJM3YElyND6TpY8IB7vTTAq91fuVU=",
-    "lastModified": 1786284243
+    "rev": "83e5828da4f2d03341e34a0ae3000a0034e986fe",
+    "narHash": "sha256-CpkDQ+0CgO/g2qUFC1dpJjDH7N81LJErLuNuUVjRytQ=",
+    "lastModified": 1786902148
   },
   "vimmax": {
     "type": "github",
     "owner": "onelocked",
     "repo": "vimmax",
-    "rev": "0327f28434ef2e71ffc6dfac8e1b6cd8196f7c90",
-    "narHash": "sha256-4253VDZjoDNbssiaYzhcLJN87+pxy1KJKNYwZHB5QxI=",
-    "lastModified": 1785762775
+    "rev": "b0562bb0c8a37124439220a6455f82a6a4a4b7d2",
+    "narHash": "sha256-dhmAly/pemRRLBkmaeo3xcPUuRhKvilPSFrbut4Wwqg=",
+    "lastModified": 1786888760
   },
   "yazi": {
     "type": "github",

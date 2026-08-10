@@ -2,7 +2,7 @@
   tack.inputs = {
     nixpkgs = "gh:nixos/nixpkgs/nixos-unstable";
     disko = "gh:nix-community/disko";
-    systems = "gh:nix-systems/x86_64-linux";
+    systems = "gh:nix-systems/default-linux";
   };
   exo.core =
     {
@@ -13,7 +13,6 @@
       ...
     }:
     {
-      forte.xdg.desktopEntries."nixos-manual".noDisplay = true;
       system.stateVersion = "25.11";
       environment.systemPackages = [ pkgs.nix-output-monitor ];
       nix = {
@@ -32,8 +31,6 @@
             "cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM="
             "onelock.cachix.org-1:Wyy9XrWqFKcPxkZXQg5yZXtsbKTbkaga44UWRJfgqEg="
           ];
-          extra-substituters = [ "https://bazinga.cachix.org" ];
-          extra-trusted-public-keys = [ "bazinga.cachix.org-1:WI9TV6l0gBVhcfY7OQM5zWqYmESIarKME0fjVN6yDYU=" ];
           experimental-features = [
             "nix-command"
             "flakes"
@@ -50,7 +47,6 @@
       sops.secrets.nix_extra_config.owner = constants.username;
       programs.nano.enable = lib.mkForce false;
       nixpkgs = {
-        hostPlatform = lib.mkDefault "x86_64-linux";
         config = {
           allowUnfree = false;
           allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.forte.allowUnfree;
@@ -59,13 +55,15 @@
 
       programs.fish.shellAbbrs = {
         nb = "nom build";
-        nd = "nom develop";
+        nd = "nix develop";
         nr = "nix run";
-        nf = "nix run .#flake-update";
-        wf = "nix run .#write-flake . --offline";
-        ws = "nix run .#write-sources . --offline";
+        tr = "nix run .#tack-rebuild";
       };
     };
+
+  exo.mods.desktop = {
+    forte.xdg.desktopEntries."nixos-manual".noDisplay = true;
+  };
   exo.skeleton =
     { lib, ... }:
     {

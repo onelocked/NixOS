@@ -1,5 +1,5 @@
 {
-  exo.core =
+  exo.mods.desktop =
     {
       lib,
       self',

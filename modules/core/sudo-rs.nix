@@ -10,8 +10,6 @@
           Defaults pwfeedback
         '';
       };
-      polkit.enable = true;
-      polkit.enablePkexecWrapper = true;
     };
   };
 }

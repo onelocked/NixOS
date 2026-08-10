@@ -27,7 +27,6 @@
     in
     {
       config = lib.mkIf cfg.enable {
-        forte.xdg.desktopEntries."yazi".noDisplay = true;
         hj.packages = [ cfg.package ];
 
         programs.fish.functions.y = # fish
@@ -199,6 +198,17 @@
             };
           };
         };
+      };
+    };
+
+  exo.mods.desktop =
+    { lib, config, ... }:
+    let
+      cfg = config.forte.yazi;
+    in
+    {
+      config = lib.mkIf cfg.enable {
+        forte.xdg.desktopEntries."yazi".noDisplay = true;
       };
     };
   perSystem =

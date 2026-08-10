@@ -3,21 +3,17 @@
     {
       pkgs,
       config,
-      lib,
-      self',
       scheme,
       ...
     }:
     let
-      lla = self'.packages.lla;
       tomlFormat = pkgs.formats.toml { };
-      _ = lib.getExe;
     in
     {
       environment.shellAliases = {
-        ls = "${_ lla} --sort-dirs-first --no-dotfiles";
-        la = "${_ lla} --sort-dirs-first";
-        ll = "${_ lla} -S";
+        ls = "${pkgs.lla}/bin/lla --sort-dirs-first --no-dotfiles";
+        la = "${pkgs.lla}/bin/lla --sort-dirs-first";
+        ll = "${pkgs.lla}/bin/lla -S";
       };
       forte.persist.home.directories = [ ".config/lla/plugins" ];
       hj.xdg.config.files = {
@@ -385,17 +381,6 @@
             };
           };
         };
-      };
-    };
-  perSystem =
-    { pkgs, ... }:
-    {
-      packages.lla = pkgs.lla.overrideAttrs {
-        doCheck = false;
-        postPatch = ''
-          substituteInPlace lla/src/formatter/column_config.rs \
-            --replace-fail '"Permissions".to_string()' '"Perms".to_string()'
-        '';
       };
     };
 }

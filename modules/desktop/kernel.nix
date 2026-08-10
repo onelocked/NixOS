@@ -3,7 +3,7 @@
     url = "gh:xddxdd/nix-cachyos-kernel/release";
     exclude_follow = [ "nixpkgs" ];
   };
-  exo.core =
+  exo.mods.desktop =
     { inputs', ... }:
     {
       nix.settings = {

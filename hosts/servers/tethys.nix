@@ -1,7 +1,29 @@
-{ inputs, ... }:
+{ inputs, lib, ... }:
 {
-  exo.hardware.gaming-pc = {
-    imports = [ inputs.disko.nixosModules.disko ];
+  tack.inputs.nixos-hardware = "gh:NixOS/nixos-hardware";
+  exo.configurations = {
+    tethys = {
+      system = "aarch64-linux";
+      user = "onelock";
+      hardware = "pi5";
+      server = true;
+      theme = "light";
+      extraConfig = {
+        imports = [ inputs.nixos-hardware.nixosModules.raspberry-pi-5 ];
+        boot.supportedFilesystems.zfs = false;
+        boot.loader.generic-extlinux-compatible.enable = lib.mkForce true;
+        hardware.raspberry-pi.firmware = {
+          enable = true;
+          uboot.enable = true;
+        };
+      };
+    };
+  };
+  exo.disko.pi5 = {
+    boot.kernel.sysctl = {
+      "vm.swappiness" = 1;
+    };
+
     disko.devices.nodev = {
       "/" = {
         fsType = "tmpfs";
@@ -13,7 +35,7 @@
     };
 
     disko.devices.disk.nixos = {
-      device = "/dev/nvme0n1";
+      device = "/dev/sda";
       type = "disk";
       content.type = "gpt";
 
@@ -58,41 +80,8 @@
               mountpoint = "/.swapvol";
               mountOptions = [ "noatime" ];
               swap = {
-                swapfile.size = "8G";
+                swapfile.size = "4G";
               };
-            };
-          };
-        };
-      };
-    };
-    disko.devices.disk.storage = {
-      device = "/dev/nvme1n1";
-      type = "disk";
-      content.type = "gpt";
-
-      content.partitions.storage = {
-        name = "storage";
-        size = "100%";
-
-        content = {
-          type = "btrfs";
-          extraArgs = [ "-f" ];
-
-          subvolumes = {
-            "@steam" = {
-              mountpoint = "/steam";
-              mountOptions = [
-                "noatime"
-                "nodatacow"
-              ];
-            };
-
-            "@games" = {
-              mountpoint = "/games";
-              mountOptions = [
-                "noatime"
-                "nodatacow"
-              ];
             };
           };
         };

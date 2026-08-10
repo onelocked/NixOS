@@ -1,16 +1,51 @@
 {
   tack.inputs.fetch.app2unit = "gh:Vladimir-csp/app2unit";
   exo.mods.desktop =
-    { pkgs, inputs, ... }:
+    {
+      pkgs,
+      lib,
+      inputs,
+      ...
+    }:
     {
       config = {
         services.ddccontrol.enable = true;
+        services.gnome.gnome-keyring.enable = true;
+
+        services = {
+          scx = {
+            enable = true;
+            package = pkgs.scx.rustscheds;
+            scheduler = "scx_cake"; # https://wiki.cachyos.org/configuration/sched-ext/#scx_cake
+          };
+        };
+
+        services.journald = {
+          storage = lib.mkForce "volatile";
+          extraConfig = lib.mkForce "";
+        };
+
+        security = {
+          polkit.enable = true;
+          polkit.enablePkexecWrapper = true;
+        };
+
+        programs.seahorse.enable = false;
+
+        forte.persist = {
+          home.directories = [
+            ".local/share/keyrings"
+          ];
+        };
         hj.packages = with pkgs; [
           silicon
           wl-clipboard
           ddcutil
           app2unit
         ];
+
+        services.gvfs.enable = false;
+
         nixpkgs.overlays = [
           (_: prev: {
             app2unit = prev.app2unit.overrideAttrs (oldAttrs: {

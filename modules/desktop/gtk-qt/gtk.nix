@@ -113,7 +113,7 @@
           name = lib.mkOption {
             description = "GTK Theme";
             type = lib.types.str;
-            default = "adw-gtk3-dark";
+            default = "adw-gtk3-light";
           };
 
           css = lib.mkOption {

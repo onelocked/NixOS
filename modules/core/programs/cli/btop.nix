@@ -5,7 +5,6 @@
       systemd.tmpfiles.rules = [
         "z /sys/class/powercap/intel-rapl/intel-rapl:0/energy_uj 0444 root root - -"
       ];
-      forte.xdg.desktopEntries."btop".noDisplay = true;
       forte.btop = {
         enable = true;
         settings = {
@@ -92,7 +91,7 @@
       lib,
       wrapPackage,
       config,
-      self',
+      pkgs,
       ...
     }:
     let
@@ -100,6 +99,7 @@
     in
     {
       config = lib.mkIf (cfg.enable) { hj.packages = [ cfg.package ]; };
+
       options.forte.btop = {
         enable = lib.mkEnableOption "btop";
 
@@ -111,6 +111,12 @@
         themes = lib.mkOption {
           type = lib.types.attrs;
           default = { };
+        };
+
+        unwrappedPackage = lib.mkOption {
+          type = lib.types.package;
+          default = pkgs.btop;
+          description = "The unwrapped btop package to use as the base.";
         };
 
         package = lib.mkOption {
@@ -130,7 +136,7 @@
               };
             in
             wrapPackage {
-              package = self'.packages.btop;
+              package = cfg.unwrappedPackage;
               files.configuration = {
                 "btop.conf" = cfg.settings |> toBtopConf;
               }
@@ -141,6 +147,19 @@
               ];
             };
         };
+      };
+    };
+  exo.mods.desktop =
+    {
+      lib,
+      config,
+      self',
+      ...
+    }:
+    {
+      config = lib.mkIf config.forte.btop.enable {
+        forte.xdg.desktopEntries."btop".noDisplay = true;
+        forte.btop.unwrappedPackage = self'.packages.btop;
       };
     };
 }

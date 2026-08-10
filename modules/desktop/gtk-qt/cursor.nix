@@ -47,18 +47,8 @@
         };
       };
     };
-  tack.inputs = {
-    fixed = {
-      saturnian-night = "https://s3.onelock.org/download/cursors/saturnian-night.tar.gz";
-      saturnian-light = "https://s3.onelock.org/download/cursors/saturnian-light.tar.gz";
-    };
-    fetch = {
-      hypr-bibata-ice = "https://github.com/LOSEARDES77/Bibata-Cursor-hyprcursor/releases/download/1.0/hypr_Bibata-Modern-Ice.tar.gz";
-      hypr-bibata-classic = "https://github.com/LOSEARDES77/Bibata-Cursor-hyprcursor/releases/download/1.0/hypr_Bibata-Modern-Classic.tar.gz";
-    };
-  };
   perSystem =
-    { pkgs, inputs, ... }:
+    { pkgs, ... }:
     {
       legacyPackages = {
         cursors = {
@@ -66,7 +56,11 @@
           hypr-bibata-ice = pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
             name = "Bibata-Modern-Ice";
             version = "1.0";
-            src = inputs.hypr-bibata-ice;
+            src = pkgs.fetchzip {
+              url = "https://github.com/LOSEARDES77/Bibata-Cursor-hyprcursor/releases/download/1.0/hypr_Bibata-Modern-Ice.tar.gz";
+              hash = "sha256-Ji5gqIBrAtFO3S9fCrY/LXPaq5gCY4CkxZJ1uAcjj70=";
+              stripRoot = false;
+            };
 
             dontConfigure = true;
             dontBuild = true;
@@ -80,7 +74,11 @@
           hypr-bibata-classic = pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
             name = "Bibata-Modern-Classic";
             version = "1.0";
-            src = inputs.hypr-bibata-classic;
+            src = pkgs.fetchzip {
+              url = "https://github.com/LOSEARDES77/Bibata-Cursor-hyprcursor/releases/download/1.0/hypr_Bibata-Modern-Classic.tar.gz";
+              hash = "sha256-Uv+96EieGBq6cJNWjoJEHPy/MshbHts+OBow7rWgBSM=";
+              stripRoot = false;
+            };
 
             dontConfigure = true;
             dontBuild = true;

@@ -1,7 +1,14 @@
 keys:
-  - &onelock age1cu7gutqmcpxgst7xfqzq6tjmvr02w33ew0q7678nj85zqe7ly99s5fjx0m
+  - &personal age1cu7gutqmcpxgst7xfqzq6tjmvr02w33ew0q7678nj85zqe7ly99s5fjx0m
+  - &vps_key age1jc5xaxymmx44q9zcxjttcdg6t7ec582d3z4xq7v9tjh6vp72y42qwljkl9
+
 creation_rules:
-  - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
+  - path_regex: personal\.yaml$
     key_groups:
     - age:
-      - *onelock
+      - *personal
+
+  - path_regex: vps\.yaml$
+    key_groups:
+    - age:
+      - *vps_key

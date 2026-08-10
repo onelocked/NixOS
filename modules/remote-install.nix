@@ -7,124 +7,304 @@
         name = "remote-install";
         runtimeInputs = with pkgs; [
           gum
-          rsync
           jq
           openssh
-          gnused
           coreutils
         ];
 
         text = ''
+          # --- helpers ---
+          WORK_DIR=$(mktemp -d)
+          trap 'rm -rf "$WORK_DIR"' EXIT
+          unset SSH_AUTH_SOCK
+
+          die() {
+            gum style --foreground 196 "Error: $1"
+            exit 1
+          }
+
+          select_host() {
+            echo "Parsing flake for NixOS configurations..." >&2
+            local hosts
+            hosts=$(nix eval .#nixosConfigurations --apply builtins.attrNames --json \
+              --extra-experimental-features "nix-command flakes" | jq -r '.[]' || true)
+
+            if [ -z "$hosts" ]; then
+              gum style --foreground 214 "Warning: Could not automatically detect configurations." >&2
+              echo "Enter the flake host (e.g., gaming-pc):" >&2
+              gum input --placeholder "gaming-pc"
+            else
+              echo "Select the target NixOS configuration:" >&2
+              echo "$hosts" | gum choose
+            fi
+          }
+
+          # --- banner ---
           clear
           gum style \
             --foreground 212 --border-foreground 212 --border double \
             --align center --width 50 --margin "1 2" --padding "1 2" \
             "NixOS Anywhere Deployer"
 
-          # prompt for the target ip
-          echo "Enter target connection string:"
+          # --- target connection ---
+          echo "Enter target connection string (e.g., root@192.168.1.100):"
           TARGET_IP=$(gum input --placeholder "root@192.168.1.100" --value "root@")
           if [ -z "$TARGET_IP" ] || [ "$TARGET_IP" = "root@" ]; then
-            gum style --foreground 196 "Error: Target IP is required."
-            exit 1
+            die "Target IP is required."
           fi
 
-          # select nixosConfiguration host
-          echo "Parsing flake for NixOS configurations..."
-          HOSTS=$(nix eval .#nixosConfigurations --apply builtins.attrNames --json --extra-experimental-features "nix-command flakes" | jq -r '.[]' || true)
+          SSH_PORT=$(gum input --placeholder "22" --value "22" --header "Enter SSH port:")
+          SSH_PORT="''${SSH_PORT:-22}"
 
-          if [ -z "$HOSTS" ]; then
-            gum style --foreground 214 "Warning: Could not automatically detect configurations."
-            echo "Enter the flake host (e.g., gaming-pc):"
-            HOST=$(gum input --placeholder "gaming-pc")
-          else
-            echo "Select the target NixOS configuration:"
-            HOST=$(echo "$HOSTS" | gum choose)
-          fi
+          # --- hardware configuration ---
+          echo "Hardware Configuration Options:"
+          HW_OPTION=$(gum choose \
+            "Skip (Continue to install)" \
+            "Fetch via kexec (For non-NixOS targets)" \
+            "Fetch directly via SSH (For NixOS targets)")
 
-          if [ -z "$HOST" ]; then
-            gum style --foreground 196 "Error: Flake host is required."
-            exit 1
-          fi
+          if [ "$HW_OPTION" != "Skip (Continue to install)" ]; then
+            if [ "$HW_OPTION" = "Fetch via kexec (For non-NixOS targets)" ]; then
+              HOST=$(select_host)
+              if [ -z "$HOST" ]; then
+                die "Flake host is required."
+              fi
 
-          # grab hardware configuration
-          if gum confirm "Do you want to fetch and install hardware-configuration.nix?" --default=false; then
-            gum style --foreground 82 "Fetching hardware configuration from $TARGET_IP for host '$HOST'..."
-            echo ""
+              TMP_CONFIG="$WORK_DIR/hardware-configuration.nix"
 
-            RAW_CONFIG=$(ssh -o StrictHostKeyChecking=no -T "$TARGET_IP" "nixos-generate-config --no-filesystems --show-hardware-config")
+              gum style --foreground 82 "Fetching hardware configuration from $TARGET_IP via kexec..."
+              echo
 
-            if [ -z "$RAW_CONFIG" ]; then
-              gum style --foreground 196 "Error: Failed to fetch configuration."
-              exit 1
+              nix run github:nix-community/nixos-anywhere -- \
+                --ssh-option "Port=$SSH_PORT" \
+                --flake .#"$HOST" \
+                --phases kexec \
+                --generate-hardware-config nixos-generate-config "$TMP_CONFIG" \
+                "$TARGET_IP"
+
+              if [ ! -s "$TMP_CONFIG" ]; then
+                die "Failed to fetch configuration."
+              fi
+
+              RAW_CONFIG=$(cat "$TMP_CONFIG")
+            else
+              gum style --foreground 82 "Fetching hardware configuration from $TARGET_IP via SSH..."
+              echo
+
+              RAW_CONFIG=$(ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -p "$SSH_PORT" -T "$TARGET_IP" \
+                "nixos-generate-config --no-filesystems --show-hardware-config")
+
+              if [ -z "$RAW_CONFIG" ]; then
+                die "Failed to fetch configuration."
+              fi
             fi
 
-            FORMATTED_CONFIG=$(echo "$RAW_CONFIG" | sed -e 's/^/    /' -e '$ s/}/};/')
-
-            OUT_DIR="./hosts/$HOST/hardware"
-            OUT_FILE="$OUT_DIR/hardware-configuration.nix"
-            mkdir -p "$OUT_DIR"
-
-            {
-              echo "# Auto-generated by fetch-hardware-config"
-              echo "{"
-              echo "  exo.hardware.\"$HOST\" ="
-              echo "$FORMATTED_CONFIG"
-              echo "}"
-            } > "$OUT_FILE"
+            OUT_FILE="./hardware-configuration.nix"
+            echo "$RAW_CONFIG" > "$OUT_FILE"
 
             gum style --margin "1 0" --foreground 82 "Successfully saved to $OUT_FILE"
             cat "$OUT_FILE"
-            echo ""
+            echo
 
-            if ! gum confirm "Continue with remote install?"; then
-              echo "Exiting."
-              exit 0
-            fi
+            echo "Hardware configuration saved. Please integrate it into your NixOS configuration, add to git, and run this script again."
+            exit 0
           fi
 
-          # deployment phase
+          # --- host selection ---
+          HOST=$(select_host)
+          if [ -z "$HOST" ]; then
+            die "Flake host is required."
+          fi
+
+          # --- deployment phases ---
           echo "Select execution phases (Space to toggle, Enter to confirm):"
           PHASES_RAW=$(gum choose --no-limit --selected "kexec,disko,install,reboot" "kexec" "disko" "install" "reboot")
           if [ -z "$PHASES_RAW" ]; then
-            gum style --foreground 196 "Error: At least one phase must be selected."
-            exit 1
+            die "At least one phase must be selected."
           fi
-          PHASES=$(echo "$PHASES_RAW" | tr '\n' ',' | sed 's/,$//')
+          PHASES=$(echo "$PHASES_RAW" | paste -sd ',')
 
+          # --- build location ---
+          echo "Select which system to use for building:"
+          BUILD_ON=$(gum choose "local" "remote")
+
+          # --- confirmation ---
           gum style --margin "1 0" --foreground 82 "Configuration complete!"
-          echo "Target: $TARGET_IP"
+          echo "Target: $TARGET_IP (port $SSH_PORT)"
           echo "Phases: $PHASES"
           echo "Host:   $HOST"
-          echo ""
+          echo "Build:  $BUILD_ON"
+          echo
 
           if ! gum confirm "Ready to deploy?"; then
             echo "Aborting."
             exit 0
           fi
 
-          # getting the sops age key ready
+          # --- stage sops age key ---
           echo "Staging age key..."
-          STAGING_DIR=$(mktemp -d)
-          trap 'rm -rf "$STAGING_DIR"' EXIT
+          SOPS_AGE_DIR="$HOME/.config/sops/age"
+          STAGING_DIR="$WORK_DIR/staging"
 
-          KEY_PATH="/home/onelock/.config/sops/age/keys.txt"
-          TARGET_DIR="$STAGING_DIR/persist/home/onelock/.config/sops/age"
+          echo "Select the age key to deploy:"
+          SELECTED_KEY=$(find "$SOPS_AGE_DIR" -maxdepth 1 -type f -printf '%f\n' | gum choose)
+          if [ -z "$SELECTED_KEY" ]; then
+            die "No key selected."
+          fi
+          SELECTED_KEY="$SOPS_AGE_DIR/$SELECTED_KEY"
 
+          TARGET_DIR="$STAGING_DIR/persist$SOPS_AGE_DIR"
           mkdir -p "$TARGET_DIR"
-          rsync -av "$KEY_PATH" "$TARGET_DIR/keys.txt"
+          cp "$SELECTED_KEY" "$TARGET_DIR/keys.txt"
           chmod 600 "$TARGET_DIR/keys.txt"
 
-          # run nixos-anywhere
+          # --- deploy ---
           echo "Running nixos-anywhere..."
           nix run github:nix-community/nixos-anywhere -- \
+            --ssh-option "Port=$SSH_PORT" \
             --phases "$PHASES" \
             --extra-files "$STAGING_DIR" \
-            --chown /persist/home/onelock/.config/sops/age/keys.txt 1000:100 \
-            --build-on local \
+            --chown "/persist$SOPS_AGE_DIR/keys.txt" 1000:100 \
+            --build-on "$BUILD_ON" \
             --flake .#"$HOST" \
             "$TARGET_IP"
         '';
+      };
+    };
+  exo.configurations = {
+    vm-empty = {
+      bare = true;
+      system = "x86_64-linux";
+      modules = [
+        {
+          boot.loader.grub.device = "/dev/vda";
+          fileSystems."/" = {
+            device = "/dev/vda1";
+            fsType = "ext4";
+          };
+
+          virtualisation.vmVariant = {
+            virtualisation.memorySize = 4096;
+            virtualisation.cores = 2;
+
+            virtualisation.forwardPorts = [
+              {
+                from = "host";
+                host.port = 2222;
+                guest.port = 22;
+              }
+            ];
+
+            virtualisation.diskSize = 20480;
+          };
+
+          services.openssh.enable = true;
+          services.openssh.settings.PermitRootLogin = "yes";
+          users.users.root.password = "nixos";
+
+          system.stateVersion = "25.11";
+        }
+      ];
+    };
+    vm-deploy-test = {
+      user = "onelock";
+      hardware = "vm-deploy-test";
+      server = true;
+      theme = "light";
+      extraConfig =
+        { pkgs, ... }:
+        {
+          sops.defaultSopsFile = ../../.secrets/vps.yaml;
+          boot.kernelPackages = pkgs.linuxPackages_latest;
+        };
+    };
+  };
+  exo.hardware.vm-deploy-test =
+    { modulesPath, ... }:
+    {
+      imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
+
+      boot.initrd.availableKernelModules = [
+        "ata_piix"
+        "uhci_hcd"
+        "virtio_pci"
+        "floppy"
+        "sr_mod"
+        "virtio_blk"
+      ];
+      boot.kernelModules = [ "kvm-amd" ];
+      boot.kernel.sysctl = {
+        "vm.swappiness" = 1;
+      };
+
+      disko.devices.nodev = {
+        "/" = {
+          fsType = "tmpfs";
+          mountOptions = [
+            "size=25%"
+            "mode=755"
+          ];
+        };
+      };
+
+      disko.devices.disk.nixos = {
+        device = "/dev/vda";
+        type = "disk";
+        content.type = "gpt";
+
+        content.partitions.boot = {
+          name = "boot";
+          size = "1M";
+          type = "EF02";
+        };
+
+        content.partitions.esp = {
+          name = "ESP";
+          size = "500M";
+          type = "EF00";
+
+          content = {
+            type = "filesystem";
+            format = "vfat";
+            mountpoint = "/boot";
+          };
+        };
+
+        content.partitions.root = {
+          name = "root";
+          size = "100%";
+
+          content = {
+            type = "btrfs";
+            extraArgs = [ "-f" ];
+
+            subvolumes = {
+              "@persist" = {
+                mountpoint = "/persist";
+                mountOptions = [
+                  "noatime"
+                  "compress=zstd"
+                ];
+              };
+
+              "@nix" = {
+                mountpoint = "/nix";
+                mountOptions = [
+                  "noatime"
+                  "compress=zstd"
+                ];
+              };
+
+              "@swap" = {
+                mountpoint = "/.swapvol";
+                mountOptions = [ "noatime" ];
+                swap = {
+                  swapfile.size = "4G";
+                };
+              };
+            };
+          };
+        };
       };
     };
 }

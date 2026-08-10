@@ -5,7 +5,6 @@
       config,
       constants,
       lib,
-      hostName,
       ...
     }:
     let
@@ -43,9 +42,7 @@
         };
       };
       options.forte.opkssh = {
-        enable = lib.mkEnableOption null // {
-          default = if hostName != "gaming-pc" then true else false;
-        };
+        enable = lib.mkEnableOption "opkssh";
       };
     };
 }

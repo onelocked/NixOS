@@ -50,14 +50,6 @@ url = "gh:amaanq/helium-flake"
 [inputs.hjem]
 url = "gh:feel-co/hjem"
 
-[inputs.hypr-bibata-classic]
-type = "fetch"
-url = "https://github.com/LOSEARDES77/Bibata-Cursor-hyprcursor/releases/download/1.0/hypr_Bibata-Modern-Classic.tar.gz"
-
-[inputs.hypr-bibata-ice]
-type = "fetch"
-url = "https://github.com/LOSEARDES77/Bibata-Cursor-hyprcursor/releases/download/1.0/hypr_Bibata-Modern-Ice.tar.gz"
-
 [inputs.hypr-plugs]
 url = "gh:hyprwm/hyprland-plugins"
 
@@ -71,11 +63,11 @@ url = "gh:feschber/lan-mouse"
 exclude_follow = ["nixpkgs"]
 url = "gh:xddxdd/nix-cachyos-kernel/release"
 
-[inputs.nix-index-database]
-url = "gh:nix-community/nix-index-database"
-
 [inputs.nixos-core]
 url = "gh:manic-systems/nixos-core"
+
+[inputs.nixos-hardware]
+url = "gh:NixOS/nixos-hardware"
 
 [inputs.nixpkgs]
 url = "gh:nixos/nixpkgs/nixos-unstable"
@@ -93,14 +85,6 @@ url = "gh:nix-community/preservation"
 
 [inputs.quickshell]
 url = "gh:quickshell-mirror/quickshell"
-
-[inputs.saturnian-light]
-type = "fixed"
-url = "https://s3.onelock.org/download/cursors/saturnian-light.tar.gz"
-
-[inputs.saturnian-night]
-type = "fixed"
-url = "https://s3.onelock.org/download/cursors/saturnian-night.tar.gz"
 
 [inputs.sf-compact]
 type = "fixed"
@@ -121,7 +105,7 @@ url = "gh:Mic92/sops-nix"
 url = "gh:Gerg-L/spicetify-nix"
 
 [inputs.systems]
-url = "gh:nix-systems/x86_64-linux"
+url = "gh:nix-systems/default-linux"
 
 [inputs.tack]
 url = "gh:manic-systems/tack"

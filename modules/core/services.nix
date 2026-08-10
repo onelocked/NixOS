@@ -7,16 +7,17 @@
     {
       services = {
         printing.enable = mkForce false;
-        gnome.gnome-keyring.enable = true;
         xserver.enable = mkForce false;
-        journald.storage = "volatile";
         dbus.implementation = mkForce "broker";
-      };
-      programs.seahorse.enable = true;
-      forte.persist = {
-        home.directories = [
-          ".local/share/keyrings"
-        ];
+        journald = {
+          storage = "persistent";
+          extraConfig = ''
+            SystemMaxUse=500M
+            SystemKeepFree=1G
+            SystemMaxFileSize=50M
+            MaxRetentionSec=1month
+          '';
+        };
       };
     };
 }

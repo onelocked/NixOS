@@ -13,7 +13,6 @@
       environment.systemPackages = with pkgs; [ sops ];
       sops = {
         useSystemdActivation = true;
-        defaultSopsFile = ./encrypted.yaml;
         age = {
           # NOTE: paths from persist are used, they need to exist before impermanence does its thing
           keyFile = "/persist${config.hj.directory}/.config/sops/age/keys.txt";

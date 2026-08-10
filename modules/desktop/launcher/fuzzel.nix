@@ -7,7 +7,7 @@
     }:
     {
       forte.fuzzel = {
-        enable = !config.forte.otter-launcher.enable;
+        enable = false;
         settings = {
           main = {
             dpi-aware = "yes";
