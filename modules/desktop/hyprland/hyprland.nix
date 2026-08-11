@@ -11,7 +11,7 @@
       withTermFileChooser = true;
       withHyprpolkit = false;
       withHyprshutdown = true;
-      withHypridle = true;
+      withHypridle = false;
     };
   };
 

@@ -34,6 +34,56 @@
 
               MemoryHigh = "512M";
               MemoryMax = "768M";
+
+              # --- Hardening ---
+              #Filesystem Sandboxing
+              ProtectSystem = "strict";
+              ProtectHome = "read-only";
+
+              # Set up ~/.cache/tuishell (user service) or /var/cache/tuishell (system service)
+              # and automatically grants read-write access to it.
+              CacheDirectory = "tuishell";
+              RuntimeDirectory = "quickshell";
+
+              ReadWritePaths = [
+                "-%h/.cache/fontconfig"
+                "-%h/.cache/ddcutil"
+              ];
+              InaccessiblePaths = [
+                "-%h/.ssh"
+                "-%h/.gnupg"
+                "-%h/.config/sops"
+                "-/persist/home"
+              ];
+
+              # Kernel & Process Isolation
+              ProtectKernelTunables = true;
+              ProtectKernelModules = true;
+              ProtectKernelLogs = true;
+              ProtectControlGroups = true;
+              ProtectClock = true;
+              ProtectHostname = true;
+              ProtectProc = "invisible"; # Hides processes not owned by this service
+
+              # Networking & Sockets
+              # AF_UNIX is mandatory for Wayland, D-Bus, and Pipewire/PulseAudio.
+              # AF_INET/AF_INET6 and AF_NETLINK are left open for internet.
+              RestrictAddressFamilies = [
+                "AF_UNIX"
+                "AF_INET"
+                "AF_INET6"
+                "AF_NETLINK"
+              ];
+              # System Call Filtering ---
+              SystemCallArchitectures = "native";
+              SystemCallFilter = [
+                "~@mount"
+                "~@module"
+                "~@raw-io"
+                "~@reboot"
+                "~@swap"
+                "~@obsolete"
+              ];
             };
           };
           systemd.services.awww = {
@@ -47,6 +97,45 @@
               Restart = "on-failure";
               RestartSec = 1;
               TimeoutStopSec = 10;
+
+              # --- Hardening ---
+              ProtectSystem = "strict";
+              ProtectHome = "read-only";
+
+              ReadWritePaths = [ "%t" ];
+              PrivateTmp = true;
+
+              InaccessiblePaths = [
+                "-%h/.ssh"
+                "-%h/.gnupg"
+                "-%h/.config/sops"
+                "-/persist/home"
+              ];
+
+              NoNewPrivileges = true;
+              CapabilityBoundingSet = "";
+
+              ProtectKernelTunables = true;
+              ProtectKernelModules = true;
+              ProtectKernelLogs = true;
+              ProtectControlGroups = true;
+              ProtectClock = true;
+              ProtectHostname = true;
+              ProtectProc = "invisible";
+
+              RestrictAddressFamilies = [ "AF_UNIX" ];
+
+              SystemCallArchitectures = "native";
+              SystemCallFilter = [
+                "~@mount"
+                "~@module"
+                "~@raw-io"
+                "~@reboot"
+                "~@swap"
+                "~@obsolete"
+                "~@privileged"
+                "~@setuid"
+              ];
             };
           };
         };
