@@ -94,11 +94,18 @@
             name: !(prevPins.inputs ? ${name}) || prevPins.inputs.${name}.url != tackConfig.inputs.${name}.url
           )
           |> lib.join " ";
+
+        # Inputs that need to be removed: exist in prevPins but not in tackConfig
+        removeInputs =
+          (prevPins.inputs or { })
+          |> lib.attrNames
+          |> lib.filter (name: !(tackConfig.inputs ? ${name}))
+          |> lib.join " ";
       in
       {
         apps.tack-rebuild = {
           type = "app";
-          meta.description = "Sync tack pins on input changes, then nh os rebuild";
+          meta.description = "Sync tack pins on input changes, can pass switch/boot/test arguments";
           program = lib.getExe (
             pkgs.writeShellApplication {
               name = "tack-rebuild";
@@ -120,6 +127,9 @@
                   ${lib.optionalString (prevPins != tackConfig) ''
                     newPinsToml="${tackConfig |> tomlFormat "pins.toml"}"
                     delta --dark --side-by-side --line-numbers --diff-so-fancy .tack/pins.toml "$newPinsToml" || true
+
+                    ${lib.optionalString (removeInputs != "") "tack rm ${removeInputs}"}
+
                     install -m 644 -D -T "$newPinsToml" .tack/pins.toml
                     echo "wrote .tack/pins.toml"
                   ''}
