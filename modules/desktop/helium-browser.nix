@@ -32,8 +32,8 @@
                 match            = { class = "helium" },
                 workspace        = "name:web",
                 fullscreen_state = "0 1",
-                opacity          = "1 override",
-                scrolling_width  = "0.709",
+                opacity          = "1 override 0.95 override",
+                scrolling_width  = 0.333,
               })
               hl.window_rule({
                 name             = "helium-pip",

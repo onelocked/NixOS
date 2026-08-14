@@ -1,7 +1,7 @@
 {
   tack.inputs = {
     hyprland = "gh:hyprwm/Hyprland";
-    hypr-plugs = "gh:hyprwm/hyprland-plugins";
+    fetch.hypr-plugs = "gh:hyprwm/hyprland-plugins";
   };
   exo.mods.desktop = {
     forte.hyprland = {
