@@ -26,7 +26,6 @@ jobs:
             "amdgpu_top"
             "loupe"
             "lan-mouse"
-            "lla"
             "quickshell"
           )
           mkdir -p /tmp/missing
