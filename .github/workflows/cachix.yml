@@ -2,10 +2,15 @@
 name: Build and Cache Specific Nix Packages
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
 jobs:
   prepare-matrix:
     name: Check Cache
     runs-on: ubuntu-latest
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      startsWith(github.event.head_commit.message, 'tack: update inputs')
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
@@ -16,7 +21,7 @@ jobs:
         with:
           extra-conf: |
             experimental-features = pipe-operators
-      - name: Filter packages against Cachix (parallel)
+      - name: Filter uncached packages
         id: set-matrix
         run: |
           PACKAGES=(
@@ -28,33 +33,18 @@ jobs:
             "lan-mouse"
             "quickshell"
           )
-          mkdir -p /tmp/missing
-          pids=()
-          for pkg in "${PACKAGES[@]}"; do
-            (
-              if STORE_PATH=$(nix eval --raw ".#packages.x86_64-linux.$pkg.outPath"); then
-                if ! nix path-info --store https://onelock.cachix.org "$STORE_PATH" >/dev/null 2>&1; then
-                  touch "/tmp/missing/$pkg"
-                fi
-              else
-                echo "::error::Evaluation failed for package: $pkg"
-                exit 1
-              fi
-            ) &
-            pids+=($!)
-          done
-          failed=0
-          for pid in "${pids[@]}"; do
-            wait "$pid" || failed=1
-          done
-          if [ "$failed" -eq 1 ]; then
-            echo "::error::One or more package evaluations failed"
-            exit 1
-          fi
+
+          # Pre-fetch all flake inputs into the store
+          nix flake prefetch . 2>/dev/null || true
           MISSING=()
           for pkg in "${PACKAGES[@]}"; do
-            if [ -f "/tmp/missing/$pkg" ]; then
-              MISSING+=("$pkg")
+            if STORE_PATH=$(nix eval --raw ".#packages.x86_64-linux.$pkg.outPath"); then
+              if ! nix path-info --store https://onelock.cachix.org "$STORE_PATH" >/dev/null 2>&1; then
+                MISSING+=("$pkg")
+              fi
+            else
+              echo "::error::Evaluation failed for package: $pkg"
+              exit 1
             fi
           done
           if [ ${#MISSING[@]} -eq 0 ]; then
@@ -64,10 +54,12 @@ jobs:
             JSON_ARRAY="$(printf '%s\n' "${MISSING[@]}" | jq -R . | jq -s -c .)"
             echo "matrix=$JSON_ARRAY" >> "$GITHUB_OUTPUT"
           fi
-  build-heavy-packages:
-    needs: prepare-matrix
-    if: ${{ needs.prepare-matrix.outputs.matrix != '[]' }}
+  build-packages:
     name: Build ${{ matrix.package }}
+    needs: prepare-matrix
+    if: >-
+      needs.prepare-matrix.result == 'success' &&
+      needs.prepare-matrix.outputs.matrix != '[]'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -89,9 +81,8 @@ jobs:
           name: onelock
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
           skipPush: true
-      - name: Build and Push ${{ matrix.package }}
+      - name: Build and push ${{ matrix.package }}
         run: |-
-          echo "Starting build for ${{ matrix.package }}..."
           nix build ".#packages.x86_64-linux.${{ matrix.package }}" \
             --print-out-paths --print-build-logs \
             | cachix push onelock
