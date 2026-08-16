@@ -1,6 +1,9 @@
 {
   tack.inputs = {
-    hyprland = "gh:hyprwm/Hyprland";
+    hyprland = {
+      url = "gh:hyprwm/Hyprland/79bc0ca16e7cca40c247a9200634d150fa8193d1";
+      exclude_follow = [ "nixpkgs" ];
+    };
     fetch.hypr-plugs = "gh:hyprwm/hyprland-plugins";
   };
   exo.mods.desktop = {
