@@ -19,6 +19,7 @@ let
               extraPkgs
               files
               aliases
+              runShell
               ;
           in
           pkgs.symlinkJoin {
@@ -67,6 +68,13 @@ let
                       args
                       |> lib.concatMap (v: [
                         "--add-flags"
+                        v
+                      ])
+                    )
+                    ++ (
+                      runShell
+                      |> lib.concatMap (v: [
+                        "--run"
                         v
                       ])
                     )
@@ -155,6 +163,12 @@ let
         aliases = lib.mkOption {
           type = lib.types.listOf lib.types.str;
           default = [ ];
+        };
+
+        runShell = lib.mkOption {
+          type = lib.types.listOf lib.types.str;
+          default = [ ];
+          description = "Commands to run before executing the main program.";
         };
 
         wrapper = lib.mkOption {
