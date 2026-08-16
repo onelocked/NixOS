@@ -7,7 +7,6 @@
     forte.hyprland = {
       enable = true;
       withUWSM = true;
-      withGreetd = true;
       withTermFileChooser = true;
       withHyprpolkit = false;
       withHyprshutdown = true;
@@ -19,10 +18,10 @@
     {
       lib,
       config,
-      constants,
       pkgs,
       self',
       hardware,
+      constants,
       ...
     }:
     let
@@ -138,24 +137,21 @@
               capabilities = "cap_sys_nice+ep";
               source = lib.getExe cfg.package;
             };
-          }
-          (lib.mkIf cfg.withGreetd {
-            security.pam.services.greetd.enableGnomeKeyring = true;
-            services = {
-              displayManager.enable = lib.mkForce false;
-              greetd = {
-                enable = true;
-                settings.default_session = {
-                  command =
+            security.pam.services.login.enableGnomeKeyring = true;
+            services.getty.autologinUser = constants.username;
+            programs.bash.loginShellInit = # bash
+              ''
+                # Auto start wayland session on tty1 if no session exists
+                if [[ -z "$DISPLAY" && -z "$WAYLAND_DISPLAY" && "$(tty)" == '/dev/tty1' ]]; then
+                  ${
                     if cfg.withUWSM then
-                      "${pkgs.uwsm}/bin/uwsm start hyprland-uwsm.desktop"
+                      "exec uwsm start hyprland-uwsm.desktop"
                     else
-                      "${cfg.package}/bin/start-hyprland";
-                  user = constants.username;
-                };
-              };
-            };
-          })
+                      "exec ${lib.getExe' cfg.package "start-hyprland"}"
+                  }
+                fi
+              '';
+          }
           (lib.mkIf cfg.withTermFileChooser {
             xdg.portal.config.hyprland = {
               default = lib.mkForce [
@@ -319,12 +315,6 @@
             Files with autoLoad = true are require()'d in hyprland.lua in
             alphabetical order. Use numeric prefixes (e.g. "00-variables",
             "01-settings") to control load order.
-          '';
-        };
-
-        withGreetd = lib.mkEnableOption null // {
-          description = ''
-            Whether to enable greetd as the login manager for Hyprland.
           '';
         };
 

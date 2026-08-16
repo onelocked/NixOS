@@ -11,6 +11,7 @@
       config = {
         services.ddccontrol.enable = true;
         services.gnome.gnome-keyring.enable = true;
+        services.displayManager.enable = lib.mkForce false;
 
         services = {
           scx = {

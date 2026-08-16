@@ -4,7 +4,7 @@
     mini-pc = {
       user = "onelock";
       hardware = "mini-pc";
-      theme = "light";
+      theme = "dark";
       modules = with config.exo.mods; [
         neovim
         media
