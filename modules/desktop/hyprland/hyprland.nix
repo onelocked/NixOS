@@ -37,9 +37,6 @@
         <| lib.mkMerge [
           {
             hj.packages = [ cfg.package ];
-
-            forte.hyprland.plugins = [ self'.legacyPackages.borders-plus-plus ];
-
             forte.persist.home.directories = [ ".config/hypr" ];
             forte.hyprland.lua.autostart =
               lib.optionalString (cfg.autostart != [ ] || cfg.plugins != [ ]) # lua

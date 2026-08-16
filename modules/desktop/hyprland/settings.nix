@@ -60,20 +60,6 @@
               layout            = "scrolling",
             },
 
-            plugin = {
-              borders_plus_plus = {
-                add_borders = ${if theme == "dark" then toString 1 else toString 2},
-                natural_rounding = true,
-                col = {
-                  border_1 = "${if theme == "dark" then "#131316D9" else "#F4EAE1DB"}",
-                  border_2 = "${if theme == "dark" then "#8c92aa" else "#8a8078"}",
-
-                },
-                border_size_1 = 13,
-                border_size_2 = 1,
-              },
-            },
-
             decoration = {
               border_part_of_window = false,
               rounding              = 0,
