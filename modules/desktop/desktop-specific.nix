@@ -28,7 +28,6 @@
 
         security = {
           polkit.enable = true;
-          polkit.enablePkexecWrapper = true;
         };
 
         programs.seahorse.enable = false;
