@@ -1,6 +1,6 @@
 {
-  exo.mods.gaming = {
-    forte.mangohud = {
+  exo.mods.desktop = {
+    forte.gaming.mangohud = {
       enable = true;
       envConfig = true;
 
@@ -8,12 +8,20 @@
         position = "top-left";
         hud_compact = true;
         round_corners = 0;
+        font_size = 17;
 
+        background_alpha = 0;
         fps = true;
         frametime = true;
-        frame_timing = true;
+        fps_limit = "60+30+0"; # careful with the fps limiter, Dark Souls 2 SOFTS doesn't like it
+        fps_limit_method = "early";
+        toggle_fps_limit = "Alt_L+f";
+        horizontal = true;
+
         cpu_stats = true;
+
         gpu_stats = true;
+
         ram = true;
         vram = true;
 
@@ -21,7 +29,6 @@
       };
     };
   };
-
   exo.skeleton =
     {
       config,
@@ -32,7 +39,7 @@
     let
       inherit (lib) mkIf mkOption types;
 
-      cfg = config.forte.mangohud;
+      cfg = config.forte.gaming.mangohud;
 
       settingsType =
         with types;
@@ -93,7 +100,7 @@
         ) cfg.settingsPerApplication;
       };
       options = {
-        forte.mangohud = {
+        forte.gaming.mangohud = {
           enable = lib.mkEnableOption "Mangohud";
 
           envConfig = lib.mkEnableOption "MANGOHUD_CONFIG environment variable generation";

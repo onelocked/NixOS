@@ -1,19 +1,51 @@
 {
-  exo.mods.gaming = {
-    forte.gaming = {
-      enable = true;
-      ntsync.enable = true;
-      platformOptimizations.enable = true;
-    };
+  exo.mods.gaming =
+    { constants, ... }:
+    {
+      forte.gaming = {
+        enable = true;
+        ntsync.enable = true;
+        platformOptimizations.enable = true;
+        gamemode.enable = true;
+      };
 
-    programs.steam = {
-      enable = false; # install via flatpak, for better permission control using flatseal
-      remotePlay.openFirewall = true;
-      localNetworkGameTransfers.openFirewall = true;
-    };
+      hardware.steam-hardware.enable = true;
 
-    programs.gamemode.enable = true;
-  };
+      programs.steam = {
+        enable = false; # install via flatpak, for better permission control using flatseal
+        remotePlay.openFirewall = false;
+        localNetworkGameTransfers.openFirewall = false;
+      };
+
+      # Realtime scheduling permissions for games
+      # Required because Steam runs in bubblewrap sandbox where capabilities don't work
+      security.pam.loginLimits = [
+        {
+          domain = "@gamemode";
+          item = "nice";
+          type = "-";
+          value = "-20";
+        }
+        {
+          domain = constants.username;
+          item = "rtprio";
+          type = "-";
+          value = "98";
+        }
+        {
+          domain = constants.username;
+          item = "nice";
+          type = "-";
+          value = "-20";
+        }
+        {
+          domain = constants.username;
+          item = "memlock";
+          type = "-";
+          value = "unlimited";
+        }
+      ];
+    };
 
   exo.skeleton =
     {
@@ -34,6 +66,11 @@
             hj.packages = [ pkgs.protonup-rs ];
             hj.environment.sessionVariables = {
               PROTON_ENABLE_WAYLAND = 1;
+              DXVK_ASYNC = "1";
+              # Allow GPU render queueing
+              DXGI_MAX_FRAME_LATENCY = "1";
+              D3D9_MAX_FRAME_LATENCY = "1";
+              MESA_SHADER_CACHE_MAX_SIZE = "10G";
             };
 
             forte.hyprland.lua.window-rules = # lua
@@ -74,8 +111,6 @@
                   decorate = false,
                   content = "game",
                   workspace = "name:games",
-                  sync_fullscreen  = true,
-                  fullscreen_state = "3 3",
                 })
               '';
 
@@ -89,6 +124,8 @@
                         ".local/share/vulkan"
                         ".cache/winetricks"
                         ".cache/umu-protonfixes"
+                        ".cache/mesa_shader_cache"
+                        ".local/share/dxvk-cache"
                       ]
                       ++ lib.optionals config.programs.steam.enable [
                         ".steam"
@@ -121,6 +158,33 @@
               "steam-unwrapped"
             ];
           }
+          (lib.mkIf cfg.gamemode.enable {
+            programs.gamemode = {
+              enable = true;
+              settings = {
+                cpu = {
+                  governor = "performance";
+                  energy_perf_preference = "performance";
+                };
+                custom = {
+                  start = toString (
+                    pkgs.writeShellScript "gamemode-start" ''
+                      ${pkgs.libnotify}/bin/notify-send -a 'Gamemode' -t 4000 -u low -i steam 'Enjoy the game' 'Praise the Sun!'
+                      ( ${pkgs.coreutils}/bin/sleep 5 && ${pkgs.systemd}/bin/systemctl --user stop tuishell.service ) & disown
+                    ''
+                  );
+
+                  end = toString (
+                    pkgs.writeShellScript "gamemode-end" ''
+                      ${pkgs.systemd}/bin/systemctl --user start tuishell.service
+                      ${pkgs.coreutils}/bin/sleep 1
+                      ${pkgs.libnotify}/bin/notify-send -a 'Gamemode' -u low -i steam 'Game has been closed' 'Welcome home, Chosen Undead.'
+                    ''
+                  );
+                };
+              };
+            };
+          })
           (lib.mkIf cfg.ntsync.enable {
             # support driver for emulation of NT synchronization, used by Wine/Proton
             boot.kernelModules = [ "ntsync" ];
@@ -131,32 +195,49 @@
                 destination = "/etc/udev/rules.d/70-ntsync.rules";
               })
             ];
-            hj.environment.sessionVariables = {
-              PROTON_NO_FSYNC = 1;
-            };
           })
           (lib.mkIf cfg.platformOptimizations.enable {
+            boot.kernelParams = [
+              "mitigations=off"
+
+              "usbcore.autosuspend=-1" # don't sleep usb devices
+
+              "pcie_aspm=off" # disables PCIe Active State Power Management (ASPM) across all PCIe links on the system
+              "nowatchdog" # Disables the software watchdog, freeing up a tiny bit of CPU time
+              "nmi_watchdog=0" # Disables the NMI watchdog
+              "split_lock_detect=off" # Prevents the kernel from throttling games that use split locks
+
+              "transparent_hugepage=madvise"
+              "thp_anon=madvise"
+
+              "hpet=disable" # Kill the High Precision Event Timer
+              "tsc=reliable" # Trust the CPU's Time Stamp Counter completely
+              "clocksource=tsc" # Force TSC as the system clock source
+            ];
             boot.kernel.sysctl = {
-              # 20-shed.conf
               "kernel.sched_cfs_bandwidth_slice_us" = 3000;
-              # 20-net-timeout.conf
-              # This is required due to some games being unable to reuse their TCP ports
-              # if they're killed and restarted quickly - the default timeout is too large.
               "net.ipv4.tcp_fin_timeout" = 5;
-              # 30-splitlock.conf
-              # Prevents intentional slowdowns in case games experience split locks
-              # This is valid for kernels v6.0+
               "kernel.split_lock_mitigate" = 0;
-              # 30-vm.conf
-              # USE MAX_INT - MAPCOUNT_ELF_CORE_MARGIN.
-              # see comment in include/linux/mm.h in the kernel tree.
               "vm.max_map_count" = 2147483642;
+
+              # Prevent background writeback micro-stutters
+              "vm.dirty_ratio" = 10;
+              "vm.dirty_background_ratio" = 5;
+
+              "vm.compaction_proactiveness" = 0;
+              "vm.vfs_cache_pressure" = 20;
+              "vm.watermark_boost_factor" = 0;
+              "vm.watermark_scale_factor" = 125;
+
+              "vm.page-cluster" = 0;
+              "vm.stat_interval" = 10;
             };
           })
         ];
       options.forte.gaming = {
         enable = lib.mkEnableOption "Gaming";
         ntsync.enable = lib.mkEnableOption "NTSync support";
+        gamemode.enable = lib.mkEnableOption "Gamemode with config";
         platformOptimizations.enable = lib.mkEnableOption "Platform optimizations";
       };
     };
