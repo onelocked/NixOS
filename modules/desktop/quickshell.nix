@@ -204,6 +204,7 @@
                       python3
                       awww
                       app2unit
+                      libnotify
                       config.forte.mpv.mpv-wlpaste
                     ]);
 
