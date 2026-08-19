@@ -1,7 +1,8 @@
 {
-  tack.inputs.lan-mouse = "gh:feschber/lan-mouse";
+  tack.inputs.fetch.lan-mouse = "gh:feschber/lan-mouse";
   exo.mods.remote-access = {
     forte.lan-mouse = {
+      enable = true;
       openFirewall = true;
       settings = {
         authorized_fingerprints = {
@@ -54,9 +55,7 @@
         forte.persist.home.directories = [ ".config/lan-mouse" ];
       };
       options.forte.lan-mouse = {
-        enable = lib.mkEnableOption "lan-mouse" // {
-          default = true;
-        };
+        enable = lib.mkEnableOption "lan-mouse";
         package = lib.mkOption {
           type = lib.types.package;
           default = self'.packages.lan-mouse;
@@ -80,11 +79,26 @@
       };
     };
   perSystem =
-    { packages', pkgs, ... }:
+    { pkgs, inputs, ... }:
     {
-      packages.lan-mouse = packages'.lan-mouse.overrideAttrs (oldAttrs: {
+      packages.lan-mouse = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
+        pname = "lan-mouse";
+        version = "git";
+        src = inputs.lan-mouse;
+
         doCheck = false;
-        patches = (oldAttrs.patches or [ ]) ++ [
+        buildNoDefaultFeatures = true;
+
+        buildFeatures = [
+          "layer_shell_capture"
+          "wlroots_emulation"
+        ];
+
+        cargoLock.lockFile = finalAttrs.src + "/Cargo.lock";
+
+        meta.mainProgram = "lan-mouse";
+
+        patches = [
           (pkgs.writeText "disable-side-buttons" # rust
             ''
               diff --git a/src/capture.rs b/src/capture.rs
