@@ -107,6 +107,10 @@ url = "gh:Mic92/sops-nix"
 [inputs.spicetify-nix]
 url = "gh:Gerg-L/spicetify-nix"
 
+[inputs.systemctl-tui]
+type = "fetch"
+url = "gh:rgwood/systemctl-tui"
+
 [inputs.systems]
 url = "gh:nix-systems/default-linux"
 

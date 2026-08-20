@@ -239,6 +239,14 @@
     "narHash": "sha256-yeKMWFCPeoIKmPBLLvP1/15ulOJO8i9ZIlSSXGuW6aw=",
     "lastModified": 1786855359
   },
+  "systemctl-tui": {
+    "type": "github",
+    "owner": "rgwood",
+    "repo": "systemctl-tui",
+    "rev": "36dac28777c21f031885fb65f62f3fc89f593d7f",
+    "narHash": "sha256-vsllvCDHQy9EH0X1RRp5N3DISTrWFi6rywUp3wL42ks=",
+    "lastModified": 1785195048
+  },
   "systems": {
     "type": "github",
     "owner": "nix-systems",
