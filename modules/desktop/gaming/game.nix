@@ -1,6 +1,6 @@
 {
   exo.mods.gaming =
-    { constants, ... }:
+    { pkgs, constants, ... }:
     {
       forte.gaming = {
         enable = true;
@@ -12,9 +12,70 @@
       hardware.steam-hardware.enable = true;
 
       programs.steam = {
-        enable = false; # install via flatpak, for better permission control using flatseal
-        remotePlay.openFirewall = false;
-        localNetworkGameTransfers.openFirewall = false;
+        enable = true;
+        extraPackages = with pkgs; [
+          mangohud
+          gamemode
+          pulseaudio
+          systemd
+        ];
+        package = pkgs.steam.override {
+          extraLibraries = pkgs: [
+            pkgs.mangohud
+            pkgs.gamemode.lib
+          ];
+          extraEnv = {
+            DBUS_FATAL_WARNINGS = "0";
+          };
+          extraPreBwrapCmds = # bash
+            ''
+              # Prevent buildFHSEnv from automatically bind-mounting all root host directories (like /home, /root, /var, etc.)
+              ignored+=(/*)
+            '';
+          extraBwrapArgs = [
+            "--ro-bind-try /sys /sys"
+            "--ro-bind-try /run/udev /run/udev"
+            "--ro-bind-try /run/opengl-driver /run/opengl-driver"
+            "--ro-bind-try /run/opengl-driver-32 /run/opengl-driver-32"
+            "--ro-bind-try /run/current-system /run/current-system"
+            "--ro-bind-try /run/dbus /run/dbus"
+            "--ro-bind-try /run/nscd /run/nscd"
+            "--ro-bind-try /run/systemd /run/systemd"
+
+            "--bind-try /tmp/.X11-unix /tmp/.X11-unix"
+            "--bind-try $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY"
+            "--bind-try $XDG_RUNTIME_DIR/wayland-0 $XDG_RUNTIME_DIR/wayland-0"
+            "--bind-try $XDG_RUNTIME_DIR/pipewire-0 $XDG_RUNTIME_DIR/pipewire-0"
+            "--bind-try $XDG_RUNTIME_DIR/pulse $XDG_RUNTIME_DIR/pulse"
+            "--bind-try $XDG_RUNTIME_DIR/bus $XDG_RUNTIME_DIR/bus"
+            "--ro-bind-try $XDG_RUNTIME_DIR/speech-dispatcher $XDG_RUNTIME_DIR/speech-dispatcher"
+            "--bind-try $XDG_RUNTIME_DIR/gamemode $XDG_RUNTIME_DIR/gamemode"
+
+            "--tmpfs $HOME"
+            "--bind-try $HOME/.steam $HOME/.steam"
+            "--bind-try $HOME/.local/share/Steam $HOME/.local/share/Steam"
+            "--bind-try $HOME/.local/share/vulkan $HOME/.local/share/vulkan"
+            "--bind-try $HOME/.cache/winetricks $HOME/.cache/winetricks"
+            "--bind-try $HOME/.cache/umu-protonfixes $HOME/.cache/umu-protonfixes"
+            "--bind-try $HOME/.cache/mesa_shader_cache $HOME/.cache/mesa_shader_cache"
+            "--bind-try $HOME/.cache/mesa_shader_cache_db $HOME/.cache/mesa_shader_cache_db"
+            "--bind-try $HOME/.cache/nvidia $HOME/.cache/nvidia"
+            "--bind-try $HOME/.nv $HOME/.nv"
+            "--ro-bind-try $HOME/.config/MangoHud $HOME/.config/MangoHud"
+            "--ro-bind-try $HOME/.config/fontconfig $HOME/.config/fontconfig"
+            "--ro-bind-try $HOME/.icons $HOME/.icons"
+            "--ro-bind-try $HOME/.local/share/icons $HOME/.local/share/icons"
+            "--ro-bind-try $HOME/.local/share/fonts $HOME/.local/share/fonts"
+            "--bind-try $HOME/.local/share/applications $HOME/.local/share/applications"
+
+            "--bind-try /games /games"
+            "--bind-try /steam /steam"
+
+            "--unshare-uts"
+            "--unshare-ipc"
+          ];
+        };
+        extraCompatPackages = [ pkgs.proton-ge-bin ];
       };
 
       # Realtime scheduling permissions for games
@@ -93,7 +154,7 @@
                 hl.window_rule({
                   name = "hide-steam-windows",
                   match = {
-                      title = "^Steam Settings$",
+                    title = "^Steam Settings$",
                     class = "^steam$",
                   },
                   border_color = "rgb(fede22)",
@@ -104,6 +165,15 @@
                 })
 
                 hl.window_rule({
+                  name = "steam-big-picture",
+                  match = {
+                    title = "Steam Big Picture Mode",
+                    class = "^steam$",
+                  },
+                  fullscreen_state = "3 3",
+                })
+
+                hl.window_rule({
                   name = "move-all-games",
                   match = {
                     xdg_tag = "proton-game"
@@ -111,7 +181,19 @@
                   decorate = false,
                   content = "game",
                   workspace = "name:games",
+                  fullscreen_state = "3 3",
                 })
+
+                -- return to workspace media once the game is closed
+                hl.on("window.close", function()
+                  local ws = hl.get_active_workspace()
+                  if ws ~= nil and ws.name == "games" then
+                    local windows = hl.get_workspace_windows(ws.name)
+                    if windows ~= nil and #windows <= 1 then
+                      hl.dispatch(hl.dsp.focus({ workspace = "media" }))
+                    end
+                  end
+                end)
               '';
 
             preservation = {
@@ -158,7 +240,29 @@
               "steam-unwrapped"
             ];
           }
+          (lib.mkIf config.programs.steam.enable {
+            hj.systemd.services = {
+              steam-autostart = {
+                enableDefaultPath = false;
+                description = "steam autostart";
+                after = [ "graphical-session.target" ];
+                wantedBy = [ "graphical-session.target" ];
+                serviceConfig = {
+                  Type = "simple";
+                  ExecStart = "${lib.getExe config.programs.steam.package} -gamepadui";
+                };
+              };
+            };
+          })
           (lib.mkIf cfg.gamemode.enable {
+            systemd.user.services.lan-mouse-gamemode-stopper = {
+              description = "Delayed shutdown for lan-mouse during GameMode";
+              script = ''
+                sleep 60
+                ${pkgs.systemd}/bin/systemctl --user stop lan-mouse.service
+              '';
+            };
+
             programs.gamemode = {
               enable = true;
               settings = {
@@ -167,8 +271,13 @@
                   energy_perf_preference = "performance";
                 };
                 custom = {
-                  start = "${config.forte.quickshell.package}/bin/tuishell ipc call gamemode set 1";
-                  end = "${config.forte.quickshell.package}/bin/tuishell ipc call gamemode set 0";
+                  start = "${pkgs.systemd}/bin/systemctl --user restart lan-mouse-gamemode-stopper.service";
+                  end = toString (
+                    pkgs.writeShellScript "gamemode-end" ''
+                      ${pkgs.systemd}/bin/systemctl --user stop lan-mouse-gamemode-stopper.service
+                      ${pkgs.systemd}/bin/systemctl --user start lan-mouse.service
+                    ''
+                  );
                 };
               };
             };

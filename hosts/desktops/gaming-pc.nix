@@ -13,7 +13,7 @@
         { config, ... }:
         {
           sops.defaultSopsFile = ../../.secrets/personal.yaml;
-          forte.flatpak.enable = true;
+          forte.flatpak.enable = false;
           services.nfs.server = {
             enable = true;
             exports = ''
