@@ -18,6 +18,7 @@
           ...
         }:
         {
+          boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
           forte.openssh.enable = lib.mkForce false;
           forte.opkssh.enable = true;
           sops.defaultSopsFile = ../../.secrets/personal.yaml;

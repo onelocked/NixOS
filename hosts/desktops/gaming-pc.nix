@@ -20,6 +20,9 @@
         {
           sops.defaultSopsFile = ../../.secrets/personal.yaml;
           forte.flatpak.enable = false;
+
+          boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
+
           forte.quickshell.enable = lib.mkForce false;
           services.nfs.server = {
             enable = true;

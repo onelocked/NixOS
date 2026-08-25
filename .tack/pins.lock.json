@@ -133,14 +133,6 @@
     "narHash": "sha256-i2xXiqLOnCNfwZnbrm1teVlTTA1HQ0IRVPXEiyiQtpU=",
     "lastModified": 1782656559
   },
-  "nix-cachyos-kernel": {
-    "type": "github",
-    "owner": "xddxdd",
-    "repo": "nix-cachyos-kernel",
-    "rev": "dbae8dc454556968710401643aa2c6867d166440",
-    "narHash": "sha256-7Hydh9RTatdMOVKgHno3ELWgsda1zeklSMGVWJqMiWs=",
-    "lastModified": 1787507561
-  },
   "nixos-core": {
     "type": "github",
     "owner": "manic-systems",
