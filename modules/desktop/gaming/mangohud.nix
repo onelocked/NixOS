@@ -1,8 +1,7 @@
 {
-  exo.mods.desktop = {
+  exo.mods.gaming = {
     forte.gaming.mangohud = {
       enable = true;
-      envConfig = true;
 
       settings = {
         position = "top-left";
@@ -82,15 +81,9 @@
       config = mkIf cfg.enable {
         hj.packages = [ cfg.package ];
 
-        hj.environment.sessionVariables = lib.mkMerge [
-          (mkIf cfg.enableSessionWide {
-            MANGOHUD = 1;
-            MANGOHUD_DLSYM = 1;
-          })
-          (mkIf (cfg.envConfig && cfg.settings != { }) {
-            MANGOHUD_CONFIG = renderEnvString cfg.settings;
-          })
-        ];
+        hj.environment.sessionVariables = {
+          MANGOHUD_CONFIG = renderEnvString cfg.settings;
+        };
 
         hj.xdg.config.files = {
           "MangoHud/MangoHud.conf" = mkIf (cfg.settings != { }) { text = renderSettings cfg.settings; };
@@ -103,18 +96,7 @@
         forte.gaming.mangohud = {
           enable = lib.mkEnableOption "Mangohud";
 
-          envConfig = lib.mkEnableOption "MANGOHUD_CONFIG environment variable generation";
-
           package = lib.mkPackageOption pkgs "mangohud" { };
-
-          enableSessionWide = mkOption {
-            type = types.bool;
-            default = false;
-            description = ''
-              Sets environment variables so that
-              MangoHud is started on any application that supports it.
-            '';
-          };
 
           settings = mkOption {
             type = with types; attrsOf settingsType;

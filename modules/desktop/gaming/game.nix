@@ -26,6 +26,14 @@
           ];
           extraEnv = {
             DBUS_FATAL_WARNINGS = "0";
+            GAMEMODERUNEXEC = "mangohud";
+
+            PROTON_ENABLE_WAYLAND = 1;
+            DXVK_ASYNC = "1";
+            # Allow GPU render queueing
+            DXGI_MAX_FRAME_LATENCY = "1";
+            D3D9_MAX_FRAME_LATENCY = "1";
+            MESA_SHADER_CACHE_MAX_SIZE = "10G";
           };
           extraPreBwrapCmds = # bash
             ''
@@ -125,15 +133,6 @@
         <| lib.mkMerge [
           {
             hj.packages = [ pkgs.protonup-rs ];
-            hj.environment.sessionVariables = {
-              PROTON_ENABLE_WAYLAND = 1;
-              DXVK_ASYNC = "1";
-              # Allow GPU render queueing
-              DXGI_MAX_FRAME_LATENCY = "1";
-              D3D9_MAX_FRAME_LATENCY = "1";
-              MESA_SHADER_CACHE_MAX_SIZE = "10G";
-            };
-
             forte.hyprland.lua.window-rules = # lua
               ''
                 hl.window_rule({
