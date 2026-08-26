@@ -4,7 +4,6 @@
       lib,
       hostName,
       theme,
-      pkgs,
       ...
     }:
     {
@@ -14,24 +13,6 @@
           hl.on("hyprland.start", function()
             hl.dispatch(hl.dsp.exec_cmd("sleep 2 && wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.6"))
           end)
-          --                     ▀     █
-          -- █▀█▀▄ ▄▀▀▀▄ █▀▀▀▄  ▀█    ▀█▀  ▄▀▀▀▄ █▄▀▀▀ ▄▀▀▀▀
-          -- █ █ █ █   █ █   █   █     █   █   █ █      ▀▀▀▄
-          -- █ █ █ ▀▄▄▄▀ █   █  ▄█▄    ▀▄▄ ▀▄▄▄▀ █     ▄▄▄▄▀
-
-          hl.monitor({
-            output   = "",
-            mode     = "preferred",
-            position = "auto",
-            scale    = "auto",
-            bitdepth = 10,
-            icc = "${
-              pkgs.fetchurl {
-                url = "https://s3.onelock.org/download/ZQE_CAA.icm";
-                hash = "sha256-ixFnNiAoi8wUJasFIOhUeQ5osjwkTzso6QSYhzo/pvo=";
-              }
-            }",
-          })
 
           --                                      ▀█
           -- ▄▀▀▀█ ▄▀▀▀▄ █▀▀▀▄ ▄▀▀▀▄ █▄▀▀▀  ▀▀▀▄   █

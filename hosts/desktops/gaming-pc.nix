@@ -8,12 +8,19 @@
       modules = with config.exo.mods; [
         remote-access
         gaming
+        neovim
       ];
       extraConfig =
-        { config, ... }:
+        {
+          config,
+          pkgs,
+          lib,
+          ...
+        }:
         {
           sops.defaultSopsFile = ../../.secrets/personal.yaml;
           forte.flatpak.enable = false;
+          forte.quickshell.enable = lib.mkForce false;
           services.nfs.server = {
             enable = true;
             exports = ''
@@ -21,6 +28,22 @@
             '';
           };
           networking.firewall.allowedTCPPorts = [ 2049 ];
+          forte.hyprland.lua.settings = # lua
+            ''
+              hl.monitor({
+                output = "DP-2",
+                mode = "3440x1440@120",
+                position = "0x0",
+                scale = 1,
+                bitdepth = 10,
+                icc = "${
+                  pkgs.fetchurl {
+                    url = "https://s3.onelock.org/download/ZQE_CAA.icm";
+                    hash = "sha256-ixFnNiAoi8wUJasFIOhUeQ5osjwkTzso6QSYhzo/pvo=";
+                  }
+                }",
+              })
+            '';
         };
     };
   };

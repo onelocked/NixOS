@@ -11,7 +11,12 @@
         remote-access
       ];
       extraConfig =
-        { config, lib, ... }:
+        {
+          pkgs,
+          config,
+          lib,
+          ...
+        }:
         {
           forte.openssh.enable = lib.mkForce false;
           forte.opkssh.enable = true;
@@ -24,6 +29,23 @@
               ];
             };
           };
+          forte.hyprland.lua.settings = # lua
+            ''
+              hl.monitor({
+                output   = "HDMI-A-1",
+                mode     = "3440x1440@100",
+                position = "0x0",
+                scale    = "1",
+                bitdepth = 10,
+                icc = "${
+                  pkgs.fetchurl {
+                    url = "https://s3.onelock.org/download/ZQE_CAA.icm";
+                    hash = "sha256-ixFnNiAoi8wUJasFIOhUeQ5osjwkTzso6QSYhzo/pvo=";
+                  }
+                }",
+              })
+            '';
+
           hj.files.".ssh/config".text = # bash
             ''
               Host Raspberry
