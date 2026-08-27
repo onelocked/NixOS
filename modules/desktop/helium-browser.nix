@@ -81,7 +81,7 @@
               "application/pdf"
               "text/html"
             ]
-            |> map (mime: lib.nameValuePair mime [ "zen-twilight.desktop" ])
+            |> map (mime: lib.nameValuePair mime [ "helium.desktop" ])
             |> lib.listToAttrs;
         };
       };
