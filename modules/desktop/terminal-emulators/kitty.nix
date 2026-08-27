@@ -20,6 +20,8 @@
           placement_strategy = "center";
           update_check_interval = "24";
           allow_hyperlinks = "yes";
+          allow_remote_control = "yes";
+          listen_on = "unix:/tmp/kitty";
 
           scrollback_lines = "10000";
           wheel_scroll_multiplier = "5.0";
