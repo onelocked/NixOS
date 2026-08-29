@@ -132,7 +132,7 @@
             cursor = {
               -- Prevents the mouse from snapping to the center when changing focus
               no_warps = true,
-              use_cpu_buffer = 0,
+              use_cpu_buffer = 2,
               no_hardware_cursors = 0,
             },
             ecosystem = {
