@@ -5,6 +5,7 @@
       exclude_follow = [ "nixpkgs" ];
     };
     fetch.hypr-plugs = "gh:hyprwm/hyprland-plugins";
+    fetch.scroll-overview = "gh:yayuuu/hyprland-scroll-overview";
   };
   exo.mods.desktop = {
     forte.hyprland = {
@@ -38,6 +39,7 @@
           {
             hj.packages = [ cfg.package ];
             forte.persist.home.directories = [ ".config/hypr" ];
+            forte.hyprland.plugins = [ self'.legacyPackages.scrolloverview ];
             forte.hyprland.lua.autostart =
               lib.optionalString (cfg.autostart != [ ] || cfg.plugins != [ ]) # lua
                 ''
@@ -351,18 +353,41 @@
     }:
     {
       legacyPackages = {
-        borders-plus-plus = pkgs.hyprlandPlugins.mkHyprlandPlugin {
-          pluginName = "borders-plus-plus";
-          version = "0.1";
-          src = "${inputs.hypr-plugs}/borders-plus-plus";
-          hyprland = self'.packages.hyprland;
+        scrolloverview = self'.packages.hyprland.stdenv.mkDerivation (finalAttrs: {
+          pname = "scrolloverview";
+          version = "1.0";
+          src = inputs.scroll-overview;
 
-          inherit (self'.packages.hyprland) nativeBuildInputs;
+          nativeBuildInputs = [ pkgs.pkg-config ];
+          buildInputs = [
+            pkgs.lua5_4
+            self'.packages.hyprland
+          ]
+          ++ self'.packages.hyprland.buildInputs;
+
+          enableParallelBuilding = true;
+          dontUseCmakeConfigure = true;
+
+          buildPhase = ''
+            runHook preBuild
+            export SCROLLOVERVIEW_BUILD_VERSION="1.0"
+            make all
+            runHook postBuild
+          '';
+
+          installPhase = ''
+            runHook preInstall
+            mkdir -p "$out/lib"
+            mv scrolloverview.so "$out/lib/libscrolloverview.so"
+            runHook postInstall
+          '';
+
           meta = {
-            homepage = "https://github.com/hyprwm/hyprland-plugins/tree/main/borders-plus-plus";
-            description = "Hyprland borders-plus-plus plugin";
+            homepage = "https://github.com/yayuuu/hyprland-scroll-overview";
+            description = "scroll overview";
+            platforms = self'.packages.hyprland.meta.platforms or [ ];
           };
-        };
+        });
       };
       packages = {
         hyprland = packages'.hyprland.overrideAttrs (oldAttrs: {

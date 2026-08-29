@@ -85,6 +85,10 @@ url = "gh:nix-community/preservation"
 [inputs.quickshell]
 url = "gh:quickshell-mirror/quickshell"
 
+[inputs.scroll-overview]
+type = "fetch"
+url = "gh:yayuuu/hyprland-scroll-overview"
+
 [inputs.sf-compact]
 type = "fixed"
 url = "https://devimages-cdn.apple.com/design/resources/download/SF-Compact.dmg"
