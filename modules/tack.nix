@@ -100,7 +100,8 @@
           (prevPins.inputs or { })
           |> lib.attrNames
           |> lib.filter (name: !(tackConfig.inputs ? ${name}))
-          |> lib.join " ";
+          |> map (remKey: "tack rm ${remKey}")
+          |> lib.concatLines;
       in
       {
         apps.tack-rebuild = {
@@ -128,7 +129,7 @@
                     newPinsToml="${tackConfig |> tomlFormat "pins.toml"}"
                     delta --dark --side-by-side --line-numbers --diff-so-fancy .tack/pins.toml "$newPinsToml" || true
 
-                    ${lib.optionalString (removeInputs != "") "tack rm ${removeInputs}"}
+                    ${lib.optionalString (removeInputs != "") removeInputs}
 
                     install -m 644 -D -T "$newPinsToml" .tack/pins.toml
                     echo "wrote .tack/pins.toml"
