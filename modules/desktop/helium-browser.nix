@@ -53,12 +53,6 @@
                   local win = hl.get_window("class:helium")
                   if win then
                       hl.dispatch(hl.dsp.focus({ window = win }))
-                      hl.dispatch(hl.dsp.window.fullscreen_state({
-                          internal = 0,
-                          client   = 3,
-                          action   = "set",
-                          window   = win,
-                      }))
                   else
                       hl.dispatch(hl.dsp.exec_raw("helium"))
                   end

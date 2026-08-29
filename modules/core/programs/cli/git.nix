@@ -138,7 +138,7 @@
               key = "D";
               command = "git show {{.SelectedLocalCommit.Hash}} | diffnav";
               context = "commits";
-              output = "terminal"; # Updated from subprocess = true;
+              output = "terminal";
               description = "Open selected commit in diffnav";
             }
           ];
