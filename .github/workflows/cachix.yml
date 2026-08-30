@@ -1,9 +1,9 @@
 ---
-name: Build and Cache Specific Nix Packages
+name: package cache
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: [master]
 jobs:
   prepare-matrix:
     name: Check Cache
@@ -15,7 +15,7 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@main
         with:
@@ -67,7 +67,7 @@ jobs:
         package: ${{ fromJSON(needs.prepare-matrix.outputs.matrix) }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@main
         with:
@@ -86,3 +86,15 @@ jobs:
           nix build ".#packages.x86_64-linux.${{ matrix.package }}" \
             --print-out-paths --print-build-logs \
             | cachix push onelock
+      - name: Notify Discord
+        uses: sarisia/actions-status-discord@v1
+        if: always()
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          username: GitHub Workflow
+          avatar_url: ${{ secrets.AVATAR_URL }}
+          status: ${{ job.status }}
+          title: Build and cache packages
+          content: look at this shi ${{ secrets.DISCORD_USER}}
+          nocontext: true
+          notimestamp: true
