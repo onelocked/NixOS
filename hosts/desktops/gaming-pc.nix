@@ -39,12 +39,6 @@
                 position = "0x0",
                 scale = 1,
                 bitdepth = 10,
-                icc = "${
-                  pkgs.fetchurl {
-                    url = "https://s3.onelock.org/download/ZQE_CAA.icm";
-                    hash = "sha256-ixFnNiAoi8wUJasFIOhUeQ5osjwkTzso6QSYhzo/pvo=";
-                  }
-                }",
               })
             '';
         };

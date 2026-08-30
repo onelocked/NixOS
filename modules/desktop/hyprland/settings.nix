@@ -97,6 +97,8 @@
               direct_scanout = 1,
               new_render_scheduling = true,
               use_fp16 = 1,
+              cm_enabled = 0;
+              cm_auto_hdr = 0;
             },
 
             --  ▀                       █

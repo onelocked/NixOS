@@ -269,15 +269,6 @@
                   governor = "performance";
                   energy_perf_preference = "performance";
                 };
-                custom = {
-                  start = "${pkgs.systemd}/bin/systemctl --user restart lan-mouse-gamemode-stopper.service";
-                  end = toString (
-                    pkgs.writeShellScript "gamemode-end" ''
-                      ${pkgs.systemd}/bin/systemctl --user stop lan-mouse-gamemode-stopper.service
-                      ${pkgs.systemd}/bin/systemctl --user start lan-mouse.service
-                    ''
-                  );
-                };
               };
             };
           })
