@@ -81,7 +81,7 @@
   perSystem =
     { pkgs, inputs, ... }:
     {
-      packages.lan-mouse = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
+      remotePackages.lan-mouse = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
         pname = "lan-mouse";
         version = "git";
         src = inputs.lan-mouse;

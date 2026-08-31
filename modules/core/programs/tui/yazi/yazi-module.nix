@@ -214,7 +214,7 @@
   perSystem =
     { inputs', ... }:
     {
-      packages.yazi = inputs'.yazi.packages.default.overrideAttrs {
+      remotePackages.yazi = inputs'.yazi.packages.default.overrideAttrs {
         doCheck = false;
       };
     };

@@ -24,16 +24,7 @@ jobs:
       - name: Filter uncached packages
         id: set-matrix
         run: |
-          PACKAGES=(
-            "yazi"
-            "cliphist"
-            "cliphist-tui"
-            "amdgpu_top"
-            "loupe"
-            "lan-mouse"
-            "quickshell"
-            "hyprland-bundle"
-          )
+          readarray -t PACKAGES < <(nix run .#list-remote-packages)
           MISSING=()
           for pkg in "${PACKAGES[@]}"; do
             if STORE_PATH=$(nix eval --raw ".#packages.x86_64-linux.$pkg.outPath"); then
@@ -49,7 +40,7 @@ jobs:
             echo "All packages are cached."
             echo "matrix=[]" >> "$GITHUB_OUTPUT"
           else
-            JSON_ARRAY="$(printf '%s\n' "${MISSING[@]}" | jq -R . | jq -s -c .)"
+            JSON_ARRAY="$(jq -nc '$ARGS.positional' --args "${MISSING[@]}")"
             echo "matrix=$JSON_ARRAY" >> "$GITHUB_OUTPUT"
           fi
   build-packages:
@@ -74,7 +65,7 @@ jobs:
       - name: Setup Magic Nix Cache
         uses: DeterminateSystems/magic-nix-cache-action@main
       - name: Setup Cachix
-        uses: cachix/cachix-action@v15
+        uses: cachix/cachix-action@v17
         with:
           name: onelock
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
@@ -89,7 +80,7 @@ jobs:
         run: echo "${{ job.status }}" > "status-${{ matrix.package }}.txt"
       - name: Upload Build Status
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: status-${{ matrix.package }}
           path: status-${{ matrix.package }}.txt
@@ -101,31 +92,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download Build Statuses
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           pattern: status-*
           merge-multiple: true
-      - name: Generate Summary
+      - name: Create Summary
         id: summary
         run: |
-          DESCRIPTION=""
+          echo "description<<EOF" >> "$GITHUB_OUTPUT"
           for file in status-*.txt; do
             [ -e "$file" ] || continue
             PACKAGE="${file#status-}"
             PACKAGE="${PACKAGE%.txt}"
-            STATUS="$(cat "$file")"
-            if [ "$STATUS" = "success" ] || [ "$STATUS" = "Success" ]; then
-              DESCRIPTION+="✅ $PACKAGE\n"
+            if [ "$(cat "$file")" = "success" ]; then
+              echo "✅ $PACKAGE" >> "$GITHUB_OUTPUT"
             else
-              DESCRIPTION+="❌ $PACKAGE\n"
+              echo "❌ $PACKAGE" >> "$GITHUB_OUTPUT"
             fi
           done
-          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-          echo "description<<$EOF" >> "$GITHUB_OUTPUT"
-          echo -e "$DESCRIPTION" >> "$GITHUB_OUTPUT"
-          echo "$EOF" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
       - name: Notify Discord
-        uses: sarisia/actions-status-discord@v1
+        uses: sarisia/actions-status-discord@v1.16.0
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           username: GitHub Workflow

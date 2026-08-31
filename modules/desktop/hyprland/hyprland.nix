@@ -507,11 +507,14 @@
             {
               doCheck = false;
             };
+      };
+      remotePackages = {
         hyprland-bundle = pkgs.symlinkJoin {
           name = "hyprland-bundle";
           paths = [
             self'.packages.hyprland
             self'.packages.xdg-desktop-portal-hyprland
+            self'.legacyPackages.scrolloverview
           ];
         };
       };

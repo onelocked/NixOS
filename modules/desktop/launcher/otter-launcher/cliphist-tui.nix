@@ -119,7 +119,7 @@
       ...
     }:
     {
-      packages.cliphist-tui = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
+      remotePackages.cliphist-tui = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
         pname = "cliphist-tui";
         version = "v1.0";
         src = inputs.cliphist-tui;
@@ -155,7 +155,7 @@
         ];
       });
 
-      packages.cliphist = wrapPackage {
+      remotePackages.cliphist = wrapPackage {
         env.CLIPHIST_MAX_STORE_SIZE = "1GB";
         package = pkgs.buildGoModule (finalAttrs: {
           pname = "cliphist";

@@ -234,7 +234,7 @@
   perSystem =
     { packages', ... }:
     {
-      packages.quickshell =
+      remotePackages.quickshell =
         (packages'.quickshell.override {
           withWayland = true;
           withPipewire = true;

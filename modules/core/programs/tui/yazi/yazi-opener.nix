@@ -46,7 +46,7 @@
   perSystem =
     { pkgs, ... }:
     {
-      packages.loupe = pkgs.loupe.overrideAttrs (oldAttrs: {
+      remotePackages.loupe = pkgs.loupe.overrideAttrs (oldAttrs: {
         doCheck = false;
         postPatch =
           (oldAttrs.postPatch or "")
