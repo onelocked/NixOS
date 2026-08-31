@@ -500,8 +500,19 @@
             )
           ];
         });
-        xdg-desktop-portal-hyprland = packages'.hyprland.xdg-desktop-portal-hyprland.overrideAttrs {
-          doCheck = false;
+        xdg-desktop-portal-hyprland =
+          (packages'.hyprland.xdg-desktop-portal-hyprland.override {
+            hyprland = self'.packages.hyprland;
+          }).overrideAttrs
+            {
+              doCheck = false;
+            };
+        hyprland-bundle = pkgs.symlinkJoin {
+          name = "hyprland-bundle";
+          paths = [
+            self'.packages.hyprland
+            self'.packages.xdg-desktop-portal-hyprland
+          ];
         };
       };
     };

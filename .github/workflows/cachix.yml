@@ -32,6 +32,7 @@ jobs:
             "loupe"
             "lan-mouse"
             "quickshell"
+            "hyprland-bundle"
           )
           MISSING=()
           for pkg in "${PACKAGES[@]}"; do
