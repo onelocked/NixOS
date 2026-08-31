@@ -33,9 +33,6 @@ jobs:
             "lan-mouse"
             "quickshell"
           )
-
-          # Pre-fetch all flake inputs into the store
-          nix flake prefetch . 2>/dev/null || true
           MISSING=()
           for pkg in "${PACKAGES[@]}"; do
             if STORE_PATH=$(nix eval --raw ".#packages.x86_64-linux.$pkg.outPath"); then
@@ -86,15 +83,54 @@ jobs:
           nix build ".#packages.x86_64-linux.${{ matrix.package }}" \
             --print-out-paths --print-build-logs \
             | cachix push onelock
+      - name: Record Build Status
+        if: always()
+        run: echo "${{ job.status }}" > "status-${{ matrix.package }}.txt"
+      - name: Upload Build Status
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: status-${{ matrix.package }}
+          path: status-${{ matrix.package }}.txt
+          retention-days: 1
+  notify:
+    name: Notify Discord
+    needs: build-packages
+    if: always() && needs.build-packages.result != 'skipped'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Build Statuses
+        uses: actions/download-artifact@v4
+        with:
+          pattern: status-*
+          merge-multiple: true
+      - name: Generate Summary
+        id: summary
+        run: |
+          DESCRIPTION=""
+          for file in status-*.txt; do
+            [ -e "$file" ] || continue
+            PACKAGE="${file#status-}"
+            PACKAGE="${PACKAGE%.txt}"
+            STATUS="$(cat "$file")"
+            if [ "$STATUS" = "success" ] || [ "$STATUS" = "Success" ]; then
+              DESCRIPTION+="✅ $PACKAGE\n"
+            else
+              DESCRIPTION+="❌ $PACKAGE\n"
+            fi
+          done
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "description<<$EOF" >> "$GITHUB_OUTPUT"
+          echo -e "$DESCRIPTION" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
       - name: Notify Discord
         uses: sarisia/actions-status-discord@v1
-        if: always()
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           username: GitHub Workflow
           avatar_url: ${{ secrets.AVATAR_URL }}
-          status: ${{ job.status }}
+          status: ${{ needs.build-packages.result }}
           title: Build and cache packages
+          description: ${{ steps.summary.outputs.description }}
           content: look at this shi ${{ secrets.DISCORD_USER}}
-          nocontext: true
           notimestamp: true
