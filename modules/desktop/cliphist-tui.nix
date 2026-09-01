@@ -92,21 +92,6 @@
               };
             };
           })
-          (lib.mkIf config.forte.otter-launcher.enable {
-            forte.otter-launcher = {
-              modules =
-                let
-                  inherit (config.forte.otter-launcher) resize;
-                in
-                [
-                  {
-                    description = "cliphist";
-                    "prefix" = "cc";
-                    cmd = resize 750 900 "cliphist-tui";
-                  }
-                ];
-            };
-          })
         ];
     };
   tack.inputs.fetch = {

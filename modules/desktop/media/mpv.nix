@@ -123,13 +123,6 @@
     {
       config = lib.mkIf cfg.enable {
         hj.packages = [ cfg.package ];
-        forte.otter-launcher.modules = [
-          {
-            description = "video";
-            prefix = "mpv";
-            cmd = "app2unit -- ${cfg.mpv-wlpaste}/bin/mpv-wlpaste";
-          }
-        ];
         forte.hyprland.lua.window-rules = # lua
           ''
             hl.window_rule({
