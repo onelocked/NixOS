@@ -153,9 +153,9 @@
     "type": "github",
     "owner": "nixos",
     "repo": "nixpkgs",
-    "rev": "d2f67949798825fe853f7c5d0492b8bf016d3f88",
-    "narHash": "sha256-pa4Q0qErvCvzCaaUph7Sm37RhR4xvPrYI8Lgz6k85+A=",
-    "lastModified": 1788039129
+    "rev": "34ab99075ac4f7e40cf037eef32cb1c360bb85e9",
+    "narHash": "sha256-hn1oU2rue2SYK8dAr8+WNZWtbsz1S2W5mnHlSEuh3bo=",
+    "lastModified": 1788179007
   },
   "no-header-prompt": {
     "type": "github",
@@ -299,9 +299,9 @@
     "type": "github",
     "owner": "sxyazi",
     "repo": "yazi",
-    "rev": "6ea223be3fbd7ffa73b61ed31f46c3e2bde25ed9",
-    "narHash": "sha256-P9XVBSN7rqg4Eh3uIQkoSnmahcupkrdYscsKlNusZBs=",
-    "lastModified": 1788180211
+    "rev": "a6f4b78c1b1e7a4d6c7c51d411799ee11f2adf3b",
+    "narHash": "sha256-JDfqyTMeYYGw+77lLKI3fmRLAIcsf49ZXfLg1EP70tU=",
+    "lastModified": 1788221843
   },
   "yazi-plugins": {
     "type": "github",
@@ -323,8 +323,8 @@
     "type": "github",
     "owner": "0xc000022070",
     "repo": "zen-browser-flake",
-    "rev": "5fe00f38d41ced9a5c0ba1cbf2127d7e8b3e3d56",
-    "narHash": "sha256-GueAv4789rOV70hixnL9+uN4tiDKJm7s92DnTejdpuE=",
-    "lastModified": 1788149125
+    "rev": "8bde1cac5dec5c287933c1d24e19050ccb749d36",
+    "narHash": "sha256-uXXFgQXqo2OV8/19fNppbxyBg0DSuHbcEXtdoARITCA=",
+    "lastModified": 1788212036
   }
 }
