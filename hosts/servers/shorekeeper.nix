@@ -7,10 +7,7 @@
       hardware = "ovh";
       server = true;
       theme = "light";
-      modules = with config.exo.mods; [
-        amneziawg
-        three-x-ui
-      ];
+      modules = with config.exo.mods; [ three-x-ui ];
       extraConfig =
         { pkgs, ... }:
         {
