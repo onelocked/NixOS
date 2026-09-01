@@ -1,12 +1,4 @@
 {
-  "app2unit": {
-    "type": "github",
-    "owner": "Vladimir-csp",
-    "repo": "app2unit",
-    "rev": "47e23ec6ab9e97bbe335c32fb640744a29bf32f7",
-    "narHash": "sha256-TIY+/9ekGub+10uyqXy5aYU+2NLysMtaQnD1PIjBCFA=",
-    "lastModified": 1785613904
-  },
   "apple-font-emoji": {
     "type": "fixed",
     "url": "https://release-assets.githubusercontent.com/github-production-release-asset/158348890/e9b8c2f1-632b-4d58-ad41-d9eae0f93b64?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-07-12T13%3A47%3A04Z&rscd=attachment%3B+filename%3DAppleColorEmoji-Linux.ttf&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-07-12T12%3A46%3A32Z&ske=2026-07-12T13%3A47%3A04Z&sks=b&skv=2018-11-09&sig=BCOwE0R5JxRQ5gb62ADAwbRzTXK5MPJHiD%2FmKJzPhII%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc4Mzg2NTA4NywibmJmIjoxNzgzODYxNDg3LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.97WRNDFlg60EzhJ4k2FzW86C8R5xG4TGaj8NI1n5EUo&response-content-disposition=attachment%3B%20filename%3DAppleColorEmoji-Linux.ttf&response-content-type=application%2Foctet-stream",

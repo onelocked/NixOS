@@ -6,10 +6,6 @@ rust-overlay = "rust-overlay"
 systems = "systems"
 treefmt-nix = "treefmt-nix"
 
-[inputs.app2unit]
-type = "fetch"
-url = "gh:Vladimir-csp/app2unit"
-
 [inputs.apple-font-emoji]
 type = "fixed"
 url = "https://github.com/samuelngs/apple-emoji-ttf/releases/download/macos-26-20260613-f1fc560b/AppleColorEmoji-Linux.ttf"

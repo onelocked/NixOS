@@ -15,7 +15,7 @@
       boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_xanmod_latest;
 
       zramSwap = {
-        enable = true;
+        enable = lib.mkDefault true;
         priority = 100;
         memoryPercent = 40;
         algorithm = "zstd";
