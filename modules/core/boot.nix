@@ -5,11 +5,21 @@
       inputs,
       lib,
       server,
+      pkgs,
       ...
     }:
     {
       imports = [ inputs.nixos-core.nixosModules.default ];
       system.nixos-core.enable = true;
+
+      boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_xanmod_latest;
+
+      zramSwap = {
+        enable = true;
+        priority = 100;
+        memoryPercent = 40;
+        algorithm = "zstd";
+      };
 
       boot.loader = {
         timeout = 10;
