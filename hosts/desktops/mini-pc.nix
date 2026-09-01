@@ -16,6 +16,7 @@
           forte.openssh.enable = lib.mkForce false;
           forte.opkssh.enable = true;
           sops.defaultSopsFile = ../../.secrets/personal.yaml;
+          forte.jellyfin-tui.enable = false;
 
           forte.persist.home.directories = [
             ".ssh"
