@@ -41,8 +41,6 @@
           };
         };
       };
-      options.forte.opkssh = {
-        enable = lib.mkEnableOption "opkssh";
-      };
+      options.forte.opkssh.enable = lib.mkEnableOption "opkssh";
     };
 }

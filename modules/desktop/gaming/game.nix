@@ -83,7 +83,6 @@
             "--unshare-ipc"
           ];
         };
-        extraCompatPackages = [ pkgs.proton-ge-bin ];
       };
 
       # Realtime scheduling permissions for games
@@ -254,17 +253,13 @@
             };
           })
           (lib.mkIf cfg.gamemode.enable {
-            systemd.user.services.lan-mouse-gamemode-stopper = {
-              description = "Delayed shutdown for lan-mouse during GameMode";
-              script = ''
-                sleep 60
-                ${pkgs.systemd}/bin/systemctl --user stop lan-mouse.service
-              '';
-            };
-
             programs.gamemode = {
               enable = true;
               settings = {
+                general = {
+                  softrealtime = "auto";
+                  renice = 15;
+                };
                 cpu = {
                   governor = "performance";
                   energy_perf_preference = "performance";

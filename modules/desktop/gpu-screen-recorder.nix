@@ -19,8 +19,6 @@
           group = "root";
         };
       };
-      options.forte.gpu-screen-recorder = {
-        enable = lib.mkEnableOption "GPU Screen Recorder";
-      };
+      options.forte.gpu-screen-recorder.enable = lib.mkEnableOption "GPU Screen Recorder";
     };
 }

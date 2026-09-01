@@ -75,23 +75,23 @@
   perSystem =
     { pkgs, ... }:
     {
-      packages.btop = pkgs.btop-rocm.overrideAttrs {
+      packages.btop = pkgs.btop.overrideAttrs (oldAttrs: {
         doCheck = false;
-        patches = [
+        patches = (oldAttrs.patches or [ ]) ++ [
           (pkgs.fetchpatch2 {
             name = "normalize_processes";
             url = "https://raw.githubusercontent.com/NotAShelf/nyxexprs/refs/heads/main/pkgs/btop/patches/normalize_processes.patch";
             hash = "sha256-dh3TTb0Ix983W50inTzGflQ7mpBELaKReBUmzjBixTo=";
           })
         ];
-      };
+      });
     };
   exo.skeleton =
     {
       lib,
       wrapPackage,
       config,
-      pkgs,
+      self',
       ...
     }:
     let
@@ -113,12 +113,6 @@
           default = { };
         };
 
-        unwrappedPackage = lib.mkOption {
-          type = lib.types.package;
-          default = pkgs.btop;
-          description = "The unwrapped btop package to use as the base.";
-        };
-
         package = lib.mkOption {
           default =
             let
@@ -136,7 +130,7 @@
               };
             in
             wrapPackage {
-              package = cfg.unwrappedPackage;
+              package = self'.packages.btop;
               files.configuration = {
                 "btop.conf" = cfg.settings |> toBtopConf;
               }
@@ -150,16 +144,11 @@
       };
     };
   exo.mods.desktop =
+    { lib, config, ... }:
+    let
+      cfg = config.forte.btop;
+    in
     {
-      lib,
-      config,
-      self',
-      ...
-    }:
-    {
-      config = lib.mkIf config.forte.btop.enable {
-        forte.xdg.desktopEntries."btop".noDisplay = true;
-        forte.btop.unwrappedPackage = self'.packages.btop;
-      };
+      config = lib.mkIf cfg.enable { forte.xdg.desktopEntries."btop".noDisplay = true; };
     };
 }

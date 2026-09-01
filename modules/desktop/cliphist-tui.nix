@@ -33,7 +33,7 @@
         systemd.startup = lib.mkEnableOption "cliphist-systemd-startup";
       };
       config =
-        lib.mkIf (cfg.enable)
+        lib.mkIf cfg.enable
         <| lib.mkMerge [
           {
             hj.packages = [ cfg.package ];

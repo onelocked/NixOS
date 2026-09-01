@@ -7,17 +7,13 @@
     {
       config = lib.mkIf cfg.enable {
         services.blueman.enable = true;
+        forte.persist.root.directories = [ "/var/lib/bluetooth" ];
         hardware.bluetooth = {
           enable = true;
           powerOnBoot = true;
           settings.General.Experimental = true;
         };
-        forte.persist = {
-          root.directories = [ "/var/lib/bluetooth" ];
-        };
       };
-      options.forte.bluetooth = {
-        enable = lib.mkEnableOption "bluetooth";
-      };
+      options.forte.bluetooth.enable = lib.mkEnableOption "bluetooth";
     };
 }

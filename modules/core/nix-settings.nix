@@ -14,7 +14,6 @@
     }:
     {
       system.stateVersion = "25.11";
-      environment.systemPackages = [ pkgs.nix-output-monitor ];
       nix = {
         channel.enable = false; # required for nix-shell -p to work, set it to true if needed
         optimise.automatic = true;
@@ -53,6 +52,8 @@
         };
       };
 
+      environment.systemPackages = [ pkgs.nix-output-monitor ];
+
       programs.fish.shellAbbrs = {
         nb = "nom build";
         nd = "nix develop";
@@ -67,11 +68,9 @@
   exo.skeleton =
     { lib, ... }:
     {
-      options.forte = {
-        allowUnfree = lib.mkOption {
-          type = lib.types.listOf lib.types.str;
-          default = [ ];
-        };
+      options.forte.allowUnfree = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [ ];
       };
     };
 }
