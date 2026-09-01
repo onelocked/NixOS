@@ -9,22 +9,21 @@
     }:
     {
       imports = [ inputs.nixos-core.nixosModules.default ];
-      config = {
-        system.nixos-core.enable = true;
-        boot.loader = {
-          timeout = 10;
-          efi.canTouchEfiVariables = !server;
+      system.nixos-core.enable = true;
 
-          systemd-boot = lib.mkIf (!server) {
-            enable = true;
-            configurationLimit = 10;
-          };
+      boot.loader = {
+        timeout = 10;
+        efi.canTouchEfiVariables = !server;
 
-          grub = lib.mkIf server {
-            enable = true;
-            efiSupport = true;
-            efiInstallAsRemovable = true;
-          };
+        systemd-boot = lib.mkIf (!server) {
+          enable = lib.mkDefault true;
+          configurationLimit = 10;
+        };
+
+        grub = lib.mkIf server {
+          enable = lib.mkDefault true;
+          efiSupport = lib.mkDefault true;
+          efiInstallAsRemovable = lib.mkDefault true;
         };
       };
     };

@@ -13,11 +13,6 @@
         {
           sops.defaultSopsFile = ../../.secrets/vps.yaml;
           boot.kernelPackages = pkgs.linuxPackages_latest;
-          boot.loader.grub = {
-            enable = true;
-            efiSupport = true;
-            efiInstallAsRemovable = true;
-          };
         };
     };
   };
