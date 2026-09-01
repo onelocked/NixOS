@@ -1,17 +1,37 @@
 {
-  exo.mods.desktop =
+  exo.mods.desktop = {
+    forte.cliphist-tui = {
+      enable = true;
+      systemd.startup = true;
+    };
+  };
+  exo.skeleton =
     {
-      self',
-      config,
-      lib,
       pkgs,
+      lib,
+      self',
       wrapPackage,
+      config,
       ...
     }:
     let
       cfg = config.forte.cliphist-tui;
     in
     {
+      options.forte.cliphist-tui = {
+        enable = lib.mkEnableOption "cliphist-tui";
+        package = lib.mkOption {
+          default = wrapPackage {
+            package = self'.packages.cliphist-tui;
+            extraPkgs = [
+              self'.packages.cliphist
+              pkgs.chafa
+              pkgs.ffmpegthumbnailer
+            ];
+          };
+        };
+        systemd.startup = lib.mkEnableOption "cliphist-systemd-startup";
+      };
       config =
         lib.mkIf (cfg.enable)
         <| lib.mkMerge [
@@ -88,24 +108,6 @@
             };
           })
         ];
-      options.forte.cliphist-tui = {
-        enable = lib.mkEnableOption "cliphist-tui" // {
-          default = true;
-        };
-        package = lib.mkOption {
-          default = wrapPackage {
-            package = self'.packages.cliphist-tui;
-            extraPkgs = [
-              self'.packages.cliphist
-              pkgs.chafa
-              pkgs.ffmpegthumbnailer
-            ];
-          };
-        };
-        systemd.startup = lib.mkEnableOption null // {
-          default = true;
-        };
-      };
     };
   tack.inputs.fetch = {
     cliphist-tui = "gh:SHORiN-KiWATA/cliphist-tui";
