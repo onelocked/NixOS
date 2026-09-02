@@ -87,6 +87,8 @@
               layers_hog_keyboard_focus  = false,
               focus_on_activate          = true,
               vrr = 0,
+              session_lock_blur = true,
+              session_lock_xray = true,
             },
 
             binds = {
@@ -94,11 +96,13 @@
             },
 
             render = {
+              async_commit = true,
               direct_scanout = 1,
               new_render_scheduling = false,
               use_fp16 = 1,
-              cm_enabled = 0;
-              cm_auto_hdr = 0;
+              cm_enabled = 0,
+              cm_auto_hdr = 0,
+              non_shader_cm = 3,
             },
 
             --  ▀                       █
@@ -132,7 +136,6 @@
               },
             },
             cursor = {
-              -- Prevents the mouse from snapping to the center when changing focus
               no_warps = true,
               use_cpu_buffer = 2,
               no_hardware_cursors = 0,
@@ -156,6 +159,8 @@
             },
           })
 
+          -- Scrindle Layout
+          -- scroll behave like dwindle for first 4 windows
           local count_tiled_windows = function(ws)
             local window_count = 0
             for _, w in pairs(hl.get_windows()) do
@@ -170,7 +175,6 @@
             return ws.name == "dev0" or ws.name == "dev1"
           end
 
-          -- scroll behave like dwindle for first 4 windows
           hl.on("window.open_early", function(w)
             if w.floating then return end
             local ws = w.workspace

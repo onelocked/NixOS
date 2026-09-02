@@ -2,7 +2,6 @@
   tack.inputs = {
     hyprland = {
       url = "gh:hyprwm/Hyprland";
-      exclude_follow = [ "nixpkgs" ];
     };
     fetch.hypr-plugs = "gh:hyprwm/hyprland-plugins";
     fetch.scroll-overview = "gh:yayuuu/hyprland-scroll-overview/new-release";
@@ -24,7 +23,6 @@
       config,
       pkgs,
       self',
-      hardware,
       constants,
       ...
     }:

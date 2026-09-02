@@ -47,7 +47,6 @@ type = "fetch"
 url = "gh:hyprwm/hyprland-plugins"
 
 [inputs.hyprland]
-exclude_follow = ["nixpkgs"]
 url = "gh:hyprwm/Hyprland"
 
 [inputs.lan-mouse]
