@@ -44,7 +44,7 @@
             decoration = {
               border_part_of_window = false,
               rounding              = 0,
-              rounding_power        = 0,
+              rounding_power        = 1,
 
               active_opacity        = ${if theme == "dark" then "0.93" else "0.88"},
               inactive_opacity      = ${if theme == "dark" then "0.89" else "0.83"},
@@ -60,7 +60,7 @@
               shadow = {
                 enabled      = ${if theme == "dark" then "false" else "true"},
                 range        = 15,
-                render_power = 30,
+                render_power = 4,
                 color        = "#59311fCC",
                 offset       = { 5, 5 }
               },
@@ -154,7 +154,6 @@
               smart_split                  = false,
               smart_resizing               = false,
               permanent_direction_override = false,
-              special_scale_factor         = 1,
               split_width_multiplier       = 2,
               use_active_for_splits        = true,
               default_split_ratio          = 1,
