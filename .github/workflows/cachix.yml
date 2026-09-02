@@ -2,15 +2,10 @@
 name: package cache
 on:
   workflow_dispatch:
-  push:
-    branches: [master]
 jobs:
   prepare-matrix:
     name: Check Cache
     runs-on: ubuntu-latest
-    if: >-
-      github.event_name == 'workflow_dispatch' ||
-      startsWith(github.event.head_commit.message, 'tack: update inputs')
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
@@ -62,8 +57,6 @@ jobs:
         with:
           extra-conf: |
             experimental-features = pipe-operators
-      - name: Setup Magic Nix Cache
-        uses: DeterminateSystems/magic-nix-cache-action@main
       - name: Setup Cachix
         uses: cachix/cachix-action@v17
         with:
