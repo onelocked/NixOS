@@ -185,11 +185,6 @@
               reboot = ''${lib.getExe pkgs.hyprshutdown} -t "Restarting..." --post-cmd "reboot"'';
             };
           })
-          (lib.mkIf (hardware == "mini-pc") {
-            environment.sessionVariables = {
-              AQ_NO_MODIFIERS = 1;
-            };
-          })
           (lib.mkIf (cfg.withHypridle) {
             hj.packages = [ pkgs.hypridle ];
             hj.systemd.services.hypridle = {

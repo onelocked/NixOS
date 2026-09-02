@@ -72,99 +72,6 @@
             end
           end)
 
-
-
-          -- switch layouts
-          hl.bind("SUPER + tab", function()
-            local workspace   = hl.get_active_workspace()
-            if not workspace then return end
-
-            -- local layouts     = { "scrolling", "dwindle" }
-            local layouts = {
-              ["dwindle"] = "scrolling",
-              ["scrolling"] =  "dwindle"
-            }
-
-            local next_layout = layouts[workspace.tiled_layout]
-            if not next_layout then return end
-
-            hl.workspace_rule({ workspace = "name:" .. workspace.name, layout = next_layout })
-
-            if next_layout == "scrolling" then
-              local prev = hl.get_config("scrolling.focus_fit_method")
-              hl.config({ scrolling = { focus_fit_method = 0 } })
-              hl.timer(function()
-                hl.config({ scrolling = { focus_fit_method = prev } })
-              end, { timeout = 50, type = "oneshot" })
-            end
-          end)
-
-          -- alt+ tab overview
-
-          hl.layout.register("grid", {
-            recalculate = function(ctx)
-              local n = #ctx.targets
-              if n == 0 then return end
-              local cols = math.ceil(math.sqrt(n))
-              for i, target in ipairs(ctx.targets) do
-                target:place(ctx:grid_cell(i, cols))
-              end
-            end,
-          })
-
-          local overview_origin_window = nil
-          local overview_origin_layout = nil
-
-          local function exit_overview(select)
-            local workspace = hl.get_active_workspace()
-            if not workspace then return end
-
-            local restore_layout = overview_origin_layout or "scrolling"
-
-            hl.workspace_rule({ workspace = "name:" .. workspace.name, layout = restore_layout })
-            hl.dispatch(hl.dsp.submap("reset"))
-
-            if not select then
-              -- Escape key restore original window focus first
-              if overview_origin_window then
-                hl.dispatch(hl.dsp.focus({ window = overview_origin_window }))
-              end
-            end
-
-            -- center in scrolling
-            if restore_layout == "scrolling" then
-              local prev = hl.get_config("scrolling.focus_fit_method")
-              hl.config({ scrolling = { focus_fit_method = 0 } })
-              hl.timer(function()
-                hl.config({ scrolling = { focus_fit_method = prev } })
-              end, { timeout = 50, type = "oneshot" })
-            end
-
-            overview_origin_window = nil
-            overview_origin_layout = nil
-          end
-
-          hl.define_submap("overview", function()
-            hl.bind("left", hl.dsp.focus({ direction = "left" }), { repeating = true })
-            hl.bind("right", hl.dsp.focus({ direction = "right" }), { repeating = true })
-            hl.bind("up", hl.dsp.focus({ direction = "up" }), { repeating = true })
-            hl.bind("down", hl.dsp.focus({ direction = "down" }), { repeating = true })
-            hl.bind("return", function() exit_overview(true) end)
-            hl.bind("escape", function() exit_overview(false) end)
-          end)
-
-          hl.bind("ALT + TAB", function()
-              local workspace = hl.get_active_workspace()
-              if not workspace then return end
-
-              overview_origin_window = hl.get_active_window()
-              overview_origin_layout = workspace.tiled_layout
-
-              hl.workspace_rule({ workspace = "name:" .. workspace.name, layout = "lua:grid" })
-              hl.dispatch(hl.dsp.submap("overview"))
-          end, { long_press = true })
-
-
           -- Move focus with SUPER + arrow keys
           hl.bind("SUPER + left", hl.dsp.focus({ direction = "left" }))
           hl.bind("SUPER + right", hl.dsp.focus({ direction = "right" }))
@@ -190,10 +97,6 @@
           -- Move/resize windows with SUPER + LMB/RMB and dragging
           hl.bind("SUPER + mouse:272", hl.dsp.window.drag(), { mouse = true })
           hl.bind("SUPER + mouse:273", hl.dsp.window.resize(), { mouse = true })
-
-          -- disable side mouse buttons
-          hl.bind("mouse:276", hl.dsp.no_op(), { release = true })
-          hl.bind("mouse:275", hl.dsp.no_op(), { release = true })
 
           hl.bind("SUPER + ALT + D", hl.dsp.exec_cmd("ddcutil setvcp 60 ${
             if hostName == "mini-pc" then "0x0f" else "0x11"
@@ -241,7 +144,7 @@
               end
           end)
 
-          scrolling_binds("SUPER" .. " + R", function()
+          scrolling_binds("SUPER + R", function()
             -- Find out what workspace we are currently on
             local ws = hl.get_active_workspace()
             local safe_key = tostring(ws and (ws.name or ws.id) or "")
@@ -261,134 +164,6 @@
             hl.config({ scrolling = { focus_fit_method = 0 } })
             hl.dispatch(hl.dsp.layout("center"))
             hl.config({ scrolling = { focus_fit_method = prev } })
-          end)
-
-
-
-          --     █         ▀             █  ▀█                █       ▀             █
-          -- ▄▀▀▀█ █   █  ▀█   █▀▀▀▄ ▄▀▀▀█   █   ▄▀▀▀▄        █▀▀▀▄  ▀█   █▀▀▀▄ ▄▀▀▀█ ▄▀▀▀▀
-          -- █   █ █ █ █   █   █   █ █   █   █   █▀▀▀▀        █   █   █   █   █ █   █  ▀▀▀▄
-          -- ▀▄▄▄█ ▀▄█▄▀  ▄█▄  █   █ ▀▄▄▄█   ▀▄▄ ▀▄▄▄▄        █▄▄▄▀  ▄█▄  █   █ ▀▄▄▄█ ▄▄▄▄▀
-
-          local function dwindle_only(fn)
-            return function()
-              local workspace = hl.get_active_workspace()
-              if workspace and workspace.tiled_layout == "dwindle" then
-                fn()
-              end
-            end
-          end
-
-          local function dwindle_binds(key, action)
-            local fn = type(action) == "function" and action or function() hl.dispatch(action) end
-            hl.bind(key, dwindle_only(fn))
-          end
-
-          dwindle_binds("SUPER + C", hl.dsp.layout("togglesplit"))
-          dwindle_binds("SUPER + F", hl.dsp.layout("swapsplit"))
-
-
-          local resize_border_rule = hl.window_rule({
-            name = "resize-mode-border",
-            match = { focus = true },
-            border_color = "rgba(f9e2afff) rgba(a6e3a1ff) rgba(89dcebff) 45deg",
-            border_size = 9
-          })
-          resize_border_rule:set_enabled(false)
-
-          local flash_timer = nil
-          local flash_rule = nil
-
-          local function flash_focused_window()
-            -- Remove existing flash rule
-            if flash_rule then
-              flash_rule:set_enabled(false)
-            end
-            -- Create new flash rule targeting focused window
-            flash_rule = hl.window_rule({
-              match = { focus = true },
-              border_color = "rgba(cba6f7ff) rgba(89b4faff) rgba(94e2d5ff) 120deg",
-              border_size = 9
-            })
-            -- Cancel any pending timer
-            if flash_timer then
-              flash_timer:set_enabled(false)
-            end
-            -- Remove flash rule after 150ms
-            flash_timer = hl.timer(function()
-              if flash_rule then
-                flash_rule:set_enabled(false)
-                flash_rule = nil
-              end
-            end, { timeout = 150, type = "oneshot" })
-          end
-
-          -- Window movement
-          local function move_window(direction)
-            local ws = hl.get_active_workspace()
-            if not ws then return end
-            local layout = ws.tiled_layout
-            if layout == "scrolling" then
-              if direction == "left" then
-                hl.dispatch(hl.dsp.layout("swapcol l"))
-              elseif direction == "right" then
-                hl.dispatch(hl.dsp.layout("swapcol r"))
-              end
-            else
-              hl.dispatch(hl.dsp.window.swap({ direction = direction }))
-            end
-          end
-
-          -- Mode management
-          local function enter_nav_mode()
-            flash_focused_window()
-            hl.dispatch(hl.dsp.submap("nav"))
-            hl.config({ decoration = { dim_inactive = true, dim_strength = 0.25 } })
-          end
-
-          local function enter_resize_mode()
-            resize_border_rule:set_enabled(true)
-            hl.dispatch(hl.dsp.submap("resize"))
-          end
-
-          local function exit_to_normal()
-            resize_border_rule:set_enabled(false)
-            hl.config({ decoration = { dim_inactive = false } })
-            hl.dispatch(hl.dsp.submap("reset"))
-          end
-
-          -- Keybindings
-          hl.bind("CTRL + SPACE", function() enter_nav_mode() end)
-
-          hl.define_submap("nav", function()
-            hl.bind("left", function() hl.dispatch(hl.dsp.focus({ direction = "left" })) end)
-            hl.bind("right", function() hl.dispatch(hl.dsp.focus({ direction = "right" })) end)
-            hl.bind("up", function() hl.dispatch(hl.dsp.focus({ direction = "up" })) end)
-            hl.bind("down", function() hl.dispatch(hl.dsp.focus({ direction = "down" })) end)
-
-            hl.bind("CTRL + left", function() move_window("left") end)
-            hl.bind("CTRL + right", function() move_window("right") end)
-            hl.bind("CTRL + up", function() move_window("up") end)
-            hl.bind("CTRL + down", function() move_window("down") end)
-
-            hl.bind("R", function() enter_resize_mode() end)
-            hl.bind("escape", function() exit_to_normal() end)
-          end)
-
-          hl.define_submap("resize", function()
-            local step = 30
-            hl.bind("right", hl.dsp.window.resize({ x = step, y = 0, relative = true }), { repeating = true })
-            hl.bind("left", hl.dsp.window.resize({ x = -step, y = 0, relative = true }), { repeating = true })
-            hl.bind("up", hl.dsp.window.resize({ x = 0, y = -step, relative = true }), { repeating = true })
-            hl.bind("down", hl.dsp.window.resize({ x = 0, y = step, relative = true }), { repeating = true })
-            hl.bind("SHIFT + right", hl.dsp.window.resize({ x = step * 2, y = 0, relative = true }), { repeating = true })
-            hl.bind("SHIFT + left", hl.dsp.window.resize({ x = -step * 2, y = 0, relative = true }), { repeating = true })
-            hl.bind("SHIFT + up", hl.dsp.window.resize({ x = 0, y = -step * 2, relative = true }), { repeating = true })
-            hl.bind("SHIFT + down", hl.dsp.window.resize({ x = 0, y = step * 2, relative = true }), { repeating = true })
-            hl.bind("escape", function()
-              resize_border_rule:set_enabled(false)
-              hl.dispatch(hl.dsp.submap("nav"))
-            end)
           end)
         '';
     };
