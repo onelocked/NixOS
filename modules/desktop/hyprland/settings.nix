@@ -95,7 +95,7 @@
 
             render = {
               direct_scanout = 1,
-              new_render_scheduling = true,
+              new_render_scheduling = false,
               use_fp16 = 1,
               cm_enabled = 0;
               cm_auto_hdr = 0;
