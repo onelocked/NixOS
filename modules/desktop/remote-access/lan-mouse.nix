@@ -41,7 +41,7 @@
           };
           serviceConfig = {
             Type = "simple";
-            ExecStart = "${lib.getExe cfg.package} daemon";
+            ExecStart = "${lib.getExe cfg.package} --capture-backend dummy daemon"; # TODO: temporary fix for this bug https://github.com/hyprwm/xdg-desktop-portal-hyprland/issues/419
             Restart = "on-failure";
             RestartSec = 1;
             TimeoutStopSec = 10;
