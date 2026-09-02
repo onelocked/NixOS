@@ -32,10 +32,6 @@ url = "gh:nix-community/disko"
 type = "fetch"
 url = "gh:boydaihungst/file-extra-metadata.yazi"
 
-[inputs.fsel]
-type = "fetch"
-url = "gh:Mjoyufull/fsel"
-
 [inputs.fuzzy-search]
 type = "fetch"
 url = "gh:onelocked/fuzzy-search.yazi"
@@ -52,7 +48,7 @@ url = "gh:hyprwm/hyprland-plugins"
 
 [inputs.hyprland]
 exclude_follow = ["nixpkgs"]
-url = "gh:hyprwm/Hyprland/79bc0ca16e7cca40c247a9200634d150fa8193d1"
+url = "gh:hyprwm/Hyprland"
 
 [inputs.lan-mouse]
 type = "fetch"
@@ -71,10 +67,6 @@ url = "gh:nixos/nixpkgs/nixos-unstable"
 type = "fetch"
 url = "gh:onelocked/no-header-prompt.yazi"
 
-[inputs.otter-launcher]
-type = "fetch"
-url = "gh:kuokuo123/otter-launcher"
-
 [inputs.preservation]
 url = "gh:nix-community/preservation"
 
@@ -83,7 +75,7 @@ url = "gh:quickshell-mirror/quickshell"
 
 [inputs.scroll-overview]
 type = "fetch"
-url = "gh:yayuuu/hyprland-scroll-overview"
+url = "gh:yayuuu/hyprland-scroll-overview/new-release"
 
 [inputs.sf-compact]
 type = "fixed"
