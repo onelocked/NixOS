@@ -84,6 +84,7 @@
       environment.sessionVariables = {
         LIBVA_DRIVER_NAME = "nvidia";
         __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+        NVD_BACKEND = "direct";
       };
       services.lact.enable = true; # GPU fan control GUI with a daemon
 
