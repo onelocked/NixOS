@@ -37,7 +37,6 @@
           {
             hj.packages = [ cfg.package ];
             forte.persist.home.directories = [ ".config/hypr" ];
-            forte.hyprland.plugins = [ self'.legacyPackages.scrolloverview ];
             forte.hyprland.lua.autostart =
               lib.optionalString (cfg.autostart != [ ] || cfg.plugins != [ ]) # lua
                 ''
