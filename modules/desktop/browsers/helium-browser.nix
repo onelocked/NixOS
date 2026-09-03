@@ -32,7 +32,7 @@
                 match            = { class = "helium" },
                 workspace        = "name:web",
                 fullscreen_state = "0 1",
-                opacity          = "1 override 0.95 override",
+                opacity          = "1 override 0.92 override",
                 scrolling_width  = 0.333,
               })
               hl.window_rule({
