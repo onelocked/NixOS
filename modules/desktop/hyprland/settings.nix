@@ -79,6 +79,9 @@
             misc = {
               force_default_wallpaper    = 0,
               disable_hyprland_logo      = true,
+              animate_manual_resizes = false,
+              animate_mouse_windowdragging = false,
+              disable_splash_rendering = true,
               middle_click_paste         = false,
               enable_swallow             = true,
               on_focus_under_fullscreen  = 1,
@@ -89,6 +92,7 @@
               vrr = 0,
               session_lock_blur = true,
               session_lock_xray = true,
+              render_unfocused_fps = 5,
             },
 
             binds = {
