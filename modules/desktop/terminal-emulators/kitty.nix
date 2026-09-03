@@ -114,6 +114,8 @@
           map alt+a kitty_scrollback_nvim
           map alt+g kitty_scrollback_nvim --config ksb_builtin_last_cmd_output
           mouse_map ctrl+shift+right press ungrabbed combine : mouse_select_command_output : kitty_scrollback_nvim --config ksb_builtin_last_visited_cmd_output
+
+          map alt+h kitten hints --type regex --regex 'sha256-[A-Za-z0-9+/=]{44}' --program @
         '';
         fontConfig =
           let
