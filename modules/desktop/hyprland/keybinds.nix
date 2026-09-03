@@ -4,34 +4,6 @@
     {
       forte.hyprland.lua.keybinds = # lua
         ''
-          -- scrolling dynamic column width based on workspace
-          local workspace_widths = {
-            ["web"] = {0.3333, 0.5, 0.7162, 0.92 },
-            ["dev0"] = { 0.3333, 0.5, 0.71 },
-            ["dev1"] = { 0.3333, 0.5, 0.71 },
-            ["chat"] = { 0.5, 0.71 },
-          }
-          local default_widths = { 0.3, 0.5, 0.71 }
-          local cycle_idx = 0
-          local function apply_workspace_widths(ws_name_or_id)
-            local safe_key = tostring(ws_name_or_id or "")
-            local widths_to_apply = workspace_widths[safe_key] or default_widths
-
-            hl.config({
-              scrolling = {
-                explicit_column_widths = table.concat(widths_to_apply, ", ")
-              }
-            })
-          end
-
-          hl.on("workspace.active", function(ws)
-            if ws then apply_workspace_widths(ws.name or ws.id) end
-          end)
-
-          local current_ws = hl.get_active_workspace()
-          if current_ws then apply_workspace_widths(current_ws.name or current_ws.id) end
-
-
           -- █                █       ▀             █
           -- █ ▄▀ ▄▀▀▀▄ █   █ █▀▀▀▄  ▀█   █▀▀▀▄ ▄▀▀▀█ ▄▀▀▀▀
           -- ██   █▀▀▀▀ █   █ █   █   █   █   █ █   █  ▀▀▀▄
@@ -145,17 +117,7 @@
           end)
 
           scrolling_binds("SUPER + R", function()
-            -- Find out what workspace we are currently on
-            local ws = hl.get_active_workspace()
-            local safe_key = tostring(ws and (ws.name or ws.id) or "")
-
-            -- Get the specific array of widths for this workspace
-            local current_array = workspace_widths[safe_key] or default_widths
-
-            cycle_idx = (cycle_idx % #current_array) + 1
-
-            -- Dispatch the layout resize
-            hl.dispatch(hl.dsp.layout("colresize " .. current_array[cycle_idx]))
+            hl.dispatch(hl.dsp.layout("colresize +conf"))
           end)
 
           scrolling_binds("SUPER + C", function()

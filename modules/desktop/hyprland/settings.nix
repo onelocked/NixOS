@@ -9,6 +9,33 @@
     {
       forte.hyprland.lua.settings = # lua
         ''
+          hl.workspace_rule {
+              workspace = "name:chat",
+              layout_opts = {
+                  explicit_column_widths = "0.333,0.5,0.7162,0.92"
+              }
+          }
+
+          hl.workspace_rule {
+              workspace = "name:dev0",
+              layout_opts = {
+                  explicit_column_widths = "0.333,0.5,0.7162"
+              }
+          }
+
+          hl.workspace_rule {
+              workspace = "name:dev1",
+              layout_opts = {
+                  explicit_column_widths = "0.333,0.5,0.7162"
+              }
+          }
+
+          hl.workspace_rule {
+              workspace = "name:chat",
+              layout_opts = {
+                  explicit_column_widths = "0.5,0.71"
+              }
+          }
 
           hl.on("hyprland.start", function()
             hl.dispatch(hl.dsp.exec_cmd("sleep 2 && wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.6"))

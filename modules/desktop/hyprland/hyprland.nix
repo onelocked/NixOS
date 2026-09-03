@@ -378,6 +378,141 @@
       packages = {
         hyprland = packages'.hyprland.overrideAttrs (oldAttrs: {
           doCheck = false;
+          patches = (oldAttrs.patches or [ ]) ++ [
+            (pkgs.writeText "per-workspace-scrolling-width" # cpp
+              ''
+                diff --git a/src/layout/algorithm/tiled/scrolling/ScrollingAlgorithm.cpp b/src/layout/algorithm/tiled/scrolling/ScrollingAlgorithm.cpp
+                index c2dd3a4..a778aab 100644
+                --- a/src/layout/algorithm/tiled/scrolling/ScrollingAlgorithm.cpp
+                +++ b/src/layout/algorithm/tiled/scrolling/ScrollingAlgorithm.cpp
+                @@ -582,6 +582,23 @@ bool SScrollingData::visible(SP<SColumnData> c, bool full) {
+                     return false;
+                 }
+
+                +static std::vector<float> parseColumnWidths(const std::string& dir) {
+                +    auto          widthVec = std::vector<float>();
+                +
+                +    char sep = dir.find(',') != std::string::npos ? ',' : ' ';
+                +    CConstVarList widths(dir, 0, sep);
+                +    for (auto& w : widths) {
+                +        if (w.empty())
+                +            continue;
+                +        try {
+                +            widthVec.emplace_back(std::clamp(std::stof(std::string{w}), MIN_COLUMN_WIDTH, MAX_COLUMN_WIDTH));
+                +        } catch (...) { LOG(Log::ERR, "scrolling: Failed to parse width {} as float", w); }
+                +    }
+                +    if (widthVec.empty())
+                +        widthVec = {0.333, 0.5, 0.667, 1.0}; // default
+                +    return widthVec;
+                +}
+                +
+                 CScrollingAlgorithm::CScrollingAlgorithm() : m_scrollingFullscreenHandler(makeUnique<Fullscreen::ScrollingFullscreenHandler::CScrollingFullscreenHandler>(this)) {
+                     static const auto PCONFWIDTHS    = CConfigValue<Config::STRING>("scrolling:explicit_column_widths");
+                     static const auto PCONFDIRECTION = CConfigValue<Config::STRING>("scrolling:direction");
+                @@ -589,21 +606,6 @@ CScrollingAlgorithm::CScrollingAlgorithm() : m_scrollingFullscreenHandler(makeUn
+                     m_scrollingData       = makeShared<SScrollingData>(this);
+                     m_scrollingData->self = m_scrollingData;
+
+                -    // Helper to parse explicit_column_widths string
+                -    auto parseColumnWidths = [](const std::string& dir) -> std::vector<float> {
+                -        auto          widthVec = std::vector<float>();
+                -
+                -        CConstVarList widths(dir, 0, ',');
+                -        for (auto& w : widths) {
+                -            try {
+                -                widthVec.emplace_back(std::clamp(std::stof(std::string{w}), MIN_COLUMN_WIDTH, MAX_COLUMN_WIDTH));
+                -            } catch (...) { LOG(Log::ERR, "scrolling: Failed to parse width {} as float", w); }
+                -        }
+                -        if (widthVec.empty())
+                -            widthVec = {0.333, 0.5, 0.667, 1.0}; // default
+                -        return widthVec;
+                -    };
+                -
+                     // Helper to parse direction string
+                     auto parseDirection = [](const std::string& dir) -> eScrollDirection {
+                         if (dir == "left")
+                @@ -616,7 +618,7 @@ CScrollingAlgorithm::CScrollingAlgorithm() : m_scrollingFullscreenHandler(makeUn
+                             return SCROLL_DIR_RIGHT; // default
+                     };
+
+                -    m_configCallback = Event::bus()->m_events.config.reloaded.listen([this, parseColumnWidths, parseDirection] {
+                +    m_configCallback = Event::bus()->m_events.config.reloaded.listen([this, parseDirection] {
+                         static const auto PCONFDIRECTION = CConfigValue<Config::STRING>("scrolling:direction");
+
+                         m_config.configuredWidths.clear();
+                @@ -1259,14 +1261,15 @@ Config::ErrorResult CScrollingAlgorithm::layoutMsg(const std::string_view& sv) {
+                             if (ARGS[1] == "+conf") {
+                                 auto col = TDATA->column.lock();
+                                 if (col) {
+                -                    for (size_t i = 0; i < m_config.configuredWidths.size(); ++i) {
+                -                        if (m_config.configuredWidths[i] > col->getColumnWidth()) {
+                -                            col->setColumnWidth(m_config.configuredWidths[i]);
+                +                    auto dynamicWidths = getDynamicWidths();
+                +                    for (size_t i = 0; i < dynamicWidths.size(); ++i) {
+                +                        if (dynamicWidths[i] > col->getColumnWidth()) {
+                +                            col->setColumnWidth(dynamicWidths[i]);
+                                             break;
+                                         }
+
+                -                        if (i == m_config.configuredWidths.size() - 1)
+                -                            col->setColumnWidth(m_config.configuredWidths[0]);
+                +                        if (i == dynamicWidths.size() - 1)
+                +                            col->setColumnWidth(dynamicWidths[0]);
+                                     }
+                                 }
+
+                @@ -1274,14 +1277,15 @@ Config::ErrorResult CScrollingAlgorithm::layoutMsg(const std::string_view& sv) {
+                             } else if (ARGS[1] == "-conf") {
+                                 auto col = TDATA->column.lock();
+                                 if (col) {
+                -                    for (size_t i = m_config.configuredWidths.size() - 1;; --i) {
+                -                        if (m_config.configuredWidths[i] < col->getColumnWidth()) {
+                -                            col->setColumnWidth(m_config.configuredWidths[i]);
+                +                    auto dynamicWidths = getDynamicWidths();
+                +                    for (size_t i = dynamicWidths.size() - 1;; --i) {
+                +                        if (dynamicWidths[i] < col->getColumnWidth()) {
+                +                            col->setColumnWidth(dynamicWidths[i]);
+                                             break;
+                                         }
+
+                                         if (i == 0) {
+                -                            col->setColumnWidth(m_config.configuredWidths.back());
+                +                            col->setColumnWidth(dynamicWidths.back());
+                                             break;
+                                         }
+                                     }
+                @@ -1966,6 +1970,15 @@ eScrollDirection CScrollingAlgorithm::getDynamicDirection() {
+                         return SCROLL_DIR_RIGHT; // default
+                 }
+
+                +std::vector<float> CScrollingAlgorithm::getDynamicWidths() {
+                +    const auto WORKSPACERULE = Config::workspaceRuleMgr()->getWorkspaceRuleFor(m_parent->space()->workspace());
+                +    if (WORKSPACERULE && WORKSPACERULE->m_layoutopts.contains("explicit_column_widths")) {
+                +        return parseColumnWidths(WORKSPACERULE->m_layoutopts.at("explicit_column_widths"));
+                +    }
+                +
+                +    return m_config.configuredWidths;
+                +}
+                +
+                 CBox CScrollingAlgorithm::usableArea() const {
+                     if (!m_parent || !m_parent->space())
+                         return {};
+                diff --git a/src/layout/algorithm/tiled/scrolling/ScrollingAlgorithm.hpp b/src/layout/algorithm/tiled/scrolling/ScrollingAlgorithm.hpp
+                index 98a43be..4f1d31b 100644
+                --- a/src/layout/algorithm/tiled/scrolling/ScrollingAlgorithm.hpp
+                +++ b/src/layout/algorithm/tiled/scrolling/ScrollingAlgorithm.hpp
+                @@ -148,6 +148,7 @@ namespace Layout::Tiled {
+                         } m_config;
+
+                         eScrollDirection         getDynamicDirection();
+                +        std::vector<float>       getDynamicWidths();
+
+                         SP<SScrollingTargetData> findBestNeighbor(SP<SScrollingTargetData> pCurrent, SP<SColumnData> pTargetCol);
+                         SP<SScrollingTargetData> closestNode(const Vector2D& posGlobglobgabgalab);
+
+              ''
+            )
+          ];
         });
         xdg-desktop-portal-hyprland =
           (packages'.hyprland.xdg-desktop-portal-hyprland.override {

@@ -105,9 +105,9 @@
     "type": "github",
     "owner": "hyprwm",
     "repo": "Hyprland",
-    "rev": "c1239d02e759673977de0389d3945c7c9adbc1ee",
-    "narHash": "sha256-qWe/uD9EMZKFs8INJfDyngkjZROC4XJQVFPa16jr2YI=",
-    "lastModified": 1788286479
+    "rev": "cb537a387e32dc8abe5e8f2a1cec4572427e5c37",
+    "narHash": "sha256-bDcUf8uUQWmbXCJE5crKTt4Sz5d85Hxi+RW2vBeg6BA=",
+    "lastModified": 1788467157
   },
   "lan-mouse": {
     "type": "github",
