@@ -4,6 +4,7 @@
       scheme,
       theme,
       lib,
+      pkgs,
       ...
     }:
     {
@@ -21,7 +22,7 @@
           update_check_interval = "24";
           allow_hyperlinks = "yes";
           allow_remote_control = "yes";
-          listen_on = "unix:/tmp/kitty";
+          listen_on = "unix:/tmp/kitty-\${kitty_pid}";
 
           scrollback_lines = "10000";
           wheel_scroll_multiplier = "5.0";
@@ -107,6 +108,13 @@
           "right press ungrabbed" = "combine : copy_to_clipboard : clear_selection";
           "left press ungrabbed" = "mouse_selection drag_or_normal_select";
         };
+        extraConfig = ''
+          # scrollback-kitty nvim plugin
+          action_alias kitty_scrollback_nvim kitten ${pkgs.vimPlugins.kitty-scrollback-nvim}/python/kitty_scrollback_nvim.py
+          map alt+a kitty_scrollback_nvim
+          map alt+g kitty_scrollback_nvim --config ksb_builtin_last_cmd_output
+          mouse_map ctrl+shift+right press ungrabbed combine : mouse_select_command_output : kitty_scrollback_nvim --config ksb_builtin_last_visited_cmd_output
+        '';
         fontConfig =
           let
             mapleFeatures = "+cv01 +cv04 +cv05 +cv06 +cv07 +cv08 +cv32 +cv34 +cv36 +cv37 +cv39 +cv40 +cv41 +cv66 +ss03 +ss04 +ss05 +ss06 +ss07 +ss08 +ss09 +ss10 +ss11 +zero";
@@ -238,6 +246,16 @@
           ]
           |> map (mime: lib.nameValuePair mime [ "kitty.desktop" ])
           |> lib.listToAttrs;
+
+        programs.fish.interactiveShellInit =
+          lib.mkIf cfg.shellIntegration.enableFishIntegration # fish
+            ''
+              if set -q KITTY_INSTALLATION_DIR
+                set --global KITTY_SHELL_INTEGRATION "${cfg.shellIntegration.mode}"
+                source "$KITTY_INSTALLATION_DIR/shell-integration/fish/vendor_conf.d/kitty-shell-integration.fish"
+                set --prepend fish_complete_path "$KITTY_INSTALLATION_DIR/shell-integration/fish/vendor_completions.d"
+              end
+            '';
       };
       options.forte.kitty = {
         enable = lib.mkEnableOption "kitty";
@@ -273,9 +291,17 @@
 
                   # Mouse Bindings
                   ${toKittyConfig cfg.mouseBindings}
+
+                  # Shell Integration
+                  ${lib.optionalString (
+                    cfg.shellIntegration.mode != null
+                  ) "shell_integration ${cfg.shellIntegration.mode}"}
+
+                  # Extra config options
+                  ${cfg.extraConfig}
                 '';
               };
-              args = [ "--config ${wrapPackage.out'}/configuration/kitty.conf" ];
+              env.KITTY_CONFIG_DIRECTORY = "${wrapPackage.out'}/configuration";
             };
         };
         settings = mkOption {
@@ -311,6 +337,12 @@
           description = "Font configuration for kitty";
         };
 
+        extraConfig = mkOption {
+          default = "";
+          type = types.lines;
+          description = "Additional configuration to add to kitty.conf.";
+        };
+
         keybindings = mkOption {
           type = types.attrsOf types.str;
           default = { };
@@ -335,6 +367,30 @@
               "left click" = "ungrabbed no-op";
             };
           '';
+        };
+
+        shellIntegration = {
+          mode = mkOption {
+            type = types.nullOr types.str;
+            default = "no-rc";
+            example = "no-cursor";
+            apply = lib.mapNullable (
+              o:
+              let
+                modes = lib.splitString " " o;
+                filtered = lib.filter (m: m != "no-rc") modes;
+              in
+              lib.concatStringsSep " " ([ "no-rc" ] ++ filtered)
+            );
+            description = ''
+              Set the mode of the shell integration. This accepts the same options
+              as the `shell_integration` option of Kitty. Note that
+              `no-rc` is always implied, unless this set to `null`.
+            '';
+          };
+          enableFishIntegration = lib.mkEnableOption "fish integration" // {
+            default = true;
+          };
         };
       };
     };
