@@ -7,7 +7,7 @@
       settings = {
         authorized_fingerprints = {
           "50:96:77:ad:06:2c:ef:52:71:8a:1d:92:1c:56:e7:a4:95:3b:b0:6c:9f:cd:b2:66:b4:01:a2:d6:24:d0:cd:a0" =
-            "Windows";
+            "mini-pc2";
         };
       };
     };
@@ -25,35 +25,28 @@
       tomlFormat = pkgs.formats.toml { };
     in
     {
-      config = lib.mkIf cfg.enable {
-        hj.systemd.services.lan-mouse = {
-          description = "Lan Mouse Daemon";
-          wantedBy = [ "graphical-session.target" ];
-          partOf = [ "graphical-session.target" ];
-          after = [
-            "graphical-session.target"
-            "network-online.target"
-          ];
-          wants = [ "network-online.target" ];
-          environment = {
-            RUST_BACKTRACE = "0";
-            RUST_LOG = "error";
-          };
-          serviceConfig = {
-            Type = "simple";
-            ExecStart = "${lib.getExe cfg.package} --capture-backend dummy daemon"; # TODO: temporary fix for this bug https://github.com/hyprwm/xdg-desktop-portal-hyprland/issues/419
-            Restart = "on-failure";
-            RestartSec = 1;
-            TimeoutStopSec = 10;
-          };
-        };
-        hj.xdg.config.files."lan-mouse/config.toml" = lib.mkIf (cfg.settings != { }) {
-          generator = tomlFormat.generate "lan-mouse-config";
-          value = cfg.settings;
-        };
-        networking.firewall.allowedUDPPorts = lib.mkIf cfg.openFirewall [ 4242 ];
-        forte.persist.home.directories = [ ".config/lan-mouse" ];
-      };
+      config =
+        lib.mkIf cfg.enable
+        <| lib.mkMerge [
+          {
+            hj.systemd.services.lan-mouse = {
+              description = "Lan Mouse Daemon";
+              wantedBy = [ "graphical-session.target" ];
+              partOf = [ "graphical-session.target" ];
+              after = [ "graphical-session.target" ];
+              serviceConfig = {
+                Type = "simple";
+                ExecStart = "${lib.getExe cfg.package} --config ${tomlFormat.generate "config.toml" cfg.settings} --capture-backend dummy daemon"; # TODO: temporary fix for this bug https://github.com/hyprwm/xdg-desktop-portal-hyprland/issues/419
+                Restart = "on-failure";
+                RestartSec = 1;
+                TimeoutStopSec = 10;
+              };
+            };
+          }
+          (lib.mkIf cfg.openFirewall {
+            networking.firewall.allowedUDPPorts = [ 4242 ];
+          })
+        ];
       options.forte.lan-mouse = {
         enable = lib.mkEnableOption "lan-mouse";
         package = lib.mkOption {
