@@ -81,9 +81,9 @@
     "type": "github",
     "owner": "amaanq",
     "repo": "helium-flake",
-    "rev": "24fb9bccd9fb6a1620edadeabb18d60c3d99602a",
-    "narHash": "sha256-2fqMH1qdEf4Uw5cPSBIAVUElaHVaUJjGdyVe6Cjfiz0=",
-    "lastModified": 1788174255
+    "rev": "cdc3a62595aaa3ffbdfcbe7c9c153f5690b5b6e8",
+    "narHash": "sha256-ystneSObIn0gXXLQH9kyUPU4TsQnZwfdW3Nk3fpSIhk=",
+    "lastModified": 1788600496
   },
   "hjem": {
     "type": "github",
@@ -97,17 +97,17 @@
     "type": "github",
     "owner": "hyprwm",
     "repo": "hyprland-plugins",
-    "rev": "67c3a4c019f223c27b5bdc6bb656ce891a60861a",
-    "narHash": "sha256-QSGOM0IFpp45DwmtIwcih8+kKuSgAoQal9QkVVSRNew=",
-    "lastModified": 1788037253
+    "rev": "722f15a77768eab13f01f5e5dce024bd2f61f270",
+    "narHash": "sha256-e2Q7i5T+iQY0o/uxFNnXxWpXZ1e5f6VV4eHdKk7l6kc=",
+    "lastModified": 1788563182
   },
   "hyprland": {
     "type": "github",
     "owner": "hyprwm",
     "repo": "Hyprland",
-    "rev": "cb537a387e32dc8abe5e8f2a1cec4572427e5c37",
-    "narHash": "sha256-bDcUf8uUQWmbXCJE5crKTt4Sz5d85Hxi+RW2vBeg6BA=",
-    "lastModified": 1788467157
+    "rev": "ab136393c2eb9e106846a704da1a1b3d6af415b4",
+    "narHash": "sha256-6zXqpXjzyczwICKsmKSuzxqCm/8h3D8863UpSXmGmB0=",
+    "lastModified": 1788628107
   },
   "lan-mouse": {
     "type": "github",
@@ -129,17 +129,17 @@
     "type": "github",
     "owner": "NixOS",
     "repo": "nixos-hardware",
-    "rev": "dc3f0cfde2050172abf6c3cdb684f735c15a57c5",
-    "narHash": "sha256-cmOd3iGoE140M2GidgQMQbyxHZ4dT7C0QZq2+CrXQyA=",
-    "lastModified": 1788044418
+    "rev": "44d95795ee2d475b3d687325e26dcf4ca9104557",
+    "narHash": "sha256-3jBEq8avfzlrsY4UpW4d5TOmm7ocseZfnitEJhqauyc=",
+    "lastModified": 1788335262
   },
   "nixpkgs": {
     "type": "github",
     "owner": "nixos",
     "repo": "nixpkgs",
-    "rev": "34ab99075ac4f7e40cf037eef32cb1c360bb85e9",
-    "narHash": "sha256-hn1oU2rue2SYK8dAr8+WNZWtbsz1S2W5mnHlSEuh3bo=",
-    "lastModified": 1788179007
+    "rev": "801bef6abd86b91e51083066b83fb354a11fc640",
+    "narHash": "sha256-hLD4l3QOGBQhkVp3mQ2lJ/YbEi99qUgKapb40KovZ88=",
+    "lastModified": 1788531059
   },
   "no-header-prompt": {
     "type": "github",
@@ -203,9 +203,9 @@
     "type": "github",
     "owner": "Mic92",
     "repo": "sops-nix",
-    "rev": "a8627b21b9107c5711c96b84f32a9a4b3d45295f",
-    "narHash": "sha256-gkig4nPi1CWc4Z50GBsjE4ygSE7hMpl/TwID2an2Cck=",
-    "lastModified": 1786629091
+    "rev": "fbf759290e0cb0a98dfc813a4eb7d53ad1dacb57",
+    "narHash": "sha256-gkSH8VUtCo6hnysNmb9DbTuDepH2t5pv+QWjP75xKAk=",
+    "lastModified": 1788337237
   },
   "spicetify-nix": {
     "type": "github",
@@ -259,9 +259,9 @@
     "type": "git",
     "url": "https://gitea.onelock.org/onelock/tuishell",
     "ref": "HEAD",
-    "rev": "4736a7331faa7a879cbad6d57011491b9aeee076",
-    "narHash": "sha256-JB1Krh8wOHHJ9+LS0XViYj94qnrRKnkyh7MCEn+b5zU=",
-    "lastModified": 1788388141
+    "rev": "aca8c6035cb4a4782ede26a74b2851dca4a9a431",
+    "narHash": "sha256-IDqBBeKvWY3RgG7pos6Z/Zyv8P4wjXS28jUi9HA53UI=",
+    "lastModified": 1788565715
   },
   "vimmax": {
     "type": "github",
@@ -299,8 +299,8 @@
     "type": "github",
     "owner": "0xc000022070",
     "repo": "zen-browser-flake",
-    "rev": "82589d1716b7d4de8e17e77b92b67952b7e3da96",
-    "narHash": "sha256-27Q1HjIybCEOHqGrP/LOtSnIb4Rmek3Ochi7Trl90Y4=",
-    "lastModified": 1788254223
+    "rev": "7e8bf446cd9cfa86d30dafb9694f548afc7b2df0",
+    "narHash": "sha256-dTXXfL/ebqRvOLV/cFiTh/TKN6FNVGg+IMgk1lKtxMs=",
+    "lastModified": 1788631059
   }
 }
