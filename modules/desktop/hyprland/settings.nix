@@ -10,7 +10,7 @@
       forte.hyprland.lua.settings = # lua
         ''
           hl.workspace_rule {
-              workspace = "name:chat",
+              workspace = "name:web",
               layout_opts = {
                   explicit_column_widths = "0.333,0.5,0.7162,0.92"
               }
