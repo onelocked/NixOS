@@ -16,9 +16,10 @@
           };
         };
 
-        services.journald = {
-          storage = lib.mkForce "volatile";
-          extraConfig = lib.mkForce "";
+        services.journald.settings = {
+          Journal = {
+            Storage = lib.mkForce "volatile";
+          };
         };
 
         programs.seahorse.enable = false;
