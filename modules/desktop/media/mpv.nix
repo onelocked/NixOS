@@ -191,7 +191,7 @@
                 "mpv.conf" = cfg.conf;
                 "input.conf" = cfg.input;
                 "scripts" = mpvScripts + "/share/mpv/scripts";
-                "fonts" = mpvScripts + "/share/fonts";
+                "fonts" = mpvScripts + "/share/fonts/truetype";
                 "script-opts/rotate-resize.conf" = "keybinds=r";
                 "script-opts/modernz.conf" = lib.generators.toKeyValue { } {
                   download_path = config.hj.directory + "/Videos/mpv";
