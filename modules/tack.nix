@@ -35,71 +35,25 @@
       }:
       let
         tomlFormat = (pkgs.formats.toml { }).generate;
-        serialisedInputs =
-          (
-            removeAttrs config.tack.inputs [
-              "fetch"
-              "fixed"
-            ]
-            |> lib.mapAttrs (
-              _:
-              {
-                url,
-                type,
-                exclude_follow,
-                follows,
-                ...
-              }:
-              lib.filterAttrs (name: value: value != null && value != { } && value != [ ]) {
-                inherit
-                  url
-                  type
-                  follows
-                  exclude_follow
-                  ;
-              }
-            )
-          )
-          // (
-            config.tack.inputs.fetch
-            |> lib.mapAttrs (
-              _: url: {
-                inherit url;
-                type = "fetch";
-              }
-            )
-          )
-          // (
-            config.tack.inputs.fixed
-            |> lib.mapAttrs (
-              _: url: {
-                inherit url;
-                type = "fixed";
-              }
-            )
-          );
+
         tackConfig = {
-          inherit (config.tack) shorturls all_follow;
-          inputs = serialisedInputs;
+          inherit (config.tack) shorturls all_follow inputs;
         };
 
-        # Read the current state of pins.toml to diff against
         prevPins = lib.importTOML (rootPath + /.tack/pins.toml);
 
-        # Inputs that need tack update: either new or URL-changed
         updateInputs =
-          tackConfig.inputs
+          config.tack.inputs
           |> lib.attrNames
           |> lib.filter (
-            name: !(prevPins.inputs ? ${name}) || prevPins.inputs.${name}.url != tackConfig.inputs.${name}.url
+            name: !(prevPins.inputs ? ${name}) || prevPins.inputs.${name}.url != config.tack.inputs.${name}.url
           )
           |> lib.join " ";
 
-        # Inputs that need to be removed: exist in prevPins but not in tackConfig
         removeInputs =
           (prevPins.inputs or { })
           |> lib.attrNames
-          |> lib.filter (name: !(tackConfig.inputs ? ${name}))
+          |> lib.filter (name: !(config.tack.inputs ? ${name}))
           |> map (remKey: "tack rm ${remKey}")
           |> lib.concatLines;
       in
@@ -118,28 +72,27 @@
                 pkgs.delta
                 packages'.tack
               ];
-              text = # bash
-                ''
-                  if [[ ! -f .tack/pins.toml ]]; then
-                    echo "Error: file not found: .tack/pins.toml" >&2
-                    exit 1
-                  fi
+              text = ''
+                if [[ ! -f .tack/pins.toml ]]; then
+                  echo "Error: file not found: .tack/pins.toml" >&2
+                  exit 1
+                fi
 
-                  ${lib.optionalString (prevPins != tackConfig) ''
-                    newPinsToml="${tackConfig |> tomlFormat "pins.toml"}"
-                    delta --dark --side-by-side --line-numbers --diff-so-fancy .tack/pins.toml "$newPinsToml" || true
+                ${lib.optionalString (prevPins != tackConfig) ''
+                  newPinsToml="${tackConfig |> tomlFormat "pins.toml"}"
+                  delta --dark --side-by-side --line-numbers --diff-so-fancy .tack/pins.toml "$newPinsToml" || true
 
-                    ${lib.optionalString (removeInputs != "") removeInputs}
+                  ${lib.optionalString (removeInputs != "") removeInputs}
 
-                    install -m 644 -D -T "$newPinsToml" .tack/pins.toml
-                    echo "wrote .tack/pins.toml"
-                  ''}
-                  ${lib.optionalString (updateInputs != "") "tack update ${updateInputs}"}
+                  install -m 644 -D -T "$newPinsToml" .tack/pins.toml
+                  echo "wrote .tack/pins.toml"
+                ''}
+                ${lib.optionalString (updateInputs != "") "tack update ${updateInputs}"}
 
-                  if [[ $# -gt 0 ]]; then
-                    nh os "$@"
-                  fi
-                '';
+                if [[ $# -gt 0 ]]; then
+                  nh os "$@"
+                fi
+              '';
             }
           );
         };
@@ -163,6 +116,44 @@
 
         inputs = lib.mkOption {
           default = { };
+          apply =
+            rawInputs:
+            let
+              standard =
+                removeAttrs rawInputs [
+                  "fetch"
+                  "fixed"
+                ]
+                |> lib.mapAttrs (
+                  _: v:
+                  lib.filterAttrs (name: val: val != null && val != { } && val != [ ]) {
+                    inherit (v)
+                      url
+                      type
+                      follows
+                      exclude_follow
+                      ;
+                  }
+                );
+              fetch =
+                (rawInputs.fetch or { })
+                |> lib.mapAttrs (
+                  _: url: {
+                    inherit url;
+                    type = "fetch";
+                  }
+                );
+              fixed =
+                (rawInputs.fixed or { })
+                |> lib.mapAttrs (
+                  _: url: {
+                    inherit url;
+                    type = "fixed";
+                  }
+                );
+            in
+            standard // fetch // fixed;
+
           type = lib.types.submodule {
             options = {
               fetch = lib.mkOption {
@@ -180,9 +171,7 @@
               lib.types.coercedTo lib.types.str (url: { inherit url; }) (
                 lib.types.submodule {
                   options = {
-                    url = lib.mkOption {
-                      type = lib.types.str;
-                    };
+                    url = lib.mkOption { type = lib.types.str; };
                     type = lib.mkOption {
                       type = lib.types.nullOr (
                         lib.types.enum [
