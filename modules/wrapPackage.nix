@@ -9,97 +9,85 @@ let
     }:
     {
       config = {
+        makeWrapperArgs = lib.mkMerge [
+          (lib.mkIf (config.args != [ ]) (
+            config.args
+            |> lib.concatMap (value: [
+              "--add-flags"
+              value
+            ])
+          ))
+          (lib.mkIf (config.runShell != [ ]) (
+            config.runShell
+            |> lib.concatMap (value: [
+              "--run"
+              value
+            ])
+          ))
+          (lib.mkIf (config.env != { }) (
+            lib.attrNames config.env
+            |> map (name: [
+              "--set"
+              name
+              (config.env.${name} |> toString)
+            ])
+            |> lib.concatLists
+          ))
+          (lib.mkIf (config.extraPkgs != [ ]) [
+            "--prefix"
+            "PATH"
+            ":"
+            (config.extraPkgs |> lib.makeBinPath)
+          ])
+        ];
         wrapper =
           let
             inherit (config)
               package
               binName
-              args
-              env
-              extraPkgs
               files
               aliases
-              runShell
+              makeWrapperArgs
               ;
+            mkList =
+              prefix: attrs:
+              lib.attrNames attrs
+              |> map (
+                name:
+                let
+                  value = attrs.${name};
+                  target = if prefix == "" then name else "${prefix}/${name}";
+                in
+                if lib.isAttrs value && !(lib.isDerivation value) then
+                  mkList target value
+                else
+                  {
+                    name = target;
+                    path =
+                      if (lib.isString value) && !(lib.hasPrefix builtins.storeDir value) then
+                        (value |> pkgs.writeText "${lib.baseNameOf name}-text")
+                      else
+                        value;
+                  }
+              );
+            flattenedFiles = files |> mkList "" |> lib.flatten;
           in
           pkgs.symlinkJoin {
             name = "${package.name}-onewrap";
             paths = [
               package
             ]
-            ++ [
-              (
-                let
-                  mkList =
-                    prefix: attrs:
-                    lib.attrNames attrs
-                    |> map (
-                      name:
-                      let
-                        value = attrs.${name};
-                        target = if prefix == "" then name else "${prefix}/${name}";
-                      in
-                      if lib.isAttrs value && !(lib.isDerivation value) then
-                        mkList target value
-                      else
-                        {
-                          name = target;
-                          path =
-                            if (lib.isString value) && !(lib.hasPrefix builtins.storeDir value) then
-                              (value |> pkgs.writeText "${lib.baseNameOf name}-text")
-                            else
-                              value;
-                        }
-                    );
-                in
-                files |> mkList "" |> lib.flatten |> pkgs.linkFarm "${package.name}"
-              )
-            ];
+            ++ lib.optionals (flattenedFiles != [ ]) [ (pkgs.linkFarm "${package.name}" flattenedFiles) ];
+
             nativeBuildInputs = [ pkgs.makeWrapper ];
+
             meta = removeAttrs (package.meta or { }) [ "outputsToInstall" ] // {
               mainProgram = binName;
             };
+
             postBuild =
               let
-                wrapperArgs =
-                  lib.escapeShellArgs
-                  <| (
-                    (
-                      args
-                      |> lib.concatMap (v: [
-                        "--add-flags"
-                        v
-                      ])
-                    )
-                    ++ (
-                      runShell
-                      |> lib.concatMap (v: [
-                        "--run"
-                        v
-                      ])
-                    )
-                    ++ (
-                      lib.attrNames env
-                      |> map (
-                        n:
-                        let
-                          v = env.${n};
-                        in
-                        [
-                          "--set"
-                          n
-                          (v |> toString)
-                        ]
-                      )
-                      |> lib.concatLists
-                    )
-                    ++ (lib.optionals (extraPkgs != [ ]) [
-                      "--prefix"
-                      "PATH"
-                      ":"
-                      (extraPkgs |> lib.makeBinPath)
-                    ])
-                  );
+                wrapperArgs = lib.escapeShellArgs makeWrapperArgs;
                 bin = binName |> lib.escapeShellArg;
               in
               #bash
@@ -169,6 +157,12 @@ let
           type = lib.types.listOf lib.types.str;
           default = [ ];
           description = "Commands to run before executing the main program.";
+        };
+
+        makeWrapperArgs = lib.mkOption {
+          type = lib.types.listOf lib.types.str;
+          default = [ ];
+          description = "Raw arguments passed to makeWrapper/wrapProgram";
         };
 
         wrapper = lib.mkOption {
