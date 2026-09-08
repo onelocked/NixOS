@@ -38,7 +38,7 @@
           }
 
           hl.on("hyprland.start", function()
-            hl.dispatch(hl.dsp.exec_cmd("sleep 2 && wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.6"))
+            hl.dispatch(hl.dsp.exec_cmd("sleep 5 && wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.6"))
           end)
 
           --                                      ▀█
