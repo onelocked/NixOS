@@ -15,6 +15,7 @@
         {
           sops.defaultSopsFile = ../../.secrets/personal.yaml;
           forte.quickshell.enable = lib.mkForce false;
+          forte.flatpak.enable = true;
 
           services.nfs.server = {
             enable = true;
