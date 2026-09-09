@@ -525,7 +525,7 @@
       remotePackages = {
         hyprland-bundle = pkgs.symlinkJoin {
           name = "hyprland-bundle";
-          paths = [
+          paths = pkgs.lib.concatMap (pkg: map (out: pkg.${out}) pkg.outputs) [
             self'.packages.hyprland
             self'.packages.xdg-desktop-portal-hyprland
             self'.legacyPackages.scrolloverview
