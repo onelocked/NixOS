@@ -44,54 +44,89 @@ let
           let
             inherit (config)
               package
+              paths
               binName
               files
               aliases
               makeWrapperArgs
               ;
-            mkList =
+            flattenFiles =
               prefix: attrs:
-              lib.attrNames attrs
-              |> map (
-                name:
-                let
-                  value = attrs.${name};
-                  target = if prefix == "" then name else "${prefix}/${name}";
-                in
-                if lib.isAttrs value && !(lib.isDerivation value) then
-                  mkList target value
-                else
-                  {
-                    name = target;
-                    path =
-                      if (lib.isString value) && !(lib.hasPrefix builtins.storeDir value) then
-                        (value |> pkgs.writeText "${lib.baseNameOf name}-text")
-                      else
-                        value;
-                  }
+              lib.concatLists (
+                lib.mapAttrsToList (
+                  name: value:
+                  let
+                    target = if prefix == "" then name else "${prefix}/${name}";
+                  in
+                  if lib.isAttrs value && !lib.isDerivation value then
+                    flattenFiles target value
+                  else
+                    [
+                      {
+                        name = target;
+                        inherit value;
+                      }
+                    ]
+                ) attrs
               );
-            flattenedFiles = files |> mkList "" |> lib.flatten;
+            inherit
+              (
+                flattenFiles "" files
+                |> builtins.partition (file: lib.isString file.value && !lib.hasPrefix builtins.storeDir file.value)
+              )
+              right
+              wrong
+              ;
+            textFiles = right |> lib.imap0 (index: file: file // { key = "f${toString index}"; });
+            linkFiles = wrong;
           in
-          pkgs.symlinkJoin {
-            name = "${package.name}-onewrap";
-            paths = [
-              package
-            ]
-            ++ lib.optionals (flattenedFiles != [ ]) [ (pkgs.linkFarm "${package.name}" flattenedFiles) ];
-
-            nativeBuildInputs = [ pkgs.makeWrapper ];
-
-            meta = removeAttrs (package.meta or { }) [ "outputsToInstall" ] // {
-              mainProgram = binName;
-            };
-
-            postBuild =
+          pkgs.runCommandLocal "${package.name}-onewrap"
+            (
+              {
+                nativeBuildInputs = with pkgs; [
+                  makeWrapper
+                  lndir
+                ];
+                meta = removeAttrs (package.meta or { }) [ "outputsToInstall" ] // {
+                  mainProgram = binName;
+                };
+                passAsFile = textFiles |> map (file: file.key);
+              }
+              // (
+                textFiles
+                |> map (file: {
+                  name = file.key;
+                  value = file.value;
+                })
+                |> lib.listToAttrs
+              )
+            )
+            (
               let
                 wrapperArgs = lib.escapeShellArgs makeWrapperArgs;
-                bin = binName |> lib.escapeShellArg;
+                bin = lib.escapeShellArg binName;
               in
               #bash
               ''
+                mkdir -p $out
+                lndir -silent ${package} $out
+                ${paths |> lib.concatMapStringsSep "\n" (pkgPath: "lndir -silent ${pkgPath} $out")}
+
+                ${
+                  linkFiles
+                  |> lib.concatMapStringsSep "\n" (file: ''
+                    mkdir -p "$(dirname "$out/${file.name}")"
+                    ln -sf ${lib.escapeShellArg file.value} "$out/${file.name}"
+                  '')
+                }
+
+                ${
+                  textFiles
+                  |> lib.concatMapStringsSep "\n" (file: ''
+                    install -Dm644 "''$${file.key}Path" "$out/${file.name}"
+                  '')
+                }
+
                 if [ ! -e "$out/bin/${bin}" ]; then
                   makeWrapper ${
                     lib.getExe' package (package.meta.mainProgram or (lib.getName package))
@@ -105,13 +140,19 @@ let
                     alias: "ln -sf $out/bin/${bin} $out/bin/${lib.escapeShellArg alias}"
                   )
                 }
-              '';
-          };
+              ''
+            );
       };
       options = {
         package = lib.mkOption {
           type = lib.types.package;
-          description = "The package to wrap.";
+          description = "The main package to wrap.";
+        };
+
+        paths = lib.mkOption {
+          type = lib.types.listOf lib.types.package;
+          default = [ ];
+          description = "Additional packages to symlink into the output directory.";
         };
 
         binName = lib.mkOption {
