@@ -261,6 +261,8 @@
                   renice = 15;
                 };
                 cpu = {
+                  park_cores = "0,1";
+                  pin_cores = "2,3,4,5,6,7";
                   governor = "performance";
                   energy_perf_preference = "performance";
                 };
@@ -279,6 +281,12 @@
             ];
           })
           (lib.mkIf cfg.platformOptimizations.enable {
+            boot.extraModprobeConfig = # bash
+              ''
+                options nvidia NVreg_UsePageAttributeTable=1
+                options nvidia NVreg_InitializeSystemMemoryAllocations=0
+              '';
+
             boot.kernelParams = [
               "mitigations=off"
 
@@ -295,6 +303,8 @@
               "hpet=disable" # Kill the High Precision Event Timer
               "tsc=reliable" # Trust the CPU's Time Stamp Counter completely
               "clocksource=tsc" # Force TSC as the system clock source
+
+              "intel_idle.max_cstate=1"
             ];
             boot.kernel.sysctl = {
               "kernel.sched_cfs_bandwidth_slice_us" = 3000;
