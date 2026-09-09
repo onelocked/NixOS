@@ -35,7 +35,7 @@
         enable = lib.mkEnableOption "neovim";
         package = lib.mkOption {
           type = lib.types.package;
-          default = inputs'.vimmax.packages.default.extend { vimmax.theme = theme; };
+          default = inputs'.vimmax.packages.${theme};
           defaultText = "default package for neovim";
         };
       };
