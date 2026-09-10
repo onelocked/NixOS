@@ -3,6 +3,8 @@
     { pkgs, lib, ... }:
     {
       config = {
+        hardware.graphics.enable = true;
+
         services.ddccontrol.enable = true;
         services.displayManager.enable = lib.mkForce false;
 

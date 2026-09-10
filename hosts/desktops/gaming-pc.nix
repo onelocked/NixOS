@@ -64,7 +64,6 @@
       hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
       hardware.graphics = {
-        enable = true;
         enable32Bit = true;
         extraPackages = with pkgs; [
           nvidia-vaapi-driver
@@ -75,12 +74,20 @@
       hardware.nvidia = {
         branch = "bleeding_edge";
         modesetting.enable = true;
-        open = true;
+        open = false;
         nvidiaSettings = false;
+
+        powerManagement.enable = true;
+        powerManagement.finegrained = false;
+
+        nvidiaPersistenced = false;
       };
 
       services.xserver.videoDrivers = [ "nvidia" ]; # needed to  have nviida drivers enabled
-      forte.allowUnfree = [ "nvidia-x11" ];
+      forte.allowUnfree = [
+        "nvidia-x11"
+        "nvidia-kernel-modules"
+      ];
 
       environment.sessionVariables = {
         LIBVA_DRIVER_NAME = "nvidia";

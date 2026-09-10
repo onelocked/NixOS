@@ -282,10 +282,7 @@
           })
           (lib.mkIf cfg.platformOptimizations.enable {
             boot.extraModprobeConfig = # bash
-              ''
-                options nvidia NVreg_UsePageAttributeTable=1
-                options nvidia NVreg_InitializeSystemMemoryAllocations=0
-              '';
+              "options nvidia NVreg_UsePageAttributeTable=1 ";
 
             boot.kernelParams = [
               "mitigations=off"
