@@ -87,9 +87,26 @@
                 cfg.lua
                 |> lib.mapAttrs' (
                   name: file:
-                  lib.nameValuePair "hypr/${
-                    lib.replaceStrings [ "." ] [ "/" ] (lib.removeSuffix ".lua" name) + ".lua"
-                  }" (if lib.isPath file.content then { source = file.content; } else { text = file.content; })
+                  lib.nameValuePair
+                    "hypr/${lib.replaceStrings [ "." ] [ "/" ] (lib.removeSuffix ".lua" name) + ".lua"}"
+                    (
+                      if lib.isPath file.content then
+                        { source = file.content; }
+                      else
+                        {
+                          source = pkgs.writeTextFile {
+                            name = lib.replaceStrings [ "/" ] [ "-" ] (lib.removeSuffix ".lua" name) + ".lua";
+                            text = file.content;
+                            checkPhase = # bash
+                              ''
+                                if ! ${pkgs.lua}/bin/luac -p "$out"; then
+                                  echo -e "\nLua Error: ${name} has incorrect syntax\n"
+                                  exit 1
+                                fi
+                              '';
+                          };
+                        }
+                    )
                 )
               )
               {
