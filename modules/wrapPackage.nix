@@ -114,10 +114,21 @@ let
 
                 ${
                   linkFiles
-                  |> lib.concatMapStringsSep "\n" (file: ''
-                    mkdir -p "$(dirname "$out/${file.name}")"
-                    ln -sf ${lib.escapeShellArg file.value} "$out/${file.name}"
-                  '')
+                  |> lib.concatMapStringsSep "\n" (file:
+                    if lib.isList file.value then ''
+                      mkdir -p "$out/${file.name}"
+                      ${lib.concatMapStringsSep "\n" (v: ''
+                        if [ -d ${lib.escapeShellArg v} ]; then
+                          lndir -silent ${lib.escapeShellArg v} "$out/${file.name}"
+                        else
+                          ln -sf ${lib.escapeShellArg v} "$out/${file.name}/"
+                        fi
+                      '') file.value}
+                    '' else ''
+                      mkdir -p "$(dirname "$out/${file.name}")"
+                      ln -sf ${lib.escapeShellArg file.value} "$out/${file.name}"
+                    ''
+                  )
                 }
 
                 ${

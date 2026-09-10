@@ -60,15 +60,7 @@
                 "theme.toml" = wrapPackage.toml cfg.theme;
                 "init.lua" = cfg.initLua;
                 flavors."oneshill.yazi"."flavor.toml" = cfg.flavorContent;
-                plugins =
-                  cfg.plugins
-                  |> lib.mapAttrsToList (
-                    name: path: {
-                      name = "${name}.yazi";
-                      inherit path;
-                    }
-                  )
-                  |> pkgs.linkFarm "yazi-plugins";
+                plugins = cfg.plugins |> lib.mapAttrs' (name: path: lib.nameValuePair "${name}.yazi" path);
               };
             };
             env = {

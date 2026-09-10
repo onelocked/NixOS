@@ -172,35 +172,28 @@
         };
         package = lib.mkOption {
           type = lib.types.package;
-          default =
-            let
-              mpvScripts = pkgs.symlinkJoin {
-                name = "mpv-scripts";
-                paths = with pkgs.mpvScripts; [
-                  mpris
-                  sponsorblock
-                  modernz
-                  self'.legacyPackages.mpv-rotate-resize
-                ];
-              };
-            in
-            wrapPackage {
-              package = pkgs.mpv;
-              env.MPV_HOME = wrapPackage.out + "configuration";
-              files.configuration = {
-                "mpv.conf" = cfg.conf;
-                "input.conf" = cfg.input;
-                "scripts" = mpvScripts + "/share/mpv/scripts";
-                "fonts" = mpvScripts + "/share/fonts/truetype";
-                "script-opts/rotate-resize.conf" = "keybinds=r";
-                "script-opts/modernz.conf" = lib.generators.toKeyValue { } {
-                  download_path = config.hj.directory + "/Videos/mpv";
-                  osc_on_start = "no";
-                  osc_on_seek = "no";
-                  showonpause = "no";
-                };
+          default = wrapPackage {
+            package = pkgs.mpv;
+            env.MPV_HOME = wrapPackage.out + "configuration";
+            files.configuration = {
+              "mpv.conf" = cfg.conf;
+              "input.conf" = cfg.input;
+              "scripts" = with pkgs.mpvScripts; [
+                "${mpris}/share/mpv/scripts"
+                "${sponsorblock}/share/mpv/scripts"
+                "${modernz}/share/mpv/scripts"
+                "${self'.legacyPackages.mpv-rotate-resize}/share/mpv/scripts"
+              ];
+              "fonts" = "${pkgs.mpvScripts.modernz}/share/fonts/truetype";
+              "script-opts/rotate-resize.conf" = "keybinds=r";
+              "script-opts/modernz.conf" = lib.generators.toKeyValue { } {
+                download_path = config.hj.directory + "/Videos/mpv";
+                osc_on_start = "no";
+                osc_on_seek = "no";
+                showonpause = "no";
               };
             };
+          };
         };
         mpv-wlpaste = lib.mkOption {
           type = lib.types.package;
