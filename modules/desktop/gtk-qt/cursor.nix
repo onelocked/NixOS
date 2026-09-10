@@ -52,42 +52,45 @@
     {
       legacyPackages = {
         cursors = {
+          hypr-bibata-ice = pkgs.symlinkJoin {
+            name = "Bibata-Modern-Ice-Merged";
+            paths = [
+              pkgs.bibata-cursors
+              (pkgs.stdenvNoCC.mkDerivation {
+                name = "Bibata-Modern-Ice-Hyprcursor";
+                src = pkgs.fetchzip {
+                  url = "https://github.com/LOSEARDES77/Bibata-Cursor-hyprcursor/releases/download/1.0/hypr_Bibata-Modern-Ice.tar.gz";
+                  hash = "sha256-Ji5gqIBrAtFO3S9fCrY/LXPaq5gCY4CkxZJ1uAcjj70=";
+                  stripRoot = false;
+                };
+                dontBuild = true;
+                installPhase = ''
+                  mkdir -p $out/share/icons/Bibata-Modern-Ice
+                  cp -r . $out/share/icons/Bibata-Modern-Ice
+                '';
+              })
+            ];
+          };
 
-          hypr-bibata-ice = pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
-            name = "Bibata-Modern-Ice";
-            version = "1.0";
-            src = pkgs.fetchzip {
-              url = "https://github.com/LOSEARDES77/Bibata-Cursor-hyprcursor/releases/download/1.0/hypr_Bibata-Modern-Ice.tar.gz";
-              hash = "sha256-Ji5gqIBrAtFO3S9fCrY/LXPaq5gCY4CkxZJ1uAcjj70=";
-              stripRoot = false;
-            };
-
-            dontConfigure = true;
-            dontBuild = true;
-
-            installPhase = ''
-              mkdir -p $out/share/icons/${finalAttrs.name}
-              cp -r . $out/share/icons/${finalAttrs.name}
-            '';
-          });
-
-          hypr-bibata-classic = pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
-            name = "Bibata-Modern-Classic";
-            version = "1.0";
-            src = pkgs.fetchzip {
-              url = "https://github.com/LOSEARDES77/Bibata-Cursor-hyprcursor/releases/download/1.0/hypr_Bibata-Modern-Classic.tar.gz";
-              hash = "sha256-Uv+96EieGBq6cJNWjoJEHPy/MshbHts+OBow7rWgBSM=";
-              stripRoot = false;
-            };
-
-            dontConfigure = true;
-            dontBuild = true;
-
-            installPhase = ''
-              mkdir -p $out/share/icons/${finalAttrs.name}
-              cp -r . $out/share/icons/${finalAttrs.name}
-            '';
-          });
+          hypr-bibata-classic = pkgs.symlinkJoin {
+            name = "Bibata-Modern-Classic-Merged";
+            paths = [
+              pkgs.bibata-cursors
+              (pkgs.stdenvNoCC.mkDerivation {
+                name = "Bibata-Modern-Classic-Hyprcursor";
+                src = pkgs.fetchzip {
+                  url = "https://github.com/LOSEARDES77/Bibata-Cursor-hyprcursor/releases/download/1.0/hypr_Bibata-Modern-Classic.tar.gz";
+                  hash = "sha256-Uv+96EieGBq6cJNWjoJEHPy/MshbHts+OBow7rWgBSM=";
+                  stripRoot = false;
+                };
+                dontBuild = true;
+                installPhase = ''
+                  mkdir -p $out/share/icons/Bibata-Modern-Classic
+                  cp -r . $out/share/icons/Bibata-Modern-Classic
+                '';
+              })
+            ];
+          };
         };
       };
     };
