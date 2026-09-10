@@ -180,6 +180,7 @@
                   content = "game",
                   workspace = "name:games",
                   fullscreen_state = "3 3",
+                  idle_inhibit = "focus",
                 })
 
                 -- return to workspace media once the game is closed

@@ -23,6 +23,7 @@
               match            = { class = "wlroots" },
               workspace        = "name:media",
               opacity          = "1 override",
+              idle_inhibit = "focus",
             })
           '';
       };

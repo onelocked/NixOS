@@ -36,6 +36,14 @@
                 scrolling_width  = 0.333,
               })
               hl.window_rule({
+                name         = "helium_idle_inhibit",
+                match        = {
+                  class = "helium",
+                  title = ".*(YouTube|TikTok).*",
+                },
+                idle_inhibit = "focus",
+              })
+              hl.window_rule({
                 name             = "helium-pip",
                 match            = { title = "Picture-in-picture" },
                 float      = true,

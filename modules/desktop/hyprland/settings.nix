@@ -73,7 +73,7 @@
               rounding              = 0,
               rounding_power        = 1,
 
-              active_opacity        = ${if theme == "dark" then "0.93" else "0.88"},
+              active_opacity        = ${if theme == "dark" then "0.95" else "0.9"},
               inactive_opacity      = ${if theme == "dark" then "0.89" else "0.83"},
 
               blur                  = {
