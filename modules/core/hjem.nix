@@ -26,4 +26,9 @@
         };
       };
     };
+  perSystem =
+    { inputs', ... }:
+    {
+      hjem- = inputs'.hjem.packages.hjem;
+    };
 }
