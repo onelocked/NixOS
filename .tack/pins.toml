@@ -50,6 +50,10 @@ url = "gh:hyprwm/Hyprland"
 type = "fetch"
 url = "gh:feschber/lan-mouse"
 
+[inputs.nix-cachyos-kernel]
+exclude_follow = ["nixpkgs"]
+url = "gh:xddxdd/nix-cachyos-kernel/release"
+
 [inputs.nixos-core]
 url = "gh:manic-systems/nixos-core"
 

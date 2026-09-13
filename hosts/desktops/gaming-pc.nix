@@ -9,6 +9,7 @@
         remote-access
         gaming
         neovim
+        cachyos-kernel
       ];
       extraConfig =
         { config, lib, ... }:
