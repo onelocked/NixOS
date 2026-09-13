@@ -4,6 +4,7 @@ flake-utils = "flake-utils"
 nixpkgs = "nixpkgs"
 rust-overlay = "rust-overlay"
 systems = "systems"
+tack = "tack"
 treefmt-nix = "treefmt-nix"
 
 [inputs.apple-font-emoji]
@@ -135,3 +136,6 @@ url = "gh:0xc000022070/zen-browser-flake"
 
 [shorturls]
 gh = "github:{path}"
+
+[tack]
+recomposable = "true"

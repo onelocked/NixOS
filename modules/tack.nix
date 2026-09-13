@@ -6,6 +6,7 @@
       shorturls = {
         gh = "github:{path}";
       };
+      tack.recomposable = "true";
       all_follow = {
         nixpkgs = "nixpkgs";
         systems = "systems";
@@ -13,6 +14,7 @@
         flake-utils = "flake-utils";
         rust-overlay = "rust-overlay";
         treefmt-nix = "treefmt-nix";
+        tack = "tack";
       };
     };
 
@@ -37,7 +39,12 @@
         tomlFormat = (pkgs.formats.toml { }).generate;
 
         tackConfig = {
-          inherit (config.tack) shorturls all_follow inputs;
+          inherit (config.tack)
+            shorturls
+            all_follow
+            tack
+            inputs
+            ;
         };
 
         prevPins = lib.importTOML (rootPath + /.tack/pins.toml);
@@ -58,6 +65,7 @@
           |> lib.concatLines;
       in
       {
+        remotePackages.tack = packages'.tack;
         apps.tack-rebuild = {
           type = "app";
           meta.description = "Sync tack pins on input changes, can pass switch/boot/test arguments";
@@ -110,6 +118,11 @@
         };
 
         all_follow = lib.mkOption {
+          type = lib.types.attrsOf lib.types.str;
+          default = { };
+        };
+
+        tack = lib.mkOption {
           type = lib.types.attrsOf lib.types.str;
           default = { };
         };
