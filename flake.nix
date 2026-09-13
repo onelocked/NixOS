@@ -2,9 +2,7 @@
   outputs =
     { self, ... }:
     let
-      inputs = (import ./.tack) // {
-        inherit self;
-      };
+      inputs = import ./.tack;
       inherit (inputs.nixpkgs) lib;
 
       rootPath = ./.;

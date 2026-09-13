@@ -29,6 +29,6 @@
   perSystem =
     { inputs', ... }:
     {
-      hjem- = inputs'.hjem.packages.hjem;
+      remotePackages.hjem-cli = inputs'.hjem.packages.hjem;
     };
 }

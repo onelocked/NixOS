@@ -1,5 +1,10 @@
 {
   tack.inputs.nixos-core = "gh:manic-systems/nixos-core";
+  perSystem =
+    { inputs', ... }:
+    {
+      remotePackages.nixos-core = inputs'.nixos-core.packages.nixos-core;
+    };
   exo.core =
     {
       inputs,
