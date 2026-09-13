@@ -43,10 +43,6 @@ url = "gh:amaanq/helium-flake"
 [inputs.hjem]
 url = "gh:feel-co/hjem"
 
-[inputs.hypr-plugs]
-type = "fetch"
-url = "gh:hyprwm/hyprland-plugins"
-
 [inputs.hyprland]
 url = "gh:hyprwm/Hyprland"
 

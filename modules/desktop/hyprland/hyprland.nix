@@ -3,7 +3,6 @@
     hyprland = {
       url = "gh:hyprwm/Hyprland";
     };
-    fetch.hypr-plugs = "gh:hyprwm/hyprland-plugins";
     fetch.scroll-overview = "gh:yayuuu/hyprland-scroll-overview/new-release";
   };
   exo.mods.desktop = {
