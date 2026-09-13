@@ -13,6 +13,19 @@
       extraConfig =
         { lib, ... }:
         {
+          nixpkgs.overlays = [
+            (_: prev: {
+              linux-firmware = prev.linux-firmware.overrideAttrs {
+                version = "20260810";
+                src = prev.fetchFromGitLab {
+                  owner = "kernel-firmware";
+                  repo = "linux-firmware";
+                  tag = "20260810";
+                  hash = "sha256-P/fPpqaatp8Z2GV+I/OChiWGn6AhV+8w1RMFuX/LqHc=";
+                };
+              };
+            })
+          ];
           forte.openssh.enable = lib.mkForce false;
           forte.opkssh.enable = true;
           sops.defaultSopsFile = ../../.secrets/personal.yaml;
