@@ -10,6 +10,7 @@
     }:
     {
       imports = [ inputs.sops-nix.nixosModules.sops ];
+      nixpkgs.overlays = [ inputs.sops-nix.overlays.default ];
       environment.systemPackages = with pkgs; [ sops ];
       sops = {
         useSystemdActivation = true;
