@@ -161,9 +161,9 @@
     "type": "github",
     "owner": "quickshell-mirror",
     "repo": "quickshell",
-    "rev": "2d3b3e9c70ef380dff751b61d334dc88df016c29",
-    "narHash": "sha256-6SUZyyALo19heYPa/Xmu2H4zV+wvdfVX4fTcqbgHRnI=",
-    "lastModified": 1787994703
+    "rev": "e3d52a7d34602cbf18091494c0e3c4488f093df4",
+    "narHash": "sha256-Agyhv1JMrlTIUaaN5PoavfrU5HhiRVoGgJbXihegHnU=",
+    "lastModified": 1789278629
   },
   "rust-overlay": {
     "type": "github",
@@ -211,9 +211,9 @@
     "type": "github",
     "owner": "Gerg-L",
     "repo": "spicetify-nix",
-    "rev": "a4ef43fb13e3615f36e5a0935aabe8cc29363dc9",
-    "narHash": "sha256-bERpuakmPAC2b36zgXy6OXh+SkZUjbaV+vV2sPmm6p8=",
-    "lastModified": 1788683578
+    "rev": "09eed5c95105aada9ffabd4c7eb6b345dc4ba66f",
+    "narHash": "sha256-lfZ7yAaTZMuAzOSLjJ7ivrKIFk0E11koWTVgkWSXwuE=",
+    "lastModified": 1789291406
   },
   "systemctl-tui": {
     "type": "github",
@@ -267,9 +267,9 @@
     "type": "github",
     "owner": "onelocked",
     "repo": "vimmax",
-    "rev": "c53fe0e4c8acaacb93c442a3870034d986aad47b",
-    "narHash": "sha256-qCSYYXbhPDfVv0EY2SlShuEJwGoACDRlKr6S8D7gVtA=",
-    "lastModified": 1789267208
+    "rev": "a46bb7b75e0a08db6215635c1aa92f798bb33e3b",
+    "narHash": "sha256-UsZMdWNMUINH6vylnFCMB5vX1Kev+vDZxndX2Bm2z1s=",
+    "lastModified": 1789319223
   },
   "yazi": {
     "type": "github",
