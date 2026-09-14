@@ -23,12 +23,14 @@
                   "audio.format" = "S16BE";
                   "sess.payload" = 127;
                   "audio.rate" = 48000;
-                  "always-process" = true;
-                  "net.dscp" = 46;
+                  "always-process" = false;
+                  "sess.min-ptime" = 2;
+                  "sess.max-ptime" = 20;
                   "stream.props" = {
                     "node.description" = "RTP Stream";
                     "media.class" = "Audio/Sink";
                     "priority.session" = 10000;
+                    "session.media" = "Audio";
                   };
                 };
               }
