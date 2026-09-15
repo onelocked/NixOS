@@ -114,28 +114,37 @@ let
 
                 ${
                   linkFiles
-                  |> lib.concatMapStringsSep "\n" (file:
-                    if lib.isList file.value then ''
-                      mkdir -p "$out/${file.name}"
-                      ${lib.concatMapStringsSep "\n" (v: ''
-                        if [ -d ${lib.escapeShellArg v} ]; then
-                          lndir -silent ${lib.escapeShellArg v} "$out/${file.name}"
-                        else
-                          ln -sf ${lib.escapeShellArg v} "$out/${file.name}/"
-                        fi
-                      '') file.value}
-                    '' else ''
-                      mkdir -p "$(dirname "$out/${file.name}")"
-                      ln -sf ${lib.escapeShellArg file.value} "$out/${file.name}"
-                    ''
+                  |> lib.concatMapStringsSep "\n" (
+                    file:
+                    if lib.isList file.value then
+                      #bash
+                      ''
+                        mkdir -p "$out/${file.name}"
+                        ${lib.concatMapStringsSep "\n" (v: ''
+                          if [ -d ${lib.escapeShellArg v} ]; then
+                            lndir -silent ${lib.escapeShellArg v} "$out/${file.name}"
+                          else
+                            ln -sf ${lib.escapeShellArg v} "$out/${file.name}/"
+                          fi
+                        '') file.value}
+                      ''
+                    else
+                      #bash
+                      ''
+                        mkdir -p "$(dirname "$out/${file.name}")"
+                        ln -sf ${lib.escapeShellArg file.value} "$out/${file.name}"
+                      ''
                   )
                 }
 
                 ${
                   textFiles
-                  |> lib.concatMapStringsSep "\n" (file: ''
-                    install -Dm644 "''$${file.key}Path" "$out/${file.name}"
-                  '')
+                  |> lib.concatMapStringsSep "\n" (
+                    file: # bash
+                    ''
+                      install -Dm644 "''$${file.key}Path" "$out/${file.name}"
+                    ''
+                  )
                 }
 
                 if [ ! -e "$out/bin/${bin}" ]; then
