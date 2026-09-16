@@ -18,6 +18,7 @@
           gamemode
           pulseaudio
           systemd
+          shadps4-qtlauncher
         ];
         package = pkgs.steam.override {
           extraLibraries = pkgs: [
@@ -69,6 +70,8 @@
             "--bind-try $HOME/.cache/mesa_shader_cache_db $HOME/.cache/mesa_shader_cache_db"
             "--bind-try $HOME/.cache/nvidia $HOME/.cache/nvidia"
             "--bind-try $HOME/.nv $HOME/.nv"
+            "--bind-try $HOME/.config/shadPS4 $HOME/.config/shadPS4"
+            "--bind-try $HOME/.local/share/shadPS4 $HOME/.local/share/shadPS4"
             "--ro-bind-try $HOME/.config/MangoHud $HOME/.config/MangoHud"
             "--ro-bind-try $HOME/.config/fontconfig $HOME/.config/fontconfig"
             "--ro-bind-try $HOME/.icons $HOME/.icons"
