@@ -168,7 +168,10 @@
           hj.environment.sessionVariables = {
             GIT_PAGER = "diffnav";
           };
-          forte.persist.home.directories = [ ".local/state/lazygit" ];
+          forte.persist.home.directories = [
+            ".local/state/lazygit"
+            ".config/gh"
+          ];
           programs.fish.functions.lg = # fish
             ''
               set -x LAZYGIT_NEW_DIR_FILE ${config.hj.xdg.config.directory}/lazygit/newdir
