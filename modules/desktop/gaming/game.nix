@@ -137,7 +137,7 @@
                 hl.window_rule({
                   name = "steam-move-workspace",
                   match = { class = "^steam$" },
-                  workspace = "name:media silent",
+                  workspace = "5 silent",
                 })
 
                 hl.window_rule({
@@ -178,7 +178,7 @@
                   },
                   decorate = false,
                   content = "game",
-                  workspace = "name:games",
+                  workspace = "6",
                   fullscreen_state = "3 3",
                   idle_inhibit = "focus",
                 })
@@ -186,10 +186,10 @@
                 -- return to workspace media once the game is closed
                 hl.on("window.close", function()
                   local ws = hl.get_active_workspace()
-                  if ws ~= nil and ws.name == "games" then
+                  if ws ~= nil and ws.name == "6" then
                     local windows = hl.get_workspace_windows(ws.name)
                     if windows ~= nil and #windows <= 1 then
-                      hl.dispatch(hl.dsp.focus({ workspace = "media" }))
+                      hl.dispatch(hl.dsp.focus({ workspace = "5" }))
                     end
                   end
                 end)

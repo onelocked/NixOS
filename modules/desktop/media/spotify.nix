@@ -62,7 +62,7 @@
               hl.window_rule({
                 name      = "spotify",
                 match     = { class = "spotify" },
-                workspace = "name:chat silent",
+                workspace = "4 silent",
                 scrolling_width = 0.5,
               })
             '';

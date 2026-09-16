@@ -20,7 +20,7 @@
               fullscreen      = false,
               scrolling_width = 0.95,
               content         = "game",
-              workspace       = "name:media silent",
+              workspace       = "5 silent",
               immediate       = true,
               no_shadow       = false,
               opacity         = "1 override",
@@ -32,7 +32,7 @@
               fullscreen       = false,
               no_initial_focus = true,
               suppress_event   = "fullscreen maximize activate activatefocus",
-              workspace       = "name:media silent",
+              workspace       = "5 silent",
               decorate         = false,
               opacity          = "1 override",
             })

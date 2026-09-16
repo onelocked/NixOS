@@ -20,13 +20,13 @@
               match           = { class = "com.ayugram.desktop", title = "negative:^Media viewer$" },
               fullscreen      = false,
               scrolling_width = 0.21,
-              workspace       = "name:chat silent",
+              workspace       = "4 silent",
               suppress_event  = "fullscreen maximize activate activatefocus",
             })
             hl.window_rule({
               name             = "Telegram-media",
               match            = { class = "com.ayugram.desktop", title = "^Media viewer$" },
-              workspace        = "name:chat silent",
+              workspace        = "4 silent",
               fullscreen       = false,
               fullscreen_state = "0 1",
               float            = true,

@@ -21,7 +21,7 @@
             hl.window_rule({
               name             = "jellium-desktop",
               match            = { class = "wlroots" },
-              workspace        = "name:media",
+              workspace        = "5",
               opacity          = "1 override",
               idle_inhibit = "focus",
             })

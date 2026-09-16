@@ -1,37 +1,36 @@
 {
   exo.mods.desktop =
-    {
-      lib,
-      hostName,
-      theme,
-      ...
-    }:
+    { theme, ... }:
     {
       forte.hyprland.lua.settings = # lua
         ''
+          for i = 1, 5 do
+            hl.workspace_rule({ workspace = tostring(i), persistent = true })
+          end
+
           hl.workspace_rule {
-              workspace = "name:web",
+              workspace = "1",
               layout_opts = {
                   explicit_column_widths = "0.333,0.5,0.667,0.7162,0.92"
               }
           }
 
           hl.workspace_rule {
-              workspace = "name:dev0",
+              workspace = "2",
               layout_opts = {
                   explicit_column_widths = "0.333,0.5,0.7162"
               }
           }
 
           hl.workspace_rule {
-              workspace = "name:dev1",
+              workspace = "3",
               layout_opts = {
                   explicit_column_widths = "0.333,0.5,0.7162"
               }
           }
 
           hl.workspace_rule {
-              workspace = "name:chat",
+              workspace = "4",
               layout_opts = {
                   explicit_column_widths = "0.5,0.71"
               }
@@ -203,7 +202,7 @@
           end
 
           local function is_target_ws(ws)
-            return ws.name == "dev0" or ws.name == "dev1"
+            return ws.name == "2" or ws.name == "3"
           end
 
           hl.on("window.open_early", function(w)
@@ -267,19 +266,6 @@
              else
                 return false
              end
-          end
-
-          --                    █
-          -- █   █ ▄▀▀▀▄ █▄▀▀▀  █ ▄▀ ▄▀▀▀▀ █▀▀▀▄  ▀▀▀▄ ▄▀▀▀▄ ▄▀▀▀▄ ▄▀▀▀▀
-          -- █ █ █ █   █ █      ██    ▀▀▀▄ █   █ ▄▀▀▀█ █     █▀▀▀▀  ▀▀▀▄
-          -- ▀▄█▄▀ ▀▄▄▄▀ █      █ ▀▄ ▄▄▄▄▀ █▄▄▄▀ ▀▄▄▄█ ▀▄▄▄▀ ▀▄▄▄▄ ▄▄▄▄▀
-          --                               █
-
-          -- named workspaces
-          for index, name in ipairs({ "web", "dev0", "dev1", "chat", "media"${
-            lib.optionalString (hostName == "gaming-pc") '', "games"''
-          } }) do
-            hl.workspace_rule({ workspace = tostring(index), default_name = name, persistent = true })
           end
         '';
     };

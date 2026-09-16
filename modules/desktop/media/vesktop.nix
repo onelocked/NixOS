@@ -340,7 +340,7 @@
               name            = "vesktop",
               match           = { class = "vesktop" },
               scrolling_width = 0.5,
-              workspace       = "name:chat silent",
+              workspace       = "4 silent",
               suppress_event  = "fullscreen maximize activate activatefocus",
               fullscreen_state = "0 3",
             })
