@@ -23,7 +23,8 @@ jobs:
           MISSING=()
           for pkg in "${PACKAGES[@]}"; do
             if STORE_PATH=$(nix eval --raw ".#packages.x86_64-linux.$pkg.outPath"); then
-              if ! nix path-info --store https://onelock.cachix.org "$STORE_PATH" >/dev/null 2>&1; then
+              HASH=$(basename "$STORE_PATH" | cut -d'-' -f1)
+              if ! curl -s -f -I "https://onelock.cachix.org/$HASH.narinfo" >/dev/null; then
                 MISSING+=("$pkg")
               fi
             else
