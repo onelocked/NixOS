@@ -9,6 +9,7 @@
         remote-access
         gaming
         neovim
+        shadps4
       ];
       extraConfig =
         { config, lib, ... }:
