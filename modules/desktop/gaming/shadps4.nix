@@ -1,5 +1,5 @@
 {
-  exo.mods.desktop = { pkgs, ... }: {
+  exo.mods.shadps4 = { pkgs, ... }: {
     hj.packages = [ pkgs.shadps4-qtlauncher ];
     forte.persist.home.directories = [ ".local/share/shadPS4" ];
   };
