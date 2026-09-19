@@ -1,8 +1,6 @@
 {
   tack.inputs = {
-    hyprland = {
-      url = "gh:hyprwm/Hyprland";
-    };
+    hyprland.url = "gh:hyprwm/Hyprland";
     fetch.scroll-overview = "gh:yayuuu/hyprland-scroll-overview/new-release";
   };
   exo.mods.desktop = {
@@ -541,7 +539,7 @@
       remotePackages = {
         hyprland-bundle = pkgs.symlinkJoin {
           name = "hyprland-bundle";
-          paths = pkgs.lib.concatMap (pkg: map (out: pkg.${out}) pkg.outputs) [
+          paths = [
             self'.packages.hyprland
             self'.packages.xdg-desktop-portal-hyprland
             self'.legacyPackages.scrolloverview
