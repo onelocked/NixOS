@@ -1,9 +1,11 @@
 {
   exo.mods.desktop =
-    { theme, ... }:
+    { theme, config, ... }:
     {
       forte.hyprland.lua.settings = # lua
         ''
+          hl.config({ ecosystem = { enforce_permissions = true } })
+          hl.permission({ binary = "${config.forte.hyprland.portalPackage}/(lib|libexec|lib64)/xdg-desktop-portal-hyprland", type = "screencopy", mode = "allow" })
           for i = 1, 5 do
             hl.workspace_rule({ workspace = tostring(i), persistent = true })
           end

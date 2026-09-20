@@ -5,6 +5,7 @@
       forte.hyprland.plugins = [ self'.legacyPackages.scrolloverview ];
       forte.hyprland.lua.settings = # lua
         ''
+          hl.permission("${self'.legacyPackages.scrolloverview}/lib/libscrolloverview.so", "plugin", "allow")
           local function isPluginLoaded(name)
             for _, p in ipairs(hl.get_loaded_plugins()) do
               if p.name == name then
