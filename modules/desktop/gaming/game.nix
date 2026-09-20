@@ -270,6 +270,10 @@
                   governor = "performance";
                   energy_perf_preference = "performance";
                 };
+                custom = {
+                  start = "${config.forte.quickshell.package}/bin/tuishell ipc call gamemode set 1";
+                  end = "${config.forte.quickshell.package}/bin/tuishell ipc call gamemode set 0";
+                };
               };
             };
           })

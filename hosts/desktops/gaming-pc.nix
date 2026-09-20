@@ -12,10 +12,9 @@
         shadps4
       ];
       extraConfig =
-        { config, lib, ... }:
+        { config, ... }:
         {
           sops.defaultSopsFile = ../../.secrets/personal.yaml;
-          forte.quickshell.enable = lib.mkForce false;
           forte.flatpak.enable = true;
 
           services.nfs.server = {
