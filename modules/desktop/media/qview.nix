@@ -16,7 +16,7 @@
             afterdelete = 2;
             allowmimecontentdetection = false;
             askdelete = true;
-            bgcolor = "${scheme.withHashtag.base00}";
+            bgcolor = "${scheme.base00}";
             bgcolorenabled = true;
             colorspaceconversion = 1;
             cropmode = 1;

@@ -2,6 +2,7 @@
   lib,
   config,
   withSystem,
+  mkScheme,
   ...
 }:
 {
@@ -30,6 +31,7 @@
                 hostName
                 ;
               inherit (hostConfig) hardware theme server;
+              scheme = mkScheme config.schemes.${hostConfig.theme};
               constants = {
                 username = hostConfig.user;
                 homedir = "/home/${hostConfig.user}";
@@ -143,10 +145,7 @@
                 };
 
                 theme = lib.mkOption {
-                  type = lib.types.enum [
-                    "light"
-                    "dark"
-                  ];
+                  type = lib.types.enum (lib.attrNames config.schemes);
                   default = "dark";
                   description = "The color theme for this system";
                 };

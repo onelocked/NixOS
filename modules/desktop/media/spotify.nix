@@ -21,7 +21,7 @@
           programs.spicetify = {
             enable = true;
             theme = spicePkgs.themes.text;
-            customColorScheme = with scheme; {
+            customColorScheme = with scheme.noHashtag; {
               accent = base0E;
               accent-active = base0D;
               accent-inactive = base03;

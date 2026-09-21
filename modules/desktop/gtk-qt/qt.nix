@@ -22,7 +22,7 @@
           name = gtk.font.serif;
           size = gtk.font.size;
         };
-        palette = with scheme.withHashtag; [
+        palette = with scheme; [
           base07
           base00
           "#ffffff"

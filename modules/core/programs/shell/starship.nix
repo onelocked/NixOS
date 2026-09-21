@@ -47,7 +47,7 @@
           docker_context = {
             symbol = "[󰡨 ](bold sky)";
           };
-          palettes.mocha = with scheme.withHashtag; {
+          palettes.mocha = with scheme; {
             color_fg0 = base05;
             color_bg1 = base01;
             color_bg3 = base03;

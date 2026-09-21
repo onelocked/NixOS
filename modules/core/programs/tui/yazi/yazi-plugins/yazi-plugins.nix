@@ -88,7 +88,7 @@
         };
       };
       forte.yazi.initLua =
-        with scheme.withHashtag; # lua
+        with scheme; # lua
         ''
           require("no-header-prompt"):setup()
           require("full-border"):setup {

@@ -16,8 +16,8 @@
           minimizeToTray = true;
           tray = true;
           splashTheming = true;
-          splashBackground = "${scheme.withHashtag.base00}";
-          splashColor = "${scheme.withHashtag.base00}";
+          splashBackground = "${scheme.base00}";
+          splashColor = "${scheme.base00}";
           staticTitle = true;
           hardwareAcceleration = true;
           discordBranch = "stable";

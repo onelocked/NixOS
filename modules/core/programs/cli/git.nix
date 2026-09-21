@@ -63,7 +63,7 @@
       forte.lazygit = {
         enable = true;
         withWorktrunk = true;
-        settings = with scheme.withHashtag; {
+        settings = with scheme; {
           git = {
             autoFetch = false;
             overrideGpg = true;

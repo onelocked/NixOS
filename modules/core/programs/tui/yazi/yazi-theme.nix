@@ -2,7 +2,7 @@
   exo.core =
     { lib, scheme, ... }:
     {
-      forte.yazi = with scheme.withHashtag; {
+      forte.yazi = with scheme; {
         theme.flavor = lib.genAttrs [ "dark" "light" ] (_: "oneshill");
         flavorContent = # toml
           ''

@@ -36,7 +36,7 @@
             display = {
               separator = " ┈➤ ";
             };
-            modules = with scheme.withHashtag; [
+            modules = with scheme; [
               {
                 type = "title";
                 keyWidth = 10;

@@ -18,7 +18,7 @@
             name = "adw-gtk3-dark";
             package = pkgs.adw-gtk3;
             css =
-              with scheme.withHashtag; # css
+              with scheme; # css
               ''
                 @define-color accent_color ${base0F};
                 @define-color accent_bg_color ${base0F};

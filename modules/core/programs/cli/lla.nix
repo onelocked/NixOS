@@ -94,7 +94,7 @@
         "lla/themes/abrelshud.toml" = {
           # Add the name here as well
           generator = tomlFormat.generate "lla-theme-abrelshud";
-          value = with scheme.withHashtag; {
+          value = with scheme; {
             name = "catppuccin_mocha_custom";
 
             colors = {

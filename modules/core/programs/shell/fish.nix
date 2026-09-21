@@ -73,7 +73,7 @@
               '';
           };
           shellInit =
-            with scheme.withHashtag; # fish
+            with scheme; # fish
             ''
               bind Z __yazi-fuzzy-zoxide
               bind -M insert Z __yazi-fuzzy-zoxide

@@ -4,7 +4,7 @@
     {
       forte.fzf = {
         enable = true;
-        colors = with scheme.withHashtag; {
+        colors = with scheme; {
           "bg+" = base02;
           "fg+" = base07;
           "hl" = base0B;

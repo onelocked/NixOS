@@ -135,7 +135,7 @@
             "font_features MapleMono-NF-ExtraBoldItalic" = mapleFeatures;
           };
         theme =
-          with scheme.withHashtag;
+          with scheme;
           {
             # Normal colors (0–7)
             color0 = base00;

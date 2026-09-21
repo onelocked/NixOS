@@ -28,7 +28,7 @@
         };
         themes = {
           oneshill =
-            with scheme.withHashtag; # bash
+            with scheme; # bash
             ''
               theme[main_bg]="${base00}"
               theme[main_fg]="${base07}"
