@@ -40,6 +40,7 @@
               float            = true,
               size             = { 1600, 1000 },
               opacity          = "1 override",
+              fullscreen_state = "0 1",
             })
           '';
       };
