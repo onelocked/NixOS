@@ -76,6 +76,8 @@
         hl.window_rule({
           match        = { pin = true },
           border_color = "rgb(FFFF00) rgba(FFFF0088)",
+          opacity      = "1 override 1 override",
+          border_size  = 1,
         })
       '';
   };
