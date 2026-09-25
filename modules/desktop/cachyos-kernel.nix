@@ -1,6 +1,6 @@
 {
   tack.inputs.nix-cachyos-kernel = {
-    url = "gh:xddxdd/nix-cachyos-kernel/release";
+    url = "gh:xddxdd/nix-cachyos-kernel";
     exclude_follow = [ "nixpkgs" ];
   };
   exo.mods.cachyos-kernel =

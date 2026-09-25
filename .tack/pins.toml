@@ -11,9 +11,6 @@ treefmt-nix = "treefmt-nix"
 type = "fixed"
 url = "https://github.com/samuelngs/apple-emoji-ttf/releases/download/macos-26-20260613-f1fc560b/AppleColorEmoji-Linux.ttf"
 
-[inputs.base16]
-url = "gh:SenchoPens/base16.nix"
-
 [inputs.cliphist]
 type = "fetch"
 url = "gh:sentriz/cliphist"
@@ -52,7 +49,7 @@ url = "gh:feschber/lan-mouse"
 
 [inputs.nix-cachyos-kernel]
 exclude_follow = ["nixpkgs"]
-url = "gh:xddxdd/nix-cachyos-kernel/release"
+url = "gh:xddxdd/nix-cachyos-kernel"
 
 [inputs.nixos-core]
 url = "gh:manic-systems/nixos-core"

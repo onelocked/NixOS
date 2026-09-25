@@ -5,14 +5,6 @@
     "sha256": "sha256-uMjtl/ZCuJuko2o+CWYZ8IBdBswlrhEW5pU7mBQq4gw=",
     "unpack": "file"
   },
-  "base16": {
-    "type": "github",
-    "owner": "SenchoPens",
-    "repo": "base16.nix",
-    "rev": "75ed5e5e3fce37df22e49125181fa37899c3ccd6",
-    "narHash": "sha256-qcMhnL7aGAuFuutH4rq9fvAhCpJWVHLcHVZLtPctPlo=",
-    "lastModified": 1755819240
-  },
   "cliphist": {
     "type": "github",
     "owner": "sentriz",
@@ -113,9 +105,9 @@
     "type": "github",
     "owner": "xddxdd",
     "repo": "nix-cachyos-kernel",
-    "rev": "444d135dde71c1de547cf7bfd73e67145e67aebb",
-    "narHash": "sha256-kY+k8kGBd8w4kxrw8IPzQGpnYZQV4mik2ZNHtGN0eHI=",
-    "lastModified": 1789241994
+    "rev": "7ce7e8689129da05517a41209a9d1ed3b86cb9e0",
+    "narHash": "sha256-umkTTaMFDzqRmLFDPBFEyo59FW86c2Yoz9yeMUzg/H0=",
+    "lastModified": 1790313209
   },
   "nixos-core": {
     "type": "github",

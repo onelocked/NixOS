@@ -9,6 +9,7 @@
         neovim
         media
         remote-access
+        cachyos-kernel
       ];
       extraConfig =
         { lib, ... }:
