@@ -52,18 +52,6 @@
           hl.bind("SUPER + up", hl.dsp.focus({ direction = "up" }))
           hl.bind("SUPER + down", hl.dsp.focus({ direction = "down" }))
 
-          -- Switch workspaces with SUPER + [0-9]
-          -- Move active window to a workspace with SUPER + SHIFT + [0-9]
-          for i = 1, 10 do
-            local key = i % 10 -- 10 maps to key 0
-            hl.bind("SUPER + " .. key, hl.dsp.focus({ workspace = i }))
-            hl.bind("SUPER + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
-          end
-
-          -- special workspace (scratchpad)
-          hl.bind("SUPER + S", hl.dsp.workspace.toggle_special("magic"))
-          hl.bind("SUPER + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
-
           -- focus through existing windows with SUPER + scroll
           hl.bind("SUPER + mouse_down", hl.dsp.focus({ direction = "right" }))
           hl.bind("SUPER + mouse_up", hl.dsp.focus({ direction = "left" }))

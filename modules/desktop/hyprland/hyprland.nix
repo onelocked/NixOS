@@ -1,6 +1,6 @@
 {
   tack.inputs = {
-    hyprland.url = "gh:hyprwm/Hyprland";
+    hyprland = "gh:hyprwm/Hyprland";
     fetch.scroll-overview = "gh:yayuuu/hyprland-scroll-overview/new-release";
   };
   exo.mods.desktop = {
