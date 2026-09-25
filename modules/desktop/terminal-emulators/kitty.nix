@@ -228,6 +228,7 @@
                 name             = "kitty",
                 match            = { class = "kitty" },
                 opacity          = "1 override 0.9 override",
+                fullscreen_state = "0 1",
               })
               hl.window_rule({
                 name  = "kitty-scroll",
