@@ -275,9 +275,9 @@
     "type": "github",
     "owner": "sxyazi",
     "repo": "yazi",
-    "rev": "0ea4c5d9ef75d7165c2e3b4eb8d713fc11f26c96",
-    "narHash": "sha256-njp/fLXNAru7mTWbs0p/iHZDMRZE7jLxjsnQei10rNY=",
-    "lastModified": 1790032246
+    "rev": "dfea26589e575487ad3957add1f389b3b95cc03f",
+    "narHash": "sha256-yOiF5qFNpMJb48A7WBkPvZCHI+Dk3j3ChUt7eydTmLI=",
+    "lastModified": 1789498956
   },
   "yazi-plugins": {
     "type": "github",
