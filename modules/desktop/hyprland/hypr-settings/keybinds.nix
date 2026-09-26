@@ -139,8 +139,15 @@
 
           scrolling_binds("SUPER + CTRL + left", hl.dsp.layout("swapcol l"))
           scrolling_binds("SUPER + CTRL + right", hl.dsp.layout("swapcol r"))
-          scrolling_binds("SUPER + bracketright", hl.dsp.layout("consume_or_expel next"))
-          scrolling_binds("SUPER + bracketleft", hl.dsp.layout("consume_or_expel prev"))
+          scrolling_binds("SUPER + bracketright", function()
+              hl.dispatch(hl.dsp.layout("consume_or_expel next"))
+              hl.dispatch(hl.dsp.layout("colresize 0.333"))
+          end)
+
+          scrolling_binds("SUPER + bracketleft", function()
+              hl.dispatch(hl.dsp.layout("consume_or_expel prev"))
+              hl.dispatch(hl.dsp.layout("colresize 0.333"))
+          end)
           hl.bind("SUPER + F", function()
               local ws = hl.get_active_workspace()
 
