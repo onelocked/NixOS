@@ -142,6 +142,8 @@
                   lib.filterAttrs (name: val: val != null && val != { } && val != [ ]) {
                     inherit (v)
                       url
+                      frozen
+                      group
                       type
                       follows
                       exclude_follow
@@ -185,6 +187,14 @@
                 lib.types.submodule {
                   options = {
                     url = lib.mkOption { type = lib.types.str; };
+                    frozen = lib.mkOption {
+                      type = lib.types.nullOr lib.types.bool;
+                      default = null;
+                    };
+                    group = lib.mkOption {
+                      type = lib.types.nullOr lib.types.str;
+                      default = null;
+                    };
                     type = lib.mkOption {
                       type = lib.types.nullOr (
                         lib.types.enum [
