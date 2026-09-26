@@ -18,12 +18,7 @@
 
           hl.config({
             general = {
-              gaps_in           = 8,
-              gaps_out = 17,
               no_focus_fallback = true,
-
-              border_size       = 1,
-
               col         = {
                 inactive_border = { colors = { "${if theme == "dark" then "#313245" else "#8a8078"}" } },
                 active_border   = { colors = { "${if theme == "dark" then "#7d75c0" else "#4b3a2b"}" } },
@@ -154,7 +149,6 @@
             scrolling = {
               direction = "right",
               fullscreen_on_one_column = false,
-              column_width = 0.711,
               wrap_swapcol = false,
               wrap_focus = false,
             },
