@@ -393,10 +393,6 @@
         hyprland = packages'.hyprland.overrideAttrs (oldAttrs: {
           doCheck = false;
           patches = (oldAttrs.patches or [ ]) ++ [
-            (pkgs.fetchpatch2 {
-              url = "https://patch-diff.githubusercontent.com/raw/hyprwm/Hyprland/pull/16361.patch";
-              hash = "sha256-0AsDExtJwB9FEhXbL/wzWtSpZpB14tyoMSoRxBVp03A=";
-            })
             (pkgs.writeText "per-workspace-scrolling-width" # cpp
               ''
                 diff --git a/src/layout/algorithm/tiled/scrolling/ScrollingAlgorithm.cpp b/src/layout/algorithm/tiled/scrolling/ScrollingAlgorithm.cpp
