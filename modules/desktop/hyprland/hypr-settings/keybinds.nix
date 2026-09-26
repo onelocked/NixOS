@@ -109,6 +109,9 @@
           scrolling_binds("SUPER + R", function()
             hl.dispatch(hl.dsp.layout("colresize +conf"))
           end)
+          scrolling_binds("SUPER + E", function()
+            hl.dispatch(hl.dsp.layout("colresize -conf"))
+          end)
 
           scrolling_binds("SUPER + C", function()
             local prev = hl.get_config("scrolling.focus_fit_method")

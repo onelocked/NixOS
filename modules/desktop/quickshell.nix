@@ -110,7 +110,7 @@
             "ALT + SHIFT + W" = "desktop toggleWidgets";
             "SUPER + SPACE" = "launcher toggle";
             "SUPER + ALT + L" = "lock lock";
-            "SUPER + E" = "emoji toggle";
+            "SUPER + SHIFT + Z" = "emoji toggle";
             "ALT + SHIFT + A " = "booru toggle";
           }
           |> lib.mapAttrsToList (
