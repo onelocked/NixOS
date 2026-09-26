@@ -38,6 +38,17 @@
             })
           '';
         forte.persist.home.directories = [ ".config/Moonlight Game Streaming Project" ];
+        forte.xdg.desktopEntries = {
+          "gaming-pc" = {
+            name = "Gaming-PC";
+            genericName = "Moonlight stream";
+            comment = "Start streaming gaming-pc";
+            exec = "app2unit moonlight stream gaming-pc desktop";
+            type = "Application";
+            icon = "moonlight";
+            startupNotify = false;
+          };
+        };
       };
       options.forte.moonlight-qt = {
         enable = lib.mkEnableOption "moonlight-qt" // {
