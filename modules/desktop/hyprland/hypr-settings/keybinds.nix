@@ -1,9 +1,59 @@
 {
   exo.mods.desktop =
-    { pkgs, hostName, ... }:
     {
-      forte.hyprland.lua.keybinds = # lua
+      pkgs,
+      scheme,
+      lib,
+      ...
+    }:
+    {
+      forte.hyprland.lua.keybinds =
+        let
+          input-source = pkgs.writeShellApplication {
+            name = "input-source";
+            derivationArgs = {
+              allowSubstitutes = false;
+              preferLocalBuild = true;
+            };
+            runtimeInputs = [
+              pkgs.gum
+              pkgs.ddcutil
+            ];
+            text = ''
+              CHOICE=$(gum choose --cursor=" " --cursor.foreground="#fff" --header="" --no-show-help 'DisplayPort-1' 'HDMI-1' 'HDMI-2')
+
+              if [[ -z $CHOICE ]]; then
+                exit 0
+              fi
+
+              gum confirm --no-show-help --selected.background="${scheme.base0D}" --prompt.foreground="${scheme.base0D}" "$CHOICE?" || exit 0
+
+              case $CHOICE in
+                "DisplayPort-1") ddcutil setvcp 60 0x0f ;;
+                "HDMI-1") ddcutil setvcp 60 0x11 ;;
+                "HDMI-2") ddcutil setvcp 60 0x12 ;;
+              esac
+            '';
+
+          };
+        in
+        # lua
         ''
+          hl.bind("SUPER + ALT + D", function()
+              local win = hl.get_window("class:input-source")
+              if win then
+                  hl.dispatch(hl.dsp.window.close({ window = win }))
+              else
+                  hl.dispatch(hl.dsp.exec_cmd("kitty --class input-source -e ${lib.getExe input-source}", {
+                      border_size  = 2,
+                      pin          = true,
+                      float        = true,
+                      center       = true,
+                      stay_focused = true,
+                      size         = { 184,90 },
+                  }))
+              end
+          end)
           -- █                █       ▀             █
           -- █ ▄▀ ▄▀▀▀▄ █   █ █▀▀▀▄  ▀█   █▀▀▀▄ ▄▀▀▀█ ▄▀▀▀▀
           -- ██   █▀▀▀▀ █   █ █   █   █   █   █ █   █  ▀▀▀▄
@@ -59,11 +109,6 @@
           -- Move/resize windows with SUPER + LMB/RMB and dragging
           hl.bind("SUPER + mouse:272", hl.dsp.window.drag(), { mouse = true })
           hl.bind("SUPER + mouse:273", hl.dsp.window.resize(), { mouse = true })
-
-          hl.bind("SUPER + ALT + D", hl.dsp.exec_cmd("ddcutil setvcp 60 ${
-            if hostName == "mini-pc" then "0x0f" else "0x11"
-          }"),
-            { locked = true, repeating = false })
 
           -- zoom
           local function toggle_zoom()
