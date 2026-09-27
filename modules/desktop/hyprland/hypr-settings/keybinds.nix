@@ -99,7 +99,7 @@
           hl.bind("SUPER + F", function()
               local ws = hl.get_active_workspace()
 
-              if ws and (ws.name == "dev0" or ws.name == "dev1") and ws.windows < 4 then
+              if ws and (ws.name == "2" or ws.name == "3") and ws.windows < 4 then
                   hl.dispatch(hl.dsp.layout("fit all"))
               else
                   hl.dispatch(hl.dsp.layout("fit active"))
