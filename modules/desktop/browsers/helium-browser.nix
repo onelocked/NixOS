@@ -30,7 +30,6 @@
               hl.window_rule({
                 name             = "helium",
                 match            = { class = "helium" },
-                workspace        = "1",
                 fullscreen_state = "0 1",
                 opacity          = "1 override 0.92 override",
                 scrolling_width  = 0.333,
@@ -60,12 +59,23 @@
               hl.bind("SUPER + B", function()
                   local win = hl.get_window("class:helium")
                   if win then
-                      hl.dispatch(hl.dsp.focus({ window = win }))
+                      hl.dispatch(hl.dsp.exec_raw("helium --new-window"))
                   else
                       hl.dispatch(hl.dsp.exec_raw("helium"))
                   end
               end)
             '';
+        };
+        forte.xdg.desktopEntries = {
+          "excalidraw" = {
+            name = "Excalidraw";
+            genericName = "Visual Whiteboard";
+            comment = "Start excalidraw";
+            exec = "helium --app=https://excalidraw.onelock.org";
+            type = "Application";
+            icon = "excalidraw";
+            startupNotify = false;
+          };
         };
         xdg.mime = lib.mkIf cfg.setAsDefaultBrowser {
           defaultApplications =
