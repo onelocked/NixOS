@@ -142,6 +142,7 @@
                   lib.filterAttrs (name: val: val != null && val != { } && val != [ ]) {
                     inherit (v)
                       url
+                      submodules
                       frozen
                       group
                       type
@@ -187,6 +188,10 @@
                 lib.types.submodule {
                   options = {
                     url = lib.mkOption { type = lib.types.str; };
+                    submodules = lib.mkOption {
+                      type = lib.types.nullOr lib.types.bool;
+                      default = null;
+                    };
                     frozen = lib.mkOption {
                       type = lib.types.nullOr lib.types.bool;
                       default = null;
