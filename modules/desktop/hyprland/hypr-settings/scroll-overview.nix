@@ -3,7 +3,7 @@
     { self', ... }:
     {
       forte.hyprland.plugins = [ self'.legacyPackages.scrolloverview ];
-      forte.hyprland.lua.settings = # lua
+      forte.hyprland.lua.scroll-overview = # lua
         ''
           hl.permission("${self'.legacyPackages.scrolloverview}/lib/libscrolloverview.so", "plugin", "allow")
           local function isPluginLoaded(name)

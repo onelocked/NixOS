@@ -64,11 +64,7 @@
             available options and documentation.
           '';
         };
-        openFirewall = lib.mkEnableOption null // {
-          description = ''
-            Whether to open the firewall for lan-mouse.
-          '';
-        };
+        openFirewall = lib.mkEnableOption "lan-mouse";
       };
     };
   perSystem =

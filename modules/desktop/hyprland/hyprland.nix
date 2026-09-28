@@ -25,7 +25,6 @@
     }:
     let
       cfg = config.forte.hyprland;
-      autoLoadFiles = lib.filterAttrs (_: file: file.autoLoad) cfg.lua;
     in
     {
       config =
@@ -34,76 +33,45 @@
           {
             hj.packages = [ cfg.package ];
             forte.persist.home.directories = [ ".config/hypr" ];
-            forte.hyprland.lua.autostart =
-              lib.optionalString (cfg.autostart != [ ] || cfg.plugins != [ ]) # lua
-                ''
-                  hl.on("hyprland.start", function()
-                  ${lib.concatStringsSep "\n" (map (cmd: "  hl.dispatch(hl.dsp.exec_raw(\"${cmd}\"))") cfg.autostart)}
-                  ${
-                    cfg.plugins
-                    |> lib.concatMapStrings (entry: ''
-                      hl.dispatch(hl.dsp.exec_raw("${config.forte.hyprland.package}/bin/hyprctl plugin load ${
-                        if lib.types.package.check entry then "${entry}/lib/lib${entry.pname}.so" else entry
-                      }"))
-                    '')
-                  }
-                  end)
-                '';
             hj.xdg.config.files = lib.mkMerge [
-              (lib.mkIf (autoLoadFiles != { }) {
+              {
                 "hypr/hyprland.lua".text =
-                  let
-                    priority = [ "settings" ];
-                    rank = name: lib.lists.findFirstIndex (x: x == name) (builtins.length priority) priority;
-                  in
-                  builtins.attrNames autoLoadFiles
-                  |> builtins.sort (
-                    a: b:
-                    let
-                      ra = rank a;
-                      rb = rank b;
-                    in
-                    if ra != rb then ra < rb else a < b
-                  )
-                  |> map (name: ''require("${lib.removeSuffix ".lua" name}")'')
+                  cfg.lua
+                  |> lib.filterAttrs (_: file: file.autoLoad)
+                  |> builtins.attrNames
+                  |> lib.partition (name: name == "settings")
+                  |> (part: part.right ++ part.wrong)
+                  |> map (name: ''require("${name}")'')
                   |> (
-                    lines:
-                    lines
+                    rs:
+                    rs
                     ++ [
                       #lua
                       ''
-                        if is_file_exists("${config.hj.xdg.config.directory}/hypr/dynamic.lua") then
-                            require("dynamic")
+                        if io.open("${config.hj.xdg.config.directory}/hypr/dynamic.lua", "r") then
+                          require("dynamic")
                         end
                       ''
                     ]
                   )
                   |> builtins.concatStringsSep "\n";
-              })
+              }
               (
                 cfg.lua
                 |> lib.mapAttrs' (
                   name: file:
-                  lib.nameValuePair
-                    "hypr/${lib.replaceStrings [ "." ] [ "/" ] (lib.removeSuffix ".lua" name) + ".lua"}"
-                    (
-                      if lib.isPath file.content then
-                        { source = file.content; }
-                      else
-                        {
-                          source = pkgs.writeTextFile {
-                            name = lib.replaceStrings [ "/" ] [ "-" ] (lib.removeSuffix ".lua" name) + ".lua";
-                            text = file.content;
-                            checkPhase = # bash
-                              ''
-                                if ! ${pkgs.lua}/bin/luac -p "$out"; then
-                                  echo -e "\nLua Error: ${name} has incorrect syntax\n"
-                                  exit 1
-                                fi
-                              '';
-                          };
-                        }
-                    )
+                  lib.nameValuePair "hypr/${name}.lua" {
+                    source = pkgs.writeTextFile {
+                      name = "${name}.lua";
+                      text = file.content;
+                      checkPhase = ''
+                        if ! ${pkgs.lua}/bin/luac -p "$out"; then
+                          echo -e "\nLua Error: ${name} has incorrect syntax\n"
+                          exit 1
+                        fi
+                      '';
+                    };
+                  }
                 )
               )
               {
@@ -146,9 +114,10 @@
             };
             security.pam.services.login.enableGnomeKeyring = true;
             services.getty.autologinUser = constants.username;
+
+            # Auto start wayland session on tty1 if no session exists
             programs.bash.loginShellInit = # bash
               ''
-                # Auto start wayland session on tty1 if no session exists
                 if [[ -z "$DISPLAY" && -z "$WAYLAND_DISPLAY" && "$(tty)" == '/dev/tty1' ]]; then
                   ${
                     if cfg.withUWSM then
@@ -159,6 +128,22 @@
                 fi
               '';
           }
+          # auto load the plugins
+          (lib.mkIf (cfg.plugins != [ ]) {
+            forte.hyprland.lua.plugin-start = # lua
+              ''
+                hl.on("hyprland.start", function()
+                ${
+                  cfg.plugins
+                  |> lib.concatMapStrings (entry: ''
+                    hl.dispatch(hl.dsp.exec_raw("${cfg.package}/bin/hyprctl plugin load ${
+                      if lib.types.package.check entry then "${entry}/lib/lib${entry.pname}.so" else entry
+                    }"))
+                  '')
+                }
+                end)
+              '';
+          })
           (lib.mkIf cfg.withTermFileChooser {
             xdg.portal.config.hyprland = {
               default = lib.mkForce [
@@ -239,12 +224,6 @@
           A configuration file will be generated in {file}`~/.config/hypr/hyprland.conf`.
           See <https://wiki.hyprland.org> for more information'';
 
-        autostart = lib.mkOption {
-          type = with lib.types; listOf str;
-          default = [ ];
-          description = "Applications to start on hyprland startup";
-        };
-
         package = lib.mkOption {
           type = lib.types.package;
           default = self'.packages.hyprland;
@@ -263,21 +242,6 @@
             absolute plugin paths.
           '';
         };
-
-        withUWSM = lib.mkEnableOption null // {
-          description = ''
-            Launch Hyprland with the UWSM (Universal Wayland Session Manager) session manager.
-            This has improved systemd support and is recommended for most users.
-            This automatically starts appropriate targets like `graphical-session.target`,
-            and `wayland-session@Hyprland.target`.
-
-            ::: {.note}
-            Some changes may need to be made to Hyprland configs depending on your setup, see
-            [Hyprland wiki](https://wiki.hyprland.org/Useful-Utilities/Systemd-start/#uwsm).
-            :::
-          '';
-        };
-
         lua = lib.mkOption {
           type =
             with lib.types;
@@ -320,27 +284,11 @@
           '';
         };
 
-        withTermFileChooser = lib.mkEnableOption null // {
-          description = ''
-            Whether to enable xdg-termfilechooser settings for Hyprland.
-          '';
-        };
-        withHyprpolkit = lib.mkEnableOption null // {
-          description = ''
-            Whether to enable hyprpolkit daemon
-          '';
-        };
-        withHyprshutdown = lib.mkEnableOption null // {
-          description = ''
-            Whether to enable hyprshutdown
-          '';
-        };
-
-        withHypridle = lib.mkEnableOption null // {
-          description = ''
-            Whether to enable hypridle
-          '';
-        };
+        withUWSM = lib.mkEnableOption "uwsm";
+        withTermFileChooser = lib.mkEnableOption "termfilchooser";
+        withHyprpolkit = lib.mkEnableOption "hyprpolkit";
+        withHyprshutdown = lib.mkEnableOption "hyprshutdown";
+        withHypridle = lib.mkEnableOption "hypridle";
       };
     };
   perSystem =

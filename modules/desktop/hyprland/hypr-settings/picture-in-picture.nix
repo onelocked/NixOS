@@ -1,6 +1,6 @@
 {
   exo.mods.desktop = {
-    forte.hyprland.lua.settings = # lua
+    forte.hyprland.lua.picture-in-picture = # lua
       ''
         -- picture-in-picture
         local pipAddress = nil
