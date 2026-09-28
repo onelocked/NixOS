@@ -93,6 +93,15 @@
     "narHash": "sha256-EDxpW+t2TWnuhH0fBnVMD6G4Es9cFm+Vnu80HejODYI=",
     "lastModified": 1790431221
   },
+  "jellium-desktop": {
+    "type": "git",
+    "url": "https://github.com/andrewrabert/jellium-desktop.git",
+    "ref": "HEAD",
+    "rev": "14dc0845981cb7c0aef5fa93ff539d927c8f0eb2",
+    "narHash": "sha256-vU7Fuw2gMvGdBBYEJ4ngu7cHayffEPdHswQA7NtNGj8=",
+    "lastModified": 1789852673,
+    "submodules": true
+  },
   "lan-mouse": {
     "type": "github",
     "owner": "feschber",

@@ -38,8 +38,13 @@
         };
       };
     };
+  tack.inputs.jellium-desktop = {
+    url = "gh:andrewrabert/jellium-desktop";
+    submodules = true;
+    type = "fetch";
+  };
   perSystem =
-    { pkgs, ... }:
+    { pkgs, inputs, ... }:
     {
       remotePackages.jellium-desktop =
         let
@@ -49,7 +54,6 @@
               lib,
               runCommand,
               rustPlatform,
-              fetchFromGitHub,
               autoPatchelfHook,
               makeWrapper,
 
@@ -119,9 +123,13 @@
               # Subtitle/text encoding and video filters
               zimg,
               libuchardet,
+
+              libglvnd,
+              mesa,
+
             }:
             let
-              cef = runCommand "cef-jellium-151.3.16" { } ''
+              cef = runCommand "cef-jellium" { } ''
                 mkdir -p "$out"
 
                 # Jellium Desktop expects a flat structure
@@ -142,16 +150,16 @@
                 LIBCLANG_PATH = "${lib.getLib llvmPackages.libclang}/lib";
               };
 
-              src = fetchFromGitHub {
-                owner = "andrewrabert";
-                repo = "jellium-desktop";
-                rev = "28f2cf16a1f1b819884dd6a72919ca55bdf9bd73";
-                hash = "sha256-cs7wxsX5fHaxVvnsSKjbq+rG//LjkV7592LnThnlPJE=";
-                fetchSubmodules = true;
-              };
+              src = inputs.jellium-desktop;
 
               cargoRoot = "src";
-              cargoHash = "sha256-JFFQjOw4Iu6NiQScQqYg/J7XEkLbHCDa+XS12VJJdVI=";
+              cargoLock = {
+                lockFile = "${inputs.jellium-desktop}/src/Cargo.lock";
+                outputHashes = {
+                  "cryoglyph-0.1.0" = "sha256-KJeEzzp5UCsF6Q2VlfHdjsY+N8vzTjgEZUAZtlIpfiU=";
+                  "iced_core-0.15.0-dev" = "sha256-cZhPMpqeCsHfXCmqOumVaw1k3Y3r2cNzqmifmtE3UlI=";
+                };
+              };
 
               patchPhase = "patchShebangs third_party/mpv ";
 
@@ -184,7 +192,14 @@
                 # Currently CEF GPU compositing leads to app crash right after launch
                 makeWrapper "$appDir/jellium-desktop" "$out/bin/jellium-desktop" \
                   --set CEF_PATH "${cef}" \
-                  --prefix LD_LIBRARY_PATH : "$appDir:${cef}"
+                  --prefix LD_LIBRARY_PATH : "$appDir:${cef}:/run/opengl-driver/lib:${
+                    lib.makeLibraryPath [
+                      libglvnd
+                      mesa
+                      vulkan-loader
+                    ]
+                  }" \
+                  --prefix XDG_DATA_DIRS : "/run/opengl-driver/share"
                 runHook postInstall
               '';
 

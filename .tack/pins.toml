@@ -43,6 +43,11 @@ url = "gh:feel-co/hjem"
 [inputs.hyprland]
 url = "gh:hyprwm/Hyprland"
 
+[inputs.jellium-desktop]
+submodules = true
+type = "fetch"
+url = "gh:andrewrabert/jellium-desktop"
+
 [inputs.lan-mouse]
 type = "fetch"
 url = "gh:feschber/lan-mouse"
