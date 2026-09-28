@@ -29,7 +29,7 @@
       config = lib.mkIf cfg.enable {
         hj.packages = [ cfg.package ];
 
-        programs.fish.functions.y = # fish
+        programs.fish.shellFunctions.y.body = # fish
           ''
             set -l tmp (mktemp -t "yazi-cwd.XXXXX")
             command yazi $argv --cwd-file="$tmp"

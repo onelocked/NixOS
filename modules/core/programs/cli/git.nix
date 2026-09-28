@@ -172,7 +172,7 @@
             ".local/state/lazygit"
             ".config/gh"
           ];
-          programs.fish.functions.lg = # fish
+          programs.fish.shellFunctions.lg.body = # fish
             ''
               set -x LAZYGIT_NEW_DIR_FILE ${config.hj.xdg.config.directory}/lazygit/newdir
               command ${lib.getExe cfg.package} $argv
