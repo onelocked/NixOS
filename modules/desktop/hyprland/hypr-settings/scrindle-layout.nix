@@ -7,6 +7,9 @@
             if not ws or ws.tiled_layout ~= "scrolling" then
                 return
             end
+            if ws.name ~= "2" and ws.name ~= "3" then
+                return
+            end
 
             local count = #hl.get_windows({ workspace = ws, floating = false })
 
