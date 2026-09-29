@@ -1,8 +1,5 @@
 {
-  tack.inputs = {
-    hyprland = "gh:hyprwm/Hyprland";
-    fetch.scroll-overview = "gh:yayuuu/hyprland-scroll-overview/new-release";
-  };
+  tack.inputs.hyprland = "gh:hyprwm/Hyprland";
   exo.mods.desktop = {
     forte.hyprland = {
       enable = true;
@@ -295,48 +292,10 @@
     {
       packages',
       pkgs,
-      inputs,
       self',
       ...
     }:
     {
-      legacyPackages = {
-        scrolloverview = self'.packages.hyprland.stdenv.mkDerivation (finalAttrs: {
-          pname = "scrolloverview";
-          version = "1.0";
-          src = inputs.scroll-overview;
-
-          nativeBuildInputs = [ pkgs.pkg-config ];
-          buildInputs = [
-            pkgs.lua5_4
-            self'.packages.hyprland
-          ]
-          ++ self'.packages.hyprland.buildInputs;
-
-          enableParallelBuilding = true;
-          dontUseCmakeConfigure = true;
-
-          buildPhase = ''
-            runHook preBuild
-            export SCROLLOVERVIEW_BUILD_VERSION="1.0"
-            make all
-            runHook postBuild
-          '';
-
-          installPhase = ''
-            runHook preInstall
-            mkdir -p "$out/lib"
-            mv scrolloverview.so "$out/lib/libscrolloverview.so"
-            runHook postInstall
-          '';
-
-          meta = {
-            homepage = "https://github.com/yayuuu/hyprland-scroll-overview";
-            description = "scroll overview";
-            platforms = self'.packages.hyprland.meta.platforms or [ ];
-          };
-        });
-      };
       packages = {
         hyprland = packages'.hyprland.overrideAttrs (oldAttrs: {
           doCheck = false;

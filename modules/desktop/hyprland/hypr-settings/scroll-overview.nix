@@ -1,4 +1,6 @@
 {
+  tack.inputs.fetch.scroll-overview = "gh:yayuuu/hyprland-scroll-overview/new-release";
+
   exo.mods.desktop =
     { self', ... }:
     {
@@ -39,5 +41,52 @@
             end
           end)
         '';
+    };
+
+  perSystem =
+    {
+      self',
+      inputs,
+      pkgs,
+      ...
+    }:
+    {
+      legacyPackages = {
+        scrolloverview = self'.packages.hyprland.stdenv.mkDerivation (finalAttrs: {
+          pname = "scrolloverview";
+          version = "1.0";
+          src = inputs.scroll-overview;
+
+          nativeBuildInputs = [ pkgs.pkg-config ];
+          buildInputs = [
+            pkgs.lua5_4
+            self'.packages.hyprland
+          ]
+          ++ self'.packages.hyprland.buildInputs;
+
+          enableParallelBuilding = true;
+          dontUseCmakeConfigure = true;
+
+          buildPhase = ''
+            runHook preBuild
+            export SCROLLOVERVIEW_BUILD_VERSION="1.0"
+            make all
+            runHook postBuild
+          '';
+
+          installPhase = ''
+            runHook preInstall
+            mkdir -p "$out/lib"
+            mv scrolloverview.so "$out/lib/libscrolloverview.so"
+            runHook postInstall
+          '';
+
+          meta = {
+            homepage = "https://github.com/yayuuu/hyprland-scroll-overview";
+            description = "scroll overview";
+            platforms = self'.packages.hyprland.meta.platforms or [ ];
+          };
+        });
+      };
     };
 }
