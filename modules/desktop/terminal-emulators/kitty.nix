@@ -14,7 +14,7 @@
           wayland_enable_ime = "no";
 
           sync_to_monitor = "yes";
-          background_opacity = "0.85";
+          background_opacity = "0.93";
           remember_window_position = "no";
 
           draw_minimal_borders = "yes";
@@ -227,7 +227,7 @@
               hl.window_rule({
                 name             = "kitty",
                 match            = { class = "kitty" },
-                opacity          = "1 override 0.9 override",
+                opacity          = "1 override 1 override",
                 fullscreen_state = "0 1",
               })
               hl.window_rule({

@@ -20,9 +20,9 @@
         hl.bind("SUPER + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
 
         -- dynamically calculate the scrolling_width for aspect ratios of 16:9 and 21:9
-        local gaps_out = 0
-        local gaps_in = 0
-        local border_size = 2
+        local gaps_out = 12
+        local gaps_in = 6
+        local border_size = 5
         hl.config({ general = { gaps_out = gaps_out, gaps_in = gaps_in, border_size = border_size } })
 
         local w169, w219

@@ -31,7 +31,6 @@
                 name             = "helium",
                 match            = { class = "helium" },
                 fullscreen_state = "0 1",
-                opacity          = "1 override 0.92 override",
                 scrolling_width  = 0.333,
               })
               hl.window_rule({

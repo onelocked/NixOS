@@ -85,6 +85,14 @@
     "narHash": "sha256-tycoVCB2KSVdy9ERT1lJGHdP9Hf4FHanaEY25hUxylw=",
     "lastModified": 1790081753
   },
+  "hypr-plugs": {
+    "type": "github",
+    "owner": "hyprwm",
+    "repo": "hyprland-plugins",
+    "rev": "b29b8293039490d0361e9f15289d361653d8aabf",
+    "narHash": "sha256-MKb+sbGuRyd+As1fNoxPNJRC6B+hLahvSPGuwPskOXw=",
+    "lastModified": 1790062321
+  },
   "hyprland": {
     "type": "github",
     "owner": "hyprwm",

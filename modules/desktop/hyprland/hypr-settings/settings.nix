@@ -20,7 +20,7 @@
             general = {
               no_focus_fallback = true,
               col         = {
-                inactive_border = { colors = { "${if theme == "dark" then "#313245" else "#8a8078"}" } },
+                inactive_border = { colors = { "${if theme == "dark" then "#362D40" else "#8a8078"}" } },
                 active_border   = { colors = { "${if theme == "dark" then "#7d75c0" else "#4b3a2b"}" } },
               },
 
@@ -37,8 +37,8 @@
               rounding              = 0,
               rounding_power        = 1,
 
-              active_opacity        = ${if theme == "dark" then "0.95" else "0.9"},
-              inactive_opacity      = ${if theme == "dark" then "0.89" else "0.83"},
+              active_opacity        = ${if theme == "dark" then "1" else "0.9"},
+              inactive_opacity      = ${if theme == "dark" then "0.95" else "0.83"},
 
               blur                  = {
                 enabled  = true,
