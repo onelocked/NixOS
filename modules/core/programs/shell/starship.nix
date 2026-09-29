@@ -6,7 +6,7 @@
         enable = true;
         settings = {
           add_newline = false;
-          format = "[ 󰪥 $directory ](color_green)$character";
+          format = "[$directory ](color_green)$character";
           palette = "mocha";
           right_format = "$all";
           command_timeout = 1000;
@@ -33,7 +33,7 @@
           directory = {
             read_only = " ";
             truncation_length = 6;
-            format = "[󰉋 ](color_blue)[$path](color_aqua)";
+            format = "[$path](color_aqua)";
           };
           golang = {
             format = "[ ](bold cyan)";
