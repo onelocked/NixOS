@@ -268,9 +268,9 @@
     "type": "git",
     "url": "https://gitea.onelock.org/onelock/tuishell",
     "ref": "HEAD",
-    "rev": "bce5e7bfb19ba31be3aa76aceb441afed6eaa88c",
-    "narHash": "sha256-H3F+yFyUqV9kB9ZAkyQuy8Roicje0d7C3ec0yOCVY5A=",
-    "lastModified": 1789935201
+    "rev": "59b4a286b9d509493b783ae860c895204e4eaab6",
+    "narHash": "sha256-kRBQh0ey/D1DWJKSbHQKRBTQ2F+mSBhhzkvBPdGosm8=",
+    "lastModified": 1790801195
   },
   "vimmax": {
     "type": "github",

@@ -20,10 +20,38 @@
         hl.bind("SUPER + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
 
         -- dynamically calculate the scrolling_width for aspect ratios of 16:9 and 21:9
-        local gaps_out = 12
-        local gaps_in = 6
+        local gaps_out = 8
+        local gaps_in = 4
         local border_size = 5
+
+        local PIXEL_BIAS = 0
+        local BPP_PLUGIN = "borders-plus-plus"
+        local BPP_CFG = "plugin:borders_plus_plus:"
+
         hl.config({ general = { gaps_out = gaps_out, gaps_in = gaps_in, border_size = border_size } })
+
+        local function isPluginLoaded(name)
+          for _, p in ipairs(hl.get_loaded_plugins()) do
+            if p.name == name then
+              return true
+            end
+          end
+          return false
+        end
+
+        -- sum of borders-plus-plus reserved px per side, read live from config
+        local function bpp_extra_border()
+          local add = hl.get_config(BPP_CFG .. "add_borders") or 0
+          local extra = 0
+          for i = 1, add do
+            local size = hl.get_config(BPP_CFG .. "border_size_" .. i)
+            if not size then
+              size = (i == 1) and hl.get_config("general:border_size") or hl.get_config(BPP_CFG .. "border_size_" .. (i - 1))
+            end
+            extra = extra + (size or 0)
+          end
+          return extra
+        end
 
         local w169, w219
 
@@ -33,16 +61,24 @@
             return
           end
 
+          -- account for plugin borders only while the plugin is actually loaded
+          local bpp = isPluginLoaded(BPP_PLUGIN)
+          local extra_border = bpp and bpp_extra_border() or 0
+          local bias = bpp and PIXEL_BIAS or 0
+          local total_border = border_size + extra_border
+
           local W, H = monitor.width, monitor.height
           local res = monitor.reserved or { top = 0, bottom = 0, left = 0, right = 0 }
 
           local usable_w = W - res.left - res.right - 2 * gaps_out
           local usable_h = H - res.top - res.bottom - 2 * gaps_out
 
-          local inner_h = usable_h - 2 * border_size
+          local inner_h = usable_h - 2 * total_border
 
           local function width_for(ratio, gaps_in_sides)
-            return (ratio * inner_h + gaps_in_sides * gaps_in + 2 * border_size) / usable_w
+            local content_w = math.floor(ratio * inner_h + 0.5)
+            local col_px = content_w + 2 * total_border + gaps_in_sides * gaps_in + bias
+            return col_px / usable_w
           end
 
           w169 = width_for(16 / 9, 2)
@@ -83,15 +119,15 @@
           }
         end
 
+        local function refresh()
+          hl.timer(apply_widths, { timeout = 200, type = "oneshot" })
+        end
+
         apply_widths()
 
-        hl.on("layer.opened", function()
-          hl.timer(apply_widths, { timeout = 200, type = "oneshot" })
-        end)
-
-        hl.on("layer.closed", function()
-          hl.timer(apply_widths, { timeout = 200, type = "oneshot" })
-        end)
+        hl.on("layer.opened", refresh)
+        hl.on("layer.closed", refresh)
+        hl.on("config.reloaded", refresh)
 
         hl.workspace_rule {
           workspace = "4",

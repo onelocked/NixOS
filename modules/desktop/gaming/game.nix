@@ -251,7 +251,7 @@
                 wantedBy = [ "graphical-session.target" ];
                 serviceConfig = {
                   Type = "simple";
-                  ExecStart = "${lib.getExe config.programs.steam.package} -gamepadui";
+                  ExecStart = "${lib.getExe config.programs.steam.package}";
                 };
               };
             };
