@@ -117,6 +117,13 @@
               explicit_column_widths = "0.5," .. w169 .. "," .. w219
             }
           }
+
+          hl.workspace_rule {
+            workspace = "special:magic",
+            layout_opts = {
+              explicit_column_widths = "0.5," .. w169 .. "," .. w219
+            }
+          }
         end
 
         local function refresh()

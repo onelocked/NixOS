@@ -49,7 +49,6 @@
                       pin          = true,
                       float        = true,
                       center       = true,
-                      stay_focused = true,
                       size         = { 184,90 },
                   }))
               end

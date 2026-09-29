@@ -11,6 +11,16 @@
                 return
             end
 
+            -- don't refit while a special workspace is covering this one
+            local mon = ws.monitor
+            if mon and mon.active_special_workspace then
+                return
+            end
+            -- fallback if ws.monitor is ever nil
+            if hl.get_active_special_workspace() then
+                return
+            end
+
             local count = #hl.get_windows({ workspace = ws, floating = false })
 
             if count == 1 then
