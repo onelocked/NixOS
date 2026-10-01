@@ -17,9 +17,9 @@
     "type": "github",
     "owner": "SHORiN-KiWATA",
     "repo": "cliphist-tui",
-    "rev": "7feb84e377f6955744b2fc50d678b03c4e4012b9",
-    "narHash": "sha256-i1F9XmnAsLRQhWTozGyKP8SiB+fBqcW9yEbg6K/GUlI=",
-    "lastModified": 1790881731
+    "rev": "d9b43bfc88ab50fd49e2dd9237d21343b208357b",
+    "narHash": "sha256-TtKy57evRwwS2j0CyB4tsiJZD4fkn0OoYuUkbHWiDS8=",
+    "lastModified": 1781050727
   },
   "confirm-dialog": {
     "type": "github",
