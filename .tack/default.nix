@@ -364,9 +364,12 @@ let
               follows = f.level;
             })
           );
+          supportsOverrides = (upPins.tack or { }).recomposable or false;
         in
         # only override tack files within a `fetch`, since there's no flake.lock
-        if hasTack && tackOverrides != { } then
+        if hasTack && tackOverrides != { } && !supportsOverrides then
+          trace "tack: ${path}: not marked recomposable (set [tack] recomposable = true); overrides will not reach upstream" path
+        else if hasTack && tackOverrides != { } then
           let
             upstream = import (path + "/.tack");
           in
