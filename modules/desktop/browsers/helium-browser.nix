@@ -16,6 +16,20 @@
     }:
     let
       cfg = config.forte.helium-browser;
+      mimeType = [
+        "application/x-extension-shtml"
+        "application/x-extension-xhtml"
+        "application/x-extension-html"
+        "application/x-extension-xht"
+        "application/x-extension-htm"
+        "x-scheme-handler/unknown"
+        "x-scheme-handler/https"
+        "x-scheme-handler/http"
+        "application/xhtml+xml"
+        "application/json"
+        "application/pdf"
+        "text/html"
+      ];
     in
     {
       config = lib.mkIf cfg.enable {
@@ -66,6 +80,14 @@
             '';
         };
         forte.xdg.desktopEntries = {
+          "helium" = {
+            name = "Helium";
+            exec = "helium --new-window %U";
+            terminal = false;
+            type = "Application";
+            icon = "helium";
+            inherit mimeType;
+          };
           "excalidraw" = {
             name = "Excalidraw";
             genericName = "Visual Whiteboard";
@@ -78,22 +100,7 @@
         };
         xdg.mime = lib.mkIf cfg.setAsDefaultBrowser {
           defaultApplications =
-            [
-              "application/x-extension-shtml"
-              "application/x-extension-xhtml"
-              "application/x-extension-html"
-              "application/x-extension-xht"
-              "application/x-extension-htm"
-              "x-scheme-handler/unknown"
-              "x-scheme-handler/https"
-              "x-scheme-handler/http"
-              "application/xhtml+xml"
-              "application/json"
-              "application/pdf"
-              "text/html"
-            ]
-            |> map (mime: lib.nameValuePair mime [ "helium.desktop" ])
-            |> lib.listToAttrs;
+            mimeType |> map (mime: lib.nameValuePair mime [ "helium.desktop" ]) |> lib.listToAttrs;
         };
       };
       options.forte.helium-browser = {
