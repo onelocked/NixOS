@@ -178,9 +178,9 @@
     "type": "github",
     "owner": "oxalica",
     "repo": "rust-overlay",
-    "rev": "20ee15370c9256669d66968b89ee20a4b0a4e673",
-    "narHash": "sha256-l7C/OsjcnWDOk2K3ssj+SBduwL67LashjBqis9+t468=",
-    "lastModified": 1783320166
+    "rev": "b2ccad3b67335d368eef49ec48b9c8166858e73d",
+    "narHash": "sha256-jtYAaAXT1gxEtzmeYmOGu0IvKPle5J39BOFbgl6os+A=",
+    "lastModified": 1790843958
   },
   "scroll-overview": {
     "type": "github",

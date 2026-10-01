@@ -79,6 +79,9 @@ url = "gh:nix-community/preservation"
 [inputs.quickshell]
 url = "gh:quickshell-mirror/quickshell"
 
+[inputs.rust-overlay]
+url = "gh:oxalica/rust-overlay"
+
 [inputs.scroll-overview]
 type = "fetch"
 url = "gh:yayuuu/hyprland-scroll-overview/new-release"
