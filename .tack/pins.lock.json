@@ -1,6 +1,41 @@
 {
   "$declared": {
-    "cliphist-tui": "github:SHORiN-KiWATA/cliphist-tui"
+    "apple-font-emoji": "https://github.com/samuelngs/apple-emoji-ttf/releases/download/macos-26-20260613-f1fc560b/AppleColorEmoji-Linux.ttf",
+    "cliphist": "github:sentriz/cliphist",
+    "cliphist-tui": "github:SHORiN-KiWATA/cliphist-tui",
+    "confirm-dialog": "github:onelocked/confirm-dialog.yazi",
+    "disko": "github:nix-community/disko",
+    "extra-metadata": "github:boydaihungst/file-extra-metadata.yazi",
+    "fuzzy-search": "github:onelocked/fuzzy-search.yazi",
+    "helium-browser": "github:amaanq/helium-flake",
+    "hjem": "github:feel-co/hjem",
+    "hypr-plugs": "github:hyprwm/hyprland-plugins",
+    "hyprland": "github:hyprwm/Hyprland",
+    "jellium-desktop": "github:andrewrabert/jellium-desktop",
+    "lan-mouse": "github:feschber/lan-mouse",
+    "nix-cachyos-kernel": "github:xddxdd/nix-cachyos-kernel",
+    "nixos-core": "github:manic-systems/nixos-core",
+    "nixos-hardware": "github:NixOS/nixos-hardware",
+    "nixpkgs": "github:nixos/nixpkgs/nixos-unstable",
+    "no-header-prompt": "github:onelocked/no-header-prompt.yazi",
+    "preservation": "github:nix-community/preservation",
+    "quickshell": "github:quickshell-mirror/quickshell",
+    "rust-overlay": "github:oxalica/rust-overlay",
+    "scroll-overview": "github:yayuuu/hyprland-scroll-overview/new-release",
+    "sf-mono": "https://devimages-cdn.apple.com/design/resources/download/SF-Mono.dmg",
+    "sops-nix": "github:Mic92/sops-nix",
+    "spicetify-nix": "github:Gerg-L/spicetify-nix",
+    "systemctl-tui": "github:rgwood/systemctl-tui",
+    "systems": "github:nix-systems/default-linux",
+    "tack": "github:manic-systems/tack",
+    "theme-store": "github:zen-browser/theme-store",
+    "tmuxFloax": "github:omerxx/tmux-floax",
+    "tuishell": "git+https://gitea.onelock.org/onelock/tuishell",
+    "vimmax": "github:onelocked/vimmax",
+    "yazi": "github:sxyazi/yazi",
+    "yazi-plugins": "github:AminurAlam/yazi-plugins",
+    "yaziline": "github:llanosrocas/yaziline.yazi",
+    "zen-browser": "github:0xc000022070/zen-browser-flake"
   },
   "apple-font-emoji": {
     "type": "fixed",
@@ -92,17 +127,17 @@
     "type": "github",
     "owner": "hyprwm",
     "repo": "hyprland-plugins",
-    "rev": "602c47132eb7fb3881458daa3f048671df38a4be",
-    "narHash": "sha256-uQFHEHl+IZvwVvrWgj6z40t8k5rs+gvBJsXe6JSQsrU=",
-    "lastModified": 1790876478
+    "rev": "64d6f514ea94fe4742faa0e299a3ccce23feaea5",
+    "narHash": "sha256-MCwH6CyMp3ijRjVwQc+QPV21sT658pqqMaWj/3ipahY=",
+    "lastModified": 1790934510
   },
   "hyprland": {
     "type": "github",
     "owner": "hyprwm",
     "repo": "Hyprland",
-    "rev": "59ab177fb6527e0e923ed016a5eec02df3deccc1",
-    "narHash": "sha256-IR5K6m/uPIQnz6FdkIYJj8Jk7mvfNOSCoP4BSg/y9ZM=",
-    "lastModified": 1790858060
+    "rev": "c6e668757d9ac136586e47e3bc07384e432b67f1",
+    "narHash": "sha256-X6iUOdSZuHWK5KRqaFoIaVEIogwNPlKplGtdWyhs0Vg=",
+    "lastModified": 1790941305
   },
   "jellium-desktop": {
     "type": "git",
@@ -181,9 +216,9 @@
     "type": "github",
     "owner": "oxalica",
     "repo": "rust-overlay",
-    "rev": "dcee1adabb61484343af863501d2e3d91ef51f72",
-    "narHash": "sha256-n+rcrZkqos6/HY2iSJsVsJw3Q4mB9XEquYpus97iOi4=",
-    "lastModified": 1790882220
+    "rev": "368fee9beaab04ca6fe7af28db63caa9badb22fa",
+    "narHash": "sha256-5r3MN/Rx7N9tLapCBmUq6/zCc3C9J7gNif1HybD1fJQ=",
+    "lastModified": 1790928989
   },
   "scroll-overview": {
     "type": "github",
@@ -247,9 +282,9 @@
     "type": "github",
     "owner": "manic-systems",
     "repo": "tack",
-    "rev": "2bd8466510898be1d0bf0a105426463c2ddd8366",
-    "narHash": "sha256-zMmFIA2c9WLzgOHje3OnBI9NkrgCBjx1cck1jGoTRZE=",
-    "lastModified": 1790893986
+    "rev": "4aaed84df55c1f116ccd81d7bc0fb818a068955f",
+    "narHash": "sha256-5fc6+wvlE5yUPkrbgi9xSWsaVRA54qLuMot4sCoLm2E=",
+    "lastModified": 1790920390
   },
   "theme-store": {
     "type": "github",
@@ -311,8 +346,8 @@
     "type": "github",
     "owner": "0xc000022070",
     "repo": "zen-browser-flake",
-    "rev": "a2cb59515204ebe895f73cce387b811a78b3c032",
-    "narHash": "sha256-rTDYMyiKgVNiL7sAc2LMr7zw3n3eC5YR+IGblzDdQQk=",
-    "lastModified": 1790843055
+    "rev": "b12abb753335dd3b9ba5ea90d3be799bd9b2dc29",
+    "narHash": "sha256-i1W4IdG9PVdSRN1rvTHaqiVqvnRS3+OXgaQa7z5iRDc=",
+    "lastModified": 1790940304
   }
 }
