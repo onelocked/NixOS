@@ -162,9 +162,9 @@
     "type": "github",
     "owner": "xddxdd",
     "repo": "nix-cachyos-kernel",
-    "rev": "53e670823581df6af23ee8981425d87c0dd43dd8",
-    "narHash": "sha256-ucR92yvxnf+wrzovd0Xp8VXD4q2ow3fD4QJAVHMA1X4=",
-    "lastModified": 1790892178
+    "rev": "b1332396df6e880d7e3b6b451c6a74132ce8cf66",
+    "narHash": "sha256-ANcKKTLB5oitjAYPp+iWts5clpbowVbDPVvt03P7Hes=",
+    "lastModified": 1790564970
   },
   "nixos-core": {
     "type": "github",
