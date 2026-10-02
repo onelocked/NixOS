@@ -331,9 +331,9 @@
     "type": "github",
     "owner": "onelocked",
     "repo": "vimmax",
-    "rev": "dc068216e20a6c9837bb574cd86b4796d545eb94",
-    "narHash": "sha256-tNYmbw3E4Mvgiy6o3SeBnh0oy4W9ILQJf8/0etWcg3U=",
-    "lastModified": 1790962348
+    "rev": "092bb6b167859468bb4e5a9ae7b42cb4876c4569",
+    "narHash": "sha256-f82zur6bzju6IfNiSW1cjK1t2B2psfvv6jTsyKtYIxs=",
+    "lastModified": 1790988304
   },
   "yazi": {
     "type": "github",
