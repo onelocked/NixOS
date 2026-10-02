@@ -80,8 +80,6 @@
           "alt+up" = "neighboring_window up";
           "alt+down" = "neighboring_window down";
 
-          "ctrl+x" = "close_window";
-
           # Resize panes
           "ctrl+alt+left" = "resize_window narrower";
           "ctrl+alt+right" = "resize_window wider";
