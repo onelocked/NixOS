@@ -4,23 +4,23 @@
     programs.steam.extraPackages = [ pkgs.shadps4-qtlauncher ];
     forte.persist.home.directories = [ ".local/share/shadPS4" ];
   };
+  tack.inputs.pkg-install = {
+    url = "gh:Muggle345/PKGInstall";
+    type = "fetch";
+    frozen = true;
+    submodules = true;
+  };
   perSystem =
-    { pkgs, ... }:
+    { pkgs, inputs, ... }:
     {
       # To install PKG
       packages.pkg-install = pkgs.stdenv.mkDerivation (finalAttrs: {
-        pname = finalAttrs.src.repo;
-        version = finalAttrs.src.rev;
+        pname = "PKG-INSTALL";
+        version = inputs._meta.pkg-install.rev;
         __structuredAttrs = true;
         strictDeps = true;
 
-        src = pkgs.fetchFromGitHub {
-          owner = "Muggle345";
-          repo = "PKGInstall";
-          rev = "902d14c1a3c277a586e4c0c4db0774d06bda3501";
-          hash = "sha256-iY8+3U271eUKAl9xgw5FZQKG6l49GkjUYJQT3fmW9os=";
-          fetchSubmodules = true;
-        };
+        src = inputs.pkg-install;
 
         doCheck = false;
 

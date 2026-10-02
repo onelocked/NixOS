@@ -73,6 +73,12 @@ url = "gh:nixos/nixpkgs/nixos-unstable"
 type = "fetch"
 url = "gh:onelocked/no-header-prompt.yazi"
 
+[inputs.pkg-install]
+frozen = true
+submodules = true
+type = "fetch"
+url = "gh:Muggle345/PKGInstall"
+
 [inputs.preservation]
 url = "gh:nix-community/preservation"
 

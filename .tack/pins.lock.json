@@ -18,6 +18,7 @@
     "nixos-hardware": "github:NixOS/nixos-hardware",
     "nixpkgs": "github:nixos/nixpkgs/nixos-unstable",
     "no-header-prompt": "github:onelocked/no-header-prompt.yazi",
+    "pkg-install": "github:Muggle345/PKGInstall",
     "preservation": "github:nix-community/preservation",
     "quickshell": "github:quickshell-mirror/quickshell",
     "rust-overlay": "github:oxalica/rust-overlay",
@@ -195,6 +196,15 @@
     "rev": "dd34339092b7cdc1f8213017f939e55e0b47a008",
     "narHash": "sha256-dHJNk3o9vMGUnO/KAl7R6UdEq1giyp2DNXzxmAKBZP0=",
     "lastModified": 1779745693
+  },
+  "pkg-install": {
+    "type": "git",
+    "url": "https://github.com/Muggle345/PKGInstall.git",
+    "ref": "HEAD",
+    "rev": "902d14c1a3c277a586e4c0c4db0774d06bda3501",
+    "narHash": "sha256-iY8+3U271eUKAl9xgw5FZQKG6l49GkjUYJQT3fmW9os=",
+    "lastModified": 1762834008,
+    "submodules": true
   },
   "preservation": {
     "type": "github",
