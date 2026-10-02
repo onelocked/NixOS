@@ -83,6 +83,7 @@ url = "gh:quickshell-mirror/quickshell"
 url = "gh:oxalica/rust-overlay"
 
 [inputs.scroll-overview]
+patches = ["https://github.com/yayuuu/hyprland-scroll-overview/pull/78"]
 type = "fetch"
 url = "gh:yayuuu/hyprland-scroll-overview/new-release"
 

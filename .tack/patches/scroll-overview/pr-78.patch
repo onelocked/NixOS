@@ -1,0 +1,63 @@
+diff --git a/OverviewPassElement.cpp b/OverviewPassElement.cpp
+index 524ffc3..9ba91ca 100644
+--- a/OverviewPassElement.cpp
++++ b/OverviewPassElement.cpp
+@@ -161,7 +161,8 @@ std::vector<UP<IPassElement>> COverviewShadowPassElement::draw() {
+         ScrollOverview::Config::setValue("decoration:shadow:render_power", *previousRenderPower);
+     });
+ 
+-    Render::GL::g_pHyprOpenGL->renderRoundedShadow(data.fullBox, data.rounding, data.roundingPower, data.range, data.color, std::clamp(data.alpha, 0.F, 1.F));
++    // Overview shadows use precomputed boxes and no current window, so no workspace presentation is needed.
++    Render::GL::g_pHyprOpenGL->renderRoundedShadow(data.fullBox, data.rounding, data.roundingPower, data.range, data.color, std::clamp(data.alpha, 0.F, 1.F), nullptr);
+ 
+     return {};
+ }
+diff --git a/Window.cpp b/Window.cpp
+index 909e7a8..7e0089e 100644
+--- a/Window.cpp
++++ b/Window.cpp
+@@ -7,6 +7,7 @@
+ #define protected public
+ #include <hyprland/src/render/Renderer.hpp>
+ #include <hyprland/src/Compositor.hpp>
++#include <hyprland/src/workspace/HLWorkspace.hpp>
+ #include <hyprland/src/config/ConfigValue.hpp>
+ #include <hyprland/src/managers/SeatManager.hpp>
+ #include <hyprland/src/desktop/state/FocusState.hpp>
+@@ -570,7 +571,7 @@ static void renderOverviewHyprbarDecoration(SOverviewCustomDecorationRenderState
+         previousReplyData->lastReply = *REPLY;
+     decoration->onPositioningReply(*REPLY);
+ 
+-    decoration->draw(monitor, PARTOFWINDOW ? 1.F : metrics.targetOpacity);
++    decoration->draw(monitor, PARTOFWINDOW ? 1.F : metrics.targetOpacity, dynamicPointerCast<Workspace::CWorkspacePresentable>(window->m_workspace));
+ 
+     state.queuedAny = true;
+     state.restoreFns.emplace_back([window, decoration, WORKSPACE, OVERRIDEWORKSPACEOFFSET, previousWindowPos, previousWindowSize, previousWorkspaceOffset, previousReply,
+@@ -904,7 +905,7 @@ static void renderOverviewGroupTabs(PHLMONITOR monitor, const PHLWINDOW& window,
+ 
+     GROUPBAR->updateWindow(window);
+     g_pHyprRenderer->m_renderPass.add(makeUnique<CRendererHintsPassElement>(CRendererHintsPassElement::SData{.renderModif = modif}));
+-    GROUPBAR->draw(monitor, metrics.targetOpacity);
++    GROUPBAR->draw(monitor, metrics.targetOpacity, dynamicPointerCast<Workspace::CWorkspacePresentable>(window->m_workspace));
+     g_pHyprRenderer->m_renderPass.add(makeUnique<CRendererHintsPassElement>(CRendererHintsPassElement::SData{.renderModif = Render::SRenderModifData{}}));
+     renderOverviewGroupTabIndicators(monitor, window, windowBox, metrics, metrics.targetOpacity);
+ }
+@@ -938,7 +939,7 @@ static SOverviewCustomDecorationRenderState renderOverviewCustomDecorations(PHLM
+         }
+ 
+         deco->updateWindow(window);
+-        deco->draw(monitor, metrics.targetOpacity);
++        deco->draw(monitor, metrics.targetOpacity, dynamicPointerCast<Workspace::CWorkspacePresentable>(window->m_workspace));
+         state.queuedAny = true;
+     }
+ 
+@@ -1040,7 +1041,8 @@ void renderOverviewWindow(const SRenderParams& params) {
+ 
+     const size_t firstWindowPassElement = g_pHyprRenderer->m_renderPass.m_passElements.size();
+     const bool   usePrecomputedBlur     = shouldUsePrecomputedBlur(params.window, params.monitor, params.workspaceBox, &params.windowBox, params.dragged);
+-    g_pHyprRenderer->renderWindow(params.window, params.monitor, params.now, false, Render::RENDER_PASS_ALL, false, false);
++    // Keep the workspace presentation so floating offsets, alpha and blur match the window.
++    g_pHyprRenderer->renderWindow(params.window, params.monitor, dynamicPointerCast<Workspace::CWorkspacePresentable>(WORKSPACE), params.now, false, Render::RENDER_PASS_ALL, false, false);
+     const Vector2D targetWindowPosition = params.monitor->m_position + params.windowBox.pos() / params.monitor->m_scale;
+     scaleOverviewChildSurfaceGeometry(params.window, targetWindowPosition, params.window->sizeAnimation()->value(), firstWindowPassElement);
+     if (!usePrecomputedBlur)

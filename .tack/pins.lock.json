@@ -226,7 +226,21 @@
     "repo": "hyprland-scroll-overview",
     "rev": "f08c5f7de06c1165952cc1c5318cf6f5c87140ff",
     "narHash": "sha256-2TzMdMGobmWPTeRS4Z305/cjlvHPsyN+rLEF86NsZQg=",
-    "lastModified": 1789346277
+    "lastModified": 1789346277,
+    "patched": {
+      "path": "/nix/store/74vsycdjdxlfif90pn69d5lk5wp53djw-source",
+      "narHash": "sha256-9LK86PI1bioSSA/14uPMXBrn0xi79eCneX3UoUP10p4=",
+      "lastModified": 1789346277,
+      "patches": [
+        {
+          "source": "https://github.com/yayuuu/hyprland-scroll-overview/pull/78",
+          "url": "https://github.com/yayuuu/hyprland-scroll-overview/pull/78",
+          "file": "patches/scroll-overview/pr-78.patch",
+          "sha256": "65e97cfebe33bc86863be8d7cf8fd117e357105351a9cbef395f2f1a8e3e714b",
+          "head": "0057ae75eed5a46edd6c9a37d8d8338819b31e39"
+        }
+      ]
+    }
   },
   "sf-compact": {
     "type": "fixed",

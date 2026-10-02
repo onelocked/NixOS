@@ -1,5 +1,11 @@
 {
-  tack.inputs.fetch.scroll-overview = "gh:yayuuu/hyprland-scroll-overview/new-release";
+  tack.inputs = {
+    scroll-overview = {
+      url = "gh:yayuuu/hyprland-scroll-overview/new-release";
+      patches = [ "https://github.com/yayuuu/hyprland-scroll-overview/pull/78" ];
+      type = "fetch";
+    };
+  };
 
   exo.mods.desktop =
     { self', ... }:
