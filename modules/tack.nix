@@ -61,7 +61,27 @@
           (prevPins.inputs or { })
           |> lib.attrNames
           |> lib.filter (name: !(config.tack.inputs ? ${name}))
-          |> map (remKey: "tack rm ${remKey}")
+          |> map (remKey: "tack rm ${lib.escapeShellArg remKey}")
+          |> lib.concatLines;
+
+        prevPatches = name: prevPins.inputs.${name}.patches or [ ];
+        currPatches = name: config.tack.inputs.${name}.patches or [ ];
+
+        rmPatchCommands =
+          config.tack.inputs
+          |> lib.attrNames
+          |> lib.concatMap (
+            name:
+            lib.subtractLists (currPatches name) (prevPatches name)
+            |> map (patch: "tack patch rm ${lib.escapeShellArg name} ${lib.escapeShellArg patch}")
+          )
+          |> lib.concatLines;
+
+        addPatchCommands =
+          config.tack.inputs
+          |> lib.attrNames
+          |> lib.filter (name: lib.subtractLists (prevPatches name) (currPatches name) != [ ])
+          |> map (name: "tack patch update ${lib.escapeShellArg name}")
           |> lib.concatLines;
       in
       {
@@ -86,6 +106,8 @@
                   exit 1
                 fi
 
+                ${lib.optionalString (rmPatchCommands != "") rmPatchCommands}
+
                 ${lib.optionalString (prevPins != tackConfig) ''
                   newPinsToml="${tackConfig |> tomlFormat "pins.toml"}"
                   delta --dark --side-by-side --line-numbers --diff-so-fancy .tack/pins.toml "$newPinsToml" || true
@@ -96,6 +118,7 @@
                   echo "wrote .tack/pins.toml"
                 ''}
                 ${lib.optionalString (updateInputs != "") "tack update ${updateInputs}"}
+                ${lib.optionalString (addPatchCommands != "") addPatchCommands}
 
                 if [[ $# -gt 0 ]]; then
                   nh os "$@"
@@ -148,6 +171,7 @@
                       type
                       follows
                       exclude_follow
+                      patches
                       ;
                   }
                 );
@@ -214,6 +238,10 @@
                       default = { };
                     };
                     exclude_follow = lib.mkOption {
+                      type = lib.types.listOf lib.types.str;
+                      default = [ ];
+                    };
+                    patches = lib.mkOption {
                       type = lib.types.listOf lib.types.str;
                       default = [ ];
                     };
