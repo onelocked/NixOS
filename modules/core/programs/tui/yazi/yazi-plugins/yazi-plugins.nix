@@ -4,7 +4,6 @@
       fuzzy-search = "gh:onelocked/fuzzy-search.yazi";
       confirm-dialog = "gh:onelocked/confirm-dialog.yazi";
       extra-metadata = "gh:boydaihungst/file-extra-metadata.yazi";
-      yaziline = "gh:llanosrocas/yaziline.yazi";
       no-header-prompt = "gh:onelocked/no-header-prompt.yazi";
     }
     |> builtins.mapAttrs (
@@ -19,7 +18,6 @@
     {
       pkgs,
       lib,
-      scheme,
       inputs,
       ...
     }:
@@ -41,7 +39,6 @@
         // (
           [
             "fuzzy-search"
-            "yaziline"
             "no-header-prompt"
             "confirm-dialog"
             "extra-metadata"
@@ -96,8 +93,7 @@
             ];
         };
       };
-      forte.yazi.initLua =
-        with scheme; # lua
+      forte.yazi.initLua = # lua
         ''
           require("no-header-prompt"):setup()
           require("full-border"):setup {
@@ -107,23 +103,6 @@
               -- Order of status signs showing in the linemode
             order = 1500,
           }
-          require("yaziline"):setup({
-            color = "${base0D}",               -- blue (active/primary)
-            secondary_color = "${base02}",     -- selection background
-            default_files_color = "${base04}", -- dark foreground (inactive)
-            selected_files_color = "${base05}",-- default foreground
-            yanked_files_color = "${base0B}",  -- green
-            cut_files_color = "${base08}",     -- red
-
-            separator_style = "liney", -- "angly" | "curvy" | "liney" | "empty"
-
-            select_symbol = "",
-            yank_symbol = "󰆐",
-
-            filename_max_length = 24, -- truncate when filename > 24
-            filename_truncate_length = 6, -- leave 6 chars on both sides
-            filename_truncate_separator = "..."
-          })
         '';
     };
 }
