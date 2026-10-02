@@ -42,6 +42,7 @@
     url = "gh:andrewrabert/jellium-desktop";
     submodules = true;
     type = "fetch";
+    group = "desktop";
   };
   perSystem =
     { pkgs, inputs, ... }:

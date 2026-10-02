@@ -1,5 +1,8 @@
 {
-  tack.inputs.helium-browser.url = "gh:amaanq/helium-flake";
+  tack.inputs.helium-browser = {
+    url = "gh:amaanq/helium-flake";
+    group = "browser";
+  };
 
   exo.mods.desktop = {
     forte.helium-browser = {

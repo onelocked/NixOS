@@ -173,7 +173,11 @@
         };
       };
     };
-  tack.inputs.fetch.systemctl-tui = "gh:rgwood/systemctl-tui";
+  tack.inputs.systemctl-tui = {
+    url = "gh:rgwood/systemctl-tui";
+    type = "fetch";
+    group = "general";
+  };
   perSystem =
     { inputs, pkgs, ... }:
     {

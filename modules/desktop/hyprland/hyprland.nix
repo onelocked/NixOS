@@ -1,5 +1,10 @@
 {
-  tack.inputs.hyprland = "gh:hyprwm/Hyprland";
+  tack.inputs = {
+    hyprland = {
+      url = "gh:hyprwm/Hyprland";
+      group = "hypr";
+    };
+  };
   exo.mods.desktop = {
     forte.hyprland = {
       enable = true;

@@ -1,8 +1,17 @@
 {
   tack.inputs = {
-    yazi = "gh:sxyazi/yazi";
-    rust-overlay = "gh:oxalica/rust-overlay";
-    fetch.yazi-plugins = "gh:AminurAlam/yazi-plugins";
+    rust-overlay = {
+      url = "gh:oxalica/rust-overlay";
+    };
+    yazi = {
+      url = "gh:sxyazi/yazi";
+      group = "sxyazi";
+    };
+    yazi-plugins = {
+      url = "gh:AminurAlam/yazi-plugins";
+      type = "fetch";
+      group = "sxyazi";
+    };
   };
   exo.core =
     {

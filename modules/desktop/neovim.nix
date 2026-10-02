@@ -1,5 +1,8 @@
 {
-  tack.inputs.vimmax = "gh:onelocked/vimmax";
+  tack.inputs.vimmax = {
+    url = "gh:onelocked/vimmax";
+    group = "general";
+  };
   exo.mods.neovim = {
     forte.neovim.enable = true;
     forte.persist = {

@@ -1,6 +1,9 @@
 { inputs, lib, ... }:
 {
-  tack.inputs.nixos-hardware = "gh:NixOS/nixos-hardware";
+  tack.inputs.nixos-hardware = {
+    url = "gh:NixOS/nixos-hardware";
+    group = "nix";
+  };
   exo.configurations = {
     tethys = {
       system = "aarch64-linux";

@@ -1,6 +1,5 @@
 { config, ... }:
 {
-  tack.inputs.nixos-hardware = "gh:NixOS/nixos-hardware";
   exo.configurations = {
     oracle = {
       user = "onelock";

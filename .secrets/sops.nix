@@ -1,6 +1,9 @@
 { inputs, ... }:
 {
-  tack.inputs.sops-nix = "gh:Mic92/sops-nix";
+  tack.inputs.sops-nix = {
+    url = "gh:Mic92/sops-nix";
+    group = "nix";
+  };
   exo.core =
     {
       pkgs,

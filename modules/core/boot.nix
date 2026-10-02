@@ -1,5 +1,8 @@
 {
-  tack.inputs.nixos-core = "gh:manic-systems/nixos-core";
+  tack.inputs.nixos-core = {
+    url = "gh:manic-systems/nixos-core";
+    group = "nix";
+  };
   perSystem =
     { inputs', ... }:
     {

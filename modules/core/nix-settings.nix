@@ -1,8 +1,17 @@
 {
   tack.inputs = {
-    nixpkgs = "gh:nixos/nixpkgs/nixos-unstable";
-    disko = "gh:nix-community/disko";
-    systems = "gh:nix-systems/default-linux";
+    nixpkgs = {
+      url = "gh:nixos/nixpkgs/nixos-unstable";
+      group = "nix";
+    };
+    disko = {
+      url = "gh:nix-community/disko";
+      group = "nix";
+    };
+    systems = {
+      url = "gh:nix-systems/default-linux";
+      group = "nix";
+    };
   };
   exo.core =
     {

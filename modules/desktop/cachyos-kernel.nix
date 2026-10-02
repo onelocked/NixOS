@@ -2,6 +2,8 @@
   tack.inputs.nix-cachyos-kernel = {
     url = "gh:xddxdd/nix-cachyos-kernel";
     exclude_follow = [ "nixpkgs" ];
+    group = "nix";
+    frozen = true;
   };
   exo.mods.cachyos-kernel =
     { inputs', lib, ... }:

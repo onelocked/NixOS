@@ -1,11 +1,20 @@
 {
-  tack.inputs.fetch = {
-    fuzzy-search = "gh:onelocked/fuzzy-search.yazi";
-    confirm-dialog = "gh:onelocked/confirm-dialog.yazi";
-    extra-metadata = "gh:boydaihungst/file-extra-metadata.yazi";
-    yaziline = "gh:llanosrocas/yaziline.yazi";
-    no-header-prompt = "gh:onelocked/no-header-prompt.yazi";
-  };
+  tack.inputs =
+    {
+      fuzzy-search = "gh:onelocked/fuzzy-search.yazi";
+      confirm-dialog = "gh:onelocked/confirm-dialog.yazi";
+      extra-metadata = "gh:boydaihungst/file-extra-metadata.yazi";
+      yaziline = "gh:llanosrocas/yaziline.yazi";
+      no-header-prompt = "gh:onelocked/no-header-prompt.yazi";
+    }
+    |> builtins.mapAttrs (
+      _: url: {
+        inherit url;
+        type = "fetch";
+        group = "sxyazi";
+      }
+    );
+
   exo.core =
     {
       pkgs,

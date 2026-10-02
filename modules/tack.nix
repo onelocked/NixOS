@@ -2,7 +2,10 @@
 {
   config = {
     tack = {
-      inputs.tack = "gh:manic-systems/tack";
+      inputs.tack = {
+        url = "gh:manic-systems/tack";
+        group = "nix";
+      };
       shorturls = {
         gh = "github:{path}";
       };
@@ -16,6 +19,11 @@
         treefmt-nix = "treefmt-nix";
         tack = "tack";
       };
+      omit_inputs = [
+        "flake-compat"
+        "pre-commit-hooks"
+        "treefmt-nix"
+      ];
     };
 
     exo.core =
@@ -45,6 +53,9 @@
             tack
             inputs
             ;
+        }
+        // lib.optionalAttrs (config.tack.omit_inputs != [ ]) {
+          omit_inputs.names = config.tack.omit_inputs;
         };
 
         prevPins = lib.importTOML (rootPath + /.tack/pins.toml);
@@ -145,6 +156,11 @@
           default = { };
         };
 
+        omit_inputs = lib.mkOption {
+          type = lib.types.listOf lib.types.str;
+          default = [ ];
+        };
+
         tack = lib.mkOption {
           type = lib.types.attrsOf lib.types.str;
           default = { };
@@ -152,104 +168,49 @@
 
         inputs = lib.mkOption {
           default = { };
-          apply =
-            rawInputs:
-            let
-              standard =
-                removeAttrs rawInputs [
-                  "fetch"
-                  "fixed"
-                ]
-                |> lib.mapAttrs (
-                  _: v:
-                  lib.filterAttrs (name: val: val != null && val != { } && val != [ ]) {
-                    inherit (v)
-                      url
-                      submodules
-                      frozen
-                      group
-                      type
-                      follows
-                      exclude_follow
-                      patches
-                      ;
-                  }
-                );
-              fetch =
-                (rawInputs.fetch or { })
-                |> lib.mapAttrs (
-                  _: url: {
-                    inherit url;
-                    type = "fetch";
-                  }
-                );
-              fixed =
-                (rawInputs.fixed or { })
-                |> lib.mapAttrs (
-                  _: url: {
-                    inherit url;
-                    type = "fixed";
-                  }
-                );
-            in
-            standard // fetch // fixed;
-
-          type = lib.types.submodule {
-            options = {
-              fetch = lib.mkOption {
-                type = lib.types.attrsOf lib.types.str;
-                default = { };
-                description = "Shorthand for defining multiple fetch inputs";
+          apply = lib.mapAttrs (
+            _: input: lib.filterAttrs (_: val: val != null && val != { } && val != [ ]) input
+          );
+          type = lib.types.attrsOf (
+            lib.types.submodule {
+              options = {
+                url = lib.mkOption { type = lib.types.str; };
+                submodules = lib.mkOption {
+                  type = lib.types.nullOr lib.types.bool;
+                  default = null;
+                };
+                frozen = lib.mkOption {
+                  type = lib.types.nullOr lib.types.bool;
+                  default = null;
+                };
+                group = lib.mkOption {
+                  type = lib.types.nullOr lib.types.str;
+                  default = null;
+                };
+                type = lib.mkOption {
+                  type = lib.types.nullOr (
+                    lib.types.enum [
+                      "fetch"
+                      "fixed"
+                    ]
+                  );
+                  default = null;
+                };
+                follows = lib.mkOption {
+                  type = lib.types.attrsOf lib.types.str;
+                  default = { };
+                };
+                exclude_follow = lib.mkOption {
+                  type = lib.types.listOf lib.types.str;
+                  default = [ ];
+                };
+                patches = lib.mkOption {
+                  type = lib.types.listOf lib.types.str;
+                  default = [ ];
+                };
               };
-              fixed = lib.mkOption {
-                type = lib.types.attrsOf lib.types.str;
-                default = { };
-                description = "Shorthand for defining multiple fixed inputs";
-              };
-            };
-            freeformType = lib.types.attrsOf (
-              lib.types.coercedTo lib.types.str (url: { inherit url; }) (
-                lib.types.submodule {
-                  options = {
-                    url = lib.mkOption { type = lib.types.str; };
-                    submodules = lib.mkOption {
-                      type = lib.types.nullOr lib.types.bool;
-                      default = null;
-                    };
-                    frozen = lib.mkOption {
-                      type = lib.types.nullOr lib.types.bool;
-                      default = null;
-                    };
-                    group = lib.mkOption {
-                      type = lib.types.nullOr lib.types.str;
-                      default = null;
-                    };
-                    type = lib.mkOption {
-                      type = lib.types.nullOr (
-                        lib.types.enum [
-                          "fetch"
-                          "fixed"
-                        ]
-                      );
-                      default = null;
-                    };
-                    follows = lib.mkOption {
-                      type = lib.types.attrsOf lib.types.str;
-                      default = { };
-                    };
-                    exclude_follow = lib.mkOption {
-                      type = lib.types.listOf lib.types.str;
-                      default = [ ];
-                    };
-                    patches = lib.mkOption {
-                      type = lib.types.listOf lib.types.str;
-                      default = [ ];
-                    };
-                  };
-                }
-              )
-            );
-          };
+            }
+          );
         };
       };
     };

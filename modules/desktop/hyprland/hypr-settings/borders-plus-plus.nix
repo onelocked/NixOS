@@ -1,5 +1,9 @@
 {
-  tack.inputs.fetch.hypr-plugs = "gh:hyprwm/hyprland-plugins";
+  tack.inputs.hypr-plugs = {
+    url = "gh:hyprwm/hyprland-plugins";
+    type = "fetch";
+    group = "hypr";
+  };
   exo.mods.desktop = { self', ... }: {
     forte.hyprland.plugins = [ self'.legacyPackages.borders-plus-plus ];
     forte.hyprland.lua.borders-plus-plus = # lua

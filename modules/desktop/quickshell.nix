@@ -1,8 +1,15 @@
 { inputs, ... }:
 {
   tack.inputs = {
-    fetch.tuishell = "git+https://gitea.onelock.org/onelock/tuishell";
-    quickshell = "gh:quickshell-mirror/quickshell";
+    tuishell = {
+      url = "git+https://gitea.onelock.org/onelock/tuishell";
+      type = "fetch";
+      group = "desktop";
+    };
+    quickshell = {
+      url = "gh:quickshell-mirror/quickshell";
+      group = "desktop";
+    };
   };
   exo.mods.desktop =
     {

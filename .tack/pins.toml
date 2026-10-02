@@ -8,68 +8,88 @@ tack = "tack"
 treefmt-nix = "treefmt-nix"
 
 [inputs.apple-font-emoji]
+frozen = true
+group = "fonts"
 type = "fixed"
 url = "https://github.com/samuelngs/apple-emoji-ttf/releases/download/macos-26-20260613-f1fc560b/AppleColorEmoji-Linux.ttf"
 
 [inputs.cliphist]
+group = "general"
 type = "fetch"
 url = "gh:sentriz/cliphist"
 
 [inputs.cliphist-tui]
+group = "general"
 type = "fetch"
 url = "gh:SHORiN-KiWATA/cliphist-tui"
 
 [inputs.confirm-dialog]
+group = "sxyazi"
 type = "fetch"
 url = "gh:onelocked/confirm-dialog.yazi"
 
 [inputs.disko]
+group = "nix"
 url = "gh:nix-community/disko"
 
 [inputs.extra-metadata]
+group = "sxyazi"
 type = "fetch"
 url = "gh:boydaihungst/file-extra-metadata.yazi"
 
 [inputs.fuzzy-search]
+group = "sxyazi"
 type = "fetch"
 url = "gh:onelocked/fuzzy-search.yazi"
 
 [inputs.helium-browser]
+group = "browser"
 url = "gh:amaanq/helium-flake"
 
 [inputs.hjem]
+group = "nix"
 url = "gh:feel-co/hjem"
 
 [inputs.hypr-plugs]
+group = "hypr"
 type = "fetch"
 url = "gh:hyprwm/hyprland-plugins"
 
 [inputs.hyprland]
+group = "hypr"
 url = "gh:hyprwm/Hyprland"
 
 [inputs.jellium-desktop]
+group = "desktop"
 submodules = true
 type = "fetch"
 url = "gh:andrewrabert/jellium-desktop"
 
 [inputs.lan-mouse]
+group = "desktop"
 type = "fetch"
 url = "gh:feschber/lan-mouse"
 
 [inputs.nix-cachyos-kernel]
 exclude_follow = ["nixpkgs"]
+frozen = true
+group = "nix"
 url = "gh:xddxdd/nix-cachyos-kernel"
 
 [inputs.nixos-core]
+group = "nix"
 url = "gh:manic-systems/nixos-core"
 
 [inputs.nixos-hardware]
+group = "nix"
 url = "gh:NixOS/nixos-hardware"
 
 [inputs.nixpkgs]
+group = "nix"
 url = "gh:nixos/nixpkgs/nixos-unstable"
 
 [inputs.no-header-prompt]
+group = "sxyazi"
 type = "fetch"
 url = "gh:onelocked/no-header-prompt.yazi"
 
@@ -80,75 +100,95 @@ type = "fetch"
 url = "gh:Muggle345/PKGInstall"
 
 [inputs.preservation]
+group = "nix"
 url = "gh:nix-community/preservation"
 
 [inputs.quickshell]
+group = "desktop"
 url = "gh:quickshell-mirror/quickshell"
 
 [inputs.rust-overlay]
 url = "gh:oxalica/rust-overlay"
 
 [inputs.scroll-overview]
+group = "hypr"
 patches = ["https://github.com/yayuuu/hyprland-scroll-overview/pull/78"]
 type = "fetch"
 url = "gh:yayuuu/hyprland-scroll-overview/new-release"
 
 [inputs.sf-compact]
+frozen = true
+group = "fonts"
 type = "fixed"
 url = "https://devimages-cdn.apple.com/design/resources/download/SF-Compact.dmg"
 
 [inputs.sf-mono]
+frozen = true
+group = "fonts"
 type = "fixed"
 url = "https://devimages-cdn.apple.com/design/resources/download/SF-Mono.dmg"
 
 [inputs.sf-pro]
+frozen = true
+group = "fonts"
 type = "fixed"
 url = "https://devimages-cdn.apple.com/design/resources/download/SF-Pro.dmg"
 
 [inputs.sops-nix]
+group = "nix"
 url = "gh:Mic92/sops-nix"
 
 [inputs.spicetify-nix]
+group = "desktop"
 url = "gh:Gerg-L/spicetify-nix"
 
 [inputs.systemctl-tui]
+group = "general"
 type = "fetch"
 url = "gh:rgwood/systemctl-tui"
 
 [inputs.systems]
+group = "nix"
 url = "gh:nix-systems/default-linux"
 
 [inputs.tack]
+group = "nix"
 url = "gh:manic-systems/tack"
 
 [inputs.theme-store]
+group = "browser"
 type = "fetch"
 url = "gh:zen-browser/theme-store"
 
-[inputs.tmuxFloax]
-type = "fetch"
-url = "gh:omerxx/tmux-floax"
-
 [inputs.tuishell]
+group = "desktop"
 type = "fetch"
 url = "git+https://gitea.onelock.org/onelock/tuishell"
 
 [inputs.vimmax]
+group = "general"
 url = "gh:onelocked/vimmax"
 
 [inputs.yazi]
+group = "sxyazi"
 url = "gh:sxyazi/yazi"
 
 [inputs.yazi-plugins]
+group = "sxyazi"
 type = "fetch"
 url = "gh:AminurAlam/yazi-plugins"
 
 [inputs.yaziline]
+group = "sxyazi"
 type = "fetch"
 url = "gh:llanosrocas/yaziline.yazi"
 
 [inputs.zen-browser]
+group = "browser"
 url = "gh:0xc000022070/zen-browser-flake"
+
+[omit_inputs]
+names = ["flake-compat", "pre-commit-hooks", "treefmt-nix"]
 
 [shorturls]
 gh = "github:{path}"

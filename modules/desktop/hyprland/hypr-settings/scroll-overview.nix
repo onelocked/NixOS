@@ -4,6 +4,7 @@
       url = "gh:yayuuu/hyprland-scroll-overview/new-release";
       patches = [ "https://github.com/yayuuu/hyprland-scroll-overview/pull/78" ];
       type = "fetch";
+      group = "hypr";
     };
   };
 
@@ -59,7 +60,7 @@
     {
       legacyPackages = {
         scrolloverview = self'.packages.hyprland.stdenv.mkDerivation (finalAttrs: {
-          pname = inputs._meta.scroll-overview.repo;
+          pname = "scrolloverview";
           version = inputs._meta.scroll-overview.rev;
           src = inputs.scroll-overview;
 

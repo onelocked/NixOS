@@ -1,5 +1,9 @@
 {
-  tack.inputs.fetch.lan-mouse = "gh:feschber/lan-mouse";
+  tack.inputs.lan-mouse = {
+    url = "gh:feschber/lan-mouse";
+    type = "fetch";
+    group = "desktop";
+  };
   exo.mods.remote-access = {
     forte.lan-mouse = {
       enable = true;

@@ -1,5 +1,8 @@
 {
-  tack.inputs.preservation = "gh:nix-community/preservation";
+  tack.inputs.preservation = {
+    url = "gh:nix-community/preservation";
+    group = "nix";
+  };
   exo.core =
     {
       config,
