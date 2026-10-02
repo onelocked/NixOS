@@ -16,13 +16,59 @@ jobs:
         with:
           extra-conf: |
             experimental-features = pipe-operators
+      - name: Setup Cachix
+        uses: cachix/cachix-action@v17
+        with:
+          name: onelock
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+          skipPush: true  # we push tack explicitly, not every path the job touches
+      - name: Ensure tack is cached
+        run: |
+          TACK_PATH=$(nix eval --raw .#tack.outPath)
+          HASH=$(basename "$TACK_PATH" | cut -d'-' -f1)
+          if curl -s -f -I "https://onelock.cachix.org/$HASH.narinfo" >/dev/null; then
+            echo "tack is already cached."
+          else
+            echo "tack is not cached, building and pushing."
+            nix build .#tack --no-link --print-out-paths --print-build-logs | cachix push onelock
+          fi
       - name: Filter uncached packages
         id: set-matrix
         run: |
+          eval_pkg() {
+            local pkg="$1" err out i
+            local -A seen=()
+            local -a found new
+            err="$(mktemp)"
+            for _ in $(seq 1 50); do
+              if out=$(nix eval --raw ".#packages.x86_64-linux.${pkg}.outPath" 2>"$err"); then
+                printf '%s' "$out"
+                rm -f "$err"
+                return 0
+              fi
+              mapfile -t found < <(grep -oP 'tack materialize \K[A-Za-z0-9._-]+' "$err" | sort -u)
+              new=()
+              for i in "${found[@]}"; do
+                if [ -z "${seen[$i]:-}" ]; then
+                  seen[$i]=1
+                  new+=("$i")
+                fi
+              done
+              if [ ${#new[@]} -eq 0 ]; then
+                cat "$err" >&2
+                rm -f "$err"
+                return 1
+              fi
+              echo "::notice::materializing ${new[*]} (needed by $pkg)" >&2
+              nix run .#tack -- materialize "${new[@]}" >&2 || return 1
+            done
+            echo "::error::too many materialize rounds for $pkg" >&2
+            return 1
+          }
           readarray -t PACKAGES < <(nix run .#list-remote-packages)
           MISSING=()
           for pkg in "${PACKAGES[@]}"; do
-            if STORE_PATH=$(nix eval --raw ".#packages.x86_64-linux.$pkg.outPath"); then
+            if STORE_PATH=$(eval_pkg "$pkg"); then
               HASH=$(basename "$STORE_PATH" | cut -d'-' -f1)
               if ! curl -s -f -I "https://onelock.cachix.org/$HASH.narinfo" >/dev/null; then
                 MISSING+=("$pkg")
@@ -63,6 +109,32 @@ jobs:
         with:
           name: onelock
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+      - name: Materialize required tack inputs
+        run: |
+          pkg="${{ matrix.package }}"
+          err="$(mktemp)"
+          declare -A seen=()
+          for _ in $(seq 1 50); do
+            if nix eval --raw ".#packages.x86_64-linux.${pkg}.outPath" >/dev/null 2>"$err"; then
+              exit 0
+            fi
+            mapfile -t found < <(grep -oP 'tack materialize \K[A-Za-z0-9._-]+' "$err" | sort -u)
+            new=()
+            for i in "${found[@]}"; do
+              if [ -z "${seen[$i]:-}" ]; then
+                seen[$i]=1
+                new+=("$i")
+              fi
+            done
+            if [ ${#new[@]} -eq 0 ]; then
+              cat "$err" >&2
+              exit 1
+            fi
+            echo "::notice::materializing ${new[*]}"
+            nix run .#tack -- materialize "${new[@]}"
+          done
+          echo "::error::too many materialize rounds"
+          exit 1
       - name: Build ${{ matrix.package }}
         run: nix build ".#packages.x86_64-linux.${{ matrix.package }}" --print-build-logs
       - name: Record Build Status
