@@ -50,12 +50,15 @@
 
           inherit name src;
 
-          unpackPhase = # bash
-            ''
-              7z x $src
+          unpackPhase = ''
+            runHook preUnpack
+            7z x $src
+            if [ ! -f 'Payload~' ]; then
               7z x './*/${pkgName}'
-              7z x 'Payload~'
-            '';
+            fi
+            7z x -tcpio 'Payload~'
+            runHook postUnpack
+          '';
 
           nativeBuildInputs = [
             pkgs.p7zip
