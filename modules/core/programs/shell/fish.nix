@@ -178,8 +178,8 @@
     { inputs, pkgs, ... }:
     {
       remotePackages.systemctl-tui = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
-        pname = "systemctl-tui";
-        version = "git";
+        pname = inputs._meta.systemctl-tui.repo;
+        version = inputs._meta.systemctl-tui.rev;
         src = inputs.systemctl-tui;
         cargoLock.lockFile = finalAttrs.src + "/Cargo.lock";
         doCheck = false;

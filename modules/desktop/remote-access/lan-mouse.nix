@@ -71,8 +71,8 @@
     { pkgs, inputs, ... }:
     {
       remotePackages.lan-mouse = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
-        pname = "lan-mouse";
-        version = "git";
+        pname = inputs._meta.lan-mouse.repo;
+        version = inputs._meta.lan-mouse.rev;
         src = inputs.lan-mouse;
 
         doCheck = false;

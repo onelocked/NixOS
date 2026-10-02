@@ -53,8 +53,8 @@
     {
       legacyPackages = {
         scrolloverview = self'.packages.hyprland.stdenv.mkDerivation (finalAttrs: {
-          pname = "scrolloverview";
-          version = "1.0";
+          pname = inputs._meta.scroll-overview.repo;
+          version = inputs._meta.scroll-overview.rev;
           src = inputs.scroll-overview;
 
           nativeBuildInputs = [ pkgs.pkg-config ];
@@ -69,7 +69,7 @@
 
           buildPhase = ''
             runHook preBuild
-            export SCROLLOVERVIEW_BUILD_VERSION="1.0"
+            export SCROLLOVERVIEW_BUILD_VERSION="${finalAttrs.version}"
             make all
             runHook postBuild
           '';

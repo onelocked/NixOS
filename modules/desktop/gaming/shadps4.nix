@@ -7,9 +7,10 @@
   perSystem =
     { pkgs, ... }:
     {
+      # To install PKG
       packages.pkg-install = pkgs.stdenv.mkDerivation (finalAttrs: {
-        pname = "pkg-install";
-        version = "0-unstable-2025-11-11";
+        pname = finalAttrs.src.repo;
+        version = finalAttrs.src.rev;
         __structuredAttrs = true;
         strictDeps = true;
 
@@ -44,7 +45,6 @@
         meta = {
           description = "pkg install for shadps4";
           homepage = "https://github.com/Muggle345/PKGInstall";
-          mainProgram = "pkg-install";
         };
       });
     };

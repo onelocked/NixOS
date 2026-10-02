@@ -44,7 +44,7 @@
       legacyPackages = {
         borders-plus-plus = self'.packages.hyprland.stdenv.mkDerivation (finalAttrs: {
           pname = "borders-plus-plus";
-          version = "1.0";
+          version = inputs._meta.hypr-plugs.rev;
           src = inputs.hypr-plugs;
 
           nativeBuildInputs = [ pkgs.pkg-config ];

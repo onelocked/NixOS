@@ -107,8 +107,8 @@
     }:
     {
       remotePackages.cliphist-tui = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
-        pname = "cliphist-tui";
-        version = "v1.0";
+        pname = inputs._meta.cliphist-tui.repo;
+        version = inputs._meta.cliphist-tui.rev;
         src = inputs.cliphist-tui;
         doCheck = false;
         cargoLock.lockFile = finalAttrs.src + "/Cargo.lock";
@@ -135,8 +135,8 @@
       remotePackages.cliphist = wrapPackage {
         env.CLIPHIST_MAX_STORE_SIZE = "1GB";
         package = pkgs.buildGoModule (finalAttrs: {
-          pname = "cliphist";
-          version = "v1.0";
+          pname = inputs._meta.cliphist.repo;
+          version = inputs._meta.cliphist.rev;
           src = inputs.cliphist;
           doCheck = false;
           vendorHash = "sha256-fDl+ul1t2Ux1w5WcCo6YMJtrcC20o+eUEO3NNycSNvI=";

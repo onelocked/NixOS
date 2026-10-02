@@ -140,7 +140,7 @@
         in
         rustPlatform.buildRustPackage {
           pname = "jellium-desktop";
-          version = "unstable-2026-07-23";
+          version = inputs._meta.jellium-desktop.rev;
           __structuredAttrs = true;
 
           env = {
