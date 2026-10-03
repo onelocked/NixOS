@@ -198,7 +198,8 @@
                   vulkan-loader
                 ]
               }" \
-              --prefix XDG_DATA_DIRS : "/run/opengl-driver/share"
+              --prefix XDG_DATA_DIRS : "/run/opengl-driver/share" \
+              --add-flags "--platform-paint dmabuf --platform=wayland --hwdec=yes"
           '';
 
           doCheck = false;
