@@ -297,7 +297,6 @@
       pkgs,
       lib,
       config,
-      hostName,
       theme,
       ...
     }:
@@ -326,7 +325,7 @@
           "vesktop/themes/${selected_theme}.css".source =
             "${theme-repo}/system24.theme-${selected_theme}.css";
         };
-        hj.systemd.services = lib.mkIf (hostName == "mini-pc") {
+        hj.systemd.services = {
           vesktop = {
             enableDefaultPath = false;
             description = "vesktop autostart";

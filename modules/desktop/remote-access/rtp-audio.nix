@@ -18,7 +18,7 @@
                 name = "libpipewire-module-rtp-sink";
                 args = {
                   "destination.ip" = "192.168.1.209";
-                  "destination.port" = if hostName == "mini-pc" then 45599 else 45610;
+                  "destination.port" = if hostName == "firekeeper" then 45599 else 45610;
                   "audio.channels" = 2;
                   "audio.format" = "S16BE";
                   "sess.payload" = 127;

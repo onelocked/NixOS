@@ -1,9 +1,9 @@
 { config, ... }:
 {
   exo.configurations = {
-    mini-pc = {
+    firekeeper = {
       user = "onelock";
-      hardware = "mini-pc";
+      hardware = "firekeeper";
       theme = "dark";
       modules = with config.exo.mods; [
         neovim
@@ -75,7 +75,7 @@
         };
     };
   };
-  exo.hardware.mini-pc =
+  exo.hardware.firekeeper =
     {
       self',
       modulesPath,
@@ -114,7 +114,7 @@
       hj.packages = [ self'.packages.amdgpu_top ];
     };
 
-  exo.disko.mini-pc = {
+  exo.disko.firekeeper = {
     boot.tmp.useTmpfs = true;
     boot.tmp.tmpfsSize = "75%";
 

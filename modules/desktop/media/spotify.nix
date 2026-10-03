@@ -10,7 +10,6 @@
       scheme,
       config,
       lib,
-      hostName,
       ...
     }:
     let
@@ -47,7 +46,7 @@
         }
         (lib.mkIf cfg.enable {
           forte.allowUnfree = [ "spotify" ];
-          hj.systemd.services = lib.mkIf (hostName == "mini-pc") {
+          hj.systemd.services = {
             spotify = {
               enableDefaultPath = false;
               description = "spotify autostart";

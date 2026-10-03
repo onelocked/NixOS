@@ -5,7 +5,7 @@
     group = "nix";
   };
   exo.configurations = {
-    tethys = {
+    pi5 = {
       system = "aarch64-linux";
       user = "onelock";
       hardware = "pi5";
