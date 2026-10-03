@@ -1,6 +1,6 @@
 {
-  tack.inputs.vimmax = {
-    url = "gh:onelocked/vimmax";
+  tack.inputs.nito = {
+    url = "gh:onelocked/nito";
     group = "general";
   };
   exo.mods.neovim = {
@@ -117,7 +117,7 @@
         enable = lib.mkEnableOption "neovim";
         package = lib.mkOption {
           type = lib.types.package;
-          default = inputs'.vimmax.packages.${theme};
+          default = inputs'.nito.packages.${theme};
           defaultText = "default package for neovim";
         };
       };

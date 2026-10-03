@@ -71,6 +71,10 @@ group = "desktop"
 type = "fetch"
 url = "gh:feschber/lan-mouse"
 
+[inputs.nito]
+group = "general"
+url = "gh:onelocked/nito"
+
 [inputs.nix-cachyos-kernel]
 exclude_follow = ["nixpkgs"]
 frozen = true
@@ -165,10 +169,6 @@ url = "gh:zen-browser/theme-store"
 group = "desktop"
 type = "fetch"
 url = "git+https://gitea.onelock.org/onelock/tuishell"
-
-[inputs.vimmax]
-group = "general"
-url = "gh:onelocked/vimmax"
 
 [inputs.yazi]
 group = "sxyazi"

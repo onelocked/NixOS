@@ -13,6 +13,7 @@
     "hyprland": "github:hyprwm/Hyprland",
     "jellium-desktop": "github:andrewrabert/jellium-desktop",
     "lan-mouse": "github:feschber/lan-mouse",
+    "nito": "github:onelocked/nito",
     "nix-cachyos-kernel": "github:xddxdd/nix-cachyos-kernel",
     "nixos-core": "github:manic-systems/nixos-core",
     "nixos-hardware": "github:NixOS/nixos-hardware",
@@ -33,7 +34,6 @@
     "tack": "github:manic-systems/tack",
     "theme-store": "github:zen-browser/theme-store",
     "tuishell": "git+https://gitea.onelock.org/onelock/tuishell",
-    "vimmax": "github:onelocked/vimmax",
     "yazi": "github:sxyazi/yazi",
     "yazi-plugins": "github:AminurAlam/yazi-plugins",
     "zen-browser": "github:0xc000022070/zen-browser-flake"
@@ -170,6 +170,14 @@
     "rev": "f1b96bdcc0294d285bc9050b7e146800a3ef8796",
     "narHash": "sha256-GGmVzbNbIyTV6hvG9lz/FEc+PwIgM2tX8nbcuD1fo9Y=",
     "lastModified": 1790422438
+  },
+  "nito": {
+    "type": "github",
+    "owner": "onelocked",
+    "repo": "nito",
+    "rev": "20c667c349bd3e94da69b58ae34921a91b3653b1",
+    "narHash": "sha256-adJNcCtXP+DV5gyHaes/bErSg4ZAZ5LhmVk+i+3ztic=",
+    "lastModified": 1791039050
   },
   "nix-cachyos-kernel": {
     "type": "github",
@@ -339,14 +347,6 @@
     "rev": "59b4a286b9d509493b783ae860c895204e4eaab6",
     "narHash": "sha256-kRBQh0ey/D1DWJKSbHQKRBTQ2F+mSBhhzkvBPdGosm8=",
     "lastModified": 1790801195
-  },
-  "vimmax": {
-    "type": "github",
-    "owner": "onelocked",
-    "repo": "vimmax",
-    "rev": "092bb6b167859468bb4e5a9ae7b42cb4876c4569",
-    "narHash": "sha256-f82zur6bzju6IfNiSW1cjK1t2B2psfvv6jTsyKtYIxs=",
-    "lastModified": 1790988304
   },
   "yazi": {
     "type": "github",
