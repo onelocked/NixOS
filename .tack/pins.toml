@@ -7,6 +7,15 @@ systems = "systems"
 tack = "tack"
 treefmt-nix = "treefmt-nix"
 
+[omit_inputs]
+names = ["flake-compat","pre-commit-hooks","treefmt-nix"]
+
+[shorturls]
+gh = "github:{path}"
+
+[tack]
+recomposable = true
+
 [inputs.apple-font-emoji]
 frozen = true
 group = "fonts"
@@ -183,11 +192,3 @@ url = "gh:AminurAlam/yazi-plugins"
 group = "browser"
 url = "gh:0xc000022070/zen-browser-flake"
 
-[omit_inputs]
-names = ["flake-compat", "pre-commit-hooks", "treefmt-nix"]
-
-[shorturls]
-gh = "github:{path}"
-
-[tack]
-recomposable = "true"
