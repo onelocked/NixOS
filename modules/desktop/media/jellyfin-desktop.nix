@@ -40,6 +40,7 @@
     };
   tack.inputs.jellium-desktop = {
     url = "gh:andrewrabert/jellium-desktop";
+    patches = [ "https://github.com/andrewrabert/jellium-desktop/pull/717" ];
     submodules = true;
     type = "fetch";
     group = "desktop";
@@ -188,7 +189,7 @@
             install -Dm644 resources/linux/net.nullsum.JelliumDesktop.svg \
                             "$out/share/icons/hicolor/scalable/apps/net.nullsum.JelliumDesktop.svg"
 
-            makeWrapper "$appDir/jellium-desktop" "$out/bin/jellium-desktop-uncaged" \
+            makeWrapper "$appDir/jellium-desktop" "$out/bin/jellium-desktop" \
               --set CEF_PATH "${cef}" \
               --prefix LD_LIBRARY_PATH : "$appDir:${cef}:/run/opengl-driver/lib:${
                 lib.makeLibraryPath [
@@ -198,14 +199,6 @@
                 ]
               }" \
               --prefix XDG_DATA_DIRS : "/run/opengl-driver/share"
-
-            makeWrapper "${pkgs.cage}/bin/cage" "$out/bin/jellium-desktop" \
-              --add-flags "-d" \
-              --add-flags "--" \
-              --add-flags "$out/bin/jellium-desktop-uncaged" \
-              --add-flags "--platform-paint=dmabuf" \
-              --add-flags "--platform=wayland"
-            runHook postInstall
           '';
 
           doCheck = false;

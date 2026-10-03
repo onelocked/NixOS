@@ -36,7 +36,6 @@
     "vimmax": "github:onelocked/vimmax",
     "yazi": "github:sxyazi/yazi",
     "yazi-plugins": "github:AminurAlam/yazi-plugins",
-    "yaziline": "github:llanosrocas/yaziline.yazi",
     "zen-browser": "github:0xc000022070/zen-browser-flake"
   },
   "apple-font-emoji": {
@@ -148,7 +147,21 @@
     "rev": "14dc0845981cb7c0aef5fa93ff539d927c8f0eb2",
     "narHash": "sha256-vU7Fuw2gMvGdBBYEJ4ngu7cHayffEPdHswQA7NtNGj8=",
     "lastModified": 1789852673,
-    "submodules": true
+    "submodules": true,
+    "patched": {
+      "path": "/nix/store/9kwfj6vl6qfr5nz8cc6qpw84j8n5ss3x-source",
+      "narHash": "sha256-jrdMoQfxET+EdSWEuoY9Kz6E1DUIXTuoc79lHzYYqMo=",
+      "lastModified": 1789852673,
+      "patches": [
+        {
+          "source": "https://github.com/andrewrabert/jellium-desktop/pull/717",
+          "url": "https://github.com/andrewrabert/jellium-desktop/pull/717",
+          "file": "patches/jellium-desktop/pr-717.patch",
+          "sha256": "b120d1f4057cbe86311574b94d1900480aae86058dd88511b19a49fd8cb80987",
+          "head": "ff055a77f68c3e723386ad4e172b0791fb718104"
+        }
+      ]
+    }
   },
   "lan-mouse": {
     "type": "github",
@@ -350,14 +363,6 @@
     "rev": "9997d5ba641314a83ed225a73c0293bd013e1bfc",
     "narHash": "sha256-KDH3Ix8ymqDtxH31NnlVeceaLn8MZy1OSDFLrHbn+IM=",
     "lastModified": 1788158185
-  },
-  "yaziline": {
-    "type": "github",
-    "owner": "llanosrocas",
-    "repo": "yaziline.yazi",
-    "rev": "029b27d55361b4b87d0982237f9730b49b4e7a3a",
-    "narHash": "sha256-oYvbhAi1xHn8XKgnwBYrHBqRReX4kJDkmSTs15RS/2U=",
-    "lastModified": 1786810126
   },
   "zen-browser": {
     "type": "github",
