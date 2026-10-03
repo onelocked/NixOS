@@ -42,7 +42,7 @@ in
         ...
       }:
       {
-        remotePackages = { inherit (packages') tack; };
+        packages = { inherit (packages') tack; };
 
         apps.tack-rebuild = {
           type = "app";
