@@ -31,8 +31,8 @@
 
             if [ -z "$hosts" ]; then
               gum style --foreground 214 "Warning: Could not automatically detect configurations." >&2
-              echo "Enter the flake host (e.g., gaming-pc):" >&2
-              gum input --placeholder "gaming-pc"
+              echo "Enter the flake host (e.g., lucatiel):" >&2
+              gum input --placeholder "lucatiel"
             else
               echo "Select the target NixOS configuration:" >&2
               echo "$hosts" | gum choose

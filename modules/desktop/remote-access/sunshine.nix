@@ -9,7 +9,7 @@
     {
       services.sunshine = {
         enable = true;
-        autoStart = if hostName != "gaming-pc" then false else true;
+        autoStart = if hostName != "lucatiel" then false else true;
         capSysAdmin = true;
         openFirewall = true;
       };

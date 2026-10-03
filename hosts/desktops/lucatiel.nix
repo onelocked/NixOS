@@ -1,9 +1,9 @@
 { config, ... }:
 {
   exo.configurations = {
-    gaming-pc = {
+    lucatiel = {
       user = "onelock";
-      hardware = "gaming-pc";
+      hardware = "lucatiel";
       theme = "dark";
       modules = with config.exo.mods; [
         remote-access
@@ -40,7 +40,7 @@
     };
   };
 
-  exo.hardware."gaming-pc" =
+  exo.hardware."lucatiel" =
     {
       config,
       lib,
@@ -100,7 +100,7 @@
       forte.persist.root.directories = [ "/etc/lact" ];
     };
 
-  exo.disko.gaming-pc = {
+  exo.disko.lucatiel = {
     boot.tmp.useTmpfs = true;
     boot.tmp.tmpfsSize = "75%";
 

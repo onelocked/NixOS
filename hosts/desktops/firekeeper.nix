@@ -58,7 +58,7 @@
                 User root
                 HostName 192.168.1.1
 
-              Host gaming-pc
+              Host lucatiel
                 User onelock
                 HostName 10.13.37.216
                 IdentityFile ~/.ssh/shorekeeper
